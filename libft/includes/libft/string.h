@@ -1,0 +1,59 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   string.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/05 11:16:33 by mjuncker          #+#    #+#             */
+/*   Updated: 2025/03/23 20:30:29 by abidolet         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef STRING_H
+# define STRING_H
+
+# include <stdlib.h>
+
+# define FREE1 0b0001
+# define FREE2 0b0010
+
+// string convertions
+int		ft_atoi(const char *nptr);
+double	ft_atof(const char *nptr);
+char	*ft_atos(char **arr, char separator);
+char	*ft_itoa(int n);
+char	*ft_uitoa(unsigned int n);
+
+// string math
+size_t	ft_strlen(const char *s);
+size_t	ft_arrlen(char **arr);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_strcmp(char *s1, char *s2);
+int		ft_strccmp(const char *s1, const char *s2, char c);
+
+// string manipulation
+size_t	ft_strlcpy(char *dst, const char *src, size_t dsize);
+size_t	ft_strlcat(char *dst, const char *src, size_t dsize);
+int		ft_toupper(int c);
+int		ft_tolower(int c);
+char	*ft_strtrim(char const *s1, char const *set);
+
+// string allocation
+char	*ft_strjoin(char *s1, char const *s2);
+char	*ft_strjoin_free(char *s1, char *s2, const int flags);
+char	*ft_charjoin(char *s1, char const c);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	**ft_split(char const *s, char c);
+char	*ft_strdup(const char *s);
+
+// string search
+char	*ft_strchr(const char *s, int c);
+char	*ft_strrchr(const char *s, int c);
+char	*ft_strnstr(const char *big, const char *little, size_t len);
+
+// string parsing
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+void	ft_striteri(char *s, void (*f)(unsigned int, char*));
+
+#endif
