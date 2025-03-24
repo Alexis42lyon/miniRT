@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:05:22 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/24 09:49:41 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:03:46 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,12 @@ static void	parse_light(t_scene *scene)
 	scene->light.is_set = true;
 	if (ft_arrlen(scene->tokens) != 4)
 		free_all(scene, "Invalid light format");
-	if (parse_vector(scene, &origin, scene->tokens[1]) == false)
-		free_all(scene, "Invalid light position");
+	parse_vector(scene, &origin, scene->tokens[1]);
 	scene->light.origin = origin;
 	scene->light.ratio = ft_atof(scene->tokens[2]);
 	if (scene->light.ratio < 0.0 || scene->light.ratio > 1.0)
 		free_all(scene, "Light brightness must be in range [0.0, 1.0]");
-	if (parse_color(scene, &scene->light.color, scene->tokens[3]) == false)
-		free_all(scene, "Invalid light color format");
+	parse_color(scene, &scene->light.color, scene->tokens[3]);
 }
 
 static void	parse_camera(t_scene *scene)
@@ -39,13 +37,11 @@ static void	parse_camera(t_scene *scene)
 	if (scene->camera.is_set)
 		free_all(scene, "Camera can only be declared once in the scene");
 	scene->camera.is_set = true;
-	if (!scene->tokens || ft_arrlen(scene->tokens) != 4)
+	if (ft_arrlen(scene->tokens) != 4)
 		free_all(scene, "Invalid camera format");
-	if (parse_vector(scene, &origin, scene->tokens[1]) == false)
-		free_all(scene, "Invalid camera position");
+	parse_vector(scene, &origin, scene->tokens[1]);
 	scene->camera.origin = origin;
-	if (parse_vector(scene, &direction, scene->tokens[2]) == false)
-		free_all(scene, "Invalid camera orientation");
+	parse_vector(scene, &direction, scene->tokens[2]);
 	if (!is_normalized(direction))
 		free_all(scene, "Invalid camera orientation");
 	scene->camera.direction = direction;
@@ -64,8 +60,7 @@ static void	parse_ambient_light(t_scene *scene)
 	scene->ambient_light.ratio = ft_atof(scene->tokens[1]);
 	if (scene->ambient_light.ratio < 0.0 || scene->ambient_light.ratio > 1.0)
 		free_all(scene, "Ambient ratio must be in range [0.0, 1.0]");
-	if (parse_color(scene, &scene->ambient_light.color, scene->tokens[2]) == false)
-		free_all(scene, "Invalid ambient color format");
+	parse_color(scene, &scene->ambient_light.color, scene->tokens[2]);
 }
 
 void	parse(t_scene *scene, int fd)

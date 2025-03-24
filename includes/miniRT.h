@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 22:24:45 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/24 09:45:14 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:13:12 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@
 
 # define ESC 65307
 # define SIZE_WIN 0.5
+
+typedef struct info
+{
+	const char	*file;
+	int			line;
+	const char	*function;
+}	t_info;
 
 typedef struct s_vec3
 {
@@ -79,7 +86,7 @@ typedef struct cylinder
 
 typedef struct s_scene
 {
-	char			**tokens;
+	t_list			*map;
 	t_ambient_light	ambient_light;
 	t_camera		camera;
 	t_light_source	light;
@@ -94,9 +101,12 @@ typedef struct s_scene
 
 void	init(t_scene *scene, char **av);
 void	free_arr(char **arr);
-void	free_all(t_scene *scene, char *msg);
+void	free_all(t_scene *scene, const char *msg);
 int		close_window(void *mlx);
 void	start(t_scene *scene, char **av);
+t_info	get_info(const char *file, int line, const char *func);
+void	*check_mem(t_scene *scene, void *mem, const char *message, t_info info);
+void	check_bool(t_scene *scene, bool ok, const char *message, t_info info);
 
 // parse.c
 void	parse(t_scene *scene, int fd);
@@ -105,8 +115,8 @@ void	parse_plane(t_scene *scene);
 void	parse_cylinder(t_scene *scene);
 
 // parse_utils.c
-bool	parse_vector(t_scene *scene, t_vec3 *vec, char *str);
-bool	parse_color(t_scene *scene, size_t *color, char *str);
+void	parse_vector(t_scene *scene, t_vec3 *vec, char *str);
+void	parse_color(t_scene *scene, size_t *color, char *str);
 bool	is_normalized(t_vec3 vec);
 
 #endif

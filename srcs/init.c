@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:47:16 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/24 10:01:30 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:15:15 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 
 void	init(t_scene *scene, char **av)
 {
-	int	fd;
+	int		fd;
+	char	*line;
+	char	**tokens;
+	t_list	*new_node;
 
 	scene->mlx = NULL;
 	scene->ambient_light.is_set = false;
@@ -36,7 +39,24 @@ void	init(t_scene *scene, char **av)
 		ft_dprintf(2, "%sError\n%s\n%s", RED, "File not found", RESET);
 		exit(1);
 	}
+	line = ft_get_next_line(fd);
+	while (line)
+	{
+		tokens = ft_split(line, ' ');
+		if (!tokens)
+		{
+			close(fd);
+			free_all(scene, "Malloc failed");
+		}
+		new_node = ft_lstnew(tokens);
+		if (!new_node)
+		{
+			close(fd);
+			free_all(scene, "Malloc failed");
+		}
+		ft_lstadd_back(&scene->map, new_node);
+		line = get_next_line(fd);
+	}
 	parse(scene, fd);
 	ft_printf("%sNo error has been found\n%s", GREEN, RESET);
-	scene->tokens = NULL;
 }
