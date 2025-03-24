@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:46:34 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/23 17:03:37 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/24 10:13:52 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,19 @@
 static int	key_hook(int keycode, t_scene *scene)
 {
 	if (keycode == ESC)
-		close_window(scene);
+		free_all(scene, NULL);
+	if (keycode == 17)
+		free_all(scene, NULL);
 	return (0);
+}
+
+int	window_close(void *param)
+{
+	t_scene	*scene;
+
+	scene = (t_scene *)param;
+	free_all(scene, NULL);
+	exit(0);
 }
 
 void	start(t_scene *scene, char **av)
@@ -25,7 +36,7 @@ void	start(t_scene *scene, char **av)
 	if (!scene->mlx)
 	{
 		error("mlx init failed");
-		exit(1);
+		free_all(scene, NULL);
 	}
 	mlx_get_screen_size(scene->mlx, &scene->width, &scene->height);
 	scene->width *= SIZE_WIN;
@@ -34,9 +45,9 @@ void	start(t_scene *scene, char **av)
 	if (!scene->win)
 	{
 		error("mlx window creation failed");
-		close_window(scene);
+		free_all(scene, NULL);
 	}
 	mlx_key_hook(scene->win, key_hook, scene);
-	mlx_hook(scene->win, 17, 0, close_window, scene);
+	mlx_hook(scene->win, 17, 0, window_close, scene);
 	mlx_loop(scene->mlx);
 }
