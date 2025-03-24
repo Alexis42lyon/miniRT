@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:46:34 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/24 10:13:52 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/24 23:38:56 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 static int	key_hook(int keycode, t_scene *scene)
 {
 	if (keycode == ESC)
-		free_all(scene, NULL);
-	if (keycode == 17)
 		free_all(scene, NULL);
 	return (0);
 }

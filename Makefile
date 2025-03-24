@@ -7,11 +7,19 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP $(INCLUDES) -g3
 MLXFLAGS = -lX11 -lXext -lbsd -lm
 
-SRCS = main.c utils.c init.c start.c parse.c parse_objects.c parse_utils.c
+VPATH = srcs:srcs/parser/
+
+SRCS =	main.c			\
+		utils.c			\
+		start.c			\
+		init.c			\
+		parse.c			\
+		parse_objects.c	\
+		parse_utils.c	\
+		print_struct.c	\
+
 OBJS = $(addprefix $(BIN_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
-
-VPATH = srcs
 
 all: $(BIN_DIR) libft mlx $(NAME)
 
@@ -33,12 +41,15 @@ $(BIN_DIR)/%.o: %.c Makefile | $(BIN_DIR)
 		$(CC) $(CFLAGS) -c $< -o $@
 
 norm:
-		norminette srcs includes libft
+		norminette srcs includes
 
 file = scene1
 
+scene: all
+		./$(NAME) scenes/scene1.rt
+
 leaks: all
-		valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) scenes/$(file).rt
+		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes ./$(NAME) scenes/$(file).rt
 
 clean:
 		@rm -rf $(BIN_DIR)

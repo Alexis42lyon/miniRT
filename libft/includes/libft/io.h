@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:15:47 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/23 17:56:21 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/24 23:03:09 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@
 # endif
 
 # define FD 1024
-
-# define GET_VARIABLE_NAME(Variable) (#Variable)
 
 // debug.c
 void	success(const char *msg);
