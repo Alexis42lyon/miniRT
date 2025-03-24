@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:16:33 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/23 20:30:29 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/24 08:54:56 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ size_t	ft_strlen(const char *s);
 size_t	ft_arrlen(char **arr);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strcmp(char *s1, char *s2);
-int		ft_strccmp(const char *s1, const char *s2, char c);
 
 // string manipulation
 size_t	ft_strlcpy(char *dst, const char *src, size_t dsize);

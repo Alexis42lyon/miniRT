@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:47:16 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/23 23:54:07 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/24 09:54:14 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ void	init(t_scene *scene, char **av)
 	}
 	parse(scene, fd);
 	ft_printf("%sNo error has been found\n%s", GREEN, RESET);
+	scene->tokens = NULL;
 	free_all(scene, NULL);
 }

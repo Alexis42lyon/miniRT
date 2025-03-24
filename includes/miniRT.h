@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 22:24:45 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/23 23:28:06 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/24 09:45:14 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 
 # define ESC 65307
 # define SIZE_WIN 0.5
-# define INVALID_COLOR 0xFFFFFFFF
 
 typedef struct s_vec3
 {
@@ -33,7 +32,7 @@ typedef struct ambient_light
 {
 	bool			is_set;
 	double			ratio;
-	unsigned int	color;
+	size_t			color;
 }	t_ambient_light;
 
 typedef struct camera
@@ -49,14 +48,14 @@ typedef struct light
 	bool			is_set;
 	t_vec3			origin;
 	double			ratio;
-	unsigned int	color;
+	size_t			color;
 }	t_light_source;
 
 typedef struct sphere
 {
 	t_vec3			origin;
 	double			diameter;
-	unsigned int	color;
+	size_t			color;
 	struct sphere	*next;
 }	t_sphere;
 
@@ -64,7 +63,7 @@ typedef struct plane
 {
 	t_vec3			origin;
 	t_vec3			normal;
-	unsigned int	color;
+	size_t			color;
 	struct plane	*next;
 }	t_plane;
 
@@ -74,12 +73,13 @@ typedef struct cylinder
 	t_vec3			normal;
 	double			diameter;
 	double			height;
-	unsigned int	color;
+	size_t			color;
 	struct cylinder	*next;
 }	t_cylinder;
 
 typedef struct s_scene
 {
+	char			**tokens;
 	t_ambient_light	ambient_light;
 	t_camera		camera;
 	t_light_source	light;
@@ -100,13 +100,13 @@ void	start(t_scene *scene, char **av);
 
 // parse.c
 void	parse(t_scene *scene, int fd);
-void	parse_sphere(t_scene *scene, char *line);
-void	parse_plane(t_scene *scene, char *line);
-void	parse_cylinder(t_scene *scene, char *line);
+void	parse_sphere(t_scene *scene);
+void	parse_plane(t_scene *scene);
+void	parse_cylinder(t_scene *scene);
 
 // parse_utils.c
-bool	parse_vector(t_vec3 *vec, char *str);
-int		parse_color(char *str);
-int		is_normalized(t_vec3 vec);
+bool	parse_vector(t_scene *scene, t_vec3 *vec, char *str);
+bool	parse_color(t_scene *scene, size_t *color, char *str);
+bool	is_normalized(t_vec3 vec);
 
 #endif

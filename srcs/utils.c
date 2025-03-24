@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:47:25 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/23 23:38:38 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/24 09:53:03 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	free_arr(char **arr)
 {
 	int	i;
 
+	if (!arr)
+		return ;
 	i = 0;
 	while (arr[i])
 		free(arr[i++]);
@@ -41,6 +43,7 @@ void	free_all(t_scene *scene, char *msg)
 {
 	if (msg)
 		ft_dprintf(2, "%sError\n%s\n%s", RED, msg, RESET);
+	free_arr(scene->tokens);
 	if (scene->spheres)
 		free(scene->spheres);
 	if (scene->planes)
