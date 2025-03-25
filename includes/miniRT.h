@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 22:24:45 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/25 09:26:16 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/25 09:29:54 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 # define ESC 65307
 # define SIZE_WIN 0.5
-# define SHOW_SRUCT 1
+# define SHOW_SRUCT 0
 
 typedef struct info
 {
