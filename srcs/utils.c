@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:47:25 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/25 08:53:08 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/25 09:55:49 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,40 @@ void	free_arr(void **arr)
 
 int	close_window(void *mlx)
 {
-	t_scene	*scene;
-
-	scene = (t_scene *)mlx;
-	if (scene && scene->win->mlx)
-	{
-		if (scene->win)
-			mlx_destroy_window(scene->win->mlx, scene->win);
-		mlx_destroy_display(scene->win->mlx);
-		free(scene->win->mlx);
-	}
+	// t_win	*win;
+	// win = (t_win *)mlx;
+	// if (win && win->mlx)
+	// {
+	// 	if (win)
+	// 		mlx_destroy_window(win->mlx, win);
+	// 	mlx_destroy_display(win->mlx);
+	// 	free(win->mlx);
+	// }
+	(void)mlx;
 	exit(0);
 }
 
-void	free_all(t_scene *scene, const char *msg)
+void	free_scene(t_scene *scene)
 {
-	if (msg)
-		ft_dprintf(2, "%sError\n%s\n%s", RED, msg, RESET);
 	close(scene->fd);
 	free(scene->line);
 	free(scene->spheres);
 	free(scene->planes);
 	free(scene->cylinders);
 	ft_lstclear(&scene->map, (void *)free_arr);
-	close_window(scene);
+}
+
+void	free_all(t_prog *prog_set)
+{
+	static t_prog	*prog = NULL;
+
+	if (prog_set)
+	{
+		prog = prog_set;
+		return ;
+	}
+	free_scene(prog->scene);
+	close_window(prog->scene);
 }
 
 t_info	get_info(const char *file, int line, const char *func)
@@ -61,13 +71,13 @@ t_info	get_info(const char *file, int line, const char *func)
 	});
 }
 
-void	check_mem(t_info info, t_scene *scene, void *mem, void **res)
+void	check_mem(t_info info, void *mem, void **res)
 {
 	if (mem == NULL)
 	{
 		ft_dprintf(2, "%s%s:%d: %smalloc assertion failed in %s'%s'\n",
 			GRAY, info.file, info.line, RED, RESET, info.function);
-		free_all(scene, NULL);
+		free_all(NULL);
 	}
 	*res = mem;
 }

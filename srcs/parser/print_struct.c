@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:42:35 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/25 00:08:26 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/25 09:30:59 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void	print_scene(const t_scene *scene)
 
 #else
 
-void	print_scene(const t_scene *scene);
+void	print_scene(const t_scene *scene)
 {
 	(void)scene;
 }

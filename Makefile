@@ -58,7 +58,7 @@ norm:
 file = scene1
 
 scene: all
-		./$(NAME) scenes/scene1.rt
+		./$(NAME) scenes/$(file).rt
 
 leaks: all
 		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes ./$(NAME) scenes/$(file).rt
