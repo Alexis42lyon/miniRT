@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:54:12 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/24 23:36:50 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/25 08:53:23 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
+#include <math.h>
 
 void	parse_vector(t_scene *scene, t_vec3 *vec, char *str)
 {

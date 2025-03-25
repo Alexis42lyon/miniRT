@@ -6,7 +6,7 @@
 #    By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/24 18:00:56 by mjuncker          #+#    #+#              #
-#    Updated: 2025/03/05 11:57:03 by mjuncker         ###   ########.fr        #
+#    Updated: 2025/03/24 17:36:31 by mjuncker         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRCS_D		= src/
 BIN_D		= bin/
 INCLUDES_D	= includes/
 
-VPATH = src:src/str:src/mem:src/math:src/link_lst:src/is:src/io
+VPATH = src:src/str:src/mem:src/math:src/link_lst:src/is:src/io:src/vector
 
 # src file names
 SRCS =  ft_isalpha.c 		\
@@ -74,6 +74,8 @@ SRCS =  ft_isalpha.c 		\
 		ft_atos.c			\
 		ft_sortarr.c		\
 		ft_dprintf.c		\
+		ft_vecmath.c		\
+		ft_vecnew.c			\
 
 OBJ = $(SRCS:.c=.o)
 

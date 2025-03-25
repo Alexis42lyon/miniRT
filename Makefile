@@ -1,13 +1,13 @@
 NAME = miniRT
 
-BIN_DIR = bin
+OBJ_DIR = obj
 INCLUDES = -Iincludes -Ilibft/includes -Imlx
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP $(INCLUDES) -g3
 MLXFLAGS = -lX11 -lXext -lbsd -lm
 
-VPATH = srcs:srcs/parser/
+VPATH = srcs:srcs/parser
 
 SRCS =	main.c			\
 		utils.c			\
@@ -17,28 +17,31 @@ SRCS =	main.c			\
 		parse_objects.c	\
 		parse_utils.c	\
 		print_struct.c	\
+		image.c			\
 
-OBJS = $(addprefix $(BIN_DIR)/, $(SRCS:.c=.o))
+OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
 
-all: $(BIN_DIR) libft mlx $(NAME)
 
-$(BIN_DIR):
-		@mkdir -p $(BIN_DIR)
+all: $(OBJ_DIR) libft mlx $(NAME)
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
 libft:
-		@echo "Compiling libft..."
-		@$(MAKE) -C libft --no-print-directory > /dev/null 2>&1
+	@echo "Compiling libft..."
+	@$(MAKE) -C libft > /dev/null 2>&1
 
 mlx:
-		@echo "Compiling mlx..."
-		@$(MAKE) -C mlx --no-print-directory > /dev/null 2>&1
+	@echo "Compiling mlx..."
+	@$(MAKE) -C mlx > /dev/null 2>&1
 
 $(NAME): $(OBJS)
-		$(CC) $(CFLAGS) $(OBJS) libft/bin/libft.a mlx/libmlx.a -o $(NAME) $(MLXFLAGS)
+	$(CC) $(CFLAGS) $(OBJS) libft/bin/libft.a mlx/libmlx.a -o $(NAME) $(MLXFLAGS)
 
-$(BIN_DIR)/%.o: %.c Makefile | $(BIN_DIR)
-		$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)/%.o: %.c Makefile | $(OBJ_DIR)
+	@$(CC) $(CFLAGS) -c $< -o $@
+	printf "$(GRAY)compiling: $(BLUE)%-40s $(GRAY)[%d/%d]\n" "$<" "$$(ls obj | wc -l)" "$(words $(SRCS))"
 
 norm:
 		norminette srcs includes
@@ -52,19 +55,21 @@ leaks: all
 		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes ./$(NAME) scenes/$(file).rt
 
 clean:
-		@rm -rf $(BIN_DIR)
-		@$(MAKE) -C libft clean --no-print-directory > /dev/null 2>&1
-		@$(MAKE) -C mlx clean --no-print-directory > /dev/null 2>&1
+	rm -rf $(OBJ_DIR)
+	$(MAKE) -C libft clean > /dev/null 2>&1
+	$(MAKE) -C mlx clean > /dev/null 2>&1
 
 fclean:
-		@rm -rf $(BIN_DIR)
-		@rm -f $(NAME)
-		@$(MAKE) -C libft fclean --no-print-directory > /dev/null 2>&1
-		@$(MAKE) -C mlx clean --no-print-directory > /dev/null 2>&1
-		@rm -f mlx/libmlx.a > /dev/null 2>&1
+	rm -rf $(OBJ_DIR)
+	rm -f $(NAME)
+	$(MAKE) -C libft fclean > /dev/null 2>&1
+	$(MAKE) -C mlx clean > /dev/null 2>&1
+	rm -f mlx/libmlx.a > /dev/null 2>&1
 
 re: fclean all
 
 .PHONY: all libft mlx leaks clean fclean re
 
 -include $(DEPS)
+.SILENT:
+
