@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:47:25 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/25 09:29:29 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/25 09:55:49 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	free_arr(void **arr)
 int	close_window(void *mlx)
 {
 	// t_win	*win;
-
 	// win = (t_win *)mlx;
 	// if (win && win->mlx)
 	// {
@@ -40,7 +39,7 @@ int	close_window(void *mlx)
 	exit(0);
 }
 
-void free_scene(t_scene *scene)
+void	free_scene(t_scene *scene)
 {
 	close(scene->fd);
 	free(scene->line);
@@ -52,14 +51,13 @@ void free_scene(t_scene *scene)
 
 void	free_all(t_prog *prog_set)
 {
-	static t_prog *prog = NULL;
+	static t_prog	*prog = NULL;
 
 	if (prog_set)
 	{
 		prog = prog_set;
 		return ;
 	}
-
 	free_scene(prog->scene);
 	close_window(prog->scene);
 }

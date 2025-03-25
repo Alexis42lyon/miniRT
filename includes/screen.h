@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   screen.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 18:00:59 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/24 18:03:07 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/25 09:56:10 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ typedef struct s_win
 	t_data	img;
 }	t_win;
 
-
 int		create_img(t_win *win);
 void	set_pixel(t_data *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
-
 
 #endif

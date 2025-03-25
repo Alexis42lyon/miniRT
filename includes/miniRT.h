@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 22:24:45 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/25 09:29:54 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/25 09:56:03 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 # define ESC 65307
 # define SIZE_WIN 0.5
-# define SHOW_SRUCT 0
+# define SHOW_SRUCT 1
 
 typedef struct info
 {
@@ -78,7 +78,6 @@ typedef struct cylinder
 	size_t			color;
 }	t_cylinder;
 
-
 /* ---------------------------------- SCENE --------------------------------- */
 
 typedef struct s_scene
@@ -103,7 +102,6 @@ typedef struct s_prog
 	t_win		*win;
 	// more ..
 }	t_prog;
-
 
 void	init(t_scene *scene, char **av);
 void	free_arr(void **arr);
