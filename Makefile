@@ -7,7 +7,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP $(INCLUDES) -g3
 MLXFLAGS = -lX11 -lXext -lbsd -lm
 
-VPATH = srcs:srcs/parser/
+VPATH = srcs:srcs/parser
 
 SRCS =	main.c			\
 		utils.c			\
@@ -17,11 +17,11 @@ SRCS =	main.c			\
 		parse_objects.c	\
 		parse_utils.c	\
 		print_struct.c	\
+		image.c			\
 
-OBJS = $(addprefix $(BIN_DIR)/, $(SRCS:.c=.o))
+OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
 
-VPATH = srcs
 
 all: $(OBJ_DIR) libft mlx $(NAME)
 

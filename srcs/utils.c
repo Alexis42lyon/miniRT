@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:47:25 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/24 22:52:11 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/25 08:53:08 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int	close_window(void *mlx)
 	t_scene	*scene;
 
 	scene = (t_scene *)mlx;
-	if (scene && scene->mlx)
+	if (scene && scene->win->mlx)
 	{
 		if (scene->win)
-			mlx_destroy_window(scene->mlx, scene->win);
-		mlx_destroy_display(scene->mlx);
-		free(scene->mlx);
+			mlx_destroy_window(scene->win->mlx, scene->win);
+		mlx_destroy_display(scene->win->mlx);
+		free(scene->win->mlx);
 	}
 	exit(0);
 }

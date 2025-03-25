@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:58:27 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/24 16:59:19 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/25 08:53:50 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 typedef struct s_vector3
 {
-	int	x;
-	int	y;
-	int	z;
+	double	x;
+	double	y;
+	double	z;
 }	t_vec3;
 
 
