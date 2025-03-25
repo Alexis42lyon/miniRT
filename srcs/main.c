@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 21:07:28 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/25 08:56:53 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/25 09:00:38 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	main(int ac, char **av)
 			RED, "Wrong number of arguments", RESET);
 		return (1);
 	}
-	ft_memset(&scene, 0, sizeof(t_scene));
 	scene.win = &win;
 	init(&scene, av);
 	// start(&scene, av);
