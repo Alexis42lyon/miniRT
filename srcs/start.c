@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:46:34 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/24 17:59:04 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/25 08:47:51 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 static int	key_hook(int keycode, t_scene *scene)
 {
 	if (keycode == ESC)
-		free_all(scene, NULL);
-	if (keycode == 17)
 		free_all(scene, NULL);
 	return (0);
 }

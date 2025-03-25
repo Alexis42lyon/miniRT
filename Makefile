@@ -7,28 +7,21 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP $(INCLUDES) -g3
 MLXFLAGS = -lX11 -lXext -lbsd -lm
 
-SRCS =	main.c	\
-		utils.c	\
-		init.c	\
-		start.c	\
-		parse.c	\
+VPATH = srcs:srcs/parser/
+
+SRCS =	main.c			\
+		utils.c			\
+		start.c			\
+		init.c			\
+		parse.c			\
 		parse_objects.c	\
 		parse_utils.c	\
-		image.c			\
+		print_struct.c	\
 
-OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+OBJS = $(addprefix $(BIN_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
 
 VPATH = srcs
-
-RESET 			= \033[0m
-GRAY			= \033[90m
-RED 			= \033[31m
-GREEN 			= \033[32m
-YELLOW 			= \033[33m
-BLUE 			= \033[34m
-CURSOR_OFF 		= \e[?25l
-CURSOR_ON 		= \e[?25h
 
 all: $(OBJ_DIR) libft mlx $(NAME)
 
@@ -51,16 +44,15 @@ $(OBJ_DIR)/%.o: %.c Makefile | $(OBJ_DIR)
 	printf "$(GRAY)compiling: $(BLUE)%-40s $(GRAY)[%d/%d]\n" "$<" "$$(ls obj | wc -l)" "$(words $(SRCS))"
 
 norm:
-	norminette srcs includes libft
+		norminette srcs includes
 
 file = scene1
 
-.PHONY: run
-run: all
-	./$(NAME) scenes/$(file).rt
+scene: all
+		./$(NAME) scenes/scene1.rt
 
 leaks: all
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./$(NAME) scenes/$(file).rt
+		valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --track-origins=yes ./$(NAME) scenes/$(file).rt
 
 clean:
 	rm -rf $(OBJ_DIR)

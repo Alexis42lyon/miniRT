@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 21:07:28 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/24 18:07:05 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/25 08:47:38 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		ft_dprintf(2, "%sError\n%s\n%s", RED, "Wrong number of arguments", RESET);
+		ft_dprintf(2, "%sError\n%s\n%s",
+			RED, "Wrong number of arguments", RESET);
 		return (1);
 	}
 	ft_memset(&scene, 0, sizeof(t_scene));

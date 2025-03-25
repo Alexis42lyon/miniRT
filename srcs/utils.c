@@ -6,13 +6,13 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:47:25 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/24 10:02:42 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/24 22:52:11 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
 
-void	free_arr(char **arr)
+void	free_arr(void **arr)
 {
 	int	i;
 
@@ -39,13 +39,35 @@ int	close_window(void *mlx)
 	exit(0);
 }
 
-void	free_all(t_scene *scene, char *msg)
+void	free_all(t_scene *scene, const char *msg)
 {
 	if (msg)
 		ft_dprintf(2, "%sError\n%s\n%s", RED, msg, RESET);
-	free_arr(scene->tokens);
+	close(scene->fd);
+	free(scene->line);
 	free(scene->spheres);
 	free(scene->planes);
 	free(scene->cylinders);
+	ft_lstclear(&scene->map, (void *)free_arr);
 	close_window(scene);
+}
+
+t_info	get_info(const char *file, int line, const char *func)
+{
+	return ((t_info){
+		.file = file,
+		.line = line,
+		.function = func,
+	});
+}
+
+void	check_mem(t_info info, t_scene *scene, void *mem, void **res)
+{
+	if (mem == NULL)
+	{
+		ft_dprintf(2, "%s%s:%d: %smalloc assertion failed in %s'%s'\n",
+			GRAY, info.file, info.line, RED, RESET, info.function);
+		free_all(scene, NULL);
+	}
+	*res = mem;
 }
