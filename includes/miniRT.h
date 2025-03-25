@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 22:24:45 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/25 08:47:02 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/25 09:26:16 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef struct cylinder
 
 
 /* ---------------------------------- SCENE --------------------------------- */
+
 typedef struct s_scene
 {
 	int				fd;
@@ -94,17 +95,23 @@ typedef struct s_scene
 	t_sphere		*spheres;
 	t_plane			*planes;
 	t_cylinder		*cylinders;
-	
-	t_win			*win;
 }	t_scene;
+
+typedef struct s_prog
+{
+	t_scene		*scene;
+	t_win		*win;
+	// more ..
+}	t_prog;
+
 
 void	init(t_scene *scene, char **av);
 void	free_arr(void **arr);
-void	free_all(t_scene *scene, const char *msg);
+void	free_all(t_prog *prog_set);
 int		close_window(void *mlx);
 void	start(t_scene *scene, char **av);
 t_info	get_info(const char *file, int line, const char *func);
-void	check_mem(t_info info, t_scene *scene, void *mem, void **res);
+void	check_mem(t_info info, void *mem, void **res);
 
 // parse.c
 void	parse(t_scene *scene);
@@ -113,8 +120,8 @@ void	parse_plane(t_scene *scene, char **tokens);
 void	parse_cylinder(t_scene *scene, char **tokens);
 
 // parse_utils.c
-void	parse_vector(t_scene *scene, t_vec3 *vec, char *str);
-void	parse_color(t_scene *scene, size_t *color, char *str);
+void	parse_vector(t_vec3 *vec, char *str);
+void	parse_color(size_t *color, char *str);
 bool	is_normalized(t_vec3 vec);
 void	init_malloc(t_scene *scene);
 void	print_scene(const t_scene *scene);
