@@ -29,10 +29,9 @@ RED 			= \033[31m
 GREEN 			= \033[32m
 YELLOW 			= \033[33m
 BLUE 			= \033[34m
-CURSOR_OFF 		= \e[?25l
-CURSOR_ON 		= \e[?25h
 
 all: $(OBJ_DIR) libft mlx $(NAME)
+	printf "$(RESET)"
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
