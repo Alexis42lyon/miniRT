@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 22:24:45 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/24 09:45:14 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/24 18:01:28 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,14 @@
 
 # include <mlx.h>
 # include <libft.h>
-# include <math.h>
+# include "libft/vector.h"
 # include <stdbool.h>
+# include "screen.h"
 
 # define ESC 65307
 # define SIZE_WIN 0.5
 
-typedef struct s_vec3
-{
-	double	x;
-	double	y;
-	double	z;
-}	t_vec3;
-
+/* --------------------------------- OBJECT --------------------------------- */
 typedef struct ambient_light
 {
 	bool			is_set;
@@ -77,6 +72,8 @@ typedef struct cylinder
 	struct cylinder	*next;
 }	t_cylinder;
 
+
+/* ---------------------------------- SCENE --------------------------------- */
 typedef struct s_scene
 {
 	char			**tokens;
@@ -86,10 +83,8 @@ typedef struct s_scene
 	t_sphere		*spheres;
 	t_plane			*planes;
 	t_cylinder		*cylinders;
-	void			*mlx;
-	int				width;
-	int				height;
-	void			*win;
+	
+	t_win			*win;
 }	t_scene;
 
 void	init(t_scene *scene, char **av);

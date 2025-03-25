@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:46:34 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/24 10:13:52 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:59:04 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,25 @@ int	window_close(void *param)
 
 void	start(t_scene *scene, char **av)
 {
-	scene->mlx = mlx_init();
-	if (!scene->mlx)
+	scene->win->mlx = mlx_init();
+	if (!scene->win->mlx)
 	{
 		error("mlx init failed");
 		free_all(scene, NULL);
 	}
-	mlx_get_screen_size(scene->mlx, &scene->width, &scene->height);
-	scene->width *= SIZE_WIN;
-	scene->height *= SIZE_WIN;
-	scene->win = mlx_new_window(scene->mlx, scene->width, scene->height, av[0]);
+	mlx_get_screen_size(scene->win->mlx, &scene->win->width, &scene->win->height);
+	// scene->win->width *= SIZE_WIN;
+	// scene->win->height *= SIZE_WIN;
+	scene->win->width = WIDTH;
+	scene->win->height = HEIGHT;
+	scene->win = mlx_new_window(scene->win->mlx, scene->win->width, scene->win->height, av[0]);
 	if (!scene->win)
 	{
+		//! MLX ptr pas free ?
 		error("mlx window creation failed");
 		free_all(scene, NULL);
 	}
 	mlx_key_hook(scene->win, key_hook, scene);
 	mlx_hook(scene->win, 17, 0, window_close, scene);
-	mlx_loop(scene->mlx);
+	mlx_loop(scene->win->mlx);
 }

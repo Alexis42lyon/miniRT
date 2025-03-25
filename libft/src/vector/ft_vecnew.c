@@ -1,32 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_vecnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 21:07:28 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/24 18:07:05 by mjuncker         ###   ########.fr       */
+/*   Created: 2025/03/24 16:58:12 by mjuncker          #+#    #+#             */
+/*   Updated: 2025/03/24 16:59:39 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <miniRT.h>
+#include "libft/vector.h"
 
-int	main(int ac, char **av)
+t_vec3	ft_vec3new(int x, int y, int z)
 {
-	t_scene	scene;
-	t_win	win;
+	t_vec3	vec;
 
-	if (ac != 2)
-	{
-		ft_dprintf(2, "%sError\n%s\n%s", RED, "Wrong number of arguments", RESET);
-		return (1);
-	}
-	ft_memset(&scene, 0, sizeof(t_scene));
-	scene.win = &win;
-	init(&scene, av);
-	start(&scene, av);
-	create_img(&win);
-	free_all(&scene, NULL);
-	return (0);
+	vec.x = x;
+	vec.y = y;
+	vec.z = z;
+	return (vec);
 }
+

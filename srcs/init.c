@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:47:16 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/24 10:01:30 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:34:49 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	init(t_scene *scene, char **av)
 {
 	int	fd;
 
-	scene->mlx = NULL;
+	scene->win->mlx = NULL;
 	scene->ambient_light.is_set = false;
 	scene->camera.is_set = false;
 	scene->light.is_set = false;
