@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:05:22 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/24 23:37:10 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/25 08:44:32 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	parse_map(t_scene *scene)
 	while (scene->line)
 	{
 		check_mem(get_info(__FILE__, __LINE__, __func__),
-			scene, ft_split(scene->line, ' '), (void **)&tokens);
+			scene, NULL, (void **)&tokens);
 		if (!ft_strcmp(tokens[0], "sp"))
 			scene->nb_spheres++;
 		else if (!ft_strcmp(tokens[0], "pl"))
