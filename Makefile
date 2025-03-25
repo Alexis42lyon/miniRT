@@ -7,7 +7,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP $(INCLUDES) -g3
 MLXFLAGS = -lX11 -lXext -lbsd -lm
 
-VPATH = srcs:srcs/parser
+VPATH = srcs:srcs/parser:srcs/graphics
 
 SRCS =	main.c			\
 		utils.c			\
@@ -22,6 +22,15 @@ SRCS =	main.c			\
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
 
+
+RESET 			= \033[0m
+GRAY			= \033[90m
+RED 			= \033[31m
+GREEN 			= \033[32m
+YELLOW 			= \033[33m
+BLUE 			= \033[34m
+CURSOR_OFF 		= \e[?25l
+CURSOR_ON 		= \e[?25h
 
 all: $(OBJ_DIR) libft mlx $(NAME)
 
