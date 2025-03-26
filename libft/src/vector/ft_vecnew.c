@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "libft/vector.h"
+#include "stdio.h"
 
-t_vec3	ft_vec3new(int x, int y, int z)
+t_vec3	ft_vec3new(double x, double y, double z)
 {
 	t_vec3	vec;
 
@@ -20,5 +21,10 @@ t_vec3	ft_vec3new(int x, int y, int z)
 	vec.y = y;
 	vec.z = z;
 	return (vec);
+}
+
+void	print_vec(t_vec3 vec)
+{
+	printf("vec: (x: %lf, y: %lf, z: %lf)\n", vec.x, vec.y, vec.z);
 }
 

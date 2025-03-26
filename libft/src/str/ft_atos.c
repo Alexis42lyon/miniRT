@@ -23,10 +23,10 @@ char	*ft_atos(char **arr, char separator)
 	while (arr[i])
 	{
 		result = ft_strjoin_free(result, arr[i], FREE1);
-		if (malloc_assert(result, __FILE__, __LINE__, __FUNCTION__))
+		if (malloc_assert(result, __FILE__, __LINE__))
 			return (NULL);
 		result = ft_charjoin(result, separator);
-		if (malloc_assert(result, __FILE__, __LINE__, __FUNCTION__))
+		if (malloc_assert(result, __FILE__, __LINE__))
 			return (NULL);
 		i++;
 	}

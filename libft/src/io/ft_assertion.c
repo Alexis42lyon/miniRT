@@ -12,11 +12,11 @@
 
 #include "libft/io.h"
 
-int	malloc_assert(void *mem, const char *file, int line, const char *function)
+int	malloc_assert(void *mem, const char *file, int line)
 {
 	if (mem)
 		return (0);
-	ft_dprintf(2, "%s%s:%d: %sminishell: malloc assertion failed in %s'%s'\n",
-		GRAY, file, line, RED, RESET, function);
+	ft_dprintf(2, "%s%s:%d: %s: malloc assertion failed%s\n",
+		GRAY, file, line, RED, RESET);
 	return (-1);
 }

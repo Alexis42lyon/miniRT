@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "window.h"
+#include "libft/io.h"
 #include "libft/memory.h"
 #include "libft/string.h"
 #include "miniRT.h"
@@ -40,7 +41,7 @@ void	init_win(t_win *win)
 	win->height = HEIGHT;
 	win->width = WIDTH;
 	win->name = ft_strdup("miniRT");
-	if (!win->name)
+	if (malloc_assert(win->name, __FILE__, __LINE__))
 		free_all(NULL);
 	win->mlx_ptr = mlx_init();
 	if (!win->mlx_ptr)
@@ -53,7 +54,7 @@ void	init_win(t_win *win)
 		free_all(NULL);
 	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, NULL);
 	mlx_key_hook(win->win_ptr, key_hook, NULL);
-	mlx_loop(win.mlx_ptr);
+
 }
 
 #else

@@ -31,8 +31,8 @@ void	parse_cylinder(t_scene *scene, char **tokens)
 		free_all(NULL);
 	}
 	scene->cylinders->normal = normal;
-	scene->cylinders->diameter = ft_atof(tokens[3]);
-	if (scene->cylinders->diameter <= 0)
+	scene->cylinders->radius = ft_atof(tokens[3]);
+	if (scene->cylinders->radius <= 0)
 	{
 		ft_dprintf(2, "Error\nCylinder diameter must be positive\n");
 		free_all(NULL);
@@ -79,8 +79,8 @@ void	parse_sphere(t_scene *scene, char **tokens)
 	}
 	parse_vector(&origin, tokens[1]);
 	scene->spheres->origin = origin;
-	scene->spheres->diameter = ft_atof(tokens[2]);
-	if (scene->spheres->diameter <= 0)
+	scene->spheres->radius = ft_atof(tokens[2]);
+	if (scene->spheres->radius <= 0)
 	{
 		ft_dprintf(2, "Error\nSphere diameter must be positive\n");
 		free_all(NULL);

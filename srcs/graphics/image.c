@@ -38,3 +38,21 @@ int	create_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
 }
+
+void	loop_on_image(t_win *win, int(*f)(int, int))
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < win->height)
+	{
+		j = 0;
+		while (j < win->width)
+		{
+			set_pixel(&win->img, j, i, f(j, i));
+			j++;
+		}
+		i++;
+	}
+}

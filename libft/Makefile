@@ -76,6 +76,7 @@ SRCS =  ft_isalpha.c 		\
 		ft_dprintf.c		\
 		ft_vecmath.c		\
 		ft_vecnew.c			\
+		ft_assertion.c		\
 
 OBJ = $(SRCS:.c=.o)
 

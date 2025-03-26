@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef WINDOW_h
-# define WINDOW_h
+#ifndef WINDOW_H
+# define WINDOW_H
 
 # include <mlx.h>
 
-# define HEIGHT 420
-# define WIDTH 720
+# define HEIGHT 400
+# define WIDTH 800
 
-# define SHOW_WIN 0
+# define SHOW_WIN 1
 
 /* ----------------------------------- MLX ---------------------------------- */
 typedef struct s_data
@@ -36,6 +36,10 @@ typedef struct s_win
 	int		width;
 	int		height;
 
+	int		view_width;
+	int		view_height;
+	int		aspect_ratio;
+
 	void	*win_ptr;
 	void	*mlx_ptr;
 	t_data	img;
@@ -46,5 +50,7 @@ void	set_pixel(t_data *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
 
 void	init_win(t_win *win);
+
+void	loop_on_image(t_win *win, int(*f)(int, int));
 
 #endif

@@ -30,7 +30,7 @@ int	main(int ac, char **av)
 	prog.scene = &scene;
 	free_all(&prog);
 	init(&scene, av);
-	init_win(&win);
+	start_renderer(&prog);
 	free_all(NULL);
 	return (0);
 }

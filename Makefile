@@ -19,6 +19,7 @@ SRCS =	main.c			\
 		print_struct.c	\
 		image.c			\
 		window.c		\
+		renderer.c		\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
@@ -39,7 +40,7 @@ $(OBJ_DIR):
 
 libft:
 	@echo "Compiling libft..."
-	@$(MAKE) -C libft > /dev/null 2>&1
+	@$(MAKE) -C libft
 
 mlx:
 	@echo "Compiling mlx..."

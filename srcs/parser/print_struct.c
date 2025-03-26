@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_struct.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:42:35 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/25 09:30:59 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/26 16:08:54 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ static void	print_spheres(const t_scene *scene)
 		while (i < scene->nb_spheres)
 		{
 			printf(YELLOW "- Sphere %zu:" RESET "\n", i + 1);
-			printf("  Origin: " GREEN "(%.2f, %.2f, %.2f)" RESET "\n",
+			printf("  Origin: " GREEN "(%.2lf, %.2lf, %.2lf)" RESET "\n",
 				scene->spheres[i].origin.x, scene->spheres[i].origin.y,
 				scene->spheres[i].origin.z);
-			printf("  Diameter: " CYAN "%.2f" RESET "\n",
-				scene->spheres[i].diameter);
+			printf("  Diameter: " CYAN "%.2lf" RESET "\n",
+				scene->spheres[i].radius);
 			printf("  Color: " CYAN "0x%06lx" RESET "\n",
 				scene->spheres[i].color);
 			i++;
@@ -50,10 +50,10 @@ static void	print_planes(const t_scene *scene)
 		while (i < scene->nb_planes)
 		{
 			printf(YELLOW "- Plane %zu:" RESET "\n", i + 1);
-			printf("  Origin: " GREEN "(%.2f, %.2f, %.2f)" RESET "\n",
+			printf("  Origin: " GREEN "(%.2lf, %.2lf, %.2lf)" RESET "\n",
 				scene->planes[i].origin.x, scene->planes[i].origin.y,
 				scene->planes[i].origin.z);
-			printf("  Normal: " BLUE "(%.2f, %.2f, %.2f)" RESET "\n",
+			printf("  Normal: " BLUE "(%.2lf, %.2lf, %.2lf)" RESET "\n",
 				scene->planes[i].normal.x, scene->planes[i].normal.y,
 				scene->planes[i].normal.z);
 			printf("  Color: " CYAN "0x%06lx" RESET "\n",
@@ -74,15 +74,15 @@ static void	print_cylinders(const t_scene *scene)
 		while (i < scene->nb_cylinders)
 		{
 			printf(YELLOW "- Cylinder %zu:" RESET "\n", i + 1);
-			printf("  Origin: " GREEN "(%.2f, %.2f, %.2f)" RESET "\n",
+			printf("  Origin: " GREEN "(%.2lf, %.2lf, %.2lf)" RESET "\n",
 				scene->cylinders[i].origin.x, scene->cylinders[i].origin.y,
 				scene->cylinders[i].origin.z);
-			printf("  Normal: " BLUE "(%.2f, %.2f, %.2f)" RESET "\n",
+			printf("  Normal: " BLUE "(%.2lf, %.2lf, %.2lf)" RESET "\n",
 				scene->cylinders[i].normal.x, scene->cylinders[i].normal.y,
 				scene->cylinders[i].normal.z);
-			printf("  Diameter: " CYAN "%.2f" RESET "\n",
-				scene->cylinders[i].diameter);
-			printf("  Height: " CYAN "%.2f" RESET "\n",
+			printf("  Diameter: " CYAN "%.2lf" RESET "\n",
+				scene->cylinders[i].radius);
+			printf("  Height: " CYAN "%.2lf" RESET "\n",
 				scene->cylinders[i].height);
 			printf("  Color: " CYAN "0x%06lx" RESET "\n",
 				scene->cylinders[i].color);
@@ -108,7 +108,7 @@ static void	print_ambient_light(const t_ambient_light *ambient)
 		printf(CYAN "No" RESET "\n");
 	if (ambient->is_set)
 	{
-		printf("Ratio: " CYAN "%.2f" RESET "\n", ambient->ratio);
+		printf("Ratio: " CYAN "%.2lf" RESET "\n", ambient->ratio);
 		printf("Color: " CYAN "0x%06lx" RESET "\n", ambient->color);
 	}
 }
@@ -123,11 +123,11 @@ static void	print_camera(const t_camera *camera)
 		printf(CYAN "No" RESET "\n");
 	if (camera->is_set)
 	{
-		printf("Origin: " GREEN "(%.2f, %.2f, %.2f)" RESET "\n",
+		printf("Origin: " GREEN "(%.2lf, %.2lf, %.2lf)" RESET "\n",
 			camera->origin.x, camera->origin.y, camera->origin.z);
-		printf("Direction: " BLUE "(%.2f, %.2f, %.2f)" RESET "\n",
+		printf("Direction: " BLUE "(%.2lf, %.2lf, %.2lf)" RESET "\n",
 			camera->direction.x, camera->direction.y, camera->direction.z);
-		printf("FOV: " CYAN "%.2f" RESET "\n", camera->fov);
+		printf("FOV: " CYAN "%.2lf" RESET "\n", camera->fov);
 	}
 }
 
@@ -141,9 +141,9 @@ static void	print_light(const t_light_source *light)
 		printf(CYAN "No" RESET "\n");
 	if (light->is_set)
 	{
-		printf("Origin: " GREEN "(%.2f, %.2f, %.2f)" RESET "\n",
+		printf("Origin: " GREEN "(%.2lf, %.2lf, %.2lf)" RESET "\n",
 			light->origin.x, light->origin.y, light->origin.z);
-		printf("Ratio: " CYAN "%.2f" RESET "\n", light->ratio);
+		printf("Ratio: " CYAN "%.2lf" RESET "\n", light->ratio);
 		printf("Color: " CYAN "0x%06lx" RESET "\n", light->color);
 	}
 }

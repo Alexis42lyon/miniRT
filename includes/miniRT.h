@@ -22,7 +22,7 @@
 
 # define ESC 65307
 # define SIZE_WIN 0.5
-# define SHOW_SRUCT 0
+# define SHOW_SRUCT 1
 
 typedef struct info
 {
@@ -58,7 +58,7 @@ typedef struct light
 typedef struct sphere
 {
 	t_vec3			origin;
-	double			diameter;
+	double			radius;
 	size_t			color;
 	struct sphere	*next;
 }	t_sphere;
@@ -74,12 +74,12 @@ typedef struct cylinder
 {
 	t_vec3			origin;
 	t_vec3			normal;
-	double			diameter;
+	double			radius;
 	double			height;
 	size_t			color;
 }	t_cylinder;
 
-typedef struct s_ray
+typedef struct ray
 {
 	t_vec3	origin;
 	t_vec3	dir;
@@ -94,6 +94,7 @@ typedef struct s_scene
 	int				fd;
 	char			*line;
 	t_list			*map;
+	int				sky_color;
 	t_ambient_light	ambient_light;
 	t_camera		camera;
 	t_light_source	light;
@@ -115,7 +116,7 @@ typedef struct s_prog
 void	init(t_scene *scene, char **av);
 void	free_arr(void **arr);
 void	free_all(t_prog *prog_set);
-int		close_window(void *mlx);
+int		close_widow(void *mlx);
 void	start(t_scene *scene, char **av);
 t_info	get_info(const char *file, int line, const char *func);
 void	check_mem(t_info info, void *mem, void **res);
@@ -133,4 +134,6 @@ bool	is_normalized(t_vec3 vec);
 void	init_malloc(t_scene *scene);
 void	print_scene(const t_scene *scene);
 
+// renderer.c
+void	start_renderer(t_prog *prog);
 #endif

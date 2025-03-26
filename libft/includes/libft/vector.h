@@ -21,9 +21,12 @@ typedef struct s_vector3
 }	t_vec3;
 
 
-t_vec3	ft_vec3new(int x, int y, int z);
-t_vec3	vec3_add(t_vec3 v1, t_vec3 v2);
-int		ft_dot(t_vec3 v1, t_vec3 v2);
-int		vec3_magn(t_vec3 vec);
+t_vec3	ft_vec3new(double x, double y, double z);
+t_vec3	vec3_add(const t_vec3 v1, const t_vec3 v2);
+double	ft_dot(const t_vec3 v1, const t_vec3 v2);
+double	vec3_magn(const t_vec3 vec);
+t_vec3	vec3_sub(const t_vec3 v1, const t_vec3 v2);
+void	print_vec(t_vec3 vec);
+t_vec3 vec3_divide(const t_vec3 v1, const double d);
 
 #endif

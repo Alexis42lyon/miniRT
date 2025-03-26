@@ -25,7 +25,7 @@
 # define PURPLE	"\033[0;35m"
 # define CYAN	"\033[0;36m"
 # define WHITE	"\033[0;37m"
-# define GRAY	"\033[0;30m"
+# define GRAY	"\033[90m"
 
 // Background
 # define B_BLACK	"\033[40m"
@@ -64,7 +64,7 @@ int		ft_dprintf(int fd, const char *s, ...);
 
 // assestions
 int		malloc_assert(void *mem, const char *file,
-			int line, const char *function);
+			int line);
 
 // get_next_line
 char	*ft_get_next_line(int fd);

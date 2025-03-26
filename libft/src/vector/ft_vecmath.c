@@ -2,17 +2,27 @@
 #include <math.h>
 
 
-t_vec3	vec3_add(t_vec3 v1, t_vec3 v2)
+t_vec3	vec3_add(const t_vec3 v1, const t_vec3 v2)
 {
 	return ft_vec3new(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
 }
 
-int	vec3_magn(t_vec3 vec)
+t_vec3 vec3_divide(const t_vec3 v1, const double d)
+{
+	 return (ft_vec3new(v1.x / d, v1.y / d, v1.z / d));
+}
+
+t_vec3	vec3_sub(const t_vec3 v1, const t_vec3 v2)
+{
+	return ft_vec3new(v1.x - v2.x, v1.y + v2.y, v1.z + v2.z);
+}
+
+double	vec3_magn(const t_vec3 vec)
 {
 	return (sqrt((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z)));
 }
 
-int	ft_dot(t_vec3 v1, t_vec3 v2)
+double	ft_dot(const t_vec3 v1, const t_vec3 v2)
 {
 	 return ((v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z));
 }
