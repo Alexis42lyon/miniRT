@@ -13,7 +13,7 @@
 #include "libft/vector.h"
 #include "stdio.h"
 
-t_vec3	ft_vec3new(double x, double y, double z)
+t_vec3	new_vec3(double x, double y, double z)
 {
 	t_vec3	vec;
 

@@ -20,19 +20,12 @@ int	sphere_hit(const t_sphere sphere, const t_ray ray)
 	return (discriminant >= 0);
 }
 
-int	draw_background(int x, int y)
+int	draw_background(t_ray r)
 {
-	(void)x;
-	(void)y;
 	t_sphere	sphere;
 
-	sphere.origin = ft_vec3new(0, 0, -1000000000);
+	sphere.origin = new_vec3(0, 0, -1000000000);
 	sphere.radius = 0.5;
-
-	t_ray r;
-
-	r.origin = ft_vec3new(0, 0, 0);
-	r.dir = ft_vec3new(0, 0, 1);
 
 	if (sphere_hit(sphere, r))
 		return (0x000000);
@@ -44,38 +37,59 @@ int	draw_background(int x, int y)
 //{
 //}
 
-/*void	render(t_win *win, t_scene *scene)
+void	render(t_win *win, t_scene *scene)
 {
+	t_camera	cam;
 
+	cam = scene->camera;
+	cam.fov = 1; // TODO a changer
 	// camera viewport
 	double vp_height = 2;
 	double vp_width = vp_height * (win->width / win->height);
 	
 	// viewport vectors
-	t_vec3 vp_u = ft_vec3new(vp_width, 0, 0);
-	t_vec3 vp_v = ft_vec3new(0, -vp_height, 0);
+	t_vec3 vp_u = new_vec3(vp_width, 0, 0);
+	t_vec3 vp_v = new_vec3(0, -vp_height, 0);
 
 	// delta between each pixel
 	t_vec3 px_delta_u = vec3_divide(vp_u, win->width);
 	t_vec3 px_delta_v = vec3_divide(vp_v, win->height);
 
 	// calculate loc of upper left px
-	t_vec3	vp_up_left
+	t_vec3	vp_up_left = vec3_sub(vec3_sub(vec3_sub(cam.origin, new_vec3(0, 0, cam.fov)),
+			vec3_divide(vp_u, 2)), vec3_divide(vp_v, 2));
+	t_vec3	px_00 = vec3_add(vp_up_left, vec3_mutl(vec3_add(px_delta_u, px_delta_v), 0.5));
+
+	// Rendering:
+	for (int j = 0; j < win->height; j++)
+	{
+		for (int i = 0; i < win->width; i++)
+		{
+			t_vec3 px_center = vec3_add(px_00, vec3_add(vec3_mutl(px_delta_u, i), vec3_mutl(px_delta_v, j)));
+			t_vec3 ray_dir = vec3_sub(px_center, cam.origin);
+
+			t_ray	ray;
+			ray.dir = ray_dir;
+			ray.origin = cam.origin;
+
+			set_pixel(&win->img, i, j, draw_background(ray));
+		}
+	}
 
 	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img.img, 0, 0);
-}*/
+}
 
 void	start_renderer(t_prog *prog)
 {
 	t_win	*win;
 	t_scene	*scene; 
-
+	
 	win = prog->win;
 	scene = prog->scene;
 	scene->sky_color = 0x8ad2ff;
 	init_win(win);
 	if (win->mlx_ptr == NULL)
 		return ;
-//	render(win, scene);
+	render(win, scene);
 	mlx_loop(win->mlx_ptr);
 }

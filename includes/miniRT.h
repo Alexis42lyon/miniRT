@@ -22,7 +22,7 @@
 
 # define ESC 65307
 # define SIZE_WIN 0.5
-# define SHOW_SRUCT 1
+# define SHOW_SRUCT 0
 
 typedef struct info
 {
