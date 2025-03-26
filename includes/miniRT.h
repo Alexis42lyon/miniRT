@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 22:24:45 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/25 12:29:25 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:08:15 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include <libft.h>
 # include "libft/vector.h"
 # include <stdbool.h>
-# include "screen.h"
+
+# include "window.h"
 
 # define ESC 65307
 # define SIZE_WIN 0.5
@@ -77,6 +78,14 @@ typedef struct cylinder
 	double			height;
 	size_t			color;
 }	t_cylinder;
+
+typedef struct s_ray
+{
+	t_vec3	origin;
+	t_vec3	dir;
+
+	int		lenght;
+}	t_ray;
 
 /* ---------------------------------- SCENE --------------------------------- */
 

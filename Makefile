@@ -18,6 +18,7 @@ SRCS =	main.c			\
 		parse_utils.c	\
 		print_struct.c	\
 		image.c			\
+		window.c		\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)

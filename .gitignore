@@ -51,6 +51,8 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-bin
+obj/
+.vscode/
 miniRT
 mlx/test/mlx-test
+compile_flags.txt

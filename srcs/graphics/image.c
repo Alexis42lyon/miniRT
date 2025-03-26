@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 17:59:06 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/25 09:55:13 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:11:53 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "screen.h"
+#include "window.h"
 
 int	create_img(t_win *win)
 {
-	win->img.img = mlx_new_image(win->mlx, win->width, win->height);
+	win->img.img = mlx_new_image(win->mlx_ptr, win->width, win->height);
 	if (!win->img.img)
 		return (-1);
 	win->img.addr = mlx_get_data_addr(win->img.img, &win->img.bits_per_pixel,
 			&win->img.line_length, &win->img.endian);
 	if (!win->img.addr)
 	{
-		mlx_destroy_image(win->mlx, win->img.img);
 		return (-1);
 	}
 	return (0);

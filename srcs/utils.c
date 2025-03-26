@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "window.h"
 #include <miniRT.h>
+#include <stdio.h>
 
 void	free_arr(void **arr)
 {
@@ -24,19 +26,11 @@ void	free_arr(void **arr)
 	free(arr);
 }
 
-int	close_window(void *mlx)
+void	free_win(t_win *win)
 {
-	// t_win	*win;
-	// win = (t_win *)mlx;
-	// if (win && win->mlx)
-	// {
-	// 	if (win)
-	// 		mlx_destroy_window(win->mlx, win);
-	// 	mlx_destroy_display(win->mlx);
-	// 	free(win->mlx);
-	// }
-	(void)mlx;
-	exit(0);
+	free(win->name);
+	
+	
 }
 
 void	free_scene(t_scene *scene)
@@ -59,7 +53,10 @@ void	free_all(t_prog *prog_set)
 		return ;
 	}
 	free_scene(prog->scene);
-	close_window(prog->scene);
+
+	exit(0);
+	//free_win(prog->win);
+	//close_window(prog->scene);
 }
 
 t_info	get_info(const char *file, int line, const char *func)

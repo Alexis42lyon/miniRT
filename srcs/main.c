@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 21:07:28 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/25 09:13:54 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/25 15:06:42 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <miniRT.h>
+#include "miniRT.h"
+#include "mlx.h"
+#include "window.h"
 
 int	main(int ac, char **av)
 {
@@ -28,8 +30,7 @@ int	main(int ac, char **av)
 	prog.scene = &scene;
 	free_all(&prog);
 	init(&scene, av);
-	// start(&scene, av);
-	// create_img(&win);
+	init_win(&win);
 	free_all(NULL);
 	return (0);
 }
