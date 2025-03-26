@@ -11,7 +11,6 @@ VPATH = srcs:srcs/parser:srcs/graphics
 
 SRCS =	main.c			\
 		utils.c			\
-		start.c			\
 		init.c			\
 		parse.c			\
 		parse_objects.c	\
