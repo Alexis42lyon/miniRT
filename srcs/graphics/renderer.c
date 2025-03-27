@@ -2,6 +2,7 @@
 #include "miniRT.h"
 #include "window.h"
 #include <stdio.h>
+t_sphere	sphere = {{-50,-1,0}, 0.5, 0, NULL};
 
 int	sphere_hit(const t_sphere sphere, const t_ray ray)
 {
@@ -16,16 +17,12 @@ int	sphere_hit(const t_sphere sphere, const t_ray ray)
 	b = -2.0 * ft_dot(ray.dir, oc);
 	c = ft_dot(oc, oc) - sphere.radius * sphere.radius;
 	discriminant = b*b - 4 * a * c;
-	printf("desc: %lf\n", discriminant);
 	return (discriminant >= 0);
 }
 
+
 int	draw_background(t_ray r)
 {
-	t_sphere	sphere;
-
-	sphere.origin = new_vec3(0, 0, -1000000000);
-	sphere.radius = 0.5;
 
 	if (sphere_hit(sphere, r))
 		return (0x000000);
@@ -75,7 +72,7 @@ void	render(t_win *win, t_scene *scene)
 			set_pixel(&win->img, i, j, draw_background(ray));
 		}
 	}
-
+	printf(GREEN "done rendering!\n" RESET);
 	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img.img, 0, 0);
 }
 
@@ -88,6 +85,7 @@ void	start_renderer(t_prog *prog)
 	scene = prog->scene;
 	scene->sky_color = 0x8ad2ff;
 	init_win(win);
+	mlx_key_hook(win->win_ptr, key_hook, prog);
 	if (win->mlx_ptr == NULL)
 		return ;
 	render(win, scene);

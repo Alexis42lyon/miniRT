@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 18:00:59 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/25 15:12:02 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/27 08:54:14 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	set_pixel(t_data *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
 
 void	init_win(t_win *win);
+
 
 void	loop_on_image(t_win *win, int(*f)(int, int));
 

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:04:01 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/25 15:14:51 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/27 09:00:27 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,31 @@
 #include "mlx.h"
 #include <stdio.h>
 
+extern t_sphere sphere;
+
 #if SHOW_WIN
 
-static int	key_hook(int keycode, t_win *scene)
+int	key_hook(int keycode, t_prog *prog)
 {
-	(void)scene;
 	if (keycode == ESC)
 		free_all(NULL);
+	if (keycode == 'e')
+		sphere.radius += 0.1;
+	if (keycode == 'f')
+		sphere.radius -= 0.1;
+	if (keycode == 'w')
+		sphere.origin = vec3_add(sphere.origin, new_vec3(0, -0.1, 0));
+	if (keycode == 's')
+		sphere.origin = vec3_add(sphere.origin, new_vec3(0, 0.1, 0));
+	if (keycode == 'a')
+		sphere.origin = vec3_add(sphere.origin, new_vec3(0.1, 0, 0));
+	if (keycode == 'd')
+		sphere.origin = vec3_add(sphere.origin, new_vec3(-0.1, 0, 0));
+	printf("sphere pos: ");
+	print_vec(sphere.origin);
+	printf("\nradius: %f\n", sphere.radius);
+	
+	render(prog->win, prog->scene);
 	return (0);
 }
 
@@ -53,7 +71,7 @@ void	init_win(t_win *win)
 	if (create_img(win) == -1)
 		free_all(NULL);
 	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, NULL);
-	mlx_key_hook(win->win_ptr, key_hook, NULL);
+
 
 }
 

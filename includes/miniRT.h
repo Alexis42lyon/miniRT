@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 22:24:45 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/25 15:08:15 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/27 09:03:09 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # define ESC 65307
 # define SIZE_WIN 0.5
-# define SHOW_SRUCT 0
+# define SHOW_SRUCT 1
 
 typedef struct info
 {
@@ -136,4 +136,7 @@ void	print_scene(const t_scene *scene);
 
 // renderer.c
 void	start_renderer(t_prog *prog);
+void	render(t_win *win, t_scene *scene);
+int	key_hook(int keycode, t_prog *prog);
+
 #endif
