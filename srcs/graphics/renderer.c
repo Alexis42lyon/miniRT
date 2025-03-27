@@ -43,7 +43,7 @@ void	render(t_win *win, t_scene *scene)
 	// camera viewport
 	double vp_height = 2;
 	double vp_width = vp_height * (win->width / win->height);
-	
+
 	// viewport vectors
 	t_vec3 vp_u = new_vec3(vp_width, 0, 0);
 	t_vec3 vp_v = new_vec3(0, -vp_height, 0);
@@ -79,13 +79,13 @@ void	render(t_win *win, t_scene *scene)
 void	start_renderer(t_prog *prog)
 {
 	t_win	*win;
-	t_scene	*scene; 
-	
+	t_scene	*scene;
+
 	win = prog->win;
 	scene = prog->scene;
 	scene->sky_color = 0x8ad2ff;
 	init_win(win);
-	mlx_key_hook(win->win_ptr, key_hook, prog);
+	// mlx_key_hook(win->win_ptr, key_hook, prog);
 	if (win->mlx_ptr == NULL)
 		return ;
 	render(win, scene);

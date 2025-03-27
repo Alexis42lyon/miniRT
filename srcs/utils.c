@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:47:25 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/25 09:55:49 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:28:16 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,13 @@ void	free_all(t_prog *prog_set)
 	exit(0);
 }
 
-t_info	get_info(const char *file, int line, const char *func)
-{
-	return ((t_info){
-		.file = file,
-		.line = line,
-		.function = func,
-	});
-}
-
-void	check_mem(t_info info, void *mem, void **res)
+void	check_mem(t_info info, void *mem, void **res, t_prog *prog)
 {
 	if (mem == NULL)
 	{
 		ft_dprintf(2, "%s%s:%d: %smalloc assertion failed in %s'%s'\n",
 			GRAY, info.file, info.line, RED, RESET, info.function);
-		free_all(NULL);
+		free_all(prog);
 	}
 	*res = mem;
 }

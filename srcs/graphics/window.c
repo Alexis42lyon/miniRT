@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:04:01 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/27 09:00:27 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/27 18:11:17 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ extern t_sphere sphere;
 int	key_hook(int keycode, t_prog *prog)
 {
 	if (keycode == ESC)
-		free_all(NULL);
+		free_all(prog);
 	if (keycode == 'e')
 		sphere.radius += 0.1;
 	if (keycode == 'f')
@@ -41,7 +41,7 @@ int	key_hook(int keycode, t_prog *prog)
 	printf("sphere pos: ");
 	print_vec(sphere.origin);
 	printf("\nradius: %f\n", sphere.radius);
-	
+
 	render(prog->win, prog->scene);
 	return (0);
 }
@@ -49,7 +49,7 @@ int	key_hook(int keycode, t_prog *prog)
 int	window_close(void *param)
 {
 	(void)param;
-	free_all(NULL);
+	free_all(prog);
 	exit(0);
 }
 
@@ -60,16 +60,16 @@ void	init_win(t_win *win)
 	win->width = WIDTH;
 	win->name = ft_strdup("miniRT");
 	if (malloc_assert(win->name, __FILE__, __LINE__))
-		free_all(NULL);
+		free_all(prog);
 	win->mlx_ptr = mlx_init();
 	if (!win->mlx_ptr)
-		free_all(NULL);
+		free_all(prog);
 	win->win_ptr = mlx_new_window(win->mlx_ptr, win->width,
 			win->height, win->name);
 	if (!win->win_ptr)
-		free_all(NULL);
+		free_all(prog);
 	if (create_img(win) == -1)
-		free_all(NULL);
+		free_all(prog);
 	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, NULL);
 
 
@@ -79,7 +79,8 @@ void	init_win(t_win *win)
 
 void	init_win(t_win *win)
 {
-	ft_bzero(win, sizeof(t_win));
+	(void)win;
+	ft_calloc(0, sizeof(t_win));
 	return ;
 }
 

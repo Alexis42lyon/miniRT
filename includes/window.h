@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 18:00:59 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/27 08:54:14 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:28:40 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define HEIGHT 400
 # define WIDTH 800
 
-# define SHOW_WIN 1
+# define SHOW_WIN 0
 
 /* ----------------------------------- MLX ---------------------------------- */
 typedef struct s_data

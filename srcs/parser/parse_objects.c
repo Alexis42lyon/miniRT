@@ -6,13 +6,13 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:08:02 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/25 09:27:32 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/27 17:44:26 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
 
-void	parse_cylinder(t_scene *scene, char **tokens)
+void	parse_cylinder(t_prog *prog, char **tokens)
 {
 	t_vec3	origin;
 	t_vec3	normal;
@@ -20,33 +20,33 @@ void	parse_cylinder(t_scene *scene, char **tokens)
 	if (ft_arrlen(tokens) != 6)
 	{
 		ft_dprintf(2, "Error\nInvalid cylinder format\n");
-		free_all(NULL);
+		free_all(prog);
 	}
-	parse_vector(&origin, tokens[1]);
-	scene->cylinders->origin = origin;
-	parse_vector(&normal, tokens[2]);
+	parse_vector(prog, &origin, tokens[1]);
+	prog->scene->cylinders->origin = origin;
+	parse_vector(prog, &normal, tokens[2]);
 	if (!is_normalized(normal))
 	{
 		ft_dprintf(2, "Error\nInvalid cylinder normal\n");
-		free_all(NULL);
+		free_all(prog);
 	}
-	scene->cylinders->normal = normal;
-	scene->cylinders->radius = ft_atof(tokens[3]);
-	if (scene->cylinders->radius <= 0)
+	prog->scene->cylinders->normal = normal;
+	prog->scene->cylinders->radius = ft_atof(tokens[3]);
+	if (prog->scene->cylinders->radius <= 0)
 	{
 		ft_dprintf(2, "Error\nCylinder diameter must be positive\n");
-		free_all(NULL);
+		free_all(prog);
 	}
-	scene->cylinders->height = ft_atof(tokens[4]);
-	if (scene->cylinders->height <= 0)
+	prog->scene->cylinders->height = ft_atof(tokens[4]);
+	if (prog->scene->cylinders->height <= 0)
 	{
 		ft_dprintf(2, "Error\nCylinder height must be positive\n");
-		free_all(NULL);
+		free_all(prog);
 	}
-	parse_color(&scene->cylinders->color, tokens[5]);
+	parse_color(prog, &prog->scene->cylinders->color, tokens[5]);
 }
 
-void	parse_plane(t_scene *scene, char **tokens)
+void	parse_plane(t_prog *prog, char **tokens)
 {
 	t_vec3	origin;
 	t_vec3	normal;
@@ -54,36 +54,36 @@ void	parse_plane(t_scene *scene, char **tokens)
 	if (ft_arrlen(tokens) != 4)
 	{
 		ft_dprintf(2, "Error\nInvalid plane format\n");
-		free_all(NULL);
+		free_all(prog);
 	}
-	parse_vector(&origin, tokens[1]);
-	scene->planes->origin = origin;
-	parse_vector(&normal, tokens[2]);
+	parse_vector(prog, &origin, tokens[1]);
+	prog->scene->planes->origin = origin;
+	parse_vector(prog, &normal, tokens[2]);
 	if (!is_normalized(normal))
 	{
 		ft_dprintf(2, "Error\nInvalid plane normal\n");
-		free_all(NULL);
+		free_all(prog);
 	}
-	scene->planes->normal = normal;
-	parse_color(&scene->planes->color, tokens[3]);
+	prog->scene->planes->normal = normal;
+	parse_color(prog, &prog->scene->planes->color, tokens[3]);
 }
 
-void	parse_sphere(t_scene *scene, char **tokens)
+void	parse_sphere(t_prog *prog, char **tokens)
 {
 	t_vec3	origin;
 
 	if (ft_arrlen(tokens) != 4)
 	{
 		ft_dprintf(2, "Error\nInvalid sphere format\n");
-		free_all(NULL);
+		free_all(prog);
 	}
-	parse_vector(&origin, tokens[1]);
-	scene->spheres->origin = origin;
-	scene->spheres->radius = ft_atof(tokens[2]);
-	if (scene->spheres->radius <= 0)
+	parse_vector(prog, &origin, tokens[1]);
+	prog->scene->spheres->origin = origin;
+	prog->scene->spheres->radius = ft_atof(tokens[2]);
+	if (prog->scene->spheres->radius <= 0)
 	{
 		ft_dprintf(2, "Error\nSphere diameter must be positive\n");
-		free_all(NULL);
+		free_all(prog);
 	}
-	parse_color(&scene->spheres->color, tokens[3]);
+	parse_color(prog, &prog->scene->spheres->color, tokens[3]);
 }
