@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 22:24:45 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/27 17:55:28 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/28 16:59:46 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,16 +116,14 @@ typedef struct s_prog
 void	init(t_prog *prog, char **av);
 void	free_arr(void **arr);
 void	free_all(t_prog *prog_set);
-int		close_widow(void *mlx);
-void	start(t_scene *scene, char **av);
-t_info	get_info(const char *file, int line, const char *func);
 void	check_mem(t_info info, void *mem, void **res, t_prog *prog);
+void	print_exit(t_prog *prog, char *str);
 
 // parse.c
 void	parse(t_prog *prog);
-void	parse_sphere(t_prog *prog, char **tokens);
-void	parse_plane(t_prog *prog, char **tokens);
-void	parse_cylinder(t_prog *prog, char **tokens);
+void	parse_sphere(t_prog *prog, t_sphere *sphere, char **tokens);
+void	parse_plane(t_prog *prog, t_plane *plane, char **tokens);
+void	parse_cylinder(t_prog *prog, t_cylinder *cylinder, char **tokens);
 
 // parse_utils.c
 void	parse_vector(t_prog *prog, t_vec3 *vec, char *str);

@@ -86,8 +86,8 @@ void	start_renderer(t_prog *prog)
 	scene->sky_color = 0x8ad2ff;
 	init_win(win);
 	// mlx_key_hook(win->win_ptr, key_hook, prog);
-	if (win->mlx_ptr == NULL)
-		return ;
+	// if (win->mlx_ptr == NULL)
+	// 	return ;
 	render(win, scene);
 	mlx_loop(win->mlx_ptr);
 }
