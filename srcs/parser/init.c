@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:47:16 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/28 16:22:07 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/28 17:11:12 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 void	init(t_prog *prog, char **av)
 {
+	prog->scene = NULL;
 	check_mem((t_info){__FILE__, __LINE__, __func__},
 		malloc(sizeof(t_scene)), (void **)&prog->scene, prog);
 	ft_bzero(prog->scene, sizeof(t_scene));
