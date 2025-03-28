@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:05:22 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/28 17:10:35 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/28 23:00:28 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,47 +56,44 @@ static void	parse_ambient_light(t_prog *prog, char **tokens)
 
 void	parse_map(t_prog *prog)
 {
-	char	**tokens;
 	t_list	*new_node;
 
-	tokens = NULL;
-	new_node = NULL;
-	prog->scene->map = NULL;
 	prog->scene->line = ft_get_next_line(prog->scene->fd);
 	while (prog->scene->line)
 	{
 		check_mem((t_info){__FILE__, __LINE__, __func__},
-			ft_split(prog->scene->line, ' '), (void **)&tokens, prog);
-		if (!ft_strcmp(tokens[0], "A"))
+			ft_split(prog->scene->line, ' '), (void **)&prog->scene->tokens, prog);
+		if (!ft_strcmp(prog->scene->tokens[0], "A"))
 		{
 			if (prog->scene->ambient_light.is_set)
 				print_exit(prog, "Ambient light can only be declared once");
 			prog->scene->ambient_light.is_set = true;
 		}
-		else if (!ft_strcmp(tokens[0], "C"))
+		else if (!ft_strcmp(prog->scene->tokens[0], "C"))
 		{
 			if (prog->scene->camera.is_set)
 				print_exit(prog, "Ambient light can only be declared once");
 			prog->scene->camera.is_set = true;
 		}
-		else if (!ft_strcmp(tokens[0], "L"))
+		else if (!ft_strcmp(prog->scene->tokens[0], "L"))
 		{
 			if (prog->scene->light.is_set)
 				print_exit(prog, "Ambient light can only be declared once");
 			prog->scene->light.is_set = true;
 		}
-		else if (!ft_strcmp(tokens[0], "sp"))
+		else if (!ft_strcmp(prog->scene->tokens[0], "sp"))
 			prog->scene->nb_spheres++;
-		else if (!ft_strcmp(tokens[0], "pl"))
+		else if (!ft_strcmp(prog->scene->tokens[0], "pl"))
 			prog->scene->nb_planes++;
-		else if (!ft_strcmp(tokens[0], "cy"))
+		else if (!ft_strcmp(prog->scene->tokens[0], "cy"))
 			prog->scene->nb_cylinders++;
 		check_mem((t_info){__FILE__, __LINE__, __func__},
-			ft_lstnew(tokens), (void **)&new_node, prog);
+			ft_lstnew(prog->scene->tokens), (void **)&new_node, prog);
 		ft_lstadd_back(&prog->scene->map, new_node);
 		free(prog->scene->line);
 		prog->scene->line = ft_get_next_line(prog->scene->fd);
 	}
+	prog->scene->tokens = NULL;
 	if (prog->scene->ambient_light.is_set == false
 		|| prog->scene->camera.is_set == false
 		|| prog->scene->light.is_set == false)

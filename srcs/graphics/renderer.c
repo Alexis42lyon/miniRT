@@ -42,15 +42,15 @@ void	render(t_win *win, t_scene *scene)
 	cam.fov = 1; // TODO a changer
 	// camera viewport
 	double vp_height = 2;
-	double vp_width = vp_height * (win->width / win->height);
+	double vp_width = vp_height * (WIDTH / HEIGHT);
 
 	// viewport vectors
 	t_vec3 vp_u = new_vec3(vp_width, 0, 0);
 	t_vec3 vp_v = new_vec3(0, -vp_height, 0);
 
 	// delta between each pixel
-	t_vec3 px_delta_u = vec3_divide(vp_u, win->width);
-	t_vec3 px_delta_v = vec3_divide(vp_v, win->height);
+	t_vec3 px_delta_u = vec3_divide(vp_u, WIDTH);
+	t_vec3 px_delta_v = vec3_divide(vp_v, HEIGHT);
 
 	// calculate loc of upper left px
 	t_vec3	vp_up_left = vec3_sub(vec3_sub(vec3_sub(cam.origin, new_vec3(0, 0, cam.fov)),
@@ -58,9 +58,9 @@ void	render(t_win *win, t_scene *scene)
 	t_vec3	px_00 = vec3_add(vp_up_left, vec3_mutl(vec3_add(px_delta_u, px_delta_v), 0.5));
 
 	// Rendering:
-	for (int j = 0; j < win->height; j++)
+	for (int j = 0; j < HEIGHT; j++)
 	{
-		for (int i = 0; i < win->width; i++)
+		for (int i = 0; i < WIDTH; i++)
 		{
 			t_vec3 px_center = vec3_add(px_00, vec3_add(vec3_mutl(px_delta_u, i), vec3_mutl(px_delta_v, j)));
 			t_vec3 ray_dir = vec3_sub(px_center, cam.origin);

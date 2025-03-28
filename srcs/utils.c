@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:47:25 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/28 16:33:27 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/28 22:58:39 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,13 @@ void	free_win(t_win *win)
 
 void	free_scene(t_scene *scene)
 {
-	close(scene->fd);
+	if (scene->fd > 0)
+		close(scene->fd);
 	free(scene->line);
 	free(scene->spheres);
 	free(scene->planes);
 	free(scene->cylinders);
+	free_arr((void **)scene->tokens);
 	ft_lstclear(&scene->map, (void *)free_arr);
 	free(scene);
 }
@@ -72,7 +74,10 @@ void	check_mem(t_info info, void *mem, void **res, t_prog *prog)
 	{
 		ft_dprintf(2, "%s%s:%d: %smalloc assertion failed in %s'%s'\n",
 			GRAY, info.file, info.line, RED, RESET, info.function);
-		free_all(prog);
+		if (prog)
+			free_all(prog);
+		else
+			exit(1);
 	}
 	*res = mem;
 }

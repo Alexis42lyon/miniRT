@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:54:12 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/28 17:10:10 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/28 21:15:00 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ void	parse_color(t_prog *prog, size_t *color, char *str)
 	int		g;
 	int		b;
 
-	tokens = ft_split(str, ',');
-	if (!tokens)
-		free_all(prog);
+	check_mem((t_info){__FILE__, __LINE__, __func__},
+		ft_split(str, ','), (void **)&tokens, prog);
 	if (ft_arrlen(tokens) != 3)
 	{
 		free_arr((void **)tokens);

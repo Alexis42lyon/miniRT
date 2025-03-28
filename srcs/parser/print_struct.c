@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_struct.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:42:35 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/26 16:08:54 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/27 20:32:47 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,6 @@ static void	print_cylinders(const t_scene *scene)
 	}
 }
 
-static void	print_objects(const t_scene *scene)
-{
-	print_spheres(scene);
-	print_planes(scene);
-	print_cylinders(scene);
-}
-
 static void	print_ambient_light(const t_ambient_light *ambient)
 {
 	printf(CYAN "\n[Ambient Light]" RESET "\n");
@@ -148,13 +141,6 @@ static void	print_light(const t_light_source *light)
 	}
 }
 
-static void	print_non_objects(const t_scene *scene)
-{
-	print_ambient_light(&scene->ambient_light);
-	print_camera(&scene->camera);
-	print_light(&scene->light);
-}
-
 void	print_scene(const t_scene *scene)
 {
 	printf(YELLOW "\n=== SCENE DUMP ===" RESET "\n");
@@ -162,8 +148,12 @@ void	print_scene(const t_scene *scene)
 	printf("Spheres: " CYAN "%zu" RESET "\n", scene->nb_spheres);
 	printf("Planes: " CYAN "%zu" RESET "\n", scene->nb_planes);
 	printf("Cylinders: " CYAN "%zu" RESET "\n", scene->nb_cylinders);
-	print_non_objects(scene);
-	print_objects(scene);
+	print_ambient_light(&scene->ambient_light);
+	print_camera(&scene->camera);
+	print_light(&scene->light);
+	print_spheres(scene);
+	print_planes(scene);
+	print_cylinders(scene);
 	printf(YELLOW "\n=== END OF DUMP ===" RESET "\n\n");
 }
 

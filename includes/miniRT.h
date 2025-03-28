@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 22:24:45 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/28 16:59:46 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/28 22:57:39 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_scene
 {
 	int				fd;
 	char			*line;
+	char			**tokens;
 	t_list			*map;
 	int				sky_color;
 	t_ambient_light	ambient_light;
