@@ -45,10 +45,10 @@ mlx:
 	@echo "Compiling mlx..."
 	@$(MAKE) -C mlx > /dev/null 2>&1
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) Makefile
 	$(CC) $(CFLAGS) $(OBJS) libft/bin/libft.a mlx/libmlx.a -o $(NAME) $(MLXFLAGS)
 
-$(OBJ_DIR)/%.o: %.c Makefile | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	printf "$(GRAY)compiling: $(BLUE)%-40s $(GRAY)[%d/%d]\n" "$<" "$$(ls obj | wc -l)" "$(words $(SRCS))"
 

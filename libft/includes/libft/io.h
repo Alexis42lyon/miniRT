@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:15:47 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/24 23:03:09 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/29 11:24:31 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int		ft_printf(const char *s, ...);
 int		ft_dprintf(int fd, const char *s, ...);
 
 // assestions
+void	print_error(const char *msg);
 int		malloc_assert(void *mem, const char *file,
 			int line);
 

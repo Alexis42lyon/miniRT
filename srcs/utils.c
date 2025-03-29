@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:47:25 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/28 22:58:39 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/29 11:27:23 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	free_arr(void **arr)
 
 void	print_exit(t_prog *prog, char *str)
 {
-	ft_dprintf(2, "%sError\n%s\n%s", RED, str, RESET);
+	print_error(str);
 	free_all(prog);
 }
 

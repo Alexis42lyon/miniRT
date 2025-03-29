@@ -8,8 +8,12 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 	{
-		ft_dprintf(2, "%sError\n%s\n%s",
-			RED, "Wrong number of arguments", RESET);
+		print_error("Wrong number of arguments");
+		return (1);
+	}
+	else if (!ft_strrchr(av[1], '.') || ft_strcmp(ft_strrchr(av[1], '.'), ".rt"))
+	{
+		print_error("File must have the .rt extension");
 		return (1);
 	}
 	init(&prog, av);
