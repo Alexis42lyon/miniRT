@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:05:22 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/28 23:00:28 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/30 18:38:46 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	parse_camera(t_prog *prog, char **tokens)
 	if (!is_normalized(direction))
 		print_exit(prog, "Invalid camera orientation");
 	prog->scene->camera.direction = direction;
-	prog->scene->camera.fov = ft_atoi(tokens[3]);
+	check_atoi(prog, tokens[3], &prog->scene->camera.fov);
 	if (prog->scene->camera.fov < 0 || prog->scene->camera.fov > 180)
 		print_exit(prog, "FOV must be in range [0, 180]");
 }
@@ -61,6 +61,8 @@ void	parse_map(t_prog *prog)
 	prog->scene->line = ft_get_next_line(prog->scene->fd);
 	while (prog->scene->line)
 	{
+		if (ft_strchr(prog->scene->line, '\n'))
+			prog->scene->line[ft_strlen(prog->scene->line) - 1] = '\0';
 		check_mem((t_info){__FILE__, __LINE__, __func__},
 			ft_split(prog->scene->line, ' '), (void **)&prog->scene->tokens, prog);
 		if (!ft_strcmp(prog->scene->tokens[0], "A"))
@@ -72,13 +74,13 @@ void	parse_map(t_prog *prog)
 		else if (!ft_strcmp(prog->scene->tokens[0], "C"))
 		{
 			if (prog->scene->camera.is_set)
-				print_exit(prog, "Ambient light can only be declared once");
+				print_exit(prog, "Camera can only be declared once");
 			prog->scene->camera.is_set = true;
 		}
 		else if (!ft_strcmp(prog->scene->tokens[0], "L"))
 		{
 			if (prog->scene->light.is_set)
-				print_exit(prog, "Ambient light can only be declared once");
+				print_exit(prog, "Light can only be declared once");
 			prog->scene->light.is_set = true;
 		}
 		else if (!ft_strcmp(prog->scene->tokens[0], "sp"))
@@ -129,8 +131,8 @@ void	parse(t_prog *prog)
 			parse_plane(prog, prog->scene->planes + i_plane++, tokens);
 		else if (!ft_strcmp(tokens[0], "cy"))
 			parse_cylinder(prog, prog->scene->cylinders + i_cylinder++, tokens);
-		else if (ft_strcmp(tokens[0], "\n"))
-			print_exit(prog, "Error\nInvalid identifier");
+		else if (tokens[0])
+			print_exit(prog, "Invalid identifier");
 		current = current->next;
 	}
 }

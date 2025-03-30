@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 22:24:45 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/28 22:57:39 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/30 18:42:19 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # define ESC 65307
 # define SIZE_WIN 0.5
-# define SHOW_SRUCT 0
+# define SHOW_SRUCT 1
 
 typedef struct info
 {
@@ -44,7 +44,7 @@ typedef struct camera
 	bool	is_set;
 	t_vec3	origin;
 	t_vec3	direction;
-	double	fov;
+	int		fov;
 }	t_camera;
 
 typedef struct light
@@ -119,6 +119,7 @@ void	free_arr(void **arr);
 void	free_all(t_prog *prog_set);
 void	check_mem(t_info info, void *mem, void **res, t_prog *prog);
 void	print_exit(t_prog *prog, char *str);
+void	check_atoi(t_prog *prog, char *s, int *res);
 
 // parse.c
 void	parse(t_prog *prog);

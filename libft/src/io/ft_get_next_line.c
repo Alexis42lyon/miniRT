@@ -6,14 +6,15 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 08:23:03 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/23 17:56:51 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/30 18:34:23 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/io.h"
 #include <stdlib.h>
+#include <stdbool.h>
 
-char	*ft_strjoin_endl(char *s1, char *s2)
+static char	*ft_strjoin_endl(char *s1, char *s2)
 {
 	char	*res;
 	size_t	i;
@@ -42,7 +43,7 @@ char	*ft_strjoin_endl(char *s1, char *s2)
 	return (res[i] = 0, res);
 }
 
-int	ft_strchr(const char *s, int c)
+static bool	ft_strchr(const char *s, int c)
 {
 	while (*s)
 	{

@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:42:35 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/27 20:32:47 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/30 18:42:39 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ static void	print_camera(const t_camera *camera)
 			camera->origin.x, camera->origin.y, camera->origin.z);
 		printf("Direction: " BLUE "(%.2lf, %.2lf, %.2lf)" RESET "\n",
 			camera->direction.x, camera->direction.y, camera->direction.z);
-		printf("FOV: " CYAN "%.2lf" RESET "\n", camera->fov);
+		printf("FOV: " CYAN "%d" RESET "\n", camera->fov);
 	}
 }
 

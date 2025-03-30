@@ -45,7 +45,7 @@ mlx:
 	@echo "Compiling mlx..."
 	@$(MAKE) -C mlx > /dev/null 2>&1
 
-$(NAME): $(OBJS) Makefile
+$(NAME): $(OBJS) libft mlx Makefile
 	$(CC) $(CFLAGS) $(OBJS) libft/bin/libft.a mlx/libmlx.a -o $(NAME) $(MLXFLAGS)
 
 $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
