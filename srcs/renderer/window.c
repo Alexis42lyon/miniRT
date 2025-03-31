@@ -67,6 +67,7 @@ void	init_win(t_prog *prog)
 	win->button_y = 0;
 	win->button_width = 100;
 	win->button_height = 50;
+	draw_button(win, 0xFF0000);
 	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, prog);
 	mlx_mouse_hook(win->win_ptr, mouse_click, win);
 }

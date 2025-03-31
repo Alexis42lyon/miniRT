@@ -2,8 +2,8 @@
 
 void	draw_button(t_win *win, int color)
 {
-	int x = 100;
-	int y = 100;
+	int x = 0;
+	int y = 0;
 	int width = 100;
 	int height = 100;
 
@@ -21,7 +21,6 @@ int	mouse_click(int butt, int x, int y, t_win *win)
 	{
 		ft_printf("Button cliqued !\n");
 		draw_button(win, 0xFF0000);
-		mlx_do_sync(win->mlx_ptr);
 	}
 	return (0);
 }
