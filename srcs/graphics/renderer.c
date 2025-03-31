@@ -15,33 +15,43 @@
 	
 // }
 
-double	sphere_hit(const t_sphere sphere, const t_ray ray)
+t_hit	sp_hit_result(const t_sphere *sp, const t_ray r, const double t)
+{
+	t_hit	hit;
+
+	hit.hit_point = vec3_add(r.origin, vec3_mult(r.dir, t));
+	hit.hit_normal = unit_vec3(vec3_sub(hit.hit_point, sp->origin));
+	hit.t = t;
+	return (hit);
+}
+
+t_hit	sphere_hit(const t_sphere *sphere, const t_ray ray)
 {
 	t_vec3	oc;
 	double	a;
-	double	b;
+	double	h;
 	double	c;
-	double	discriminant;
+	double	t;
 
-	oc = vec3_sub(sphere.origin, ray.origin);
-	a = ft_dot(ray.dir, ray.dir);
-	b = -2.0 * ft_dot(ray.dir, oc);
-	c = ft_dot(oc, oc) - sphere.radius * sphere.radius;
-	discriminant = b * b - 4 * a * c;
+	oc = vec3_sub(sphere->origin, ray.origin);
+	a = vec3_lenght_square(ray.dir);
+	h = ft_dot(ray.dir, oc);
+	c = vec3_lenght_square(oc) - sphere->radius * sphere->radius;
+	t = h * h - a * c;
 
-	if (discriminant < 0)
-		return (-1);
-	return ((-b - sqrt(discriminant)) / (2 * a));
+	if (t < 0)
+		return ((t_hit){{0 ,0 ,0}, {0, 0, 0}, -1});
+	return (sp_hit_result(sphere, ray, ((h - sqrt(t)) / a)));
 }
 
 t_vec3	draw_background(t_ray r, t_sphere *sphere)
 {	
-	double			t;
+	t_hit	hit;
 	
-	t = sphere_hit(*sphere, r);
-	if (t > 0)
+	hit = sphere_hit(sphere, r);
+	if (hit.t > 0)
 	{
-		return (sp_normal_color(sphere, r, t));
+		return (sp_normal_color(hit));
 	}
 	t_vec3	unit_dir = unit_vec3(r.dir);
 	double	a = 0.5f * (unit_dir.y + 1.0f);

@@ -1,15 +1,11 @@
 #include "miniRT.h"
 #include "raytracer.h"
 
-t_vec3	sp_normal_color(t_sphere *sp, t_ray r, double t)
+t_vec3	sp_normal_color(t_hit hit)
 {
-	t_vec3	hit_point;
-	t_vec3	normal;
 	t_vec3	color;
 
-	hit_point = vec3_add(r.origin, vec3_mult(r.dir, t));
-	normal = unit_vec3(vec3_sub(hit_point, sp->origin));
-	color = vec3_mult(vec3_add(normal, (t_vec3){1, 1, 1}), 0.5);
+	color = vec3_mult(vec3_add(hit.hit_normal, (t_vec3){1, 1, 1}), 0.5);
 	return (color);
 }
 

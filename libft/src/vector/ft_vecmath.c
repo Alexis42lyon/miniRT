@@ -21,14 +21,19 @@ t_vec3	vec3_sub(const t_vec3 v1, const t_vec3 v2)
 	return ((t_vec3){v1.x - v2.x, v1.y - v2.y, v1.z - v2.z});
 }
 
-double	vec3_magn(const t_vec3 vec)
+double	vec3_lenght(const t_vec3 vec)
 {
-	return (sqrt((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z)));
+	return (sqrt(vec3_lenght_square(vec)));
+}
+
+double	vec3_lenght_square(const t_vec3 vec)
+{
+	return ((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z));
 }
 
 t_vec3	unit_vec3(const t_vec3 v)
 {
-	return (vec3_divide(v, vec3_magn(v)));
+	return (vec3_divide(v, vec3_lenght(v)));
 }
 
 double	ft_dot(const t_vec3 v1, const t_vec3 v2)
