@@ -20,7 +20,8 @@ SRCS =	main.c			\
 		window.c		\
 		renderer.c		\
 		ray.c			\
-		colors.c			\
+		colors.c		\
+		button.c		\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)

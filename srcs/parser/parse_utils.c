@@ -12,7 +12,7 @@ void	check_atoi(t_prog *prog, char *s, int *res)
 			print_exit(prog, "Invalid number");
 }
 
-void	parse_vector(t_prog * prog, t_vec3 *vec, char *str)
+void	parse_vector(t_prog *prog, t_vec3 *vec, char *str)
 {
 	check_mem((t_info){__FILE__, __LINE__, __func__},
 		ft_split(str, ','), (void **)&prog->scene->tokens, prog);

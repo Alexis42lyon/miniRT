@@ -3,7 +3,7 @@
 #if SHOW_SRUCT
 
 # include <stdio.h>
-#include "raytracer.h"
+# include "raytracer.h"
 
 static void	print_spheres(const t_scene *scene)
 {

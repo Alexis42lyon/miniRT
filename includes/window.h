@@ -29,10 +29,22 @@ typedef struct s_win
 	int		view_height;
 	int		aspect_ratio;
 
+	int		button_x;
+	int		button_y;
+	int		button_width;
+	int		button_height;
+
 	void	*win_ptr;
 	void	*mlx_ptr;
 	t_data	img;
 }	t_win;
+
+typedef struct s_button
+{
+	void	*mlx;
+	void	*win;
+
+} t_button;
 
 // image.c
 int		create_img(t_win *win);
@@ -41,6 +53,7 @@ int		create_trgb(int t, int r, int g, int b);
 
 // window.c
 void	init_win(t_prog *prog);
+int		mouse_click(int butt, int x, int y, t_win *win);
 int		key_hook(int keycode, t_prog *prog);
 
 void	render(t_win *win, t_scene *scene);
