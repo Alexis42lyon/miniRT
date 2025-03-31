@@ -1,8 +1,5 @@
-#include "libft/vector.h"
-#include "miniRT.h"
 #include "window.h"
-#include <math.h>
-#include <stdio.h>
+#include "raytracer.h"
 
 // t are hit distance (for r = a * bt)
 // double	get_closest_hit(double a, double b, double discriminant, t_ray ray)
@@ -42,38 +39,13 @@ t_vec3	draw_background(t_ray r, t_sphere *sphere)
 	double			t;
 	
 	t = sphere_hit(*sphere, r);
-	// printf("res: %lf\n", result);
 	if (t > 0)
 	{
-		    t_vec3 hit_point = vec3_add(r.origin, vec3_mult(r.dir, t));
-		// Calculate normal at the hit point
-		t_vec3 normal = unit_vec3(vec3_sub(hit_point, sphere->origin));
-		// Map the normal from [-1,1] to [0,1]
-		t_vec3 color = vec3_mult(vec3_add(normal, (t_vec3){1, 1, 1}), 0.5);
-		return color;
-
-		t_vec3	N = unit_vec3(vec3_sub(ray_to_vec(r), (t_vec3){0, 0, -1}));
-		return (vec3_mult((t_vec3){N.x + 1, N.y + 1, N.z + 1}, 0.5));
-		// return ((t_vec3){1, 0, 1});
-		// return (unit_vec3(vec3_add(r.origin, vec3_mult(r.dir, result))));
+		return (sp_normal_color(sphere, r, t));
 	}
 	t_vec3	unit_dir = unit_vec3(r.dir);
 	double	a = 0.5f * (unit_dir.y + 1.0f);
 	return (vec3_add(vec3_mult(new_vec3(1, 1, 1), (1.0 - a)), vec3_mult(new_vec3(0.5, 0.7, 1.0), a)));
-
-	return (new_vec3(0, 0, 0));
-}
-
-int convert_to_rgba(const t_vec3 color)
-{
-	unsigned short r, g, b, a;
-
-	r = (unsigned short)(color.x * 255.999f);
-	g = (unsigned short)(color.y * 255.999f);
-	b = (unsigned short)(color.z * 255.999f);
-	a = (unsigned short)(255.0f);
-
-	return ((a << 24) | (r << 16) | (g << 8) | b);
 }
 
 void	render(t_win *win, t_scene *scene)
@@ -115,7 +87,7 @@ void	render(t_win *win, t_scene *scene)
 			set_pixel(&win->img, i, j, convert_to_rgba(col));
 		}
 	}
-	printf(GREEN "done rendering!\n" RESET);
+	ft_printf(GREEN "done rendering!\n" RESET);
 	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img.img, 0, 0);
 }
 

@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:47:16 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/28 21:10:47 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/31 10:50:16 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <miniRT.h>
 #include <fcntl.h>
+#include "parser.h"
 
 void	init(t_prog *prog, char **av)
 {

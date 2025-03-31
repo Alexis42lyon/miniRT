@@ -1,6 +1,6 @@
-#include "miniRT.h"
-#include "mlx.h"
 #include "window.h"
+#include "parser.h"
+#include "raytracer.h"
 
 int	main(int ac, char **av)
 {

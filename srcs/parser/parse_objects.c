@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_objects.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:08:02 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/28 16:58:12 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/31 10:50:18 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <miniRT.h>
+#include "parser.h"
 
 void	parse_cylinder(t_prog *prog, t_cylinder *cylinder, char **tokens)
 {

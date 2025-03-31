@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 18:54:12 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/30 18:46:36 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/31 10:46:46 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <miniRT.h>
 #include <math.h>
+#include "libft/is.h"
 
 void	check_atoi(t_prog *prog, char *s, int *res)
 {

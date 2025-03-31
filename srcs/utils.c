@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/23 14:47:25 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/29 11:27:23 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/31 10:58:48 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mlx.h"
 #include "window.h"
-#include <miniRT.h>
+#include "miniRT.h"
 #include <stdio.h>
 
 void	free_arr(void **arr)
@@ -35,17 +35,16 @@ void	print_exit(t_prog *prog, char *str)
 
 void	free_win(t_win *win)
 {
-	(void)win;
-	// free(win->name);
-	// if (win->img.img)
-	// 	mlx_destroy_image(win->mlx_ptr, win->img.img);
-	// if (win->win_ptr)
-	// 	mlx_destroy_window(win->mlx_ptr, win->win_ptr);
-	// if (win->mlx_ptr)
-	// {
-	// 	mlx_destroy_display(win->mlx_ptr);
-	// 	free(win->mlx_ptr);
-	// }
+	free(win->name);
+	if (win->img.img)
+		mlx_destroy_image(win->mlx_ptr, win->img.img);
+	if (win->win_ptr)
+		mlx_destroy_window(win->mlx_ptr, win->win_ptr);
+	if (win->mlx_ptr)
+	{
+		mlx_destroy_display(win->mlx_ptr);
+		free(win->mlx_ptr);
+	}
 }
 
 void	free_scene(t_scene *scene)
