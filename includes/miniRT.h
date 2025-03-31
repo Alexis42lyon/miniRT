@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 22:24:45 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/30 18:42:19 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/31 09:23:22 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # define ESC 65307
 # define SIZE_WIN 0.5
-# define SHOW_SRUCT 1
+# define SHOW_SRUCT 0
 
 typedef struct info
 {

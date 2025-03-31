@@ -30,7 +30,7 @@ double	sphere_hit(const t_sphere sphere, const t_ray ray)
 	a = ft_dot(ray.dir, ray.dir);
 	b = -2.0 * ft_dot(ray.dir, oc);
 	c = ft_dot(oc, oc) - sphere.radius * sphere.radius;
-	discriminant = b*b - 4 * a * c;
+	discriminant = b * b - 4 * a * c;
 
 	if (discriminant < 0)
 		return (-1);
@@ -39,18 +39,27 @@ double	sphere_hit(const t_sphere sphere, const t_ray ray)
 
 t_vec3	draw_background(t_ray r, t_sphere *sphere)
 {	
-	double			result;
+	double			t;
 	
-	result = sphere_hit(*sphere, r);
+	t = sphere_hit(*sphere, r);
 	// printf("res: %lf\n", result);
-	if (result > 0)
+	if (t > 0)
 	{
-		return ((t_vec3){1, 0, 1});
-		return (vec3_add(r.origin, vec3_mult(r.dir, result)));
+		    t_vec3 hit_point = vec3_add(r.origin, vec3_mult(r.dir, t));
+		// Calculate normal at the hit point
+		t_vec3 normal = unit_vec3(vec3_sub(hit_point, sphere->origin));
+		// Map the normal from [-1,1] to [0,1]
+		t_vec3 color = vec3_mult(vec3_add(normal, (t_vec3){1, 1, 1}), 0.5);
+		return color;
+
+		t_vec3	N = unit_vec3(vec3_sub(ray_to_vec(r), (t_vec3){0, 0, -1}));
+		return (vec3_mult((t_vec3){N.x + 1, N.y + 1, N.z + 1}, 0.5));
+		// return ((t_vec3){1, 0, 1});
+		// return (unit_vec3(vec3_add(r.origin, vec3_mult(r.dir, result))));
 	}
-	// t_vec3	unit_dir = unit_vec3(r.dir);
-	// double	a = 0.5f * (unit_dir.y + 1.0f);
-	// return (vec3_add(vec3_mult(new_vec3(1, 1, 1), (1.0 - a)), vec3_mult(new_vec3(0.5, 0.7, 1.0), a)));
+	t_vec3	unit_dir = unit_vec3(r.dir);
+	double	a = 0.5f * (unit_dir.y + 1.0f);
+	return (vec3_add(vec3_mult(new_vec3(1, 1, 1), (1.0 - a)), vec3_mult(new_vec3(0.5, 0.7, 1.0), a)));
 
 	return (new_vec3(0, 0, 0));
 }
@@ -122,11 +131,8 @@ void	start_renderer(t_prog *prog)
 	mlx_key_hook(win->win_ptr, key_hook, prog);
 	if (win->mlx_ptr == NULL)
 		return ;
-	scene->camera.fov = 1;
-	scene->camera.direction = (t_vec3){0, 0, 0};
-	scene->camera.origin = (t_vec3){0, 0, 0};
 	scene->spheres->origin = (t_vec3){0, 0, 0};
-	scene->spheres->radius = 1;
+	scene->spheres->radius = 0.5;
 	render(win, scene);
 	mlx_loop(win->mlx_ptr);
 }

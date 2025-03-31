@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:04:01 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/31 08:56:47 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/31 10:05:44 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,26 @@ int	key_hook(int keycode, t_prog *prog)
 	if (keycode == ESC)
 		free_all(prog);
 	else if (keycode == 'q')
-		sphere->origin = vec3_add(sphere->origin, new_vec3(0, 0, -1));
+		sphere->origin = vec3_add(sphere->origin, new_vec3(0, 0, -4));
 	else if (keycode == 'e')
-		sphere->origin = vec3_add(sphere->origin, new_vec3(0, 0, 1));
+		sphere->origin = vec3_add(sphere->origin, new_vec3(0, 0, 4));
 	else if (keycode == 'w')
-		sphere->origin = vec3_add(sphere->origin, new_vec3(0, -1, 0));
+		sphere->origin = vec3_add(sphere->origin, new_vec3(0, -0.4, 0));
 	else if (keycode == 's')
-		sphere->origin = vec3_add(sphere->origin, new_vec3(0, 1, 0));
+		sphere->origin = vec3_add(sphere->origin, new_vec3(0, 0.4, 0));
 	else if (keycode == 'a')
-		sphere->origin = vec3_add(sphere->origin, new_vec3(1, 0, 0));
+		sphere->origin = vec3_add(sphere->origin, new_vec3(0.4, 0, 0));
 	else if (keycode == 'd')
-		sphere->origin = vec3_add(sphere->origin, new_vec3(-1, 0, 0));
+		sphere->origin = vec3_add(sphere->origin, new_vec3(-0.4, 0, 0));
 	else if (keycode == 'z')
 		camera->fov++;
 	else if (keycode == 'x')
 		camera->fov--;
 	else
 		return 0;
-	printf("camera pos: ");
+	printf("camera pos:");
 	print_vec(sphere->origin);
+	printf("camera fov:%d\n", camera->fov);
 	
 	render(prog->win, prog->scene);
 	return (0);
