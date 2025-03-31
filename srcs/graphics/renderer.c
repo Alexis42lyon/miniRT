@@ -81,8 +81,8 @@ void	render(t_win *win, t_scene *scene)
 	t_vec3 vp_v = (t_vec3){0, -vp_height, 0};
 
 	// delta between each pixel
-	t_vec3 px_delta_u = vec3_divide(vp_u, win->width);
-	t_vec3 px_delta_v = vec3_divide(vp_v, win->height);
+	t_vec3 px_delta_u = vec3_divide(vp_u, WIDTH);
+	t_vec3 px_delta_v = vec3_divide(vp_v, HEIGHT);
 
 	// calculate loc of upper left px
 	t_vec3	vp_up_left = vec3_sub(vec3_sub(vec3_sub(cam.origin, (t_vec3){0, 0, cam.fov}),
@@ -90,9 +90,9 @@ void	render(t_win *win, t_scene *scene)
 	t_vec3	px_00 = vec3_add(vp_up_left, vec3_mult(vec3_add(px_delta_u, px_delta_v), 0.5));
 
 	// Rendering:
-	for (int j = 0; j < win->height; j++)
+	for (int j = 0; j < HEIGHT; j++)
 	{
-		for (int i = 0; i < win->width; i++)
+		for (int i = 0; i < WIDTH; i++)
 		{
 			t_vec3 px_center = vec3_add(px_00, vec3_add(vec3_mult(px_delta_u, i), vec3_mult(px_delta_v, j)));
 			t_vec3 ray_dir = vec3_sub(px_center, cam.origin);
@@ -113,12 +113,12 @@ void	render(t_win *win, t_scene *scene)
 void	start_renderer(t_prog *prog)
 {
 	t_win	*win;
-	t_scene	*scene; 
-	
+	t_scene	*scene;
+
 	win = prog->win;
 	scene = prog->scene;
 	scene->sky_color = 0x8ad2ff;
-	init_win(win);
+	init_win(prog);
 	mlx_key_hook(win->win_ptr, key_hook, prog);
 	if (win->mlx_ptr == NULL)
 		return ;

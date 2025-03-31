@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 18:00:59 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/27 08:54:14 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/31 08:58:34 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # define WIDTH 800
 
 # define SHOW_WIN 1
+
+typedef struct s_prog t_prog;
 
 /* ----------------------------------- MLX ---------------------------------- */
 typedef struct s_data
@@ -50,7 +52,7 @@ void	set_pixel(t_data *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
 
 int	color_from_vec(double r, double g, double b);
-void	init_win(t_win *win);
+void	init_win(t_prog *prog);
 
 
 void	loop_on_image(t_win *win, int(*f)(int, int));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 22:24:45 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/27 09:03:09 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/30 18:42:19 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct camera
 	bool	is_set;
 	t_vec3	origin;
 	t_vec3	direction;
-	double	fov;
+	int		fov;
 }	t_camera;
 
 typedef struct light
@@ -93,6 +93,7 @@ typedef struct s_scene
 {
 	int				fd;
 	char			*line;
+	char			**tokens;
 	t_list			*map;
 	int				sky_color;
 	t_ambient_light	ambient_light;
@@ -113,31 +114,30 @@ typedef struct s_prog
 	// more ..
 }	t_prog;
 
-void	init(t_scene *scene, char **av);
+void	init(t_prog *prog, char **av);
 void	free_arr(void **arr);
 void	free_all(t_prog *prog_set);
-int		close_widow(void *mlx);
-void	start(t_scene *scene, char **av);
-t_info	get_info(const char *file, int line, const char *func);
-void	check_mem(t_info info, void *mem, void **res);
+void	check_mem(t_info info, void *mem, void **res, t_prog *prog);
+void	print_exit(t_prog *prog, char *str);
+void	check_atoi(t_prog *prog, char *s, int *res);
 
 // parse.c
-void	parse(t_scene *scene);
-void	parse_sphere(t_scene *scene, char **tokens);
-void	parse_plane(t_scene *scene, char **tokens);
-void	parse_cylinder(t_scene *scene, char **tokens);
+void	parse(t_prog *prog);
+void	parse_sphere(t_prog *prog, t_sphere *sphere, char **tokens);
+void	parse_plane(t_prog *prog, t_plane *plane, char **tokens);
+void	parse_cylinder(t_prog *prog, t_cylinder *cylinder, char **tokens);
 
 // parse_utils.c
-void	parse_vector(t_vec3 *vec, char *str);
-void	parse_color(size_t *color, char *str);
+void	parse_vector(t_prog *prog, t_vec3 *vec, char *str);
+void	parse_color(t_prog *prog, size_t *color, char *str);
 bool	is_normalized(t_vec3 vec);
-void	init_malloc(t_scene *scene);
+void	init_malloc(t_prog *prog);
 void	print_scene(const t_scene *scene);
 
 // renderer.c
 void	start_renderer(t_prog *prog);
 void	render(t_win *win, t_scene *scene);
-int	key_hook(int keycode, t_prog *prog);
+int		key_hook(int keycode, t_prog *prog);
 
 // ray.c
 t_vec3	ray_to_vec(t_ray r);

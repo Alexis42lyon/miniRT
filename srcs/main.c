@@ -1,36 +1,27 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 21:07:28 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/25 15:06:42 by mjuncker         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "miniRT.h"
 #include "mlx.h"
 #include "window.h"
 
 int	main(int ac, char **av)
 {
-	t_scene	scene;
-	t_win	win;
 	t_prog	prog;
+	t_win	win;
+	t_scene	scene;
 
+	prog.scene = &scene;
+	prog.win = &win;
 	if (ac != 2)
 	{
-		ft_dprintf(2, "%sError\n%s\n%s",
-			RED, "Wrong number of arguments", RESET);
+		print_error("Wrong number of arguments");
 		return (1);
 	}
-	prog.win = &win;
-	prog.scene = &scene;
+	else if (!ft_strrchr(av[1], '.') || ft_strcmp(ft_strrchr(av[1], '.'), ".rt"))
+	{
+		print_error("File must have the .rt extension");
+		return (1);
+	}
+	init(&prog, av);
+	//start_renderer(&prog);
 	free_all(&prog);
-	init(&scene, av);
-	start_renderer(&prog);
-	free_all(NULL);
 	return (0);
 }

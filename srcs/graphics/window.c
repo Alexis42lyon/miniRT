@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:04:01 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/27 15:47:46 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/31 08:56:47 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	key_hook(int keycode, t_prog *prog)
 	camera = &prog->scene->camera;
 	sphere = prog->scene->spheres;
 	if (keycode == ESC)
-		free_all(NULL);
+		free_all(prog);
 	else if (keycode == 'q')
 		sphere->origin = vec3_add(sphere->origin, new_vec3(0, 0, -1));
 	else if (keycode == 'e')
@@ -54,30 +54,32 @@ int	key_hook(int keycode, t_prog *prog)
 	return (0);
 }
 
-int	window_close(void *param)
+int	window_close(void *prog)
 {
-	(void)param;
-	free_all(NULL);
+	free_all(prog);
 	exit(0);
 }
 
-void	init_win(t_win *win)
+void	init_win(t_prog *prog)
 {
+	t_win	*win;
+
+	win = prog->win;
 	ft_bzero(win, sizeof(t_win));
 	win->height = HEIGHT;
 	win->width = WIDTH;
 	win->name = ft_strdup("miniRT");
 	if (malloc_assert(win->name, __FILE__, __LINE__))
-		free_all(NULL);
+		free_all(prog);
 	win->mlx_ptr = mlx_init();
 	if (!win->mlx_ptr)
-		free_all(NULL);
+		free_all(prog);
 	win->win_ptr = mlx_new_window(win->mlx_ptr, win->width,
 			win->height, win->name);
 	if (!win->win_ptr)
-		free_all(NULL);
+		free_all(prog);
 	if (create_img(win) == -1)
-		free_all(NULL);
+		free_all(prog);
 	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, NULL);
 
 
@@ -87,7 +89,8 @@ void	init_win(t_win *win)
 
 void	init_win(t_win *win)
 {
-	ft_bzero(win, sizeof(t_win));
+	(void)win;
+	ft_calloc(0, sizeof(t_win));
 	return ;
 }
 
