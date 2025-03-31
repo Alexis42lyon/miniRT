@@ -7,7 +7,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP $(INCLUDES) -g3
 MLXFLAGS = -lX11 -lXext -lbsd -lm
 
-VPATH = srcs:srcs/parser:srcs/graphics
+VPATH = srcs:srcs/parser:srcs/renderer
 
 SRCS =	main.c			\
 		utils.c			\

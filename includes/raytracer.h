@@ -56,4 +56,7 @@ t_vec3	ray_to_vec(t_ray r);
 // renderer.c
 void	start_renderer(t_prog *prog);
 
+// sphere.c
+t_hit	sphere_hit(const t_sphere sphere, const t_ray ray);
+
 #endif
