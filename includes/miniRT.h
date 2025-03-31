@@ -139,4 +139,7 @@ void	start_renderer(t_prog *prog);
 void	render(t_win *win, t_scene *scene);
 int	key_hook(int keycode, t_prog *prog);
 
+// ray.c
+t_vec3	ray_to_vec(t_ray r);
+	
 #endif

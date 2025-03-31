@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:04:01 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/27 09:00:27 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:47:46 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,37 @@
 #include "mlx.h"
 #include <stdio.h>
 
-extern t_sphere sphere;
-
 #if SHOW_WIN
 
 int	key_hook(int keycode, t_prog *prog)
 {
+	t_camera	*camera;
+	t_sphere	*sphere;
+
+	camera = &prog->scene->camera;
+	sphere = prog->scene->spheres;
 	if (keycode == ESC)
 		free_all(NULL);
-	if (keycode == 'e')
-		sphere.radius += 0.1;
-	if (keycode == 'f')
-		sphere.radius -= 0.1;
-	if (keycode == 'w')
-		sphere.origin = vec3_add(sphere.origin, new_vec3(0, -0.1, 0));
-	if (keycode == 's')
-		sphere.origin = vec3_add(sphere.origin, new_vec3(0, 0.1, 0));
-	if (keycode == 'a')
-		sphere.origin = vec3_add(sphere.origin, new_vec3(0.1, 0, 0));
-	if (keycode == 'd')
-		sphere.origin = vec3_add(sphere.origin, new_vec3(-0.1, 0, 0));
-	printf("sphere pos: ");
-	print_vec(sphere.origin);
-	printf("\nradius: %f\n", sphere.radius);
+	else if (keycode == 'q')
+		sphere->origin = vec3_add(sphere->origin, new_vec3(0, 0, -1));
+	else if (keycode == 'e')
+		sphere->origin = vec3_add(sphere->origin, new_vec3(0, 0, 1));
+	else if (keycode == 'w')
+		sphere->origin = vec3_add(sphere->origin, new_vec3(0, -1, 0));
+	else if (keycode == 's')
+		sphere->origin = vec3_add(sphere->origin, new_vec3(0, 1, 0));
+	else if (keycode == 'a')
+		sphere->origin = vec3_add(sphere->origin, new_vec3(1, 0, 0));
+	else if (keycode == 'd')
+		sphere->origin = vec3_add(sphere->origin, new_vec3(-1, 0, 0));
+	else if (keycode == 'z')
+		camera->fov++;
+	else if (keycode == 'x')
+		camera->fov--;
+	else
+		return 0;
+	printf("camera pos: ");
+	print_vec(sphere->origin);
 	
 	render(prog->win, prog->scene);
 	return (0);

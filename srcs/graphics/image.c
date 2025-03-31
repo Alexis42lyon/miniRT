@@ -34,9 +34,16 @@ void	set_pixel(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+#include <stdio.h>
 int	create_trgb(int t, int r, int g, int b)
 {
+	//printf("r: %u g: %u b: %u\n", r, g, b);
 	return (t << 24 | r << 16 | g << 8 | b);
+}
+
+int	color_from_vec(double r, double g, double b)
+{
+	return (create_trgb(255, r * 255.99, g * 255.99, b * 255.99));
 }
 
 void	loop_on_image(t_win *win, int(*f)(int, int))

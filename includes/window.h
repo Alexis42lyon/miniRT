@@ -49,6 +49,7 @@ int		create_img(t_win *win);
 void	set_pixel(t_data *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
 
+int	color_from_vec(double r, double g, double b);
 void	init_win(t_win *win);
 
 

@@ -1,10 +1,24 @@
 #include "libft/vector.h"
 #include "miniRT.h"
 #include "window.h"
+#include <math.h>
 #include <stdio.h>
-t_sphere	sphere = {{-50,-1,0}, 0.5, 0, NULL};
 
-int	sphere_hit(const t_sphere sphere, const t_ray ray)
+// t are hit distance (for r = a * bt)
+// double	get_closest_hit(double a, double b, double discriminant, t_ray ray)
+// {
+// 	float	t0;
+// 	float	t1;
+// 	t_vec3	hit;
+
+// 	t0 = (-b - sqrt(discriminant)) / (2 * a);
+// 	t1 = (-b + sqrt(discriminant)) / (2 * a);
+
+// 	hit = vec3_add(ray.origin, vec3_mutl(ray.dir, t0));
+	
+// }
+
+double	sphere_hit(const t_sphere sphere, const t_ray ray)
 {
 	t_vec3	oc;
 	double	a;
@@ -17,59 +31,79 @@ int	sphere_hit(const t_sphere sphere, const t_ray ray)
 	b = -2.0 * ft_dot(ray.dir, oc);
 	c = ft_dot(oc, oc) - sphere.radius * sphere.radius;
 	discriminant = b*b - 4 * a * c;
-	return (discriminant >= 0);
+
+	if (discriminant < 0)
+		return (-1);
+	return ((-b - sqrt(discriminant)) / (2 * a));
 }
 
+t_vec3	draw_background(t_ray r, t_sphere *sphere)
+{	
+	double			result;
+	
+	result = sphere_hit(*sphere, r);
+	// printf("res: %lf\n", result);
+	if (result > 0)
+	{
+		return ((t_vec3){1, 0, 1});
+		return (vec3_add(r.origin, vec3_mult(r.dir, result)));
+	}
+	// t_vec3	unit_dir = unit_vec3(r.dir);
+	// double	a = 0.5f * (unit_dir.y + 1.0f);
+	// return (vec3_add(vec3_mult(new_vec3(1, 1, 1), (1.0 - a)), vec3_mult(new_vec3(0.5, 0.7, 1.0), a)));
 
-int	draw_background(t_ray r)
+	return (new_vec3(0, 0, 0));
+}
+
+int convert_to_rgba(const t_vec3 color)
 {
+	unsigned short r, g, b, a;
 
-	if (sphere_hit(sphere, r))
-		return (0x000000);
+	r = (unsigned short)(color.x * 255.999f);
+	g = (unsigned short)(color.y * 255.999f);
+	b = (unsigned short)(color.z * 255.999f);
+	a = (unsigned short)(255.0f);
 
-	return (0x8ad2ff);
+	return ((a << 24) | (r << 16) | (g << 8) | b);
 }
-
-//int	render_test_sphere(t_win *win)
-//{
-//}
 
 void	render(t_win *win, t_scene *scene)
 {
 	t_camera	cam;
-
 	cam = scene->camera;
-	cam.fov = 1; // TODO a changer
+
 	// camera viewport
 	double vp_height = 2;
-	double vp_width = vp_height * (win->width / win->height);
+	double vp_width = vp_height * ((double)win->width / win->height);
 	
 	// viewport vectors
-	t_vec3 vp_u = new_vec3(vp_width, 0, 0);
-	t_vec3 vp_v = new_vec3(0, -vp_height, 0);
+	t_vec3 vp_u = (t_vec3){vp_width, 0, 0};
+	t_vec3 vp_v = (t_vec3){0, -vp_height, 0};
 
 	// delta between each pixel
 	t_vec3 px_delta_u = vec3_divide(vp_u, win->width);
 	t_vec3 px_delta_v = vec3_divide(vp_v, win->height);
 
 	// calculate loc of upper left px
-	t_vec3	vp_up_left = vec3_sub(vec3_sub(vec3_sub(cam.origin, new_vec3(0, 0, cam.fov)),
+	t_vec3	vp_up_left = vec3_sub(vec3_sub(vec3_sub(cam.origin, (t_vec3){0, 0, cam.fov}),
 			vec3_divide(vp_u, 2)), vec3_divide(vp_v, 2));
-	t_vec3	px_00 = vec3_add(vp_up_left, vec3_mutl(vec3_add(px_delta_u, px_delta_v), 0.5));
+	t_vec3	px_00 = vec3_add(vp_up_left, vec3_mult(vec3_add(px_delta_u, px_delta_v), 0.5));
 
 	// Rendering:
 	for (int j = 0; j < win->height; j++)
 	{
 		for (int i = 0; i < win->width; i++)
 		{
-			t_vec3 px_center = vec3_add(px_00, vec3_add(vec3_mutl(px_delta_u, i), vec3_mutl(px_delta_v, j)));
+			t_vec3 px_center = vec3_add(px_00, vec3_add(vec3_mult(px_delta_u, i), vec3_mult(px_delta_v, j)));
 			t_vec3 ray_dir = vec3_sub(px_center, cam.origin);
 
 			t_ray	ray;
 			ray.dir = ray_dir;
 			ray.origin = cam.origin;
 
-			set_pixel(&win->img, i, j, draw_background(ray));
+			t_vec3	col = draw_background(ray, scene->spheres);
+
+			set_pixel(&win->img, i, j, convert_to_rgba(col));
 		}
 	}
 	printf(GREEN "done rendering!\n" RESET);
@@ -88,6 +122,11 @@ void	start_renderer(t_prog *prog)
 	mlx_key_hook(win->win_ptr, key_hook, prog);
 	if (win->mlx_ptr == NULL)
 		return ;
+	scene->camera.fov = 1;
+	scene->camera.direction = (t_vec3){0, 0, 0};
+	scene->camera.origin = (t_vec3){0, 0, 0};
+	scene->spheres->origin = (t_vec3){0, 0, 0};
+	scene->spheres->radius = 1;
 	render(win, scene);
 	mlx_loop(win->mlx_ptr);
 }

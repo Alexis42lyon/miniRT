@@ -19,6 +19,7 @@ SRCS =	main.c			\
 		image.c			\
 		window.c		\
 		renderer.c		\
+		ray.c			\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
