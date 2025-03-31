@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:04:01 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/31 11:18:38 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:29:45 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,17 @@ int	key_hook(int keycode, t_prog *prog)
 	if (keycode == ESC)
 		free_all(prog);
 	else if (keycode == 'q')
-		camera->origin = vec3_add(camera->origin, new_vec3(0, 0, -4));
-	else if (keycode == 'e')
 		camera->origin = vec3_add(camera->origin, new_vec3(0, 0, 4));
+	else if (keycode == 'e')
+		camera->origin = vec3_add(camera->origin, new_vec3(0, 0, -4));
 	else if (keycode == 'w')
-		camera->origin = vec3_add(camera->origin, new_vec3(0, -0.4, 0));
-	else if (keycode == 's')
 		camera->origin = vec3_add(camera->origin, new_vec3(0, 0.4, 0));
+	else if (keycode == 's')
+		camera->origin = vec3_add(camera->origin, new_vec3(0, -0.4, 0));
 	else if (keycode == 'a')
-		camera->origin = vec3_add(camera->origin, new_vec3(0.4, 0, 0));
-	else if (keycode == 'd')
 		camera->origin = vec3_add(camera->origin, new_vec3(-0.4, 0, 0));
+	else if (keycode == 'd')
+		camera->origin = vec3_add(camera->origin, new_vec3(0.4, 0, 0));
 	else if (keycode == 'z')
 		camera->fov++;
 	else if (keycode == 'x')

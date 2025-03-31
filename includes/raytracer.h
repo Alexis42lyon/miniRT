@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:34:28 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/31 11:39:15 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/31 12:21:06 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,16 @@ typedef struct hit_info
 {
 	t_vec3	hit_point;
 	t_vec3	hit_normal;
-	double	t;
+	double	hit_distance;
+
+	size_t	obj_index;
 
 }	t_hit;
 
 typedef struct s_win	t_win;
 
 // colors.c
-t_vec3	sp_normal_color(t_hit hit);
+t_vec3	normal_color(t_hit hit);
 int		convert_to_rgba(const t_vec3 color);
 
 // ray.c

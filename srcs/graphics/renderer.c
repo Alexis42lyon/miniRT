@@ -1,19 +1,6 @@
 #include "window.h"
 #include "raytracer.h"
-
-// t are hit distance (for r = a * bt)
-// double	get_closest_hit(double a, double b, double discriminant, t_ray ray)
-// {
-// 	float	t0;
-// 	float	t1;
-// 	t_vec3	hit;
-
-// 	t0 = (-b - sqrt(discriminant)) / (2 * a);
-// 	t1 = (-b + sqrt(discriminant)) / (2 * a);
-
-// 	hit = vec3_add(ray.origin, vec3_mutl(ray.dir, t0));
-	
-// }
+#include <limits.h>
 
 t_hit	sp_hit_result(const t_sphere *sp, const t_ray r, const double t)
 {
@@ -21,7 +8,7 @@ t_hit	sp_hit_result(const t_sphere *sp, const t_ray r, const double t)
 
 	hit.hit_point = vec3_add(r.origin, vec3_mult(r.dir, t));
 	hit.hit_normal = unit_vec3(vec3_sub(hit.hit_point, sp->origin));
-	hit.t = t;
+	hit.hit_distance = t;
 	return (hit);
 }
 
@@ -40,18 +27,31 @@ t_hit	sphere_hit(const t_sphere *sphere, const t_ray ray)
 	t = h * h - a * c;
 
 	if (t < 0)
-		return ((t_hit){{0 ,0 ,0}, {0, 0, 0}, -1});
+		return ((t_hit){{0 ,0 ,0}, {0, 0, 0}, -1, 0});
 	return (sp_hit_result(sphere, ray, ((h - sqrt(t)) / a)));
 }
 
-t_vec3	draw_background(t_ray r, t_sphere *sphere)
+t_vec3	draw_background(t_ray r, t_sphere *sphere, t_scene *scene)
 {	
 	t_hit	hit;
-	
-	hit = sphere_hit(sphere, r);
-	if (hit.t > 0)
+	t_hit	tmp;
+	size_t	i;
+
+	hit.hit_distance = INT_MIN;
+	i = 0;
+	while (i < scene->nb_spheres)
 	{
-		return (sp_normal_color(hit));
+		tmp = sphere_hit(&sphere[i], r);
+		if (tmp.hit_distance > hit.hit_distance)
+		{
+			hit = tmp;
+		}
+		i++;
+	}
+
+	if (hit.hit_distance > 0)
+	{
+		return (normal_color(hit));
 	}
 	t_vec3	unit_dir = unit_vec3(r.dir);
 	double	a = 0.5f * (unit_dir.y + 1.0f);
@@ -92,7 +92,7 @@ void	render(t_win *win, t_scene *scene)
 			ray.dir = ray_dir;
 			ray.origin = cam.origin;
 
-			t_vec3	col = draw_background(ray, scene->spheres);
+			t_vec3	col = draw_background(ray, scene->spheres, scene);
 
 			set_pixel(&win->img, i, j, convert_to_rgba(col));
 		}
@@ -113,8 +113,6 @@ void	start_renderer(t_prog *prog)
 	mlx_key_hook(win->win_ptr, key_hook, prog);
 	if (win->mlx_ptr == NULL)
 		return ;
-	scene->spheres->origin = (t_vec3){0, 0, 0};
-	scene->spheres->radius = 0.5;
 	render(win, scene);
 	mlx_loop(win->mlx_ptr);
 }
