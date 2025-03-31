@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:04:01 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/31 11:17:51 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/31 11:18:38 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	key_hook(int keycode, t_prog *prog)
 	printf("camera pos:");
 	print_vec(camera->origin);
 	printf("camera fov:%d\n", camera->fov);
-	
+
 	render(prog->win, prog->scene);
 	return (0);
 }
@@ -58,7 +58,7 @@ int	key_hook(int keycode, t_prog *prog)
 int	window_close(void *prog)
 {
 	free_all(prog);
-	exit(0);
+	return (0);
 }
 
 void	init_win(t_prog *prog)
@@ -81,7 +81,7 @@ void	init_win(t_prog *prog)
 		free_all(prog);
 	if (create_img(win) == -1)
 		free_all(prog);
-	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, NULL);
+	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, prog);
 
 
 }
