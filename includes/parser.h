@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/31 10:39:21 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/31 10:49:14 by mjuncker         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef PARSER_H
 # define PARSER_H
 
@@ -26,7 +14,7 @@ void	parse_cylinder(t_prog *prog, t_cylinder *cylinder, char **tokens);
 
 // parse_utils.c
 void	parse_vector(t_prog *prog, t_vec3 *vec, char *str);
-void	parse_color(t_prog *prog, size_t *color, char *str);
+void	parse_color(t_prog *prog, t_vec3 *color, char *str);
 bool	is_normalized(t_vec3 vec);
 void	init_malloc(t_prog *prog);
 void	print_scene(const t_scene *scene);

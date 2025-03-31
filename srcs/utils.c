@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/23 14:47:25 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/31 10:58:48 by mjuncker         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "mlx.h"
 #include "window.h"
 #include "miniRT.h"
@@ -63,7 +51,7 @@ void	free_scene(t_scene *scene)
 void	free_all(t_prog *prog)
 {
 	free_scene(prog->scene);
-	free_win(prog->win);
+	// free_win(prog->win);
 	exit(0);
 }
 

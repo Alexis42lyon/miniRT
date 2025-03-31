@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/22 22:24:45 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/31 14:18:28 by mjuncker         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINIRT_H
 # define MINIRT_H
 
@@ -38,7 +26,7 @@ typedef struct ambient_light
 {
 	bool			is_set;
 	double			ratio;
-	size_t			color;
+	t_vec3			color;
 }	t_ambient_light;
 
 typedef struct camera
@@ -54,14 +42,14 @@ typedef struct light
 	bool			is_set;
 	t_vec3			origin;
 	double			ratio;
-	size_t			color;
+	t_vec3			color;
 }	t_light_source;
 
 typedef struct sphere
 {
 	t_vec3			origin;
 	double			radius;
-	size_t			color;
+	t_vec3			color;
 	struct sphere	*next;
 }	t_sphere;
 
@@ -69,7 +57,7 @@ typedef struct plane
 {
 	t_vec3			origin;
 	t_vec3			normal;
-	size_t			color;
+	t_vec3			color;
 }	t_plane;
 
 typedef struct cylinder
@@ -78,7 +66,7 @@ typedef struct cylinder
 	t_vec3			normal;
 	double			radius;
 	double			height;
-	size_t			color;
+	t_vec3			color;
 }	t_cylinder;
 
 /* ---------------------------------- SCENE --------------------------------- */

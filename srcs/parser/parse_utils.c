@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/23 18:54:12 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/31 10:46:46 by mjuncker         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <miniRT.h>
 #include <math.h>
 #include "libft/is.h"
@@ -37,24 +25,20 @@ void	parse_vector(t_prog * prog, t_vec3 *vec, char *str)
 	prog->scene->tokens = NULL;
 }
 
-void	parse_color(t_prog *prog, size_t *color, char *str)
+void	parse_color(t_prog *prog, t_vec3 *color, char *str)
 {
-	int		r;
-	int		g;
-	int		b;
-
 	check_mem((t_info){__FILE__, __LINE__, __func__},
 		ft_split(str, ','), (void **)&prog->scene->tokens, prog);
 	if (ft_arrlen(prog->scene->tokens) != 3)
 		print_exit(prog, "Invalid color format");
-	check_atoi(prog, prog->scene->tokens[0], &r);
-	check_atoi(prog, prog->scene->tokens[1], &g);
-	check_atoi(prog, prog->scene->tokens[2], &b);
+	color->x = ft_atof(prog->scene->tokens[0]) / 255;
+	color->y = ft_atof(prog->scene->tokens[1]) / 255;
+	color->z = ft_atof(prog->scene->tokens[2]) / 255;
 	free_arr((void **)prog->scene->tokens);
 	prog->scene->tokens = NULL;
-	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+	if (color->x < 0 || color->x > 255 || color->y < 0 || color->y > 255
+		|| color->z < 0 || color->z > 255)
 		print_exit(prog, "Color values must be in range [0, 255]");
-	*color = (r << 16) + (g << 8) + b;
 }
 
 bool	is_normalized(t_vec3 vec)
