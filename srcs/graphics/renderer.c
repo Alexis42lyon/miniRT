@@ -32,7 +32,7 @@ t_hit	sphere_hit(const t_sphere *sphere, const t_ray ray)
 }
 
 t_vec3	draw_background(t_ray r, t_sphere *sphere, t_scene *scene)
-{	
+{
 	t_hit	hit;
 	t_hit	tmp;
 	size_t	i;
@@ -66,7 +66,7 @@ void	render(t_win *win, t_scene *scene)
 	// camera viewport
 	double vp_height = 2;
 	double vp_width = vp_height * ((double)win->width / win->height);
-	
+
 	// viewport vectors
 	t_vec3 vp_u = (t_vec3){vp_width, 0, 0};
 	t_vec3 vp_v = (t_vec3){0, -vp_height, 0};

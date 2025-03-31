@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 23:42:35 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/30 18:42:39 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/03/31 15:34:50 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #if SHOW_SRUCT
 
 # include <stdio.h>
+#include "raytracer.h"
 
 static void	print_spheres(const t_scene *scene)
 {
@@ -32,8 +33,8 @@ static void	print_spheres(const t_scene *scene)
 				scene->spheres[i].origin.z);
 			printf("  Diameter: " CYAN "%.2lf" RESET "\n",
 				scene->spheres[i].radius);
-			printf("  Color: " CYAN "0x%06lx" RESET "\n",
-				scene->spheres[i].color);
+			printf("  Color: " CYAN "0x%x" RESET "\n",
+				convert_to_rgba(scene->spheres[i].color));
 			i++;
 		}
 	}
@@ -56,8 +57,8 @@ static void	print_planes(const t_scene *scene)
 			printf("  Normal: " BLUE "(%.2lf, %.2lf, %.2lf)" RESET "\n",
 				scene->planes[i].normal.x, scene->planes[i].normal.y,
 				scene->planes[i].normal.z);
-			printf("  Color: " CYAN "0x%06lx" RESET "\n",
-				scene->planes[i].color);
+			printf("  Color: " CYAN "0x%x" RESET "\n",
+				convert_to_rgba(scene->planes[i].color));
 			i++;
 		}
 	}
@@ -84,8 +85,8 @@ static void	print_cylinders(const t_scene *scene)
 				scene->cylinders[i].radius);
 			printf("  Height: " CYAN "%.2lf" RESET "\n",
 				scene->cylinders[i].height);
-			printf("  Color: " CYAN "0x%06lx" RESET "\n",
-				scene->cylinders[i].color);
+			printf("  Color: " CYAN "0x%x" RESET "\n",
+				convert_to_rgba(scene->cylinders[i].color));
 			i++;
 		}
 	}
@@ -102,7 +103,7 @@ static void	print_ambient_light(const t_ambient_light *ambient)
 	if (ambient->is_set)
 	{
 		printf("Ratio: " CYAN "%.2lf" RESET "\n", ambient->ratio);
-		printf("Color: " CYAN "0x%06lx" RESET "\n", ambient->color);
+		printf("Color: " CYAN "0x%x" RESET "\n", convert_to_rgba(ambient->color));
 	}
 }
 
@@ -137,7 +138,7 @@ static void	print_light(const t_light_source *light)
 		printf("Origin: " GREEN "(%.2lf, %.2lf, %.2lf)" RESET "\n",
 			light->origin.x, light->origin.y, light->origin.z);
 		printf("Ratio: " CYAN "%.2lf" RESET "\n", light->ratio);
-		printf("Color: " CYAN "0x%06lx" RESET "\n", light->color);
+		printf("Color: " CYAN "0x%x" RESET "\n", convert_to_rgba(light->color));
 	}
 }
 

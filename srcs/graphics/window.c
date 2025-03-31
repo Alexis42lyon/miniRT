@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:04:01 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/31 12:29:45 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/31 15:25:06 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,13 @@ void	init_win(t_prog *prog)
 	if (create_img(win) == -1)
 		free_all(prog);
 	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, prog);
-
-
 }
 
 #else
 
-void	init_win(t_win *win)
+void	init_win(t_prog *prog)
 {
-	(void)win;
-	ft_calloc(0, sizeof(t_win));
+	(void)prog;
 	return ;
 }
 

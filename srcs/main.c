@@ -21,7 +21,7 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	init(&prog, av);
-	start_renderer(&prog);
+	// start_renderer(&prog);
 	free_all(&prog);
 	return (0);
 }
