@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 10:34:28 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/31 12:21:06 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:12:58 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,28 @@ typedef struct hit_info
 	size_t	obj_index;
 
 }	t_hit;
+
+typedef struct viewport
+{
+	t_win		*win;
+
+	double		vp_height;
+	double		vp_width;
+
+	t_vec3		vp_u;
+	t_vec3		vp_v;
+
+	t_vec3		px_delta_u;
+	t_vec3		px_delta_v;
+
+	t_vec3		vp_up_left;
+	t_vec3		px_00;
+
+	t_camera	cam;
+
+	t_vec3		color;
+	
+}	t_viewport;
 
 typedef struct s_win	t_win;
 

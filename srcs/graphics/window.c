@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/25 09:04:01 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/31 12:29:45 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:06:07 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ int	key_hook(int keycode, t_prog *prog)
 		camera->fov--;
 	else
 		return 0;
-	printf("camera pos:");
-	print_vec(camera->origin);
-	printf("camera fov:%d\n", camera->fov);
+	// printf("camera pos:");
+	// print_vec(camera->origin);
+	// printf("camera fov:%d\n", camera->fov);
 
 	render(prog->win, prog->scene);
 	return (0);

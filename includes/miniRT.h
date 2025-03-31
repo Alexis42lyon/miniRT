@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/22 22:24:45 by abidolet          #+#    #+#             */
-/*   Updated: 2025/03/31 10:58:21 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/03/31 14:18:28 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct s_scene
 	char			*line;
 	char			**tokens;
 	t_list			*map;
-	int				sky_color;
+	t_vec3			sky_color;
 	t_ambient_light	ambient_light;
 	t_camera		camera;
 	t_light_source	light;
