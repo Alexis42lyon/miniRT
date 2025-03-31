@@ -6,8 +6,6 @@
 #include "mlx.h"
 #include <stdio.h>
 
-#if SHOW_WIN
-
 int	key_hook(int keycode, t_prog *prog)
 {
 	t_camera	*camera;
@@ -34,11 +32,7 @@ int	key_hook(int keycode, t_prog *prog)
 	else if (keycode == 'x')
 		camera->fov--;
 	else
-		return 0;
-	// printf("camera pos:");
-	// print_vec(camera->origin);
-	// printf("camera fov:%d\n", camera->fov);
-
+		return (0);
 	render(prog->win, prog->scene);
 	return (0);
 }
@@ -76,13 +70,3 @@ void	init_win(t_prog *prog)
 	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, prog);
 	mlx_mouse_hook(win->win_ptr, mouse_click, win);
 }
-
-#else
-
-void	init_win(t_prog *prog)
-{
-	(void)prog;
-	return ;
-}
-
-#endif
