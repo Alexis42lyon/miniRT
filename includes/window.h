@@ -65,5 +65,7 @@ void	run_pipeline(t_prog *prog);
 
 // button.c
 void	init_buttons(t_win *win);
+void	free_scene(t_scene *scene);
+void	init(t_prog *prog, char **av);
 
 #endif

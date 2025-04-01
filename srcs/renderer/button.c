@@ -2,9 +2,11 @@
 
 typedef void	(*t_button_func)(t_prog *);
 
-static void	button_func2(t_prog *win)
+static void	button_func2(t_prog *prog)
 {
-	(void)win;
+	free_scene(prog->scene);
+	init(prog, NULL);
+	run_pipeline(prog);
 }
 
 static void	button_func3(t_prog *win)
@@ -25,7 +27,7 @@ static t_button_func	get_button_func(int index)
 {
 	static t_button_func	funcs[] =
 	{
-		&run_pipeline, // run_pipeline
+		&run_pipeline,
 		&button_func2,
 		&button_func3,
 		&button_func4
@@ -88,7 +90,7 @@ int	mouse_click(int button, int x, int y, t_prog *prog)
 	if (button != 1 || !prog)
 		return (0);
 	i = 0;
-	while (i < 4)
+	while (i < 2)
 	{
 		btn = get_button_data(i);
 		if (!btn)
@@ -107,16 +109,16 @@ int	mouse_click(int button, int x, int y, t_prog *prog)
 	return (0);
 }
 
-void	init_buttons(t_win *win)
+void	init_buttons(t_win *prog)
 {
 	int	i;
 
-	if (!win)
+	if (!prog)
 		return ;
 	i = 0;
-	while (i < 4)
+	while (i < 2)
 	{
-		draw_button(win, i);
+		draw_button(prog, i);
 		i++;
 	}
 }
