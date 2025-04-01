@@ -71,8 +71,8 @@ t_ray	get_ray(int i, int j, t_viewport vp, uint seed)
 	// sample = vec3_add(vp.px_00, vec3_add(
 	// 			vec3_mult(vp.px_delta_u, i + offset.x),
 	// 			vec3_mult(vp.px_delta_v, j + offset.y))
-	// 			);	
-			
+	// 			);
+
 	t_vec3 px_center = vec3_add(vp.px_00, vec3_add(
 				vec3_mult(vp.px_delta_u, i),
 				vec3_mult(vp.px_delta_v, j))
@@ -136,6 +136,8 @@ void	render(t_win *win, t_scene *scene)
 
 void	run_pipeline(t_prog *prog)
 {
+	if (!prog)
+		return ;
 	render(prog->win, prog->scene);
 	mlx_put_image_to_window(prog->win->mlx_ptr, prog->win->win_ptr,
 		prog->win->img.img, 0, 0);
@@ -156,5 +158,6 @@ void	start_renderer(t_prog *prog)
 	if (win->mlx_ptr == NULL)
 		return ;
 	run_pipeline(prog);
+	init_buttons(win);
 	mlx_loop(win->mlx_ptr);
 }

@@ -56,7 +56,7 @@ int		create_trgb(int t, int r, int g, int b);
 
 // window.c
 void	init_win(t_prog *prog);
-int		mouse_click(int butt, int x, int y, t_win *win);
+int		mouse_click(int button, int x, int y, t_prog *prog);
 void	draw_button(t_win *win, int color);
 int		key_hook(int keycode, t_prog *prog);
 

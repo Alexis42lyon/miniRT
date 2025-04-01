@@ -1,29 +1,20 @@
 #include "window.h"
 
-typedef void	(*t_button_func)(t_win *);
+typedef void	(*t_button_func)(t_prog *);
 
-static void	button_func1(t_win *win)
+static void	button_func2(t_prog *win)
 {
 	(void)win;
-	ft_printf("Aie\n");
 }
 
-static void	button_func2(t_win *win)
+static void	button_func3(t_prog *win)
 {
 	(void)win;
-	ft_printf("Ouie\n");
 }
 
-static void	button_func3(t_win *win)
+static void	button_func4(t_prog *win)
 {
 	(void)win;
-	ft_printf("Arrete de me cliquer dessus !\n");
-}
-
-static void	button_func4(t_win *win)
-{
-	(void)win;
-	ft_printf("Ne me touche pas\n");
 }
 
 // frame time
@@ -34,8 +25,8 @@ static t_button_func	get_button_func(int index)
 {
 	static t_button_func	funcs[] =
 	{
-		&button_func1, // run_pipeline
-		&button_func2, 
+		&run_pipeline, // run_pipeline
+		&button_func2,
 		&button_func3,
 		&button_func4
 	};
@@ -88,13 +79,13 @@ void	draw_button(t_win *win, int btn_index)
 		btn->x + 10, btn->y + 20, 0xFFFFFF, btn->text);
 }
 
-int	mouse_click(int button, int x, int y, t_win *win)
+int	mouse_click(int button, int x, int y, t_prog *prog)
 {
 	const t_button	*btn;
 	t_button_func	func;
 	int				i;
 
-	if (button != 1 || !win)
+	if (button != 1 || !prog)
 		return (0);
 	i = 0;
 	while (i < 4)
@@ -107,8 +98,8 @@ int	mouse_click(int button, int x, int y, t_win *win)
 		{
 			func = get_button_func(i);
 			if (func)
-				func(win);
-			draw_button(win, i);
+				func(prog);
+			draw_button(prog->win, i);
 			break ;
 		}
 		i++;
