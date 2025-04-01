@@ -33,7 +33,7 @@ int	key_hook(int keycode, t_prog *prog)
 		camera->fov--;
 	else
 		return (0);
-	render(prog->win, prog->scene);
+	run_pipeline(prog);
 	return (0);
 }
 
@@ -67,7 +67,6 @@ void	init_win(t_prog *prog)
 	win->button_y = 0;
 	win->button_width = 100;
 	win->button_height = 50;
-	draw_button(win, 0xFF0000);
 	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, prog);
 	mlx_mouse_hook(win->win_ptr, mouse_click, win);
 }

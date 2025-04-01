@@ -20,7 +20,7 @@ int	mouse_click(int butt, int x, int y, t_win *win)
 		y >= win->button_y && y <= win->button_y + win->button_height)
 	{
 		ft_printf("Button cliqued !\n");
-		draw_button(win, 0xFF0000);
+		draw_button(win, 0xFF000000);
 	}
 	return (0);
 }

@@ -41,7 +41,6 @@ typedef struct viewport
 	t_camera	cam;
 
 	t_vec3		color;
-	
 }	t_viewport;
 
 typedef struct s_win	t_win;

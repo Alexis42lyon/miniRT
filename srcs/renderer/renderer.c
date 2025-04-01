@@ -73,8 +73,6 @@ void	trace_ray(t_viewport vp, t_scene *scene)
 		}
 		j++;
 	}
-	mlx_put_image_to_window(vp.win->mlx_ptr, vp.win->win_ptr,
-		vp.win->img.img, 0, 0);
 }
 
 void	render(t_win *win, t_scene *scene)
@@ -94,6 +92,14 @@ void	render(t_win *win, t_scene *scene)
 	ft_printf(GREEN "done rendering!\n\n" RESET);
 }
 
+void	run_pipeline(t_prog *prog)
+{
+	render(prog->win, prog->scene);
+	mlx_put_image_to_window(prog->win->mlx_ptr, prog->win->win_ptr,
+		prog->win->img.img, 0, 0);
+	draw_button(prog->win, 0xFF000000);
+}
+
 void	start_renderer(t_prog *prog)
 {
 	t_win	*win;
@@ -106,6 +112,6 @@ void	start_renderer(t_prog *prog)
 	mlx_key_hook(win->win_ptr, key_hook, prog);
 	if (win->mlx_ptr == NULL)
 		return ;
-	render(win, scene);
+	run_pipeline(prog);
 	mlx_loop(win->mlx_ptr);
 }
