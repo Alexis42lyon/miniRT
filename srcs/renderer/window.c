@@ -51,19 +51,15 @@ void	init_win(t_prog *prog)
 	ft_bzero(win, sizeof(t_win));
 	win->height = HEIGHT;
 	win->width = WIDTH;
-	win->name = ft_strdup("miniRT");
-	if (malloc_assert(win->name, __FILE__, __LINE__))
-		free_all(prog);
 	win->mlx_ptr = mlx_init();
 	if (!win->mlx_ptr)
 		free_all(prog);
 	win->win_ptr = mlx_new_window(win->mlx_ptr, win->width,
-			win->height, win->name);
+			win->height, "miniRT");
 	if (!win->win_ptr)
 		free_all(prog);
 	if (create_img(win) == -1)
 		free_all(prog);
-	init_buttons(win);
 	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, prog);
-	mlx_mouse_hook(win->win_ptr, mouse_click, win);
+	mlx_mouse_hook(win->win_ptr, mouse_click, prog);
 }
