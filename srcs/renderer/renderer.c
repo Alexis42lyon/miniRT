@@ -11,8 +11,8 @@ t_vec3	draw_background(t_ray r, t_scene *scene)
 	t_hit	hit;
 	t_hit	tmp;
 	size_t	i;
-	// t_vec3	light_dir = vec3_normalize((t_vec3){-1, 0, -1}); // FAKE LIGHT
-	// float	dot;
+	t_vec3	light_dir = vec3_normalize((t_vec3){-1, -1, -1}); // FAKE LIGHT
+	float	dot;
 
 
 	hit.hit_distance = INT_MIN;
@@ -29,12 +29,12 @@ t_vec3	draw_background(t_ray r, t_scene *scene)
 	}
 	if (hit.hit_distance > 0)
 	{
-		// dot = ft_dot(hit.hit_normal, light_dir);
-		// if (dot > 0)
-			// return ((t_vec3){0.12, 0.12, 0.12});
-		return (scene->spheres[hit.obj_index].color);
+		dot = ft_dot(hit.hit_normal, vec3_mult(light_dir, -1));
+		dot *= 0.5f;
+		dot += 0.5f;
+		return (vec3_mult(scene->spheres[hit.obj_index].color, dot));
 	}
-	return (scene->sky_color);
+	return ((t_vec3){0, 0, 0});
 }
 
 t_viewport	viewport(t_win *win, t_scene *scene)
@@ -59,19 +59,19 @@ t_viewport	viewport(t_win *win, t_scene *scene)
 
 t_ray	get_ray(int i, int j, t_viewport vp, uint seed)
 {
-	// t_vec3	offset;
-	// t_vec3	sample;
+	t_vec3	offset;
+	t_vec3	sample;
 	t_ray	ray;
 
 	(void)seed;
-	// offset = vec3_rand_range(0.5, seed);
-	// sample = vec3_add(vec3_add(vp.px_00,
-	// 		vec3_mult(vp.px_delta_u, i + offset.x)),
-	// 		vec3_mult(vp.px_delta_u, j + offset.y));
-	// sample = vec3_add(vp.px_00, vec3_add(
-	// 			vec3_mult(vp.px_delta_u, i + offset.x),
-	// 			vec3_mult(vp.px_delta_v, j + offset.y))
-	// 			);	
+	offset = vec3_rand_range(0.5, seed);
+	sample = vec3_add(vec3_add(vp.px_00,
+			vec3_mult(vp.px_delta_u, i + offset.x)),
+			vec3_mult(vp.px_delta_u, j + offset.y));
+	sample = vec3_add(vp.px_00, vec3_add(
+				vec3_mult(vp.px_delta_u, i + offset.x),
+				vec3_mult(vp.px_delta_v, j + offset.y))
+				);	
 			
 	t_vec3 px_center = vec3_add(vp.px_00, vec3_add(
 				vec3_mult(vp.px_delta_u, i),
@@ -139,7 +139,7 @@ void	run_pipeline(t_prog *prog)
 	render(prog->win, prog->scene);
 	mlx_put_image_to_window(prog->win->mlx_ptr, prog->win->win_ptr,
 		prog->win->img.img, 0, 0);
-	// draw_button(prog->win, 0xFF000000);
+	init_buttons(prog->win);
 }
 
 void	start_renderer(t_prog *prog)
