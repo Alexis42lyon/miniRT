@@ -89,6 +89,7 @@ typedef struct s_scene
 	t_cylinder		*cylinders;
 
 	uint			frame_count;
+	uint			sample_count;
 }	t_scene;
 
 typedef struct s_prog

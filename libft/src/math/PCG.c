@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:12:52 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/01 09:38:58 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/01 12:30:11 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ uint	PCG_Hash(uint input)
 	return ((word >> 22u) ^ word);
 }
 
-float	PCG_Hash_range(uint range, uint input)
+float	PCG_Hash_range(float range, uint input)
 {
 	uint state = input * 747796405u + 2891336453u;
 	uint word = ((state >> ((state >> 28u) + 4u)) ^ state) * 277803737u;

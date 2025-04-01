@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:16:11 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/01 09:39:07 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/01 12:30:17 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ int		ft_max(int a, int b);
 int		ft_min(int a, int b);
 
 uint	PCG_Hash(uint input);
-float	PCG_Hash_range(uint range, uint input);
+float	PCG_Hash_range(float range, uint input);
 
 #endif

@@ -26,12 +26,16 @@ static void	button_func4(t_win *win)
 	ft_printf("Ne me touche pas\n");
 }
 
+// frame time
+// frame count
+// cam pos
+
 static t_button_func	get_button_func(int index)
 {
 	static t_button_func	funcs[] =
 	{
-		&button_func1,
-		&button_func2,
+		&button_func1, // run_pipeline
+		&button_func2, 
 		&button_func3,
 		&button_func4
 	};

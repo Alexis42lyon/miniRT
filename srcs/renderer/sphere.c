@@ -5,7 +5,7 @@ t_hit	sp_hit_result(const t_sphere sp, const t_ray r, const double t)
 	t_hit	hit;
 
 	hit.hit_point = vec3_add(r.origin, vec3_mult(r.dir, t));
-	hit.hit_normal = unit_vec3(vec3_sub(hit.hit_point, sp.origin));
+	hit.hit_normal = vec3_normalize(vec3_sub(hit.hit_point, sp.origin));
 	hit.hit_distance = t;
 	return (hit);
 }
@@ -26,4 +26,16 @@ t_hit	sphere_hit(const t_sphere sphere, const t_ray ray)
 	if (t < 0)
 		return ((t_hit){{0, 0, 0}, {0, 0, 0}, -1, 0});
 	return (sp_hit_result(sphere, ray, ((h - sqrt(t)) / a)));
+}
+
+t_vec3	random_vec_hemisphere(const t_vec3 normal, const uint seed)
+{
+	t_vec3	vec;
+
+	vec = vec3_rand_unit(seed);
+	if (ft_dot(vec, normal) > 0)
+	{
+		return (vec);
+	}
+	return (vec3_mult(vec, -1.0));
 }

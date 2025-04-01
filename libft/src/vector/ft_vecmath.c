@@ -31,12 +31,12 @@ double	vec3_lenght_square(const t_vec3 vec)
 	return ((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z));
 }
 
-t_vec3	unit_vec3(const t_vec3 v)
+t_vec3	vec3_normalize(const t_vec3 v)
 {
 	return (vec3_divide(v, vec3_lenght(v)));
 }
 
-double	ft_dot(const t_vec3 v1, const t_vec3 v2)
+float	ft_dot(const t_vec3 v1, const t_vec3 v2)
 {
 	 return ((v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z));
 }
@@ -46,11 +46,28 @@ t_vec3	vec3_rand(uint seed)
 	return ((t_vec3){PCG_Hash(seed * 2), PCG_Hash(seed * 8), PCG_Hash(seed)});
 }
 
-t_vec3	vec3_rand_range(uint range, uint seed)
+t_vec3	vec3_rand_range(float range, uint seed)
 {
 	return ((t_vec3){
 		PCG_Hash_range(range, seed),
 		PCG_Hash_range(range, seed * 2),
 		PCG_Hash_range(range, seed * 8)
 	});
+}
+#include <stdio.h>
+t_vec3	vec3_rand_unit(uint seed)
+{
+	int		i;
+	t_vec3	v;
+	double	sqlen;
+
+	i = seed * 8;
+	while (1)
+	{
+		v = vec3_rand_range(1, i);
+		sqlen = vec3_lenght_square(v);
+		if (1e-160 < sqlen && sqlen <= 1)
+			return (vec3_normalize(v));
+		i++;
+	}
 }
