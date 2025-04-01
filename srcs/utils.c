@@ -51,7 +51,7 @@ void	free_scene(t_scene *scene)
 void	free_all(t_prog *prog)
 {
 	free_scene(prog->scene);
-	// free_win(prog->win);
+	free_win(prog->win);
 	exit(0);
 }
 

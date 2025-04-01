@@ -63,10 +63,7 @@ void	init_win(t_prog *prog)
 		free_all(prog);
 	if (create_img(win) == -1)
 		free_all(prog);
-	win->button_x = 0;
-	win->button_y = 0;
-	win->button_width = 100;
-	win->button_height = 50;
+	init_buttons(win);
 	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, prog);
 	mlx_mouse_hook(win->win_ptr, mouse_click, win);
 }

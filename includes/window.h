@@ -41,10 +41,13 @@ typedef struct s_win
 
 typedef struct s_button
 {
-	void	*mlx;
-	void	*win;
-
-} t_button;
+	int		x;
+	int		y;
+	int		width;
+	int		height;
+	int		color;
+	char	*text;
+}	t_button;
 
 // image.c
 int		create_img(t_win *win);
@@ -59,5 +62,8 @@ int		key_hook(int keycode, t_prog *prog);
 
 void	render(t_win *win, t_scene *scene);
 void	run_pipeline(t_prog *prog);
+
+// button.c
+void	init_buttons(t_win *win);
 
 #endif
