@@ -9,7 +9,7 @@ t_vec3	normal_color(t_hit hit)
 	return (color);
 }
 
-unsigned int	convert_to_rgba(const t_vec3 color)
+uint	convert_to_rgba(const t_vec3 color)
 {
 	unsigned short	r;
 	unsigned short	g;

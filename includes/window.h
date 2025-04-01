@@ -60,7 +60,6 @@ int		mouse_click(int button, int x, int y, t_prog *prog);
 void	draw_button(t_win *win, int color);
 int		key_hook(int keycode, t_prog *prog);
 
-void	render(t_win *win, t_scene *scene);
 void	run_pipeline(t_prog *prog);
 
 // button.c
