@@ -86,9 +86,11 @@ void	render(t_win *win, t_scene *scene)
 	before = clock();
 	vp = viewport(win, scene);
 	trace_ray(vp, scene);
+	scene->frame_count++;
 	difference = clock() - before;
 	msec = difference * 1000 / CLOCKS_PER_SEC;
-	ft_printf(GRAY "[LOG]: render time: %dms \n" RESET, msec % 1000);
+	ft_printf(GRAY "[LOG]: render time:%dms \n" RESET, msec % 1000);
+	ft_printf(GRAY "[LOG]: frame_count:%d \n" RESET, scene->frame_count);
 	ft_printf(GREEN "done rendering!\n\n" RESET);
 }
 
