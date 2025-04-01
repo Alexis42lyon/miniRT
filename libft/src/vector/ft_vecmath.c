@@ -1,5 +1,5 @@
-#include "libft/vector.h"
 #include <math.h>
+#include "libft/vector.h"
 
 t_vec3	vec3_add(const t_vec3 v1, const t_vec3 v2)
 {
@@ -39,4 +39,18 @@ t_vec3	unit_vec3(const t_vec3 v)
 double	ft_dot(const t_vec3 v1, const t_vec3 v2)
 {
 	 return ((v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z));
+}
+
+t_vec3	vec3_rand(uint seed)
+{
+	return ((t_vec3){PCG_Hash(seed * 2), PCG_Hash(seed * 8), PCG_Hash(seed)});
+}
+
+t_vec3	vec3_rand_range(uint range, uint seed)
+{
+	return ((t_vec3){
+		PCG_Hash_range(range, seed),
+		PCG_Hash_range(range, seed * 2),
+		PCG_Hash_range(range, seed * 8)
+	});
 }

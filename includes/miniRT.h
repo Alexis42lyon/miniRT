@@ -12,8 +12,6 @@
 # define SIZE_WIN 0.5
 # define SHOW_SRUCT 0
 
-# define uint unsigned int
-
 typedef struct s_win	t_win;
 
 typedef struct info
@@ -104,7 +102,5 @@ void	free_arr(void **arr);
 void	free_all(t_prog *prog_set);
 void	check_mem(t_info info, void *mem, void **res, t_prog *prog);
 void	print_exit(t_prog *prog, char *str);
-
-uint	PCG_Hash(uint input);
 
 #endif

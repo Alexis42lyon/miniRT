@@ -23,6 +23,7 @@ t_vec3	draw_background(t_ray r, t_scene *scene)
 	}
 	if (hit.hit_distance > 0)
 	{
+		// return (normal_color(hit));
 		return (scene->spheres[hit.obj_index].color);
 	}
 	return (scene->sky_color);

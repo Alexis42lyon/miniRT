@@ -6,7 +6,7 @@
 #    By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/24 18:00:56 by mjuncker          #+#    #+#              #
-#    Updated: 2025/03/24 17:36:31 by mjuncker         ###   ########.fr        #
+#    Updated: 2025/04/01 09:13:42 by mjuncker         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +77,7 @@ SRCS =  ft_isalpha.c 		\
 		ft_vecmath.c		\
 		ft_vecnew.c			\
 		ft_assertion.c		\
+		PCG.c				\
 
 OBJ = $(SRCS:.c=.o)
 

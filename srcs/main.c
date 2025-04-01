@@ -1,6 +1,11 @@
 #include "window.h"
 #include "parser.h"
 #include "raytracer.h"
+#include "libft/math.h"
+
+#include <stdio.h>
+#include <unistd.h>
+#include "libft/vector.h"
 
 int	main(int ac, char **av)
 {
