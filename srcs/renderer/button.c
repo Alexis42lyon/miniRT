@@ -90,6 +90,19 @@ int	button_window_click(int button, int x, int y, t_prog *prog)
 	return (0);
 }
 
+int	key_hook_button(int keycode, t_prog *prog)
+{
+	if (keycode == ESC)
+		free_all(prog);
+	return (0);
+}
+
+int	window_button_close(void *prog)
+{
+	free_all(prog);
+	return (0);
+}
+
 void	init_button_window(t_prog *prog)
 {
 	int	i;
@@ -109,5 +122,7 @@ void	init_button_window(t_prog *prog)
 		draw_button_win(prog->win_button, i);
 		i++;
 	}
+	mlx_key_hook(prog->win_button->win_ptr, key_hook_button, prog);
+	mlx_hook(prog->win_button->win_ptr, 17, 1L << 2, window_button_close, prog);
 	mlx_mouse_hook(prog->win_button->win_ptr, button_window_click, prog);
 }
