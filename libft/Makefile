@@ -6,7 +6,7 @@
 #    By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/24 18:00:56 by mjuncker          #+#    #+#              #
-#    Updated: 2025/04/01 09:13:42 by mjuncker         ###   ########.fr        #
+#    Updated: 2025/04/02 12:58:04 by mjuncker         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,7 +88,7 @@ DEPS = $(OBJ:.o=.d)
 
 # compiler settings
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I$(INCLUDES_D) -g3 -D BUFFER_SIZE=20 -MP -MMD
+CFLAGS = -Wall -Werror -Wextra -I$(INCLUDES_D) -D BUFFER_SIZE=20 -MP -MMD
 MAKEFLAGS += -s
 
 # commands

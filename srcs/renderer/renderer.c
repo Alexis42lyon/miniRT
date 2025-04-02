@@ -6,7 +6,13 @@
 //! TO REMOVE
 #include <stdio.h>
 
+<<<<<<< HEAD
 t_viewport	viewport(t_win_scene *win, t_scene *scene)
+=======
+#define BOUNCES 2
+
+t_viewport	viewport(t_win *win, t_scene *scene)
+>>>>>>> refs/remotes/origin/main
 {
 	t_viewport	vp;
 
@@ -31,17 +37,40 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	t_vec3	light_dir;
 	float	dot;
 	t_ray	ray;
-	t_hit	hit_result;
+	t_hit	hit;
+
+	t_vec3	final_color;
+	float	mutiplier = 1.0f;
+
+	final_color = (t_vec3){0.0, 0.0, 0.0};
 
 	light_dir = vec3_normalize((t_vec3){-1, -1, -1}); // FAKE LIGHT
 	ray = get_ray(i, j, vp, scene->sample_count);
-	hit_result = trace_ray(ray, scene);
-	if (hit_result.hit_distance == -1)
-		return ((t_vec3){0, 0, 0});
-	dot = ft_dot(hit_result.hit_normal, vec3_mult(light_dir, -1));
-	dot *= 0.5f;
-	dot += 0.5f;
-	return (vec3_mult(scene->spheres[hit_result.obj_index].color, dot));
+	
+	for (int i = 0; i < BOUNCES; i++)
+	{
+		hit = trace_ray(ray, scene);
+		if (hit.hit_distance == -1)
+		{
+			final_color = vec3_mult(vec3_add(final_color, scene->sky_color), mutiplier);
+			break;
+		}
+	
+		dot = ft_dot(hit.hit_normal, vec3_mult(light_dir, -1));
+		dot *= 0.5f;
+		dot += 0.5f;
+		t_vec3	color = scene->spheres[hit.obj_index].color;
+		color = vec3_mult(color, dot);
+		
+		final_color = vec3_mult( vec3_add(final_color, color), mutiplier);
+
+		mutiplier *= 0.5f;
+
+		ray.origin = vec3_add(hit.hit_point, vec3_mult(hit.hit_normal, 0.0001));
+		ray.dir = vec3_reflect(ray.dir, hit.hit_normal);
+	}
+
+	return (final_color);
 }
 
 void	render(t_viewport vp, t_scene *scene)
@@ -72,7 +101,12 @@ void	run_pipeline(t_prog *prog)
 	clock_t		difference;
 	t_viewport	vp;
 
+<<<<<<< HEAD
 	vp = viewport(prog->win_scene, prog->scene);
+=======
+	prog->scene->sky_color = (t_vec3){0.8, 0.9, 0.95};
+	vp = viewport(prog->win, prog->scene);
+>>>>>>> refs/remotes/origin/main
 	msec = 0;
 	before = clock();
 	render(vp, prog->scene);
@@ -94,7 +128,6 @@ void	start_renderer(t_prog *prog)
 	win = prog->win_scene;
 	scene = prog->scene;
 	scene->sample_count = 0;
-	scene->sky_color = (t_vec3){0.8, 0.9, 0.95};
 	init_win(prog);
 	mlx_key_hook(win->win_ptr, key_hook, prog);
 	if (win->mlx_ptr == NULL)

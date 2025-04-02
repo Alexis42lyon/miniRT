@@ -4,8 +4,8 @@
 # include "miniRT.h"
 # include <mlx.h>
 
-# define HEIGHT 1200
-# define WIDTH 2000
+# define HEIGHT 400
+# define WIDTH 800
 
 # define SHOW_WIN 1
 
