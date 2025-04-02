@@ -1,16 +1,17 @@
 #include "raytracer.h"
 
-t_hit	sp_hit_result(const t_sphere sp, const t_ray r, const double t)
+t_hit	sp_hit_result(const t_vec3 origin, const t_ray r, const double t, const size_t idx)
 {
 	t_hit	hit;
 
 	hit.hit_point = vec3_add(r.origin, vec3_mult(r.dir, t));
-	hit.hit_normal = vec3_normalize(vec3_sub(hit.hit_point, sp.origin));
+	hit.hit_normal = vec3_normalize(vec3_sub(hit.hit_point, origin));
 	hit.hit_distance = t;
+	hit.obj_index = idx;
 	return (hit);
 }
 
-t_hit	sphere_hit(const t_sphere sphere, const t_ray ray)
+double	sphere_hit(const t_sphere sphere, const t_ray ray)
 {
 	t_vec3	oc;
 	double	a;
@@ -24,8 +25,8 @@ t_hit	sphere_hit(const t_sphere sphere, const t_ray ray)
 	c = vec3_lenght_square(oc) - sphere.radius * sphere.radius;
 	t = h * h - a * c;
 	if (t < 0)
-		return ((t_hit){{0, 0, 0}, {0, 0, 0}, -1, 0});
-	return (sp_hit_result(sphere, ray, ((h - sqrt(t)) / a)));
+		return (-1);
+	return (((h - sqrt(t)) / a));
 }
 
 t_vec3	random_vec_hemisphere(const t_vec3 normal, const uint seed)

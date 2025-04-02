@@ -60,7 +60,8 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene);
 void	start_renderer(t_prog *prog);
 
 // sphere.c
-t_hit	sphere_hit(const t_sphere sphere, const t_ray ray);
+double	sphere_hit(const t_sphere sphere, const t_ray ray);
 t_vec3	random_vec_hemisphere(const t_vec3 normal, const uint seed);
+t_hit	sp_hit_result(const t_vec3 origin, const t_ray r, const double t, const size_t idx);
 
 #endif

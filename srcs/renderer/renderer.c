@@ -3,10 +3,13 @@
 #include <limits.h>
 #include <time.h>
 
+
+// parser error: decimal point are alway parse has positive nb (ex: 0.8 == -0.8) (-1.8 will put the origin 1 unit down then add 0.8 up)
+
 //! TO REMOVE
 #include <stdio.h>
 
-#define BOUNCES 2
+#define BOUNCES 1
 
 t_viewport	viewport(t_win *win, t_scene *scene)
 {
@@ -57,7 +60,6 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 		dot += 0.5f;
 		t_vec3	color = scene->spheres[hit.obj_index].color;
 		color = vec3_mult(color, dot);
-		
 		final_color = vec3_mult( vec3_add(final_color, color), mutiplier);
 
 		mutiplier *= 0.5f;
@@ -67,6 +69,8 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	}
 
 	return (final_color);
+	// print_vec(final_color);
+	// return ((t_vec3){ft_min(1, final_color.x), ft_min(1, final_color.y), ft_min(1, final_color.z)});
 }
 
 void	render(t_viewport vp, t_scene *scene)
