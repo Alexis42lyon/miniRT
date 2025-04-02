@@ -47,6 +47,8 @@ void	init_win(t_prog *prog)
 {
 	t_win_scene	*win;
 
+	prog->win_button->mlx_ptr = NULL;
+	prog->win_button->win_ptr = NULL;
 	win = prog->win_scene;
 	ft_bzero(win, sizeof(t_win_scene));
 	win->height = HEIGHT;
