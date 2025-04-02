@@ -31,14 +31,16 @@ void	parse_color(t_prog *prog, t_vec3 *color, char *str)
 		ft_split(str, ','), (void **)&prog->scene->tokens, prog);
 	if (ft_arrlen(prog->scene->tokens) != 3)
 		print_exit(prog, "Invalid color format");
-	color->x = ft_atof(prog->scene->tokens[0]) / 255;
-	color->y = ft_atof(prog->scene->tokens[1]) / 255;
-	color->z = ft_atof(prog->scene->tokens[2]) / 255;
+	color->x = ft_atof(prog->scene->tokens[0]);
+	color->y = ft_atof(prog->scene->tokens[1]);
+	color->z = ft_atof(prog->scene->tokens[2]);
 	free_arr((void **)prog->scene->tokens);
 	prog->scene->tokens = NULL;
-	if (color->x < 0 || color->x > 255 || color->y < 0 || color->y > 255
-		|| color->z < 0 || color->z > 255)
+	if (color->x != (unsigned char)(color->x) || color->y != (unsigned char)(color->y) || color->z != (unsigned char)(color->z))
 		print_exit(prog, "Color values must be in range [0, 255]");
+	color->x /= 255.0;
+	color->y /= 255.0;
+	color->z /= 255.0;
 }
 
 bool	is_normalized(t_vec3 vec)
