@@ -2,16 +2,6 @@
 #include <math.h>
 #include "libft/is.h"
 
-void	check_atoi(t_prog *prog, char *s, int *res)
-{
-	*res = ft_atoi(s);
-	if (*s == '-' || *s == '+')
-		s++;
-	while (*s)
-		if (!ft_isdigit(*s++))
-			print_exit(prog, "Invalid number");
-}
-
 void	parse_vector(t_prog *prog, t_vec3 *vec, char *str)
 {
 	check_mem((t_info){__FILE__, __LINE__, __func__},

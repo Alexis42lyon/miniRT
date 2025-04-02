@@ -6,7 +6,7 @@
 //! TO REMOVE
 #include <stdio.h>
 
-t_viewport	viewport(t_win *win, t_scene *scene)
+t_viewport	viewport(t_win_scene *win, t_scene *scene)
 {
 	t_viewport	vp;
 
@@ -72,13 +72,12 @@ void	run_pipeline(t_prog *prog)
 	clock_t		difference;
 	t_viewport	vp;
 
-	vp = viewport(prog->win, prog->scene);
+	vp = viewport(prog->win_scene, prog->scene);
 	msec = 0;
 	before = clock();
 	render(vp, prog->scene);
-	mlx_put_image_to_window(prog->win->mlx_ptr, prog->win->win_ptr,
-		prog->win->img.img, 0, 0);
-	init_buttons(prog->win);
+	mlx_put_image_to_window(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr,
+		prog->win_scene->img.img, 0, 0);
 	difference = clock() - before;
 	msec = difference * 1000 / CLOCKS_PER_SEC;
 	ft_dprintf(2, GRAY "[LOG]: render time:%dms \n" RESET, msec % 1000);
@@ -89,10 +88,10 @@ void	run_pipeline(t_prog *prog)
 
 void	start_renderer(t_prog *prog)
 {
-	t_win	*win;
+	t_win_scene	*win;
 	t_scene	*scene;
 
-	win = prog->win;
+	win = prog->win_scene;
 	scene = prog->scene;
 	scene->sample_count = 0;
 	scene->sky_color = (t_vec3){0.8, 0.9, 0.95};
@@ -101,5 +100,6 @@ void	start_renderer(t_prog *prog)
 	if (win->mlx_ptr == NULL)
 		return ;
 	run_pipeline(prog);
+	init_button_window(prog);
 	mlx_loop(win->mlx_ptr);
 }

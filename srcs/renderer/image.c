@@ -1,6 +1,6 @@
 #include "window.h"
 
-int	create_img(t_win *win)
+int	create_img(t_win_scene *win)
 {
 	win->img.img = mlx_new_image(win->mlx_ptr, win->width, win->height);
 	if (!win->img.img)

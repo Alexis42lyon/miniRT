@@ -21,7 +21,7 @@ void	print_exit(t_prog *prog, char *str)
 	free_all(prog);
 }
 
-void	free_win(t_win *win)
+void	free_win(t_win_scene *win)
 {
 	free(win->name);
 	if (win->img.img)
@@ -51,7 +51,7 @@ void	free_scene(t_scene *scene)
 void	free_all(t_prog *prog)
 {
 	free_scene(prog->scene);
-	free_win(prog->win);
+	free_win(prog->win_scene);
 	exit(0);
 }
 

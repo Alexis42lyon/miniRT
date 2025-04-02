@@ -12,7 +12,8 @@
 # define SIZE_WIN 0.5
 # define SHOW_SRUCT 0
 
-typedef struct s_win	t_win;
+typedef struct s_win_scene	t_win_scene;
+typedef struct s_win_button	t_win_button;
 
 typedef struct info
 {
@@ -94,8 +95,9 @@ typedef struct s_scene
 
 typedef struct s_prog
 {
-	t_scene		*scene;
-	t_win		*win;
+	t_scene			*scene;
+	t_win_scene		*win_scene;
+	t_win_button	*win_button;
 	// more ..
 }	t_prog;
 
