@@ -49,6 +49,8 @@ typedef struct s_button
 	char	*text;
 }	t_button;
 
+typedef void	(*t_button_func)(t_prog *);
+
 // image.c
 int		create_img(t_win *win);
 void	set_pixel(t_data *data, int x, int y, int color);

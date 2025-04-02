@@ -1,22 +1,10 @@
 #include "window.h"
 
-typedef void	(*t_button_func)(t_prog *);
-
 static void	button_func2(t_prog *prog)
 {
 	free_scene(prog->scene);
 	init(prog, NULL);
 	run_pipeline(prog);
-}
-
-static void	button_func3(t_prog *win)
-{
-	(void)win;
-}
-
-static void	button_func4(t_prog *win)
-{
-	(void)win;
 }
 
 // frame time
@@ -25,15 +13,10 @@ static void	button_func4(t_prog *win)
 
 static t_button_func	get_button_func(int index)
 {
-	static t_button_func	funcs[] =
-	{
-		&run_pipeline,
-		&button_func2,
-		&button_func3,
-		&button_func4
-	};
-	int	count = sizeof(funcs) / sizeof(funcs[0]);
+	static t_button_func	funcs[] = {&run_pipeline, &button_func2};
+	int						count;
 
+	count = sizeof(funcs) / sizeof(funcs[0]);
 	if (index < 0 || index >= count)
 		return (NULL);
 	return (funcs[index]);
@@ -41,15 +24,13 @@ static t_button_func	get_button_func(int index)
 
 static const t_button	*get_button_data(int index)
 {
-	static t_button	buttons[] =
-	{
-		{10, 10, 100, 50, 0xFF0000, "Btn1"},
-		{120, 10, 100, 50, 0x00FF00, "Btn2"},
-		{10, 70, 100, 50, 0x0000FF, "Btn3"},
-		{120, 70, 100, 50, 0xFFFF00, "Btn4"}
-	};
-	int				count = sizeof(buttons) / sizeof(buttons[0]);
+	static t_button	buttons[] = {{10, 10, 100, 50, 0xFF0000, "Btn1"},
+	{120, 10, 100, 50, 0x00FF00, "Btn2"},
+	{10, 70, 100, 50, 0x0000FF, "Btn3"},
+	{120, 70, 100, 50, 0xFFFF00, "Btn4"}};
+	int				count;
 
+	count = sizeof(buttons) / sizeof(buttons[0]);
 	if (index < 0 || index >= count)
 		return (NULL);
 	return (&buttons[index]);

@@ -3,7 +3,7 @@
 
 void	init(t_prog *prog, char **av)
 {
-	static char **av2 = NULL;
+	static char	**av2 = NULL;
 
 	if (!av2)
 		av2 = av;
