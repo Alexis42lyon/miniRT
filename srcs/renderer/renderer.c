@@ -6,37 +6,6 @@
 //! TO REMOVE
 #include <stdio.h>
 
-t_vec3	draw_background(t_ray r, t_scene *scene)
-{
-	t_hit	hit;
-	t_hit	tmp;
-	size_t	i;
-	t_vec3	light_dir = vec3_normalize((t_vec3){-1, -1, -1}); // FAKE LIGHT
-	float	dot;
-
-
-	hit.hit_distance = INT_MIN;
-	i = 0;
-	while (i < scene->nb_spheres)
-	{
-		tmp = sphere_hit(scene->spheres[i], r);
-		if (tmp.hit_distance > hit.hit_distance)
-		{
-			hit = tmp;
-			hit.obj_index = i;
-		}
-		i++;
-	}
-	if (hit.hit_distance > 0)
-	{
-		dot = ft_dot(hit.hit_normal, vec3_mult(light_dir, -1));
-		dot *= 0.5f;
-		dot += 0.5f;
-		return (vec3_mult(scene->spheres[hit.obj_index].color, dot));
-	}
-	return ((t_vec3){0, 0, 0});
-}
-
 t_viewport	viewport(t_win *win, t_scene *scene)
 {
 	t_viewport	vp;
@@ -57,44 +26,28 @@ t_viewport	viewport(t_win *win, t_scene *scene)
 	return (vp);
 }
 
-t_ray	get_ray(int i, int j, t_viewport vp, uint seed)
+t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 {
-	t_vec3	offset;
-	t_vec3	sample;
+	t_vec3	light_dir;
+	float	dot;
 	t_ray	ray;
+	t_hit	hit_result;
 
-	(void)seed;
-	offset = vec3_rand_range(0.5, seed);
-	sample = vec3_add(vec3_add(vp.px_00,
-			vec3_mult(vp.px_delta_u, i + offset.x)),
-			vec3_mult(vp.px_delta_u, j + offset.y));
-	sample = vec3_add(vp.px_00, vec3_add(
-				vec3_mult(vp.px_delta_u, i + offset.x),
-				vec3_mult(vp.px_delta_v, j + offset.y))
-				);	
-			
-	t_vec3 px_center = vec3_add(vp.px_00, vec3_add(
-				vec3_mult(vp.px_delta_u, i),
-				vec3_mult(vp.px_delta_v, j))
-				);
-
-	// printf("px_center: ");
-	// print_vec(px_center);
-	// printf("sample: ");
-	// print_vec(sample);
-	// printf("\n");
-
-	ray.origin = vp.cam.origin;
-	ray.dir = vec3_sub(px_center, ray.origin); // TODO: change to sample point
-	return (ray);
+	light_dir = vec3_normalize((t_vec3){-1, -1, -1}); // FAKE LIGHT
+	ray = get_ray(i, j, vp, scene->sample_count);
+	hit_result = trace_ray(ray, scene);
+	if (hit_result.hit_distance == -1)
+		return ((t_vec3){0, 0, 0});
+	dot = ft_dot(hit_result.hit_normal, vec3_mult(light_dir, -1));
+	dot *= 0.5f;
+	dot += 0.5f;
+	return (vec3_mult(scene->spheres[hit_result.obj_index].color, dot));
 }
 
-void	trace_ray(t_viewport vp, t_scene *scene)
+void	render(t_viewport vp, t_scene *scene)
 {
 	int		i;
 	int		j;
-	// t_vec3	px_center;
-	t_ray	ray;
 	t_vec3	col;
 
 	j = 0;
@@ -103,43 +56,35 @@ void	trace_ray(t_viewport vp, t_scene *scene)
 		i = 0;
 		while (i < vp.win->width)
 		{
-			ray = get_ray(i, j, vp, scene->sample_count);
-			scene->sample_count++;
-			// ray.dir = vec3_sub(px_center, vp.cam.origin);
-			// ray.origin = vp.cam.origin;
-			col = draw_background(ray, scene);
+			col = get_px_col(i, j, vp, scene);
 			set_pixel(&vp.win->img, i, j, convert_to_rgba(col));
 			i++;
 		}
 		j++;
 	}
-}
-
-void	render(t_win *win, t_scene *scene)
-{
-	t_viewport	vp;
-	int			msec;
-	clock_t		before;
-	clock_t		difference;
-
-	msec = 0;
-	before = clock();
-	vp = viewport(win, scene);
-	trace_ray(vp, scene);
 	scene->frame_count++;
-	difference = clock() - before;
-	msec = difference * 1000 / CLOCKS_PER_SEC;
-	ft_dprintf(2, GRAY "[LOG]: render time:%dms \n" RESET, msec % 1000);
-	ft_dprintf(2, GRAY "[LOG]: frame_count:%d \n" RESET, scene->frame_count);
-	ft_dprintf(2, GREEN "done rendering!\n\n" RESET);
 }
 
 void	run_pipeline(t_prog *prog)
 {
-	render(prog->win, prog->scene);
+	int			msec;
+	clock_t		before;
+	clock_t		difference;
+	t_viewport	vp;
+
+	vp = viewport(prog->win, prog->scene);
+	msec = 0;
+	before = clock();
+	render(vp, prog->scene);
 	mlx_put_image_to_window(prog->win->mlx_ptr, prog->win->win_ptr,
 		prog->win->img.img, 0, 0);
 	init_buttons(prog->win);
+	difference = clock() - before;
+	msec = difference * 1000 / CLOCKS_PER_SEC;
+	ft_dprintf(2, GRAY "[LOG]: render time:%dms \n" RESET, msec % 1000);
+	ft_dprintf(2, GRAY "[LOG]: frame_count:%d \n" RESET,
+		prog->scene->frame_count);
+	ft_dprintf(2, GREEN "done rendering!\n\n" RESET);
 }
 
 void	start_renderer(t_prog *prog)
