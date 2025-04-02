@@ -3,16 +3,12 @@
 #include <limits.h>
 #include <time.h>
 
+#define BOUNCES 2
+
 //! TO REMOVE
 #include <stdio.h>
 
-<<<<<<< HEAD
 t_viewport	viewport(t_win_scene *win, t_scene *scene)
-=======
-#define BOUNCES 2
-
-t_viewport	viewport(t_win *win, t_scene *scene)
->>>>>>> refs/remotes/origin/main
 {
 	t_viewport	vp;
 
@@ -46,7 +42,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 
 	light_dir = vec3_normalize((t_vec3){-1, -1, -1}); // FAKE LIGHT
 	ray = get_ray(i, j, vp, scene->sample_count);
-	
+
 	for (int i = 0; i < BOUNCES; i++)
 	{
 		hit = trace_ray(ray, scene);
@@ -55,13 +51,13 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 			final_color = vec3_mult(vec3_add(final_color, scene->sky_color), mutiplier);
 			break;
 		}
-	
+
 		dot = ft_dot(hit.hit_normal, vec3_mult(light_dir, -1));
 		dot *= 0.5f;
 		dot += 0.5f;
 		t_vec3	color = scene->spheres[hit.obj_index].color;
 		color = vec3_mult(color, dot);
-		
+
 		final_color = vec3_mult( vec3_add(final_color, color), mutiplier);
 
 		mutiplier *= 0.5f;
@@ -101,12 +97,8 @@ void	run_pipeline(t_prog *prog)
 	clock_t		difference;
 	t_viewport	vp;
 
-<<<<<<< HEAD
-	vp = viewport(prog->win_scene, prog->scene);
-=======
 	prog->scene->sky_color = (t_vec3){0.8, 0.9, 0.95};
-	vp = viewport(prog->win, prog->scene);
->>>>>>> refs/remotes/origin/main
+	vp = viewport(prog->win_scene, prog->scene);
 	msec = 0;
 	before = clock();
 	render(vp, prog->scene);
