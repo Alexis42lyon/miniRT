@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:58:27 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/01 13:30:56 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/02 12:41:41 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ double	vec3_lenght_square(const t_vec3 vec);
 
 t_vec3	vec3_rand_range(float range, uint seed);
 t_vec3	vec3_rand_unit(uint seed);
+
+t_vec3	vec3_reflect(const t_vec3 vec, const t_vec3 n);
 
 
 #endif
