@@ -3,15 +3,12 @@
 #include <limits.h>
 #include <time.h>
 
-
-// parser error: decimal point are alway parse has positive nb (ex: 0.8 == -0.8) (-1.8 will put the origin 1 unit down then add 0.8 up)
+#define BOUNCES 2
 
 //! TO REMOVE
 #include <stdio.h>
 
-#define BOUNCES 1
-
-t_viewport	viewport(t_win *win, t_scene *scene)
+t_viewport	viewport(t_win_scene *win, t_scene *scene)
 {
 	t_viewport	vp;
 
@@ -45,7 +42,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 
 	light_dir = vec3_normalize((t_vec3){-1, -1, -1}); // FAKE LIGHT
 	ray = get_ray(i, j, vp, scene->sample_count);
-	
+
 	for (int i = 0; i < BOUNCES; i++)
 	{
 		hit = trace_ray(ray, scene);
@@ -54,12 +51,13 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 			final_color = vec3_mult(vec3_add(final_color, scene->sky_color), mutiplier);
 			break;
 		}
-	
+
 		dot = ft_dot(hit.hit_normal, vec3_mult(light_dir, -1));
 		dot *= 0.5f;
 		dot += 0.5f;
 		t_vec3	color = scene->spheres[hit.obj_index].color;
 		color = vec3_mult(color, dot);
+
 		final_color = vec3_mult( vec3_add(final_color, color), mutiplier);
 
 		mutiplier *= 0.5f;
@@ -102,13 +100,12 @@ void	run_pipeline(t_prog *prog)
 	t_viewport	vp;
 
 	prog->scene->sky_color = (t_vec3){0.8, 0.9, 0.95};
-	vp = viewport(prog->win, prog->scene);
+	vp = viewport(prog->win_scene, prog->scene);
 	msec = 0;
 	before = clock();
 	render(vp, prog->scene);
-	mlx_put_image_to_window(prog->win->mlx_ptr, prog->win->win_ptr,
-		prog->win->img.img, 0, 0);
-	init_buttons(prog->win);
+	mlx_put_image_to_window(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr,
+		prog->win_scene->img.img, 0, 0);
 	difference = clock() - before;
 	msec = difference * 1000 / CLOCKS_PER_SEC;
 	ft_dprintf(2, GRAY "[LOG]: render time:%dms \n" RESET, msec % 1000);
@@ -119,10 +116,10 @@ void	run_pipeline(t_prog *prog)
 
 void	start_renderer(t_prog *prog)
 {
-	t_win	*win;
+	t_win_scene	*win;
 	t_scene	*scene;
 
-	win = prog->win;
+	win = prog->win_scene;
 	scene = prog->scene;
 	scene->sample_count = 0;
 	init_win(prog);
@@ -130,5 +127,6 @@ void	start_renderer(t_prog *prog)
 	if (win->mlx_ptr == NULL)
 		return ;
 	run_pipeline(prog);
+	init_button_window(prog);
 	mlx_loop(win->mlx_ptr);
 }

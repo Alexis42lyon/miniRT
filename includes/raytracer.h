@@ -24,7 +24,7 @@ typedef struct hit_info
 
 typedef struct viewport
 {
-	t_win		*win;
+	t_win_scene		*win;
 
 	double		vp_height;
 	double		vp_width;

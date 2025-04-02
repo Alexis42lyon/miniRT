@@ -4,7 +4,6 @@
 # include "miniRT.h"
 
 void	init(t_prog *prog, char **av);
-void	check_atoi(t_prog *prog, char *s, int *res);
 
 // parse.c
 void	parse(t_prog *prog);

@@ -9,9 +9,10 @@
 
 int	main(int ac, char **av)
 {
-	t_prog	prog;
-	t_win	win;
-	t_scene	scene;
+	t_prog		prog;
+	t_scene		scene;
+	t_win_scene		win_scene;
+	t_win_button	win_button;
 
 	if (ac != 2)
 	{
@@ -25,8 +26,9 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	prog.scene = &scene;
-	prog.win = &win;
-	ft_bzero(prog.win, sizeof(t_win));
+	prog.win_scene = &win_scene;
+	prog.win_button = &win_button;
+	ft_bzero(prog.win_scene, sizeof(t_win_scene));
 	init(&prog, av);
 	start_renderer(&prog);
 	free_all(&prog);

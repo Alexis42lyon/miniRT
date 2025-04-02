@@ -19,7 +19,7 @@ typedef struct s_data
 	int		endian;
 }	t_data;
 
-typedef struct s_win
+typedef struct s_win_scene
 {
 	char	*name;
 	int		width;
@@ -29,44 +29,41 @@ typedef struct s_win
 	int		view_height;
 	int		aspect_ratio;
 
-	int		button_x;
-	int		button_y;
-	int		button_width;
-	int		button_height;
-
 	void	*win_ptr;
 	void	*mlx_ptr;
 	t_data	img;
-}	t_win;
+}	t_win_scene;
 
-typedef struct s_button
+typedef struct s_win_button
 {
+	void	*win_ptr;
+	void	*mlx_ptr;
+
 	int		x;
 	int		y;
 	int		width;
 	int		height;
 	int		color;
 	char	*text;
-}	t_button;
+}	t_win_button;
 
-typedef void	(*t_button_func)(t_prog *);
+typedef void (*t_button_func)(t_prog *);
 
 // image.c
-int		create_img(t_win *win);
+int		create_img(t_win_scene *win);
 void	set_pixel(t_data *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
 
 // window.c
 void	init_win(t_prog *prog);
-int		mouse_click(int button, int x, int y, t_prog *prog);
-void	draw_button(t_win *win, int color);
 int		key_hook(int keycode, t_prog *prog);
 
 void	run_pipeline(t_prog *prog);
 
 // button.c
-void	init_buttons(t_win *win);
+int		button_window_click(int button, int x, int y, t_prog *prog);
 void	free_scene(t_scene *scene);
 void	init(t_prog *prog, char **av);
+void	init_button_window(t_prog *prog);
 
 #endif

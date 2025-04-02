@@ -27,7 +27,7 @@ static void	parse_camera(t_prog *prog, char **tokens)
 	if (!is_normalized(direction))
 		print_exit(prog, "Invalid camera orientation");
 	prog->scene->camera.direction = direction;
-	check_atoi(prog, tokens[3], &prog->scene->camera.fov);
+	prog->scene->camera.fov = ft_atof(tokens[3]);
 	if (prog->scene->camera.fov < 0 || prog->scene->camera.fov > 180)
 		print_exit(prog, "FOV must be in range [0, 180]");
 }

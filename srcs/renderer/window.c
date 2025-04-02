@@ -45,10 +45,12 @@ int	window_close(void *prog)
 
 void	init_win(t_prog *prog)
 {
-	t_win	*win;
+	t_win_scene	*win;
 
-	win = prog->win;
-	ft_bzero(win, sizeof(t_win));
+	prog->win_button->mlx_ptr = NULL;
+	prog->win_button->win_ptr = NULL;
+	win = prog->win_scene;
+	ft_bzero(win, sizeof(t_win_scene));
 	win->height = HEIGHT;
 	win->width = WIDTH;
 	win->mlx_ptr = mlx_init();
@@ -61,5 +63,5 @@ void	init_win(t_prog *prog)
 	if (create_img(win) == -1)
 		free_all(prog);
 	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, prog);
-	mlx_mouse_hook(win->win_ptr, mouse_click, prog);
+	mlx_mouse_hook(win->win_ptr, button_window_click, prog);
 }

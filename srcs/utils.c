@@ -21,9 +21,19 @@ void	print_exit(t_prog *prog, char *str)
 	free_all(prog);
 }
 
-void	free_win(t_win *win)
+void	free_win_button(t_win_button *win)
 {
-	free(win->name);
+	if (win->win_ptr)
+		mlx_destroy_window(win->mlx_ptr, win->win_ptr);
+	if (win->mlx_ptr)
+	{
+		mlx_destroy_display(win->mlx_ptr);
+		free(win->mlx_ptr);
+	}
+}
+
+void	free_win_scene(t_win_scene *win)
+{
 	if (win->img.img)
 		mlx_destroy_image(win->mlx_ptr, win->img.img);
 	if (win->win_ptr)
@@ -51,7 +61,8 @@ void	free_scene(t_scene *scene)
 void	free_all(t_prog *prog)
 {
 	free_scene(prog->scene);
-	free_win(prog->win);
+	free_win_scene(prog->win_scene);
+	free_win_button(prog->win_button);
 	exit(0);
 }
 
