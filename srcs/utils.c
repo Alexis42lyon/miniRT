@@ -23,13 +23,7 @@ void	print_exit(t_prog *prog, char *str)
 
 void	free_win_button(t_win_button *win)
 {
-	if (win->win_ptr)
-		mlx_destroy_window(win->mlx_ptr, win->win_ptr);
-	if (win->mlx_ptr)
-	{
-		mlx_destroy_display(win->mlx_ptr);
-		free(win->mlx_ptr);
-	}
+	(void)win;
 }
 
 void	free_win_scene(t_win_scene *win)
