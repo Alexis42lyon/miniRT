@@ -52,7 +52,6 @@ int	key_hook(int keycode, t_prog *prog)
 		camera->fov--;
 	else
 		return (0);
-	print_cam(camera);
 	run_pipeline(prog);
 	return (0);
 }
@@ -76,6 +75,7 @@ void	init_win(t_prog *prog)
 	win->mlx_ptr = mlx_init();
 	if (!win->mlx_ptr)
 		free_all(prog);
+	mlx_do_key_autorepeaton(prog->win_scene->mlx_ptr);
 	win->win_ptr = mlx_new_window(win->mlx_ptr, win->width,
 			win->height, "miniRT");
 	if (!win->win_ptr)

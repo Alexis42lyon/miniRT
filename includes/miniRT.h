@@ -113,4 +113,5 @@ void	free_all(t_prog *prog_set);
 void	check_mem(t_info info, void *mem, void **res, t_prog *prog);
 void	print_exit(t_prog *prog, char *str);
 
+void	print_cam(const t_camera *cam);
 #endif

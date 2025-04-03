@@ -1,6 +1,7 @@
 #include "libft/math.h"
 #include "libft/vector.h"
 #include "miniRT.h"
+#include "mlx.h"
 #include "window.h"
 #include "raytracer.h"
 #include <limits.h>
@@ -62,7 +63,6 @@ t_viewport viewport(t_win_scene *win, t_scene *scene)
 						
 	return vp;
 }
-
 
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 {
@@ -131,6 +131,7 @@ void	run_pipeline(t_prog *prog)
 	clock_t		difference;
 	t_viewport	vp;
 
+	print_cam(&prog->scene->camera);
 	prog->scene->sky_color = (t_vec3){0.8, 0.9, 0.95};
 	vp = viewport(prog->win_scene, prog->scene);
 	msec = 0;
@@ -155,6 +156,7 @@ void	start_renderer(t_prog *prog)
 	scene = prog->scene;
 	scene->sample_count = 0;
 	init_win(prog);
+	mlx_key_hook(win->win_ptr, key_hook, prog);
 	if (win->mlx_ptr == NULL)
 		return ;
 	run_pipeline(prog);
