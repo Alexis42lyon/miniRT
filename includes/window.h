@@ -68,5 +68,6 @@ void	free_scene(t_scene *scene);
 void	init(t_prog *prog, char **av);
 void	init_button_window(t_prog *prog);
 void	start_renderer(t_prog *prog);
+void	print_scene(const t_scene *scene);
 
 #endif

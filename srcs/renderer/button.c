@@ -46,7 +46,10 @@ int	handle_click(int button, int x, int y, t_prog *prog)
 			&& y >= 75 && y <= 90)
 			win->is_dragging = 1;
 		else if (x >= 20 && x <= 120 && y >= 20 && y <= 50)
+		{
 			run_pipeline(prog);
+			print_scene(prog->scene);
+		}
 	}
 	return (0);
 }
