@@ -53,7 +53,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 			final_color = vec3_mult(vec3_add(final_color, scene->sky_color), mutiplier);
 			break;
 		}
-	
+
 		float	light_intensity = ft_dot(hit.hit_normal, vec3_mult(light_dir, -1));
 		if (light_intensity < 0)
 			light_intensity = 0;
@@ -122,7 +122,6 @@ void	start_renderer(t_prog *prog)
 	scene = prog->scene;
 	scene->sample_count = 0;
 	init_win(prog);
-	// mlx_key_hook(win->win_ptr, key_hook, prog);
 	if (win->mlx_ptr == NULL)
 		return ;
 	run_pipeline(prog);
