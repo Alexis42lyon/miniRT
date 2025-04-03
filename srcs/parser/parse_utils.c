@@ -55,3 +55,28 @@ void	init_malloc(t_prog *prog)
 		malloc(sizeof(t_cylinder) * (prog->scene->nb_cylinders + 1)),
 		(void **)&prog->scene->cylinders, prog);
 }
+
+double	check_atof(const char *nptr)
+{
+	double	res;
+	double	fraction;
+
+	res = ft_atoi(nptr);
+	fraction = 0.1;
+	while ((*nptr >= 9 && *nptr <= 13) || *nptr == ' ')
+		nptr++;
+	if (*nptr == '-' || *nptr == '+')
+		nptr++;
+	while (*nptr >= '0' && *nptr <= '9')
+		nptr++;
+	if (*nptr++ == '.')
+	{
+		while (*nptr >= '0' && *nptr <= '9')
+		{
+			res += (*nptr - '0') * fraction;
+			fraction *= 0.1;
+			nptr++;
+		}
+	}
+	return (res);
+}

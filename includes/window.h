@@ -34,17 +34,19 @@ typedef struct s_win_scene
 	t_data	img;
 }	t_win_scene;
 
+# define SLIDER_WIDTH 200
+# define SLIDER_MIN 0
+# define SLIDER_MAX 180
+
 typedef struct s_win_button
 {
 	void	*win_ptr;
 	void	*mlx_ptr;
-
-	int		x;
-	int		y;
 	int		width;
 	int		height;
-	int		color;
-	char	*text;
+	int		slider_x;
+	int		slider_width;
+	int		is_dragging;
 }	t_win_button;
 
 typedef void (*t_button_func)(t_prog *);
@@ -65,5 +67,6 @@ int		button_window_click(int button, int x, int y, t_prog *prog);
 void	free_scene(t_scene *scene);
 void	init(t_prog *prog, char **av);
 void	init_button_window(t_prog *prog);
+void	start_renderer(t_prog *prog);
 
 #endif

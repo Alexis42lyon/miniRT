@@ -63,5 +63,4 @@ void	init_win(t_prog *prog)
 	if (create_img(win) == -1)
 		free_all(prog);
 	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, prog);
-	mlx_mouse_hook(win->win_ptr, button_window_click, prog);
 }

@@ -123,7 +123,7 @@ void	start_renderer(t_prog *prog)
 	scene = prog->scene;
 	scene->sample_count = 0;
 	init_win(prog);
-	mlx_key_hook(win->win_ptr, key_hook, prog);
+	// mlx_key_hook(win->win_ptr, key_hook, prog);
 	if (win->mlx_ptr == NULL)
 		return ;
 	run_pipeline(prog);
