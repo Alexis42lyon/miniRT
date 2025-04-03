@@ -33,7 +33,7 @@ int	key_hook(int keycode, t_prog *prog)
 		camera->direction = vec3_add(camera->direction, new_vec3(0.02, 0, 0));
 	else if (keycode == RIGHT_ARR)
 		camera->direction = vec3_add(camera->direction, new_vec3(-0.02, 0, 0));
-	
+
 	else if (keycode == 'q')
 		camera->origin = vec3_add(camera->origin, new_vec3(0, -0.4, 0));
 	else if (keycode == 'e')
