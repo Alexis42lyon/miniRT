@@ -24,8 +24,8 @@ static void	parse_camera(t_prog *prog, char **tokens)
 	parse_vector(prog, &origin, tokens[1]);
 	prog->scene->camera.origin = origin;
 	parse_vector(prog, &direction, tokens[2]);
-	if (!is_normalized(direction))
-		print_exit(prog, "Invalid camera orientation");
+	// if (!is_normalized(direction))
+	// 	print_exit(prog, "Invalid camera orientation");
 	prog->scene->camera.direction = direction;
 	prog->scene->camera.fov = ft_atof(tokens[3]);
 	if (prog->scene->camera.fov < 0 || prog->scene->camera.fov > 180)
