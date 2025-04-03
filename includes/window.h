@@ -60,7 +60,7 @@ int		create_trgb(int t, int r, int g, int b);
 void	init_win(t_prog *prog);
 int		key_hook(int keycode, t_prog *prog);
 
-void	run_pipeline(t_prog *prog);
+int	run_pipeline(t_prog *prog);
 
 // button.c
 int		button_window_click(int button, int x, int y, t_prog *prog);

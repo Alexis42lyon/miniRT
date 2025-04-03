@@ -12,6 +12,28 @@
 //! TO REMOVE
 #include <stdio.h>
 
+void	show_progress(int current, int max)
+{
+		int		i;
+		float	progress;
+
+		printf("\033[?25lprogress: [");
+		progress = ((double)current / (double)max) * 100;
+		i = 0;
+		while (i * 5 < progress)
+		{
+				printf(RESET "#");
+				i++;
+		}
+		while (i < 20)
+		{
+				printf(GRAY "-");
+				i++;
+		}
+		printf(RESET "] (%d%%)\r", (int)progress);
+
+}
+
 t_viewport viewport(t_win_scene *win, t_scene *scene)
 {
 	t_viewport vp;
@@ -44,11 +66,24 @@ t_viewport viewport(t_win_scene *win, t_scene *scene)
 	return vp;
 }
 
+
+
+t_vec3	r(int r)
+{
+	return ((t_vec3){
+		(double)(rand() % (r * 2) - r) / 10,
+		(double)(rand() % (r * 2) - r) / 10,
+		(double)(rand() % (r * 2) - r) / 10
+	});
+}
+
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 {
 	t_vec3	light_dir;
 	t_ray	ray;
 	t_hit	hit;
+	t_mat	mat;
+	t_vec3	color;
 
 	t_vec3	final_color;
 	float	mutiplier = 1.0f;
@@ -70,19 +105,20 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 		float	light_intensity = ft_dot(hit.hit_normal, vec3_mult(light_dir, -1));
 		if (light_intensity < 0)
 			light_intensity = 0;
-		t_vec3	color = scene->spheres[hit.obj_index].material.albedo;
-		color = vec3_mult(color, light_intensity);
+		mat = scene->spheres[hit.obj_index].material;
+		mat.roughtness = 0;
+		color = vec3_mult(mat.albedo, light_intensity);
 
 		final_color = vec3_mult(vec3_add(final_color, color), mutiplier);
 		mutiplier *= 0.5f;
 
 		ray.origin = vec3_add(hit.hit_point, vec3_mult(hit.hit_normal, 0.0001));
-		ray.dir = vec3_reflect(ray.dir, hit.hit_normal);
+		ray.dir = vec3_reflect(ray.dir,
+			vec3_add(hit.hit_normal, vec3_mult(r(5), mat.roughtness)));
 	}
 
 	return (final_color);
 }
-void    show_progress(int current, int max);
 
 void	render(t_viewport vp, t_scene *scene)
 {
@@ -107,29 +143,7 @@ void	render(t_viewport vp, t_scene *scene)
 	scene->frame_count++;
 }
 
-void    show_progress(int current, int max)
-{
-        int             i;
-        float   progress;
-
-        printf("\033[?25lprogress: [");
-        progress = ((double)current / (double)max) * 100;
-        i = 0;
-        while (i * 5 < progress)
-        {
-                printf(RESET "#");
-                i++;
-        }
-        while (i < 20)
-        {
-                printf(GRAY "-");
-                i++;
-        }
-        printf(RESET "] (%d%%)\r", (int)progress);
-
-}
-
-void	run_pipeline(t_prog *prog)
+int	run_pipeline(t_prog *prog)
 {
 	int			msec;
 	clock_t		before;
@@ -150,6 +164,7 @@ void	run_pipeline(t_prog *prog)
 	ft_dprintf(2, GRAY "[LOG]: frame_count:%d \n" RESET,
 		prog->scene->frame_count);
 	ft_dprintf(2, GREEN "done rendering!\n\n" RESET);
+	return (0);
 }
 
 void	start_renderer(t_prog *prog)

@@ -50,8 +50,8 @@ inline t_vec3	vec3_rand_range(float range, uint seed)
 {
 	return ((t_vec3){
 		PCG_Hash_range(range, seed),
-		PCG_Hash_range(range, seed * 2),
-		PCG_Hash_range(range, seed * 8)
+		PCG_Hash_range(range, seed << 8),
+		PCG_Hash_range(range, seed >> 8)
 	});
 }
 #include <stdio.h>
