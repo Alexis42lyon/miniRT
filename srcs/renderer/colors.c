@@ -1,4 +1,3 @@
-#include "miniRT.h"
 #include "raytracer.h"
 
 t_vec3	normal_color(t_hit hit)
