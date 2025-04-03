@@ -1,3 +1,6 @@
+#include "libft/math.h"
+#include "libft/vector.h"
+#include "miniRT.h"
 #include "window.h"
 #include "raytracer.h"
 #include <limits.h>
@@ -31,7 +34,6 @@ t_viewport	viewport(t_win_scene *win, t_scene *scene)
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 {
 	t_vec3	light_dir;
-	float	dot;
 	t_ray	ray;
 	t_hit	hit;
 
@@ -51,15 +53,14 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 			final_color = vec3_mult(vec3_add(final_color, scene->sky_color), mutiplier);
 			break;
 		}
-
-		dot = ft_dot(hit.hit_normal, vec3_mult(light_dir, -1));
-		dot *= 0.5f;
-		dot += 0.5f;
+	
+		float	light_intensity = ft_dot(hit.hit_normal, vec3_mult(light_dir, -1));
+		if (light_intensity < 0)
+			light_intensity = 0;
 		t_vec3	color = scene->spheres[hit.obj_index].color;
-		color = vec3_mult(color, dot);
+		color = vec3_mult(color, light_intensity);
 
 		final_color = vec3_mult( vec3_add(final_color, color), mutiplier);
-
 		mutiplier *= 0.5f;
 
 		ray.origin = vec3_add(hit.hit_point, vec3_mult(hit.hit_normal, 0.0001));
@@ -67,8 +68,6 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	}
 
 	return (final_color);
-	// print_vec(final_color);
-	// return ((t_vec3){ft_min(1, final_color.x), ft_min(1, final_color.y), ft_min(1, final_color.z)});
 }
 
 void	render(t_viewport vp, t_scene *scene)

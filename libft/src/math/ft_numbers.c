@@ -10,21 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_abs(int n)
+int	ft_abs(float n)
 {
 	if (n < 0)
 		return (n * -1);
 	return (n);
 }
 
-int	ft_min(int a, int b)
+float ft_min(float a, float b)
 {
 	if (a < b)
 		return (a);
 	return (b);
 }
 
-int	ft_max(int a, int b)
+float	ft_max(float a, float b)
 {
 	if (a > b)
 		return (a);
