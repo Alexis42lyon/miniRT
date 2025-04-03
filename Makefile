@@ -4,7 +4,7 @@ OBJ_DIR = obj
 INCLUDES = -Iincludes -Ilibft/includes -Imlx
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -MMD -MP $(INCLUDES)
+CFLAGS = -Wall -Werror -Wextra -MMD -MP $(INCLUDES) -g3
 MLXFLAGS = -lX11 -lXext -lbsd -lm
 
 VPATH = srcs:srcs/parser:srcs/renderer
@@ -65,7 +65,7 @@ scene: all
 		./$(NAME) scenes/$(file).rt
 
 leaks: all
-		valgrind --track-origins=yes ./$(NAME) scenes/$(file).rt
+		valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME) scenes/$(file).rt
 
 clean:
 	rm -rf $(OBJ_DIR)
