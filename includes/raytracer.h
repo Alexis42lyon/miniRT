@@ -38,7 +38,7 @@ typedef struct viewport
 	t_vec3		vp_up_left;
 	t_vec3		px_00;
 
-	t_camera	cam;
+	t_camera	*cam;
 
 	t_vec3		color;
 }	t_viewport;

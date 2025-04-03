@@ -18,7 +18,7 @@ t_ray	get_ray(int i, int j, t_viewport vp, uint seed)
 				vec3_mult(vp.px_delta_u, i),
 				vec3_mult(vp.px_delta_v, j))
 			);
-	ray.origin = vp.cam.origin;
+	ray.origin = vp.cam->origin;
 	ray.dir = vec3_sub(px_center, ray.origin);
 	return (ray);
 }

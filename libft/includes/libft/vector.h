@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:58:27 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/03 10:33:29 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:45:30 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 #include <sys/types.h>
 #include "libft/math.h"
+
+#ifndef uint
+# define uint unsigned int
+#endif
 
 typedef struct s_vector3
 {

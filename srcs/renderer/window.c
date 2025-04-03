@@ -2,6 +2,7 @@
 #include "libft/io.h"
 #include "libft/memory.h"
 #include "libft/string.h"
+#include "libft/vector.h"
 #include "miniRT.h"
 #include "mlx.h"
 #include <stdio.h>
@@ -26,26 +27,26 @@ int	key_hook(int keycode, t_prog *prog)
 	if (keycode == ESC)
 		free_all(prog);
 	else if (keycode == UP_ARR)
-		camera->direction = vec3_add(camera->direction, new_vec3(0, -0.02, 0));
+		camera->direction = vec3_add(camera->direction, new_vec3(0, -0.05, 0));
 	else if (keycode == DOWN_ARR)
-		camera->direction = vec3_add(camera->direction, new_vec3(0, 0.02, 0));
+		camera->direction = vec3_add(camera->direction, new_vec3(0, 0.05, 0));
 	else if (keycode == LEFT_ARR)
-		camera->direction = vec3_add(camera->direction, new_vec3(0.02, 0, 0));
+		camera->direction = vec3_add(camera->direction, new_vec3(0.05, 0, 0));
 	else if (keycode == RIGHT_ARR)
-		camera->direction = vec3_add(camera->direction, new_vec3(-0.02, 0, 0));
+		camera->direction = vec3_add(camera->direction, new_vec3(-0.05, 0, 0));
 
 	else if (keycode == 'q')
-		camera->origin = vec3_add(camera->origin, new_vec3(0, -0.4, 0));
+		camera->origin = vec3_add(camera->origin, vec3_mult(camera->up, 0.5));
 	else if (keycode == 'e')
-		camera->origin = vec3_add(camera->origin, new_vec3(0, 0.4, 0));
+		camera->origin = vec3_add(camera->origin, vec3_mult(camera->up, -0.5));
 	else if (keycode == 'w')
-		camera->origin = vec3_add(camera->origin, new_vec3(0, 0, -0.4));
+		camera->origin = vec3_add(camera->origin, vec3_mult(camera->foward, -0.5));
 	else if (keycode == 's')
-		camera->origin = vec3_add(camera->origin, new_vec3(0, 0, 0.4));
+		camera->origin = vec3_add(camera->origin, vec3_mult(camera->foward, 0.5));
 	else if (keycode == 'a')
-		camera->origin = vec3_add(camera->origin, new_vec3(-0.4, 0, 0));
+		camera->origin = vec3_add(camera->origin, vec3_mult(camera->right, -0.5));
 	else if (keycode == 'd')
-		camera->origin = vec3_add(camera->origin, new_vec3(0.4, 0, 0));
+		camera->origin = vec3_add(camera->origin, vec3_mult(camera->right, 0.5));
 	else if (keycode == 'z')
 		camera->fov++;
 	else if (keycode == 'x')

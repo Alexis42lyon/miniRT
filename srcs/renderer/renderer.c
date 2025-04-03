@@ -12,47 +12,27 @@
 //! TO REMOVE
 #include <stdio.h>
 
-// t_viewport	viewport(t_win_scene *win, t_scene *scene)
-// {
-// 	t_viewport	vp;
-
-// 	vp.win = win;
-// 	vp.cam = scene->camera;
-// 	vp.vp_height = 2;
-// 	vp.vp_width = vp.vp_height * ((double)win->width / win->height);
-// 	vp.vp_u = (t_vec3){vp.vp_width, 0, 0};
-// 	vp.vp_v = (t_vec3){0, -vp.vp_height, 0};
-// 	vp.px_delta_u = vec3_divide(vp.vp_u, WIDTH);
-// 	vp.px_delta_v = vec3_divide(vp.vp_v, HEIGHT);
-// 	vp.vp_up_left = vec3_sub(vec3_sub(vec3_sub(vp.cam.origin,
-// 					(t_vec3){0, 0, vp.cam.fov}),
-// 				vec3_divide(vp.vp_u, 2)), vec3_divide(vp.vp_v, 2));
-// 	vp.px_00 = vec3_add(vp.vp_up_left, vec3_mult(
-// 				vec3_add(vp.px_delta_u, vp.px_delta_v), 0.5));
-// 	return (vp);
-// }
-
 t_viewport viewport(t_win_scene *win, t_scene *scene)
 {
 	t_viewport vp;
 	vp.win = win;
-	vp.cam = scene->camera;
+	vp.cam = &scene->camera;
 
-	t_vec3 forward = vec3_normalize(vp.cam.direction);
+	vp.cam->foward = vec3_normalize(vp.cam->direction);
 	t_vec3 world_up = (t_vec3){0, -1, 0}; // World up direction
-	t_vec3 right = vec3_normalize(vec3_cross(forward, world_up));
-	t_vec3 up = vec3_cross(right, forward);
+	vp.cam->right = vec3_normalize(vec3_cross(vp.cam->foward, world_up));
+	vp.cam->up = vec3_cross(vp.cam->right, vp.cam->foward);
 
-	vp.vp_height = 2.0;
+	vp.vp_height = 2;
 	vp.vp_width = vp.vp_height * ((double)win->width / win->height);
 
-	vp.vp_u = vec3_mult(right, vp.vp_width);
-	vp.vp_v = vec3_mult(up, vp.vp_height);
+	vp.vp_u = vec3_mult(vp.cam->right, vp.vp_width);
+	vp.vp_v = vec3_mult(vp.cam->up, vp.vp_height);
 
 	vp.px_delta_u = vec3_divide(vp.vp_u, win->width);
 	vp.px_delta_v = vec3_divide(vp.vp_v, win->height);
 
-	t_vec3 view_center = vec3_sub(vp.cam.origin, vec3_mult(forward, vp.cam.fov));
+	t_vec3 view_center = vec3_sub(vp.cam->origin, vec3_mult(vp.cam->foward, vp.cam->fov));
 	vp.vp_up_left = vec3_sub(
 						vec3_sub(view_center, vec3_divide(vp.vp_u, 2)),
 						vec3_divide(vp.vp_v, 2)
@@ -90,10 +70,10 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 		float	light_intensity = ft_dot(hit.hit_normal, vec3_mult(light_dir, -1));
 		if (light_intensity < 0)
 			light_intensity = 0;
-		t_vec3	color = scene->spheres[hit.obj_index].color;
+		t_vec3	color = scene->spheres[hit.obj_index].material.albedo;
 		color = vec3_mult(color, light_intensity);
 
-		final_color = vec3_mult( vec3_add(final_color, color), mutiplier);
+		final_color = vec3_mult(vec3_add(final_color, color), mutiplier);
 		mutiplier *= 0.5f;
 
 		ray.origin = vec3_add(hit.hit_point, vec3_mult(hit.hit_normal, 0.0001));
@@ -102,6 +82,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 
 	return (final_color);
 }
+void    show_progress(int current, int max);
 
 void	render(t_viewport vp, t_scene *scene)
 {
@@ -119,9 +100,33 @@ void	render(t_viewport vp, t_scene *scene)
 			set_pixel(&vp.win->img, i, j, convert_to_rgba(col));
 			i++;
 		}
+		show_progress(vp.win->width * j + i, vp.win->width * vp.win->height);
 		j++;
 	}
+	printf("\033[?25h\n");
 	scene->frame_count++;
+}
+
+void    show_progress(int current, int max)
+{
+        int             i;
+        float   progress;
+
+        printf("\033[?25lprogress: [");
+        progress = ((double)current / (double)max) * 100;
+        i = 0;
+        while (i * 5 < progress)
+        {
+                printf(RESET "#");
+                i++;
+        }
+        while (i < 20)
+        {
+                printf(GRAY "-");
+                i++;
+        }
+        printf(RESET "] (%d%%)\r", (int)progress);
+
 }
 
 void	run_pipeline(t_prog *prog)

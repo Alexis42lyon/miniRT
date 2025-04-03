@@ -11,7 +11,7 @@ static void	parse_light(t_prog *prog, char **tokens)
 	prog->scene->light.ratio = ft_atof(tokens[2]);
 	if (prog->scene->light.ratio < 0.0 || prog->scene->light.ratio > 1.0)
 		print_exit(prog, "Light brightness must be in range [0.0, 1.0]");
-	parse_color(prog, &prog->scene->light.color, tokens[3]);
+	parse_color(prog, &prog->scene->light.material.albedo, tokens[3]);
 }
 
 static void	parse_camera(t_prog *prog, char **tokens)

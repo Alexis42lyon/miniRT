@@ -29,6 +29,14 @@ typedef struct info
 	const char	*function;
 }	t_info;
 
+typedef struct material
+{
+	t_vec3	albedo;
+
+	float	metalic;
+	float	roughtness;
+}	t_mat;
+
 /* --------------------------------- OBJECT --------------------------------- */
 typedef struct ambient_light
 {
@@ -42,6 +50,10 @@ typedef struct camera
 	bool	is_set;
 	t_vec3	origin;
 	t_vec3	direction;
+
+	t_vec3	foward;
+	t_vec3	up;
+	t_vec3	right;
 	int		fov;
 }	t_camera;
 
@@ -50,14 +62,14 @@ typedef struct light
 	bool			is_set;
 	t_vec3			origin;
 	double			ratio;
-	t_vec3			color;
+	t_mat			material;
 }	t_light_source;
 
 typedef struct sphere
 {
 	t_vec3			origin;
 	double			radius;
-	t_vec3			color;
+	t_mat			material;
 	struct sphere	*next;
 }	t_sphere;
 
@@ -74,7 +86,7 @@ typedef struct cylinder
 	t_vec3			normal;
 	double			radius;
 	double			height;
-	t_vec3			color;
+	t_mat			material;
 }	t_cylinder;
 
 /* ---------------------------------- SCENE --------------------------------- */
