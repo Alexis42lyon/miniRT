@@ -6,6 +6,16 @@
 #include "mlx.h"
 #include <stdio.h>
 
+void	print_cam(const t_camera *cam)
+{
+	ft_printf(GRAY "[LOG]: camera settings\n");
+	ft_printf("\torigin:");
+	print_vec(cam->origin);
+	ft_printf("\tdirection:");
+	print_vec(cam->direction);
+	ft_printf("\tfov:%d%s\n\n", cam->fov, RESET);
+}
+
 int	key_hook(int keycode, t_prog *prog)
 {
 	t_camera	*camera;
@@ -15,14 +25,23 @@ int	key_hook(int keycode, t_prog *prog)
 	sphere = prog->scene->spheres;
 	if (keycode == ESC)
 		free_all(prog);
+	else if (keycode == UP_ARR)
+		camera->direction = vec3_add(camera->direction, new_vec3(0, -0.02, 0));
+	else if (keycode == DOWN_ARR)
+		camera->direction = vec3_add(camera->direction, new_vec3(0, 0.02, 0));
+	else if (keycode == LEFT_ARR)
+		camera->direction = vec3_add(camera->direction, new_vec3(0.02, 0, 0));
+	else if (keycode == RIGHT_ARR)
+		camera->direction = vec3_add(camera->direction, new_vec3(-0.02, 0, 0));
+	
 	else if (keycode == 'q')
-		camera->origin = vec3_add(camera->origin, new_vec3(0, 0, 4));
-	else if (keycode == 'e')
-		camera->origin = vec3_add(camera->origin, new_vec3(0, 0, -4));
-	else if (keycode == 'w')
-		camera->origin = vec3_add(camera->origin, new_vec3(0, 0.4, 0));
-	else if (keycode == 's')
 		camera->origin = vec3_add(camera->origin, new_vec3(0, -0.4, 0));
+	else if (keycode == 'e')
+		camera->origin = vec3_add(camera->origin, new_vec3(0, 0.4, 0));
+	else if (keycode == 'w')
+		camera->origin = vec3_add(camera->origin, new_vec3(0, 0, -0.4));
+	else if (keycode == 's')
+		camera->origin = vec3_add(camera->origin, new_vec3(0, 0, 0.4));
 	else if (keycode == 'a')
 		camera->origin = vec3_add(camera->origin, new_vec3(-0.4, 0, 0));
 	else if (keycode == 'd')
@@ -33,6 +52,7 @@ int	key_hook(int keycode, t_prog *prog)
 		camera->fov--;
 	else
 		return (0);
+	print_cam(camera);
 	run_pipeline(prog);
 	return (0);
 }

@@ -11,25 +11,58 @@
 //! TO REMOVE
 #include <stdio.h>
 
-t_viewport	viewport(t_win_scene *win, t_scene *scene)
-{
-	t_viewport	vp;
+// t_viewport	viewport(t_win_scene *win, t_scene *scene)
+// {
+// 	t_viewport	vp;
 
+// 	vp.win = win;
+// 	vp.cam = scene->camera;
+// 	vp.vp_height = 2;
+// 	vp.vp_width = vp.vp_height * ((double)win->width / win->height);
+// 	vp.vp_u = (t_vec3){vp.vp_width, 0, 0};
+// 	vp.vp_v = (t_vec3){0, -vp.vp_height, 0};
+// 	vp.px_delta_u = vec3_divide(vp.vp_u, WIDTH);
+// 	vp.px_delta_v = vec3_divide(vp.vp_v, HEIGHT);
+// 	vp.vp_up_left = vec3_sub(vec3_sub(vec3_sub(vp.cam.origin,
+// 					(t_vec3){0, 0, vp.cam.fov}),
+// 				vec3_divide(vp.vp_u, 2)), vec3_divide(vp.vp_v, 2));
+// 	vp.px_00 = vec3_add(vp.vp_up_left, vec3_mult(
+// 				vec3_add(vp.px_delta_u, vp.px_delta_v), 0.5));
+// 	return (vp);
+// }
+
+t_viewport viewport(t_win_scene *win, t_scene *scene)
+{
+	t_viewport vp;
 	vp.win = win;
 	vp.cam = scene->camera;
-	vp.vp_height = 2;
+
+	t_vec3 forward = vec3_normalize(vp.cam.direction);
+	t_vec3 world_up = (t_vec3){0, -1, 0}; // World up direction
+	t_vec3 right = vec3_normalize(vec3_cross(forward, world_up));
+	t_vec3 up = vec3_cross(right, forward);
+
+	vp.vp_height = 2.0;
 	vp.vp_width = vp.vp_height * ((double)win->width / win->height);
-	vp.vp_u = (t_vec3){vp.vp_width, 0, 0};
-	vp.vp_v = (t_vec3){0, -vp.vp_height, 0};
-	vp.px_delta_u = vec3_divide(vp.vp_u, WIDTH);
-	vp.px_delta_v = vec3_divide(vp.vp_v, HEIGHT);
-	vp.vp_up_left = vec3_sub(vec3_sub(vec3_sub(vp.cam.origin,
-					(t_vec3){0, 0, vp.cam.fov}),
-				vec3_divide(vp.vp_u, 2)), vec3_divide(vp.vp_v, 2));
-	vp.px_00 = vec3_add(vp.vp_up_left, vec3_mult(
-				vec3_add(vp.px_delta_u, vp.px_delta_v), 0.5));
-	return (vp);
+
+	vp.vp_u = vec3_mult(right, vp.vp_width);
+	vp.vp_v = vec3_mult(up, vp.vp_height);
+
+	vp.px_delta_u = vec3_divide(vp.vp_u, win->width);
+	vp.px_delta_v = vec3_divide(vp.vp_v, win->height);
+
+	t_vec3 view_center = vec3_sub(vp.cam.origin, vec3_mult(forward, vp.cam.fov));
+	vp.vp_up_left = vec3_sub(
+						vec3_sub(view_center, vec3_divide(vp.vp_u, 2)),
+						vec3_divide(vp.vp_v, 2)
+						);
+
+	vp.px_00 = vec3_add(vp.vp_up_left,
+						vec3_mult(vec3_add(vp.px_delta_u, vp.px_delta_v), 0.5));
+						
+	return vp;
 }
+
 
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 {

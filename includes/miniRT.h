@@ -9,6 +9,13 @@
 # include <stdbool.h>
 
 # define ESC 65307
+# define LEFT_ARR 65361
+# define UP_ARR 65362
+# define RIGHT_ARR 65363
+# define DOWN_ARR 65364
+# define PAGE_UP 65365
+# define PAGE_DOWN 65366
+
 # define SIZE_WIN 0.5
 # define SHOW_SRUCT 0
 
