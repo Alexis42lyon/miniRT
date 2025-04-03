@@ -1,5 +1,14 @@
 #include "raytracer.h"
 
+t_mat	default_mat(void)
+{
+	return ((t_mat){
+		{1, 1, 1},
+		1.0f,
+		0.0f
+	});
+}
+
 t_vec3	normal_color(t_hit hit)
 {
 	t_vec3	color;

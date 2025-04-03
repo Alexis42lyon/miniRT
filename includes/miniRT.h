@@ -77,7 +77,7 @@ typedef struct plane
 {
 	t_vec3			origin;
 	t_vec3			normal;
-	t_vec3			color;
+	t_mat			material;
 }	t_plane;
 
 typedef struct cylinder
@@ -126,4 +126,6 @@ void	check_mem(t_info info, void *mem, void **res, t_prog *prog);
 void	print_exit(t_prog *prog, char *str);
 
 void	print_cam(const t_camera *cam);
+t_mat	default_mat(void);
+
 #endif

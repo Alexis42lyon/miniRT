@@ -19,6 +19,7 @@ void	parse_cylinder(t_prog *prog, t_cylinder *cylinder, char **tokens)
 	cylinder->height = ft_atof(tokens[4]);
 	if (cylinder->height <= 0)
 		print_exit(prog, "Cylinder height must be positive");
+	cylinder->material = default_mat();
 	parse_color(prog, &cylinder->material.albedo, tokens[5]);
 }
 
@@ -35,7 +36,8 @@ void	parse_plane(t_prog *prog, t_plane *plane, char **tokens)
 	if (!is_normalized(normal))
 		print_exit(prog, "Invalid plane normal");
 	plane->normal = normal;
-	parse_color(prog, &plane->color, tokens[3]);
+	plane->material = default_mat();
+	parse_color(prog, &plane->material.albedo, tokens[3]);
 }
 
 void	parse_sphere(t_prog *prog, t_sphere *sphere, char **tokens)
@@ -49,5 +51,6 @@ void	parse_sphere(t_prog *prog, t_sphere *sphere, char **tokens)
 	sphere->radius = ft_atof(tokens[2]);
 	if (sphere->radius <= 0)
 		print_exit(prog, "Sphere diameter must be positive");
+	sphere->material = default_mat();
 	parse_color(prog, &sphere->material.albedo, tokens[3]);
 }
