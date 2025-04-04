@@ -32,7 +32,6 @@ int	key_hook(int keycode, t_prog *prog)
 		camera->direction = vec3_add(camera->direction, new_vec3(0.05, 0, 0));
 	else if (keycode == RIGHT_ARR)
 		camera->direction = vec3_add(camera->direction, new_vec3(-0.05, 0, 0));
-
 	else if (keycode == 'q')
 		camera->origin = vec3_add(camera->origin, vec3_mult(camera->up, 0.5));
 	else if (keycode == 'e')
@@ -51,8 +50,8 @@ int	key_hook(int keycode, t_prog *prog)
 		camera->fov--;
 	else
 		return (0);
-
-	ft_bzero(prog->win_scene->accumulation_data, prog->win_scene->height * prog->win_scene->width * sizeof(t_vec3));
+	ft_bzero(prog->win_scene->accumulation_data,
+		prog->win_scene->height * prog->win_scene->width * sizeof(t_vec3));
 	prog->scene->frame_count = 1;
 	run_pipeline(prog);
 	return (0);
@@ -86,7 +85,7 @@ void	init_win(t_prog *prog)
 		free_all(prog);
 	mlx_loop_hook(prog->win_scene->mlx_ptr, run_pipeline, prog);
 	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, prog);
-	win->accumulation_data = ft_calloc(win->height * win->width, sizeof(t_vec3));
-	if (!win->accumulation_data)
-		free_all(prog);
+	check_mem((t_info){__FILE__, __LINE__, __func__},
+		ft_calloc(win->height * win->width, sizeof(t_vec3)),
+		(void **)&win->accumulation_data, prog);
 }
