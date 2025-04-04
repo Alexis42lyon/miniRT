@@ -35,6 +35,7 @@ typedef struct material
 
 	float	metalic;
 	float	roughtness;
+	float	emission_power;
 }	t_mat;
 
 /* --------------------------------- OBJECT --------------------------------- */

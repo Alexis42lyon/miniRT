@@ -5,7 +5,7 @@
 # include <mlx.h>
 
 # define WIDTH 1200
-# define HEIGHT 900
+# define HEIGHT 1000
 
 # define SHOW_WIN 1
 

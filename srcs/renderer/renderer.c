@@ -7,7 +7,8 @@
 #include <limits.h>
 #include <time.h>
 
-#define BOUNCES 5
+#define BOUNCES 4
+#define DEFAULT_EMMI_POWER 1
 
 //! TO REMOVE
 #include <stdio.h>
@@ -17,21 +18,20 @@ void	show_progress(int current, int max)
 	int		i;
 	float	progress;
 
-	printf("progress: [");
+	printf("\033[?25lprogress: [");
 	progress = ((double)current / (double)max) * 100;
 	i = 0;
 	while (i * 5 < progress)
 	{
-			printf(RESET "#");
-			i++;
+		printf(RESET "#");
+		i++;
 	}
 	while (i < 20)
 	{
-			printf(GRAY "-");
-			i++;
+		printf(GRAY "-");
+		i++;
 	}
-	printf(RESET "] (%d%%)\r", (int)progress);
-
+	printf(RESET "] (%d%%)\033[?25h\r", (int)progress);
 }
 
 t_viewport viewport(t_win_scene *win, t_scene *scene)
@@ -102,11 +102,19 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 		}
 
 		mat = scene->spheres[hit.obj_index].material;
-		mat.roughtness = 0.7f;
+		mat.roughtness = 0.8f;
 		color = mat.albedo;
 
 		final_color = vec3_mult(vec3_add(final_color, color), mutiplier);
-		mutiplier *= 0.5f;
+		if (color.x == 1 && color.y == 0 && color.z == 1)
+		{
+			mat.emission_power = DEFAULT_EMMI_POWER;
+		}
+
+		if (mat.emission_power != -1)
+			mutiplier = mat.emission_power;
+		else
+			mutiplier *= 0.5f;
 
 		ray.origin = vec3_add(hit.hit_point, vec3_mult(hit.hit_normal, 0.0001));
 		ray.dir = vec3_reflect(ray.dir,
@@ -142,7 +150,6 @@ void	render(t_viewport vp, t_scene *scene)
 		show_progress(vp.win->width * j + i, vp.win->width * vp.win->height);
 		j++;
 	}
-	printf("\033[?25h\n");
 	scene->frame_count++;
 }
 
@@ -163,7 +170,7 @@ int	run_pipeline(t_prog *prog)
 		prog->win_scene->img.img, 0, 0);
 	difference = clock() - before;
 	msec = difference * 1000 / CLOCKS_PER_SEC;
-	ft_dprintf(2, GRAY "[LOG]: render time:%dms\n" RESET, msec % 1000);
+	ft_dprintf(2, GRAY "\n[LOG]: render time:%dms\n" RESET, msec % 1000);
 	ft_dprintf(2, GRAY "[LOG]: frame_count:%d\n" RESET,
 		prog->scene->frame_count);
 	ft_dprintf(2, GREEN "done rendering!\n" RESET);

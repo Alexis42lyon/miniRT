@@ -5,7 +5,8 @@ t_mat	default_mat(void)
 	return ((t_mat){
 		{1, 1, 1},
 		1.0f,
-		0.0f
+		0.0f,
+		-1.0f
 	});
 }
 
