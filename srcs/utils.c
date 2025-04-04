@@ -32,6 +32,7 @@ void	free_win_scene(t_win_scene *win)
 		mlx_destroy_display(win->mlx_ptr);
 		free(win->mlx_ptr);
 	}
+	free(win->accumulation_data);
 }
 
 void	free_scene(t_scene *scene)

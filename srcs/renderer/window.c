@@ -20,10 +20,8 @@ void	print_cam(const t_camera *cam)
 int	key_hook(int keycode, t_prog *prog)
 {
 	t_camera	*camera;
-	t_sphere	*sphere;
 
 	camera = &prog->scene->camera;
-	sphere = prog->scene->spheres;
 	if (keycode == ESC)
 		free_all(prog);
 	else if (keycode == UP_ARR)
