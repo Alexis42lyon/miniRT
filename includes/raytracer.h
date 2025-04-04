@@ -61,7 +61,6 @@ void	start_renderer(t_prog *prog);
 
 // sphere.c
 double	sphere_hit(const t_sphere sphere, const t_ray ray);
-t_vec3	random_vec_hemisphere(const t_vec3 normal, const uint seed);
 t_hit	sp_hit_result(const t_vec3 origin, const t_ray r, const double t, const size_t idx);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:58:27 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/04 08:55:09 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/04 10:24:43 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 #include <sys/types.h>
 #include "libft/math.h"
 
-#ifndef uint
-# define uint unsigned int
-#endif
+typedef unsigned int uint;
+
 
 typedef struct s_vector3
 {
@@ -42,6 +41,7 @@ t_vec3	vec3_normalize(const t_vec3 v);
 double	vec3_lenght_square(const t_vec3 vec);
 
 t_vec3	vec3_rand_range(float range, uint seed);
+t_vec3 in_unit_sphere(uint seed);
 t_vec3	vec3_rand_unit(uint seed);
 
 t_vec3	vec3_reflect(const t_vec3 vec, const t_vec3 n);

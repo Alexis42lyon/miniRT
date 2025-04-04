@@ -35,15 +35,3 @@ double	sphere_hit(const t_sphere sphere, const t_ray ray)
 		return (t1);
 	return (t2);
 }
-
-t_vec3	random_vec_hemisphere(const t_vec3 normal, const uint seed)
-{
-	t_vec3	vec;
-
-	vec = vec3_rand_unit(seed);
-	if (ft_dot(vec, normal) > 0)
-	{
-		return (vec);
-	}
-	return (vec3_mult(vec, -1.0));
-}

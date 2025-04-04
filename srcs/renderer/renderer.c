@@ -14,23 +14,23 @@
 
 void	show_progress(int current, int max)
 {
-		int		i;
-		float	progress;
+	int		i;
+	float	progress;
 
-		printf("\033[?25lprogress: [");
-		progress = ((double)current / (double)max) * 100;
-		i = 0;
-		while (i * 5 < progress)
-		{
-				printf(RESET "#");
-				i++;
-		}
-		while (i < 20)
-		{
-				printf(GRAY "-");
-				i++;
-		}
-		printf(RESET "] (%d%%)\r", (int)progress);
+	printf("progress: [");
+	progress = ((double)current / (double)max) * 100;
+	i = 0;
+	while (i * 5 < progress)
+	{
+			printf(RESET "#");
+			i++;
+	}
+	while (i < 20)
+	{
+			printf(GRAY "-");
+			i++;
+	}
+	printf(RESET "] (%d%%)\r", (int)progress);
 
 }
 
@@ -66,20 +66,17 @@ t_viewport viewport(t_win_scene *win, t_scene *scene)
 	return vp;
 }
 
-
-
-t_vec3	r(float r)
+t_vec3	random_vec(uint seed)
 {
 	return ((t_vec3){
-		((float)rand() / (float)RAND_MAX) - r,
-		((float)rand() / (float)RAND_MAX) - r,
-		((float)rand() / (float)RAND_MAX) - r,
+		random_float(seed ^ 0x1F1F1F1F),
+		random_float(seed ^ 0x2E2E2E2E),
+		random_float(seed ^ 0x3D3D3D3D)
 	});
 }
 
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 {
-	t_vec3	light_dir;
 	t_ray	ray;
 	t_hit	hit;
 	t_mat	mat;
@@ -90,8 +87,10 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 
 	final_color = (t_vec3){0.0, 0.0, 0.0};
 
-	light_dir = vec3_normalize((t_vec3){-1, -1, -1}); // FAKE LIGHT
 	ray = get_ray(i, j, vp, scene->sample_count);
+
+	uint seed = i + j * vp.win->width;
+	seed *= scene->frame_count;
 
 	for (int i = 0; i < BOUNCES; i++)
 	{
@@ -103,7 +102,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 		}
 
 		mat = scene->spheres[hit.obj_index].material;
-		mat.roughtness = 1.0f;
+		mat.roughtness = 0.7f;
 		color = mat.albedo;
 
 		final_color = vec3_mult(vec3_add(final_color, color), mutiplier);
@@ -111,10 +110,10 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 
 		ray.origin = vec3_add(hit.hit_point, vec3_mult(hit.hit_normal, 0.0001));
 		ray.dir = vec3_reflect(ray.dir,
-			vec3_add(hit.hit_normal, vec3_mult(r(.5f), mat.roughtness)));
+			vec3_add(hit.hit_normal, vec3_mult(random_vec(seed), mat.roughtness)));
 	}
 
-	return (final_color);
+	return (vec3_clamp(final_color, 0 ,1));
 }
 
 void	render(t_viewport vp, t_scene *scene)
