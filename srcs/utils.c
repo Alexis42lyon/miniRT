@@ -3,6 +3,22 @@
 #include "miniRT.h"
 #include <stdio.h>
 
+void	session_result(const t_scene *scene)
+{
+	printf(CYAN "\n\n-------------------------\nsession result:\n");
+
+	printf(CYAN "\n[render times]:\n");
+	printf(GRAY "\taverage:%ums    ", scene->total_render_time / (scene->frame_count - 1));
+	printf(GRAY "min:%ums    ", scene->min_render_time);
+	printf(GRAY "max:%ums\n", scene->max_render_time);
+
+	printf(CYAN "\n[accumulation data]\n");
+	printf(GRAY "\ttotal-render-time:%ums\n", scene->total_render_time);
+	printf(GRAY "\ttotal-frame-count:%u\n", scene->frame_count);
+	printf(CYAN "\n-------------------------\n\n");
+
+}
+
 void	free_arr(void **arr)
 {
 	int	i;
@@ -50,6 +66,7 @@ void	free_scene(t_scene *scene)
 
 void	free_all(t_prog *prog)
 {
+	session_result(prog->scene);
 	free_scene(prog->scene);
 	if (prog->win_scene->win_ptr)
 		mlx_destroy_window(prog->win_button->mlx_ptr, prog->win_button->win_ptr);

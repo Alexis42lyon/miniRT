@@ -14,7 +14,7 @@ void	print_cam(const t_camera *cam)
 	print_vec(cam->origin);
 	ft_printf("\tdirection:");
 	print_vec(cam->direction);
-	ft_printf("\tfov:%d%s\n\n", cam->fov, RESET);
+	ft_printf("\tfov:%d%s\n", cam->fov, RESET);
 }
 
 int	key_hook(int keycode, t_prog *prog)
@@ -53,6 +53,9 @@ int	key_hook(int keycode, t_prog *prog)
 	ft_bzero(prog->win_scene->accumulation_data,
 		prog->win_scene->height * prog->win_scene->width * sizeof(t_vec3));
 	prog->scene->frame_count = 1;
+	prog->scene->total_render_time = 0;
+	prog->scene->max_render_time = -1;
+	prog->scene->min_render_time = -1;
 	run_pipeline(prog);
 	return (0);
 }

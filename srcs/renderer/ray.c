@@ -8,12 +8,11 @@ t_vec3	ray_to_vec(t_ray r)
 	return (vec3_add(r.origin, vec3_mult(r.dir, r.lenght)));
 }
 
-t_ray	get_ray(int i, int j, t_viewport vp, uint seed)
+t_ray	get_ray(int i, int j, t_viewport vp)
 {
 	t_ray	ray;
 	t_vec3	px_center;
 
-	(void)seed;
 	px_center = vec3_add(vp.px_00, vec3_add(
 				vec3_mult(vp.px_delta_u, i),
 				vec3_mult(vp.px_delta_v, j))

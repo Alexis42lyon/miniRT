@@ -7,8 +7,8 @@
 #include <limits.h>
 #include <time.h>
 
-#define BOUNCES 4
-#define DEFAULT_EMMI_POWER 1
+#define BOUNCES 3
+#define DEFAULT_EMMI_POWER 5
 
 //! TO REMOVE
 #include <stdio.h>
@@ -87,7 +87,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 
 	final_color = (t_vec3){0.0, 0.0, 0.0};
 
-	ray = get_ray(i, j, vp, scene->sample_count);
+	ray = get_ray(i, j, vp);
 
 	uint seed = i + j * vp.win->width;
 	seed *= scene->frame_count;
@@ -153,6 +153,27 @@ void	render(t_viewport vp, t_scene *scene)
 	scene->frame_count++;
 }
 
+void	add_to_log(t_scene *scene, uint render_time)
+{
+	print_cam(&scene->camera);
+	ft_printf(GRAY "[LOG]: render time:%dms\n" RESET, render_time);
+	ft_printf(GRAY "[LOG]: frame_count:%d\n" RESET,
+		scene->frame_count);
+	ft_printf(GREEN "done rendering!\n\n" RESET);
+		
+	scene->total_render_time += render_time;
+	if (scene->min_render_time == (uint)-1)
+	{
+		scene->min_render_time = render_time;
+		scene->max_render_time = render_time;
+		return ;
+	}
+	if (render_time > scene->max_render_time)
+		scene->max_render_time = render_time;
+	if (render_time < scene->min_render_time)
+		scene->min_render_time = render_time;
+}
+
 int	run_pipeline(t_prog *prog)
 {
 	int			msec;
@@ -160,7 +181,6 @@ int	run_pipeline(t_prog *prog)
 	clock_t		difference;
 	t_viewport	vp;
 
-	print_cam(&prog->scene->camera);
 	prog->scene->sky_color = (t_vec3){0.8, 0.9, 0.95};
 	vp = viewport(prog->win_scene, prog->scene);
 	msec = 0;
@@ -170,10 +190,7 @@ int	run_pipeline(t_prog *prog)
 		prog->win_scene->img.img, 0, 0);
 	difference = clock() - before;
 	msec = difference * 1000 / CLOCKS_PER_SEC;
-	ft_dprintf(2, GRAY "\n[LOG]: render time:%dms\n" RESET, msec % 1000);
-	ft_dprintf(2, GRAY "[LOG]: frame_count:%d\n" RESET,
-		prog->scene->frame_count);
-	ft_dprintf(2, GREEN "done rendering!\n" RESET);
+	add_to_log(prog->scene, msec);
 	return (0);
 }
 
@@ -184,7 +201,11 @@ void	start_renderer(t_prog *prog)
 
 	win = prog->win_scene;
 	scene = prog->scene;
-	scene->sample_count = 0;
+
+	scene->min_render_time = -1;
+	scene->max_render_time = -1;
+	scene->total_render_time = 0;
+
 	init_win(prog);
 	mlx_key_hook(win->win_ptr, key_hook, prog);
 	if (win->mlx_ptr == NULL)

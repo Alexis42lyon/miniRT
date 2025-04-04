@@ -50,7 +50,7 @@ t_vec3	normal_color(t_hit hit);
 uint	convert_to_rgba(const t_vec3 color);
 
 // ray.c
-t_ray	get_ray(int i, int j, t_viewport vp, uint seed);
+t_ray	get_ray(int i, int j, t_viewport vp);
 t_hit	trace_ray(t_ray ray, t_scene *scene);
 t_hit	hit_fail(void);
 t_vec3	ray_to_vec(t_ray r);
