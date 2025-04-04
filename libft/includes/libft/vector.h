@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:58:27 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/03 12:45:30 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/04 08:55:09 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct s_vector3
 float	ft_dot(const t_vec3 v1, const t_vec3 v2);
 
 t_vec3	new_vec3(double x, double y, double z);
+t_vec3	vec3_zero(void);
+
 t_vec3	vec3_add(const t_vec3 v1, const t_vec3 v2);
 double	vec3_lenght(const t_vec3 vec);
 t_vec3	vec3_sub(const t_vec3 v1, const t_vec3 v2);
@@ -44,5 +46,7 @@ t_vec3	vec3_rand_unit(uint seed);
 
 t_vec3	vec3_reflect(const t_vec3 vec, const t_vec3 n);
 t_vec3	vec3_cross(const t_vec3 a, const t_vec3 b);
+
+t_vec3	vec3_clamp(const t_vec3 vec, double min, double max);
 
 #endif

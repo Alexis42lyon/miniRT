@@ -13,7 +13,7 @@ void	init(t_prog *prog, char **av)
 	if (prog->scene->fd == -1)
 		print_exit(prog, "File not found or cannot access to the file");
 	parse(prog);
-	prog->scene->frame_count = 0;
+	prog->scene->frame_count = 1;
 	print_scene(prog->scene);
 	ft_printf("%sNo error has been found\n%s", GREEN, RESET);
 }

@@ -7,7 +7,7 @@
 #include <limits.h>
 #include <time.h>
 
-#define BOUNCES 2
+#define BOUNCES 5
 
 //! TO REMOVE
 #include <stdio.h>
@@ -68,12 +68,12 @@ t_viewport viewport(t_win_scene *win, t_scene *scene)
 
 
 
-t_vec3	r(int r)
+t_vec3	r(float r)
 {
 	return ((t_vec3){
-		(double)(rand() % (r * 2) - r) / 10,
-		(double)(rand() % (r * 2) - r) / 10,
-		(double)(rand() % (r * 2) - r) / 10
+		((float)rand() / (float)RAND_MAX) - r,
+		((float)rand() / (float)RAND_MAX) - r,
+		((float)rand() / (float)RAND_MAX) - r,
 	});
 }
 
@@ -102,19 +102,16 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 			break;
 		}
 
-		float	light_intensity = ft_dot(hit.hit_normal, vec3_mult(light_dir, -1));
-		if (light_intensity < 0)
-			light_intensity = 0;
 		mat = scene->spheres[hit.obj_index].material;
-		mat.roughtness = 0;
-		color = vec3_mult(mat.albedo, light_intensity);
+		mat.roughtness = 1.0f;
+		color = mat.albedo;
 
 		final_color = vec3_mult(vec3_add(final_color, color), mutiplier);
 		mutiplier *= 0.5f;
 
 		ray.origin = vec3_add(hit.hit_point, vec3_mult(hit.hit_normal, 0.0001));
 		ray.dir = vec3_reflect(ray.dir,
-			vec3_add(hit.hit_normal, vec3_mult(r(5), mat.roughtness)));
+			vec3_add(hit.hit_normal, vec3_mult(r(.5f), mat.roughtness)));
 	}
 
 	return (final_color);
@@ -124,7 +121,10 @@ void	render(t_viewport vp, t_scene *scene)
 {
 	int		i;
 	int		j;
-	t_vec3	col;
+	t_vec3	color;
+	t_vec3	*accumulation_data;
+
+	accumulation_data = vp.win->accumulation_data;
 
 	j = 0;
 	while (j < vp.win->height)
@@ -132,8 +132,12 @@ void	render(t_viewport vp, t_scene *scene)
 		i = 0;
 		while (i < vp.win->width)
 		{
-			col = get_px_col(i, j, vp, scene);
-			set_pixel(&vp.win->img, i, j, convert_to_rgba(col));
+			color = get_px_col(i, j, vp, scene);
+			accumulation_data[i + j * vp.win->width] = vec3_add(accumulation_data[i + j * vp.win->width], color);
+			t_vec3	accumulation = accumulation_data[i + j * vp.win->width];
+			accumulation = vec3_divide(accumulation, scene->frame_count);
+			accumulation = vec3_clamp(accumulation, 0, 1);
+			set_pixel(&vp.win->img, i, j, convert_to_rgba(accumulation));
 			i++;
 		}
 		show_progress(vp.win->width * j + i, vp.win->width * vp.win->height);
@@ -160,10 +164,10 @@ int	run_pipeline(t_prog *prog)
 		prog->win_scene->img.img, 0, 0);
 	difference = clock() - before;
 	msec = difference * 1000 / CLOCKS_PER_SEC;
-	ft_dprintf(2, GRAY "[LOG]: render time:%dms \n" RESET, msec % 1000);
-	ft_dprintf(2, GRAY "[LOG]: frame_count:%d \n" RESET,
+	ft_dprintf(2, GRAY "[LOG]: render time:%dms\n" RESET, msec % 1000);
+	ft_dprintf(2, GRAY "[LOG]: frame_count:%d\n" RESET,
 		prog->scene->frame_count);
-	ft_dprintf(2, GREEN "done rendering!\n\n" RESET);
+	ft_dprintf(2, GREEN "done rendering!\n" RESET);
 	return (0);
 }
 

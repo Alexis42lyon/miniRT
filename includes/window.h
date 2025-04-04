@@ -29,6 +29,8 @@ typedef struct s_win_scene
 	int		view_height;
 	int		aspect_ratio;
 
+	t_vec3	*accumulation_data;
+
 	void	*win_ptr;
 	void	*mlx_ptr;
 	t_data	img;

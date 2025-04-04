@@ -86,3 +86,12 @@ inline t_vec3	vec3_cross(const t_vec3 a, const t_vec3 b)
 		(a.x * b.y) - (a.y * b.x)
 	});
 }
+
+inline t_vec3	vec3_clamp(const t_vec3 vec, double min, double max)
+{
+	return ((t_vec3){
+		ft_clamp(vec.x, min, max),
+		ft_clamp(vec.y, min, max),
+		ft_clamp(vec.z, min, max)
+	});
+}

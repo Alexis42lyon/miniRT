@@ -53,6 +53,9 @@ int	key_hook(int keycode, t_prog *prog)
 		camera->fov--;
 	else
 		return (0);
+
+	ft_bzero(prog->win_scene->accumulation_data, prog->win_scene->height * prog->win_scene->width * sizeof(t_vec3));
+	prog->scene->frame_count = 1;
 	run_pipeline(prog);
 	return (0);
 }
@@ -83,6 +86,9 @@ void	init_win(t_prog *prog)
 		free_all(prog);
 	if (create_img(win) == -1)
 		free_all(prog);
-	// mlx_loop_hook(prog->win_scene->mlx_ptr, run_pipeline, prog);
+	mlx_loop_hook(prog->win_scene->mlx_ptr, run_pipeline, prog);
 	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, prog);
+	win->accumulation_data = ft_calloc(win->height * win->width, sizeof(t_vec3));
+	if (!win->accumulation_data)
+		free_all(prog);
 }
