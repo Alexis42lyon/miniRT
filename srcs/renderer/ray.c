@@ -56,15 +56,26 @@ t_hit	trace_ray(t_ray ray, t_scene *scene)
 		}
 		i++;
 	}
+	i = 0;
+	while (i < scene->nb_cylinders)
+	{
+		// dist = cylinders_hit(scene->cylinders[i], ray);
+		if (dist > 0 && dist < min_dist)
+		{
+			min_dist = dist;
+			hit.obj_index = i;
+			type = CYLINDER;
+		}
+		i++;
+	}
 	if (hit.obj_index != (size_t)-1)
 	{
 		if (type == SPHERE)
 			hit = hit_result(scene->spheres[hit.obj_index].origin, ray, min_dist, hit.obj_index);
 		else if (type == PLANE)
-		{
 			hit = hit_result(scene->planes[hit.obj_index].origin, ray, min_dist, hit.obj_index);
-			hit.hit_normal = scene->planes[hit.obj_index].normal;
-		}
+		else if (type == CYLINDER)
+			hit = hit_result(scene->cylinders[hit.obj_index].origin, ray, min_dist, hit.obj_index);
 		hit.type = type;
 		return (hit);
 	}

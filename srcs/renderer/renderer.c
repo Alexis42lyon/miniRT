@@ -62,7 +62,7 @@ t_viewport viewport(t_win_scene *win, t_scene *scene)
 
 	vp.px_00 = vec3_add(vp.vp_up_left,
 						vec3_mult(vec3_add(vp.px_delta_u, vp.px_delta_v), 0.5));
-						
+
 	return vp;
 }
 
@@ -115,7 +115,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	t_vec3	final_color;
 	float	mutiplier = 1.0f;
 	t_vec3	ray_color;
-	
+
 	ray_color = vec3_mult(scene->ambient_light.color, scene->ambient_light.ratio);
 	final_color = (t_vec3){0.0, 0.0, 0.0};
 
@@ -134,12 +134,14 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 			break;
 		}
 
-		
+
 		if (hit.type == SPHERE)
 			mat = scene->spheres[hit.obj_index].material;
 		else if (hit.type == PLANE)
 			mat = scene->planes[hit.obj_index].material;
-		
+		else if (hit.type == CYLINDER)
+			mat = scene->cylinders[hit.obj_index].material;
+
 		mat.roughtness = 0.7f;
 		//ka = 0.5
 		// ambiant_color = normal_color(hit);
@@ -149,18 +151,18 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 			mutiplier = mat.emission_power;
 		final_color = vec3_mult(vec3_add(final_color, ambiant_color), mutiplier);
 		mutiplier *= 0.5f;
-		
+
 		ray.origin = vec3_add(hit.hit_point, vec3_mult(hit.hit_normal, 0.0001));
 		ray.dir = vec3_reflect(ray.dir,
 			vec3_add(hit.hit_normal, vec3_mult(random_vec(seed), mat.roughtness)));
-			
+
 		// t_vec3	light_dir = vec3_sub(hit.hit_point, scene->light.origin);
 		// double dot = ft_clamp(ft_dot(hit.hit_normal, vec3_mult(light_dir, -1)), 0, vec3_lenght(light_dir));
 		// final_color = vec3_mult(final_color, dot);
 		// final_color = vec3_mult(final_color, scene->light.ratio * 10);
 		// final_color = vec3_divide(final_color, vec3_lenght_square(light_dir));
 	}
-			
+
 	return (vec3_clamp(final_color, 0 ,1));
 }
 
@@ -200,7 +202,7 @@ void	add_to_log(t_scene *scene, uint render_time)
 	ft_printf(GRAY "[LOG]: frame_count:%d\n" RESET,
 		scene->frame_count);
 	ft_printf(GREEN "done rendering!\n\n" RESET);
-		
+
 	scene->total_render_time += render_time;
 	if (scene->min_render_time == (uint)-1)
 	{
