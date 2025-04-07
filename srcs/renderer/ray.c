@@ -61,7 +61,10 @@ t_hit	trace_ray(t_ray ray, t_scene *scene)
 		if (type == SPHERE)
 			hit = hit_result(scene->spheres[hit.obj_index].origin, ray, min_dist, hit.obj_index);
 		else if (type == PLANE)
+		{
 			hit = hit_result(scene->planes[hit.obj_index].origin, ray, min_dist, hit.obj_index);
+			hit.hit_normal = scene->planes[hit.obj_index].normal;
+		}
 		hit.type = type;
 		return (hit);
 	}

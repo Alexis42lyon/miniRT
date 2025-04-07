@@ -75,16 +75,48 @@ t_vec3	random_vec(uint seed)
 	});
 }
 
+int get_sp_inter(const t_sphere sphere, const t_ray ray)
+{
+	t_vec3	oc;
+	double	a;
+	double	b;
+	double	c;
+	double	disc;
+
+	oc = vec3_sub(sphere.origin, ray.origin);
+	a = ft_dot(ray.dir,ray.dir);
+	b = -2.0 * ft_dot(ray.dir, oc);
+	c = ft_dot(oc, oc) - sphere.radius * sphere.radius;
+	disc = b*b - 4*a*c;
+	if (disc < 0)
+		return (-1);
+	return (disc);
+}
+
+int exposed_to_light(t_sphere sphere, t_vec3 point, t_vec3 light)
+{
+	(void)sphere;
+	(void)point;
+	(void)light;
+
+	t_ray	ray;
+	ray.origin = point;
+	ray.dir = vec3_add(point, light);
+	return (get_sp_inter(sphere, ray) == 0);
+}
+
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 {
 	t_ray	ray;
 	t_hit	hit;
 	t_mat	mat;
-	t_vec3	color;
+	t_vec3	ambiant_color;
 
 	t_vec3	final_color;
 	float	mutiplier = 1.0f;
-
+	t_vec3	ray_color;
+	
+	ray_color = vec3_mult(scene->ambient_light.color, scene->ambient_light.ratio);
 	final_color = (t_vec3){0.0, 0.0, 0.0};
 
 	ray = get_ray(i, j, vp);
@@ -97,34 +129,38 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 		hit = trace_ray(ray, scene);
 		if (hit.hit_distance == -1)
 		{
+			// return ((t_vec3){0,0,0});
 			final_color = vec3_mult(vec3_add(final_color, scene->sky_color), mutiplier);
 			break;
 		}
 
+		
 		if (hit.type == SPHERE)
 			mat = scene->spheres[hit.obj_index].material;
 		else if (hit.type == PLANE)
 			mat = scene->planes[hit.obj_index].material;
-
-		mat.roughtness = 0.8f;
-		color = mat.albedo;
-
-		final_color = vec3_mult(vec3_add(final_color, color), mutiplier);
-		if (color.x == 1 && color.y == 0 && color.z == 1)
-		{
-			mat.emission_power = DEFAULT_EMMI_POWER;
-		}
+		
+		mat.roughtness = 0.7f;
+		//ka = 0.5
+		// ambiant_color = normal_color(hit);
+		ambiant_color = vec3_multv(mat.albedo, scene->ambient_light.color);
 
 		if (mat.emission_power != -1)
 			mutiplier = mat.emission_power;
-		else
-			mutiplier *= 0.5f;
-
+		final_color = vec3_mult(vec3_add(final_color, ambiant_color), mutiplier);
+		mutiplier *= 0.5f;
+		
 		ray.origin = vec3_add(hit.hit_point, vec3_mult(hit.hit_normal, 0.0001));
 		ray.dir = vec3_reflect(ray.dir,
 			vec3_add(hit.hit_normal, vec3_mult(random_vec(seed), mat.roughtness)));
+			
+		// t_vec3	light_dir = vec3_sub(hit.hit_point, scene->light.origin);
+		// double dot = ft_clamp(ft_dot(hit.hit_normal, vec3_mult(light_dir, -1)), 0, vec3_lenght(light_dir));
+		// final_color = vec3_mult(final_color, dot);
+		// final_color = vec3_mult(final_color, scene->light.ratio * 10);
+		// final_color = vec3_divide(final_color, vec3_lenght_square(light_dir));
 	}
-
+			
 	return (vec3_clamp(final_color, 0 ,1));
 }
 
@@ -186,6 +222,7 @@ int	run_pipeline(t_prog *prog)
 	t_viewport	vp;
 
 	prog->scene->sky_color = (t_vec3){0.8, 0.9, 0.95};
+	prog->scene->sky_color = (t_vec3){0,0,0};
 	vp = viewport(prog->win_scene, prog->scene);
 	msec = 0;
 	before = clock();

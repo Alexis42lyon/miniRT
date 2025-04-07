@@ -1,0 +1,20 @@
+digraph "callgraph" {
+  F55b65520ad70 [label="main\n10 926 783 176"];
+  F55b65520c6f0 [label="start_renderer\n10 926 783 176"];
+  F55b65523d110 [label="trace_ray\n6 695 675 535"];
+  F55b65523d790 [label="sphere_hit\n4 198 485 104"];
+  F55b6552882a0 [label="mlx_loop\n5 317 015 690"];
+  F55b6552a15c0 [label="run_pipeline\n10 633 401 377"];
+  F55b6552a8490 [label="render\n10 633 323 227"];
+  F55b6552a8800 [label="get_px_col\n9 806 311 863"];
+  F55b655312ce0 [label="(below main)\n10 926 783 176"];
+  F55b65520ad70 -> F55b65520c6f0 [weight=3,label="10 926 783 176 (1x)"];
+  F55b65520c6f0 -> F55b6552882a0 [weight=3,label="5 317 015 690 (1x)"];
+  F55b65520c6f0 -> F55b6552a15c0 [weight=3,label="5 316 483 802 (1x)"];
+  F55b65523d110 -> F55b65523d790 [weight=3,label="4 198 485 104 (23 775 025x)"];
+  F55b6552882a0 -> F55b6552a15c0 [weight=3,label="5 316 917 575 (1x)"];
+  F55b6552a15c0 -> F55b6552a8490 [weight=3,label="10 633 323 227 (2x)"];
+  F55b6552a8490 -> F55b6552a8800 [weight=3,label="9 806 311 863 (2 400 000x)"];
+  F55b6552a8800 -> F55b65523d110 [weight=3,label="6 695 675 535 (4 755 005x)"];
+  F55b655312ce0 -> F55b65520ad70 [weight=3,label="10 926 783 176 (1x)"];
+}
