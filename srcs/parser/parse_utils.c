@@ -77,20 +77,20 @@ double	check_atof(t_prog *prog, const char *nptr)
 	while (ft_isdigit(*nptr))
 	{
 		res = res * 10 + *nptr++ - '0';
-		if (res * sign != (double)(res * sign))
+		if (res * sign != (int)(res * sign))
 			print_exit(prog, "Invalid number format");
 	}
 	fraction = 0.1;
-	if (*nptr++ == '.')
+	if (*nptr == '.')
 	{
+		nptr++;
 		while (ft_isdigit(*nptr))
 		{
-			res += (*nptr - '0') * fraction;
+			res += (*nptr++ - '0') * fraction;
 			fraction *= 0.1;
-			nptr++;
 		}
-		if (*nptr)
-			print_exit(prog, "Invalid number format");
 	}
+	if (*nptr)
+		print_exit(prog, "Invalid number format");
 	return (res * sign);
 }
