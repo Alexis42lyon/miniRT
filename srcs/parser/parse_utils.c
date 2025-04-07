@@ -1,5 +1,6 @@
 #include <miniRT.h>
 #include <math.h>
+#include <parser.h>
 #include "libft/is.h"
 
 void	parse_vector(t_prog *prog, t_vec3 *vec, char *str)
@@ -8,9 +9,9 @@ void	parse_vector(t_prog *prog, t_vec3 *vec, char *str)
 		ft_split(str, ','), (void **)&prog->scene->tokens, prog);
 	if (ft_arrlen(prog->scene->tokens) != 3)
 		free_all(prog);
-	vec->x = ft_atof(prog->scene->tokens[0]);
-	vec->y = ft_atof(prog->scene->tokens[1]);
-	vec->z = ft_atof(prog->scene->tokens[2]);
+	vec->x = check_atof(prog, prog->scene->tokens[0]);
+	vec->y = check_atof(prog, prog->scene->tokens[1]);
+	vec->z = check_atof(prog, prog->scene->tokens[2]);
 	free_arr((void **)prog->scene->tokens);
 	prog->scene->tokens = NULL;
 }
@@ -21,9 +22,9 @@ void	parse_color(t_prog *prog, t_vec3 *color, char *str)
 		ft_split(str, ','), (void **)&prog->scene->tokens, prog);
 	if (ft_arrlen(prog->scene->tokens) != 3)
 		print_exit(prog, "Invalid color format");
-	color->x = ft_atof(prog->scene->tokens[0]);
-	color->y = ft_atof(prog->scene->tokens[1]);
-	color->z = ft_atof(prog->scene->tokens[2]);
+	color->x = check_atof(prog, prog->scene->tokens[0]);
+	color->y = check_atof(prog, prog->scene->tokens[1]);
+	color->z = check_atof(prog, prog->scene->tokens[2]);
 	free_arr((void **)prog->scene->tokens);
 	prog->scene->tokens = NULL;
 	if (color->x != (unsigned char)(color->x) || color->y != (unsigned char)(color->y) || color->z != (unsigned char)(color->z))
@@ -55,28 +56,43 @@ void	init_malloc(t_prog *prog)
 		malloc(sizeof(t_cylinder) * (prog->scene->nb_cylinders + 1)),
 		(void **)&prog->scene->cylinders, prog);
 }
-
-double	check_atof(const char *nptr)
+#include <stdio.h>
+double	check_atof(t_prog *prog, const char *nptr)
 {
+	int		sign;
 	double	res;
 	double	fraction;
 
-	res = ft_atoi(nptr);
+	ft_printf("nptr: %s\n", nptr);
+	sign = 1;
+	if (*nptr == '-')
+	{
+		sign = -1;
+		nptr++;
+	}
+	else if (*nptr == '+')
+		nptr++;
+	res = 0.0;
+	if (!ft_isdigit(*nptr))
+		print_exit(prog, "Invalid number format");
+	while (ft_isdigit(*nptr))
+	{
+		res = res * 10 + *nptr++ - '0';
+		if (res * sign != (double)(res * sign))
+			print_exit(prog, "Invalid number format");
+	}
 	fraction = 0.1;
-	while ((*nptr >= 9 && *nptr <= 13) || *nptr == ' ')
-		nptr++;
-	if (*nptr == '-' || *nptr == '+')
-		nptr++;
-	while (*nptr >= '0' && *nptr <= '9')
-		nptr++;
 	if (*nptr++ == '.')
 	{
-		while (*nptr >= '0' && *nptr <= '9')
+		while (ft_isdigit(*nptr))
 		{
 			res += (*nptr - '0') * fraction;
 			fraction *= 0.1;
 			nptr++;
 		}
+		if (*nptr)
+			print_exit(prog, "Invalid number format");
 	}
-	return (res);
+	printf("res: %f\n", res * sign);
+	return (res * sign);
 }

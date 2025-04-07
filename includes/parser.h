@@ -17,5 +17,6 @@ void	parse_color(t_prog *prog, t_vec3 *color, char *str);
 bool	is_normalized(t_vec3 vec);
 void	init_malloc(t_prog *prog);
 void	print_scene(const t_scene *scene);
+double	check_atof(t_prog *prog, const char *nptr);
 
 #endif
