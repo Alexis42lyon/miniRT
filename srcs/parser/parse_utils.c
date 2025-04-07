@@ -56,7 +56,7 @@ void	init_malloc(t_prog *prog)
 		malloc(sizeof(t_cylinder) * (prog->scene->nb_cylinders + 1)),
 		(void **)&prog->scene->cylinders, prog);
 }
-#include <stdio.h>
+
 double	check_atof(t_prog *prog, const char *nptr)
 {
 	int		sign;
