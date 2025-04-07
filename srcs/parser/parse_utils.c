@@ -63,7 +63,6 @@ double	check_atof(t_prog *prog, const char *nptr)
 	double	res;
 	double	fraction;
 
-	ft_printf("nptr: %s\n", nptr);
 	sign = 1;
 	if (*nptr == '-')
 	{
@@ -93,6 +92,5 @@ double	check_atof(t_prog *prog, const char *nptr)
 		if (*nptr)
 			print_exit(prog, "Invalid number format");
 	}
-	printf("res: %f\n", res * sign);
 	return (res * sign);
 }
