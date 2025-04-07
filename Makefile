@@ -23,6 +23,7 @@ SRCS =	main.c			\
 		colors.c		\
 		button.c		\
 		sphere.c		\
+		plane.c			\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)

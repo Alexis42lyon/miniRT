@@ -31,7 +31,7 @@ void	show_progress(int current, int max)
 		printf(GRAY "-");
 		i++;
 	}
-	printf(RESET "] (%d%%)\033[?25h\r", (int)progress);
+	printf(RESET "]\033[?25h\r");
 }
 
 t_viewport viewport(t_win_scene *win, t_scene *scene)
@@ -101,7 +101,11 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 			break;
 		}
 
-		mat = scene->spheres[hit.obj_index].material;
+		if (hit.type == SPHERE)
+			mat = scene->spheres[hit.obj_index].material;
+		else if (hit.type == PLANE)
+			mat = scene->planes[hit.obj_index].material;
+
 		mat.roughtness = 0.8f;
 		color = mat.albedo;
 
@@ -155,8 +159,8 @@ void	render(t_viewport vp, t_scene *scene)
 
 void	add_to_log(t_scene *scene, uint render_time)
 {
-	print_cam(&scene->camera);
-	ft_printf(GRAY "[LOG]: render time:%dms\n" RESET, render_time);
+	// print_cam(&scene->camera);
+	ft_printf(GRAY "\n[LOG]: render time:%dms\n" RESET, render_time);
 	ft_printf(GRAY "[LOG]: frame_count:%d\n" RESET,
 		scene->frame_count);
 	ft_printf(GREEN "done rendering!\n\n" RESET);

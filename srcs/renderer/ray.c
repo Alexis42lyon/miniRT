@@ -28,6 +28,7 @@ t_hit	trace_ray(t_ray ray, t_scene *scene)
 	double	dist;
 	double	min_dist;
 	size_t	i;
+	enum e_object_type	type;
 
 	min_dist = INT_MAX;
 	hit.obj_index = -1;
@@ -39,12 +40,30 @@ t_hit	trace_ray(t_ray ray, t_scene *scene)
 		{
 			min_dist = dist;
 			hit.obj_index = i;
+			type = SPHERE;
+		}
+		i++;
+	}
+	i = 0;
+	while (i < scene->nb_planes)
+	{
+		dist = plane_hit(scene->planes[i], ray);
+		if (dist > 0 && dist < min_dist)
+		{
+			min_dist = dist;
+			hit.obj_index = i;
+			type = PLANE;
 		}
 		i++;
 	}
 	if (hit.obj_index != (size_t)-1)
 	{
-		return (sp_hit_result(scene->spheres[hit.obj_index].origin, ray, min_dist, hit.obj_index));
+		if (type == SPHERE)
+			hit = hit_result(scene->spheres[hit.obj_index].origin, ray, min_dist, hit.obj_index);
+		else if (type == PLANE)
+			hit = hit_result(scene->planes[hit.obj_index].origin, ray, min_dist, hit.obj_index);
+		hit.type = type;
+		return (hit);
 	}
 	return (hit_fail());
 }
@@ -55,6 +74,7 @@ t_hit	hit_fail(void)
 		{0, 0, 0},
 		{0, 0, 0},
 		-1,
-		-1
+		-1,
+		NONE,
 	});
 }

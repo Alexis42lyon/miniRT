@@ -4,6 +4,14 @@
 # include "miniRT.h"
 # include <math.h>
 
+enum	e_object_type
+{
+	NONE = 0,
+	PLANE,
+	SPHERE,
+	CYLINDER,
+};
+
 typedef struct ray
 {
 	t_vec3	origin;
@@ -19,6 +27,7 @@ typedef struct hit_info
 	double	hit_distance;
 
 	size_t	obj_index;
+	enum e_object_type	type;
 
 }	t_hit;
 
@@ -61,6 +70,9 @@ void	start_renderer(t_prog *prog);
 
 // sphere.c
 double	sphere_hit(const t_sphere sphere, const t_ray ray);
-t_hit	sp_hit_result(const t_vec3 origin, const t_ray r, const double t, const size_t idx);
+t_hit	hit_result(const t_vec3 origin, const t_ray r, const double t, const size_t idx);
+
+// place.c
+double	plane_hit(const t_plane plane, const t_ray ray);
 
 #endif
