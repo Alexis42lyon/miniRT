@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "libft/vector.h"
 
 void	parse_cylinder(t_prog *prog, t_cylinder *cylinder, char **tokens)
 {
@@ -31,11 +32,9 @@ void	parse_plane(t_prog *prog, t_plane *plane, char **tokens)
 	if (ft_arrlen(tokens) != 4)
 		print_exit(prog, "Invalid plane format");
 	parse_vector(prog, &origin, tokens[1]);
-	plane->origin = origin;
 	parse_vector(prog, &normal, tokens[2]);
-	// if (!is_normalized(normal))
-	// 	print_exit(prog, "Invalid plane normal");
-	plane->normal = normal;
+	plane->origin = origin;
+	plane->normal = vec3_normalize(normal);
 	plane->material = default_mat();
 	parse_color(prog, &plane->material.albedo, tokens[3]);
 }
