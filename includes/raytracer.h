@@ -4,6 +4,9 @@
 # include "miniRT.h"
 # include <math.h>
 
+# define BOUNCES 2
+# define DEFAULT_EMMI_POWER 5
+
 enum	e_object_type
 {
 	NONE = 0,
@@ -22,9 +25,9 @@ typedef struct ray
 
 typedef struct hit_info
 {
-	t_vec3	hit_point;
-	t_vec3	hit_normal;
-	double	hit_distance;
+	t_vec3	point;
+	t_vec3	normal;
+	double	distance;
 
 	size_t	obj_index;
 	enum e_object_type	type;

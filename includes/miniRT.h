@@ -120,7 +120,6 @@ typedef struct s_prog
 	t_scene			*scene;
 	t_win_scene		*win_scene;
 	t_win_button	*win_button;
-	// more ..
 }	t_prog;
 
 void	free_arr(void **arr);

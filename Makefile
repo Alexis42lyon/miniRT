@@ -60,7 +60,7 @@ $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 norm:
 		norminette srcs includes
 
-file = scene1
+file = scene1_light
 
 scene: all
 		./$(NAME) scenes/$(file).rt

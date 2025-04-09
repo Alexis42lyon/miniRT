@@ -14,6 +14,8 @@ void	print_cam(const t_camera *cam)
 	print_vec(cam->origin);
 	ft_printf("\tdirection:");
 	print_vec(cam->direction);
+	ft_printf("\tforward:");
+	print_vec(cam->foward);
 	ft_printf("\tfov:%d%s\n", cam->fov, RESET);
 }
 

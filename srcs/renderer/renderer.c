@@ -7,9 +7,6 @@
 #include <limits.h>
 #include <time.h>
 
-#define BOUNCES 3
-#define DEFAULT_EMMI_POWER 5
-
 //! TO REMOVE
 #include <stdio.h>
 
@@ -105,12 +102,54 @@ int exposed_to_light(t_sphere sphere, t_vec3 point, t_vec3 light)
 	return (get_sp_inter(sphere, ray) == 0);
 }
 
+
+t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat)
+{
+	t_vec3	diffuse;
+	t_vec3	specular;
+	t_vec3	ambient;
+
+	t_vec3	light_dir;
+
+	light_dir = vec3_sub(hit.point, scene->light.origin);
+	light_dir = vec3_mult(light_dir, -1);
+
+	// Diffuse = Kd * DOT(N, L) * Od * Ld
+	// Kd = reflection coef
+	// N = normal
+	// L = light
+	// Od = mat albeado
+	// Ld = light color
+	diffuse = vec3_mult(mat.albedo, mat.roughtness * ft_clamp(ft_dot(hit.normal, light_dir), 0, 1));
+	diffuse = vec3_multv(diffuse, scene->light.material.albedo);
+	diffuse = vec3_divide(diffuse, vec3_lenght_square(light_dir));
+	diffuse = vec3_mult(diffuse, scene->light.ratio * 5);
+
+	// R = 2 * DOT(N, L) * N - L
+	// specular = Ks * (DOT(V, R))^roughness * Od * Ld
+	// ks = obj specular coef
+	// V = view vector
+	float specular_coef = 01.0f;
+
+	t_vec3	view_vec = vec3_normalize(vec3_sub(scene->camera.origin, hit.point));
+	t_vec3 R = vec3_sub(vec3_mult(hit.normal, 2 * ft_clamp(ft_dot(hit.normal, light_dir), 0, 1)), light_dir); 
+	float	specular_intensity = specular_coef * pow(ft_clamp(ft_dot(view_vec, R), 0, 1), mat.roughtness);
+	specular = vec3_multv(vec3_mult(mat.albedo, specular_intensity), scene->light.material.albedo);
+
+	// Ambient = Ka * Od * Ld
+	ambient = vec3_multv( mat.albedo, scene->ambient_light.color);
+	ambient = vec3_mult(ambient, scene->ambient_light.ratio);
+
+	// return specular;
+	return vec3_clamp(vec3_add(vec3_add(ambient, diffuse), specular), 0, 1);
+}
+
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 {
 	t_ray	ray;
 	t_hit	hit;
 	t_mat	mat;
-	t_vec3	ambiant_color;
+	// t_vec3	ambiant_color;
 
 	t_vec3	final_color;
 	float	mutiplier = 1.0f;
@@ -127,7 +166,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	for (int i = 0; i < BOUNCES; i++)
 	{
 		hit = trace_ray(ray, scene);
-		if (hit.hit_distance == -1)
+		if (hit.distance == -1)
 		{
 			// return ((t_vec3){0,0,0});
 			final_color = vec3_mult(vec3_add(final_color, scene->sky_color), mutiplier);
@@ -142,25 +181,19 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 		else if (hit.type == CYLINDER)
 			mat = scene->cylinders[hit.obj_index].material;
 
-		mat.roughtness = 0.7f;
-		//ka = 0.5
-		// ambiant_color = normal_color(hit);
-		ambiant_color = vec3_multv(mat.albedo, scene->ambient_light.color);
+		mat.roughtness = 0.1f;
+		final_color = vec3_mult(mat.albedo, mutiplier);
+		// final_color = vec3_mult(normal_color(hit), mutiplier);
 
-		if (mat.emission_power != -1)
-			mutiplier = mat.emission_power;
-		final_color = vec3_mult(vec3_add(final_color, ambiant_color), mutiplier);
+		// Phong shading model
+		final_color = phong_shading(scene, hit, mat);
+		// final_color = 
 		mutiplier *= 0.5f;
 
-		ray.origin = vec3_add(hit.hit_point, vec3_mult(hit.hit_normal, 0.0001));
+		ray.origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));
 		ray.dir = vec3_reflect(ray.dir,
-			vec3_add(hit.hit_normal, vec3_mult(random_vec(seed), mat.roughtness)));
-
-		// t_vec3	light_dir = vec3_sub(hit.hit_point, scene->light.origin);
-		// double dot = ft_clamp(ft_dot(hit.hit_normal, vec3_mult(light_dir, -1)), 0, vec3_lenght(light_dir));
-		// final_color = vec3_mult(final_color, dot);
-		// final_color = vec3_mult(final_color, scene->light.ratio * 10);
-		// final_color = vec3_divide(final_color, vec3_lenght_square(light_dir));
+			vec3_add(hit.normal, vec3_mult(random_vec(seed), mat.roughtness)));
+		
 	}
 
 	return (vec3_clamp(final_color, 0 ,1));

@@ -5,9 +5,9 @@ t_hit	hit_result(const t_vec3 origin, const t_ray r, const double t, const size_
 {
 	t_hit	hit;
 
-	hit.hit_point = vec3_add(r.origin, vec3_mult(r.dir, t));
-	hit.hit_normal = vec3_normalize(vec3_sub(hit.hit_point, origin));
-	hit.hit_distance = t;
+	hit.point = vec3_add(r.origin, vec3_mult(r.dir, t));
+	hit.normal = vec3_normalize(vec3_sub(hit.point, origin));
+	hit.distance = t;
 	hit.obj_index = idx;
 	return (hit);
 }

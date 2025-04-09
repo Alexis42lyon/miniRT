@@ -14,7 +14,7 @@ t_vec3	normal_color(t_hit hit)
 {
 	t_vec3	color;
 
-	color = vec3_mult(vec3_add(hit.hit_normal, (t_vec3){1, 1, 1}), 0.5);
+	color = vec3_mult(vec3_add(hit.normal, (t_vec3){1, 1, 1}), 0.5);
 	return (color);
 }
 
