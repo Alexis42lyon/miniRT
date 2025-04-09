@@ -37,16 +37,16 @@ int	key_hook(int keycode, t_prog *prog)
 	else if (keycode == 'e')
 		camera->origin = vec3_add(camera->origin, vec3_mult(camera->up, -0.5));
 	else if (keycode == 'w')
-		prog->scene->light.origin = vec3_add(prog->scene->light.origin,
+		camera->origin = vec3_add(camera->origin,
 				vec3_mult(camera->foward, -0.5));
 	else if (keycode == 's')
-		prog->scene->light.origin = vec3_add(prog->scene->light.origin,
+		camera->origin = vec3_add(camera->origin,
 				vec3_mult(camera->foward, 0.5));
 	else if (keycode == 'a')
-		prog->scene->light.origin = vec3_add(prog->scene->light.origin,
+		camera->origin = vec3_add(camera->origin,
 				vec3_mult(camera->right, -0.5));
 	else if (keycode == 'd')
-		prog->scene->light.origin = vec3_add(prog->scene->light.origin,
+		camera->origin = vec3_add(camera->origin,
 				vec3_mult(camera->right, 0.5));
 	else if (keycode == 'z')
 		camera->fov++;

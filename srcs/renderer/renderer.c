@@ -141,7 +141,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 		else if (hit.type == CYLINDER)
 			mat = scene->cylinders[hit.obj_index].material;
 
-		mat.roughtness = 0.5f;
+		mat.roughtness = 0.8f;
 		final_color = vec3_mult(mat.albedo, mutiplier);
 
 		// Phong shading model
@@ -214,8 +214,8 @@ int	run_pipeline(t_prog *prog)
 	clock_t		difference;
 	t_viewport	vp;
 
-	prog->scene->sky_color = (t_vec3){0.8, 0.9, 0.95};
 	prog->scene->sky_color = (t_vec3){0,0,0};
+	prog->scene->sky_color = (t_vec3){0.8, 0.9, 0.95};
 	vp = viewport(prog->win_scene, prog->scene);
 	msec = 0;
 	before = clock();

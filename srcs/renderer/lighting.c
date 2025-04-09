@@ -10,7 +10,7 @@ int	in_light(t_scene *scene, t_hit hit, t_vec3 light_dir)
 	ray.dir = vec3_mult(light_dir, -1);
 
 	light_hit = trace_ray(ray, scene);	
-	return (hit.distance != -1);
+	return (light_hit.distance == -1);
 }
 
 
