@@ -103,57 +103,6 @@ int exposed_to_light(t_sphere sphere, t_vec3 point, t_vec3 light)
 }
 
 
-t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
-{
-	t_vec3	diffuse;
-	t_vec3	specular;
-	t_vec3	ambient;
-
-	t_vec3	light_dir;
-
-	light_dir = vec3_sub(hit.point, scene->light.origin);
-	// light_dir = vec3_mult(light_dir, -1);
-
-	// Diffuse = Kd * DOT(N, L) * Od * Ld
-	// Kd = reflection coef
-	// N = normal
-	// L = light
-	// Od = mat albeado
-	// Ld = light color
-	diffuse = vec3_mult(mat.albedo, mat.roughtness * ft_clamp(ft_dot(hit.normal, light_dir), 0, 1));
-	diffuse = vec3_multv(diffuse, scene->light.material.albedo);
-	diffuse = vec3_divide(diffuse, vec3_lenght_square(light_dir));
-	diffuse = vec3_mult(diffuse, scene->light.ratio * 5);
-
-	// R = 2 * DOT(N, L) * N - L
-	// specular = Ks * (DOT(V, R))^roughness * Od * Ld
-	// ks = obj specular coef
-	// V = view vector
-	float specular_strenght = 0.5f;
-
-	t_vec3	view_vec = vec3_normalize(vec3_sub(ray.origin, hit.point));
-	t_vec3	reflect_vec = vec3_reflect(light_dir, hit.normal);
-	float	spec = pow(ft_clamp(ft_dot(view_vec, reflect_vec), 0.0f, 1.0f), 32);
-	specular = vec3_mult(scene->light.material.albedo, specular_strenght * spec);
-	specular = vec3_divide(diffuse, vec3_lenght(light_dir));
-
-
-	// float specular_coef = 5.0f;
-	
-	// t_vec3 R = vec3_sub(vec3_mult(hit.normal, 2 * ft_clamp(ft_dot(hit.normal, light_dir), 0, 1)), light_dir); 
-	// float	specular_intensity = specular_coef * pow(ft_clamp(ft_dot(view_vec, R), 0, 1), 256);
-	// specular = vec3_multv(vec3_mult(mat.albedo, specular_intensity), scene->light.material.albedo);
-
-
-	
-
-	// Ambient = Ka * Od * Ld
-	ambient = vec3_multv( mat.albedo, scene->ambient_light.color);
-	ambient = vec3_mult(ambient, scene->ambient_light.ratio);
-
-	// return specular;
-	return vec3_clamp(vec3_add(vec3_add(ambient, diffuse), specular), 0, 1);
-}
 
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 {
@@ -192,13 +141,11 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 		else if (hit.type == CYLINDER)
 			mat = scene->cylinders[hit.obj_index].material;
 
-		mat.roughtness = 0.1f;
+		mat.roughtness = 0.5f;
 		final_color = vec3_mult(mat.albedo, mutiplier);
-		// final_color = vec3_mult(normal_color(hit), mutiplier);
 
 		// Phong shading model
 		final_color = phong_shading(scene, hit, mat, ray);
-		// final_color = 
 		mutiplier *= 0.5f;
 
 		ray.origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));

@@ -7,6 +7,10 @@
 # define BOUNCES 1
 # define DEFAULT_EMMI_POWER 5
 
+#define SPECULAR 0b0100
+#define DIFFUSE 0b0010
+#define AMBIENT 0b0001
+
 enum	e_object_type
 {
 	NONE = 0,
@@ -79,5 +83,8 @@ t_hit	hit_result(const t_vec3 origin, const t_ray r, const double t,
 // place.c
 double	plane_hit(const t_plane plane, const t_ray ray);
 double	cylinders_hit(const t_cylinder plane, const t_ray ray);
+
+// lighting.c
+t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray);
 
 #endif
