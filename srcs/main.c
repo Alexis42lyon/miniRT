@@ -9,8 +9,8 @@
 
 int	main(int ac, char **av)
 {
-	t_prog		prog;
-	t_scene		scene;
+	t_prog			prog;
+	t_scene			scene;
 	t_win_scene		win_scene;
 	t_win_button	win_button;
 

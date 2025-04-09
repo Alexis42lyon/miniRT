@@ -67,7 +67,8 @@ int	mouse_move(int x, int y, t_prog *prog)
 			win->slider_x = 20;
 		if (win->slider_x > 20 + win->slider_width)
 			win->slider_x = 20 + win->slider_width;
-		prog->scene->camera.fov = (win->slider_x - 20) * 180 / win->slider_width;
+		prog->scene->camera.fov = (win->slider_x - 20) * 180
+			/ win->slider_width;
 		draw_controls(prog);
 	}
 	return (0);

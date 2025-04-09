@@ -1,7 +1,8 @@
 #include "libft/vector.h"
 #include "raytracer.h"
 
-t_hit	hit_result(const t_vec3 origin, const t_ray r, const double t, const size_t idx)
+t_hit	hit_result(const t_vec3 origin, const t_ray r, const double t,
+	const size_t idx)
 {
 	t_hit	hit;
 
@@ -23,14 +24,14 @@ double	sphere_hit(const t_sphere sphere, const t_ray ray)
 	double	t2;
 
 	oc = vec3_sub(sphere.origin, ray.origin);
-	a = ft_dot(ray.dir,ray.dir);
+	a = ft_dot(ray.dir, ray.dir);
 	b = -2.0 * ft_dot(ray.dir, oc);
 	c = ft_dot(oc, oc) - sphere.radius * sphere.radius;
-	disc = b*b - 4*a*c;
+	disc = b * b - 4 * a * c;
 	if (disc < 0)
 		return (-1);
-	t1 = (-b - sqrt(disc)) / (2*a);
-	t2 = (-b + sqrt(disc)) / (2*a);
+	t1 = (-b - sqrt(disc)) / (2 * a);
+	t2 = (-b + sqrt(disc)) / (2 * a);
 	if (t1 < t2)
 		return (t1);
 	return (t2);

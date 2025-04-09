@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_vecnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:58:12 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/04 08:51:09 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:51:46 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,3 @@ void	print_vec(t_vec3 vec)
 {
 	printf("(x: %lf, y: %lf, z: %lf)\n", vec.x, vec.y, vec.z);
 }
-

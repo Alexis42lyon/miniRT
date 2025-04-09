@@ -6,19 +6,19 @@ inline t_vec3	vec3_add(const t_vec3 v1, const t_vec3 v2)
 	return ((t_vec3){v1.x + v2.x, v1.y + v2.y, v1.z + v2.z});
 }
 
-inline t_vec3 vec3_divide(const t_vec3 v1, const double d)
+inline t_vec3	vec3_divide(const t_vec3 v1, const double d)
 {
-	 return ((t_vec3){v1.x / d, v1.y / d, v1.z / d});
+	return ((t_vec3){v1.x / d, v1.y / d, v1.z / d});
 }
 
-inline t_vec3 vec3_mult(const t_vec3 v1, const double d)
+inline t_vec3	vec3_mult(const t_vec3 v1, const double d)
 {
-	 return ((t_vec3){v1.x * d, v1.y * d, v1.z * d});
+	return ((t_vec3){v1.x * d, v1.y * d, v1.z * d});
 }
 
-inline t_vec3 vec3_multv(const t_vec3 v1, const t_vec3 v2)
+inline t_vec3	vec3_multv(const t_vec3 v1, const t_vec3 v2)
 {
-	 return ((t_vec3){v1.x * v2.x, v1.y * v2.y, v1.z * v2.z});
+	return ((t_vec3){v1.x * v2.x, v1.y * v2.y, v1.z * v2.z});
 }
 
 inline t_vec3	vec3_sub(const t_vec3 v1, const t_vec3 v2)
@@ -43,10 +43,9 @@ inline t_vec3	vec3_normalize(const t_vec3 v)
 
 inline float	ft_dot(const t_vec3 v1, const t_vec3 v2)
 {
-	 return ((v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z));
+	return ((v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z));
 }
 
-// r = d −2(d⋅n)n
 inline t_vec3	vec3_reflect(const t_vec3 vec, const t_vec3 n)
 {
 	return (vec3_sub(vec, vec3_mult(n, 2 * ft_dot(vec, n))));
@@ -70,16 +69,19 @@ inline t_vec3	vec3_clamp(const t_vec3 vec, double min, double max)
 	});
 }
 
-
 /*
 CGFloat xDist = (p2.x - p1.x);
 CGFloat yDist = (p2.y - p1.y);
 CGFloat distance = sqrt(xDist * xDist + yDist * yDist);
 */
-inline float vec3_dist(t_vec3 v1, t_vec3 v2)
+inline float	vec3_dist(t_vec3 v1, t_vec3 v2)
 {
-	float x_dist = v2.x - v1.x;
-	float y_dist = v2.y - v1.y;
-	float z_dist = v2.z - v1.z;
+	float	x_dist;
+	float	y_dist;
+	float	z_dist;
+
+	x_dist = v2.x - v1.x;
+	y_dist = v2.y - v1.y;
+	z_dist = v2.z - v1.z;
 	return (sqrt(x_dist * x_dist + y_dist * y_dist + z_dist * z_dist));
 }

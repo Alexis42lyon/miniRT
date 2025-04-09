@@ -63,7 +63,7 @@ t_viewport viewport(t_win_scene *win, t_scene *scene)
 	return vp;
 }
 
-t_vec3	random_vec(uint seed)
+t_vec3	random_vec(t_uint seed)
 {
 	return ((t_vec3){
 		random_float(seed ^ 0x1F1F1F1F),
@@ -151,7 +151,7 @@ t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 	ambient = vec3_multv( mat.albedo, scene->ambient_light.color);
 	ambient = vec3_mult(ambient, scene->ambient_light.ratio);
 
-	return specular;
+	// return specular;
 	return vec3_clamp(vec3_add(vec3_add(ambient, diffuse), specular), 0, 1);
 }
 
@@ -171,7 +171,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 
 	ray = get_ray(i, j, vp);
 
-	uint seed = i + j * vp.win->width;
+	t_uint seed = i + j * vp.win->width;
 	seed *= scene->frame_count;
 
 	for (int i = 0; i < BOUNCES; i++)
@@ -204,7 +204,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 		ray.origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));
 		ray.dir = vec3_reflect(ray.dir,
 			vec3_add(hit.normal, vec3_mult(random_vec(seed), mat.roughtness)));
-		
+
 	}
 
 	return (vec3_clamp(final_color, 0 ,1));
@@ -239,7 +239,7 @@ void	render(t_viewport vp, t_scene *scene)
 	scene->frame_count++;
 }
 
-void	add_to_log(t_scene *scene, uint render_time)
+void	add_to_log(t_scene *scene, t_uint render_time)
 {
 	// print_cam(&scene->camera);
 	ft_printf(GRAY "\n[LOG]: render time:%dms\n" RESET, render_time);
@@ -248,7 +248,7 @@ void	add_to_log(t_scene *scene, uint render_time)
 	ft_printf(GREEN "done rendering!\n\n" RESET);
 
 	scene->total_render_time += render_time;
-	if (scene->min_render_time == (uint)-1)
+	if (scene->min_render_time == (t_uint)-1)
 	{
 		scene->min_render_time = render_time;
 		scene->max_render_time = render_time;

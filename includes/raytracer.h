@@ -4,7 +4,7 @@
 # include "miniRT.h"
 # include <math.h>
 
-# define BOUNCES 2
+# define BOUNCES 1
 # define DEFAULT_EMMI_POWER 5
 
 enum	e_object_type
@@ -38,28 +38,28 @@ typedef struct viewport
 {
 	t_win_scene		*win;
 
-	double		vp_height;
-	double		vp_width;
+	double			vp_height;
+	double			vp_width;
 
-	t_vec3		vp_u;
-	t_vec3		vp_v;
+	t_vec3			vp_u;
+	t_vec3			vp_v;
 
-	t_vec3		px_delta_u;
-	t_vec3		px_delta_v;
+	t_vec3			px_delta_u;
+	t_vec3			px_delta_v;
 
-	t_vec3		vp_up_left;
-	t_vec3		px_00;
+	t_vec3			vp_up_left;
+	t_vec3			px_00;
 
-	t_camera	*cam;
+	t_camera		*cam;
 
-	t_vec3		color;
+	t_vec3			color;
 }	t_viewport;
 
 typedef struct s_win	t_win;
 
 // colors.c
 t_vec3	normal_color(t_hit hit);
-uint	convert_to_rgba(const t_vec3 color);
+t_uint	convert_to_rgba(const t_vec3 color);
 
 // ray.c
 t_ray	get_ray(int i, int j, t_viewport vp);
@@ -73,9 +73,11 @@ void	start_renderer(t_prog *prog);
 
 // sphere.c
 double	sphere_hit(const t_sphere sphere, const t_ray ray);
-t_hit	hit_result(const t_vec3 origin, const t_ray r, const double t, const size_t idx);
+t_hit	hit_result(const t_vec3 origin, const t_ray r, const double t,
+			const size_t idx);
 
 // place.c
 double	plane_hit(const t_plane plane, const t_ray ray);
+double	cylinders_hit(const t_cylinder plane, const t_ray ray);
 
 #endif
