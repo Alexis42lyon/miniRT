@@ -45,50 +45,53 @@ void	parse_map(t_prog *prog)
 {
 	t_list	*new_node;
 
-	prog->scene->line = ft_get_next_line(prog->scene->fd);
-	while (prog->scene->line)
+	prog->scene->nb_spheres = 0;
+	prog->scene->nb_planes = 0;
+	prog->scene->nb_cylinders = 0;
+	prog->parser->line = ft_get_next_line(prog->parser->fd);
+	while (prog->parser->line)
 	{
-		if (ft_strchr(prog->scene->line, '\n'))
-			prog->scene->line[ft_strlen(prog->scene->line) - 1] = '\0';
+		if (ft_strchr(prog->parser->line, '\n'))
+			prog->parser->line[ft_strlen(prog->parser->line) - 1] = '\0';
 		check_mem((t_info){__FILE__, __LINE__, __func__},
-			ft_split(prog->scene->line, ' '),
-			(void **)&prog->scene->tokens, prog);
-		if (!ft_strcmp(prog->scene->tokens[0], "A"))
+			ft_split(prog->parser->line, ' '),
+			(void **)&prog->parser->tokens, prog);
+		if (!ft_strcmp(prog->parser->tokens[0], "A"))
 		{
-			if (prog->scene->ambient_light.is_set)
+			if (prog->parser->ambient_is_set)
 				print_exit(prog, "Ambient light can only be declared once");
-			prog->scene->ambient_light.is_set = true;
+			prog->parser->ambient_is_set = true;
 		}
-		else if (!ft_strcmp(prog->scene->tokens[0], "C"))
+		else if (!ft_strcmp(prog->parser->tokens[0], "C"))
 		{
-			if (prog->scene->camera.is_set)
+			if (prog->parser->camera_is_set)
 				print_exit(prog, "Camera can only be declared once");
-			prog->scene->camera.is_set = true;
+			prog->parser->camera_is_set = true;
 		}
-		else if (!ft_strcmp(prog->scene->tokens[0], "L"))
+		else if (!ft_strcmp(prog->parser->tokens[0], "L"))
 		{
-			if (prog->scene->light.is_set)
+			if (prog->parser->light_is_set)
 				print_exit(prog, "Light can only be declared once");
-			prog->scene->light.is_set = true;
+			prog->parser->light_is_set = true;
 		}
-		else if (!ft_strcmp(prog->scene->tokens[0], "sp"))
+		else if (!ft_strcmp(prog->parser->tokens[0], "sp"))
 			prog->scene->nb_spheres++;
-		else if (!ft_strcmp(prog->scene->tokens[0], "pl"))
+		else if (!ft_strcmp(prog->parser->tokens[0], "pl"))
 			prog->scene->nb_planes++;
-		else if (!ft_strcmp(prog->scene->tokens[0], "cy"))
+		else if (!ft_strcmp(prog->parser->tokens[0], "cy"))
 			prog->scene->nb_cylinders++;
-		else if (prog->scene->tokens[0])
+		else if (prog->parser->tokens[0])
 			print_exit(prog, "Invalid identifier");
 		check_mem((t_info){__FILE__, __LINE__, __func__},
-			ft_lstnew(prog->scene->tokens), (void **)&new_node, prog);
-		ft_lstadd_back(&prog->scene->map, new_node);
-		free(prog->scene->line);
-		prog->scene->line = ft_get_next_line(prog->scene->fd);
+			ft_lstnew(prog->parser->tokens), (void **)&new_node, prog);
+		ft_lstadd_back(&prog->parser->map, new_node);
+		free(prog->parser->line);
+		prog->parser->line = ft_get_next_line(prog->parser->fd);
 	}
-	prog->scene->tokens = NULL;
-	if (prog->scene->ambient_light.is_set == false
-		|| prog->scene->camera.is_set == false
-		|| prog->scene->light.is_set == false)
+	prog->parser->tokens = NULL;
+	if (prog->parser->ambient_is_set == false
+		|| prog->parser->camera_is_set == false
+		|| prog->parser->light_is_set == false)
 		print_exit(prog, "Missing mandatory elements");
 }
 
@@ -105,7 +108,7 @@ void	parse(t_prog *prog)
 	i_cylinder = 0;
 	i_sphere = 0;
 	i_plane = 0;
-	current = prog->scene->map;
+	current = prog->parser->map;
 	while (current)
 	{
 		tokens = (char **)current->content;

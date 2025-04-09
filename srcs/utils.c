@@ -1,6 +1,7 @@
 #include "mlx.h"
 #include "window.h"
 #include "miniRT.h"
+#include "parser.h"
 #include <stdio.h>
 
 void	session_result(const t_scene *scene)
@@ -49,23 +50,23 @@ void	free_win_scene(t_win_scene *win)
 	free(win->accumulation_data);
 }
 
-void	free_scene(t_scene *scene)
+void	free_parser(t_parser *parser)
 {
-	if (scene->fd > 0)
-		close(scene->fd);
-	free(scene->line);
-	free(scene->spheres);
-	free(scene->planes);
-	free(scene->cylinders);
-	free_arr((void **)scene->tokens);
-	ft_lstclear(&scene->map, (void *)free_arr);
-	free(scene);
+	if (parser->fd > 0)
+		close(parser->fd);
+	free(parser->line);
+	free_arr((void **)parser->tokens);
+	ft_lstclear(&parser->map, (void *)free_arr);
+	free(parser);
 }
 
 void	free_all(t_prog *prog)
 {
+	free(prog->scene->spheres);
+	free(prog->scene->planes);
+	free(prog->scene->cylinders);
 	session_result(prog->scene);
-	free_scene(prog->scene);
+	free_parser(prog->parser);
 	if (prog->win_button->win_ptr)
 		mlx_destroy_window(prog->win_button->mlx_ptr,
 			prog->win_button->win_ptr);

@@ -11,8 +11,6 @@ void	parse_cylinder(t_prog *prog, t_cylinder *cylinder, char **tokens)
 	parse_vector(prog, &origin, tokens[1]);
 	cylinder->origin = origin;
 	parse_vector(prog, &normal, tokens[2]);
-	if (!is_normalized(normal))
-		print_exit(prog, "Invalid cylinder normal");
 	cylinder->normal = normal;
 	cylinder->radius = check_atof(prog, tokens[3]);
 	if (cylinder->radius <= 0)

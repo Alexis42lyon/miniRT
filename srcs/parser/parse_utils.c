@@ -6,27 +6,27 @@
 void	parse_vector(t_prog *prog, t_vec3 *vec, char *str)
 {
 	check_mem((t_info){__FILE__, __LINE__, __func__},
-		ft_split(str, ','), (void **)&prog->scene->tokens, prog);
-	if (ft_arrlen(prog->scene->tokens) != 3)
+		ft_split(str, ','), (void **)&prog->parser->tokens, prog);
+	if (ft_arrlen(prog->parser->tokens) != 3)
 		free_all(prog);
-	vec->x = check_atof(prog, prog->scene->tokens[0]);
-	vec->y = check_atof(prog, prog->scene->tokens[1]);
-	vec->z = check_atof(prog, prog->scene->tokens[2]);
-	free_arr((void **)prog->scene->tokens);
-	prog->scene->tokens = NULL;
+	vec->x = check_atof(prog, prog->parser->tokens[0]);
+	vec->y = check_atof(prog, prog->parser->tokens[1]);
+	vec->z = check_atof(prog, prog->parser->tokens[2]);
+	free_arr((void **)prog->parser->tokens);
+	prog->parser->tokens = NULL;
 }
 
 void	parse_color(t_prog *prog, t_vec3 *color, char *str)
 {
 	check_mem((t_info){__FILE__, __LINE__, __func__},
-		ft_split(str, ','), (void **)&prog->scene->tokens, prog);
-	if (ft_arrlen(prog->scene->tokens) != 3)
+		ft_split(str, ','), (void **)&prog->parser->tokens, prog);
+	if (ft_arrlen(prog->parser->tokens) != 3)
 		print_exit(prog, "Invalid color format");
-	color->x = check_atof(prog, prog->scene->tokens[0]);
-	color->y = check_atof(prog, prog->scene->tokens[1]);
-	color->z = check_atof(prog, prog->scene->tokens[2]);
-	free_arr((void **)prog->scene->tokens);
-	prog->scene->tokens = NULL;
+	color->x = check_atof(prog, prog->parser->tokens[0]);
+	color->y = check_atof(prog, prog->parser->tokens[1]);
+	color->z = check_atof(prog, prog->parser->tokens[2]);
+	free_arr((void **)prog->parser->tokens);
+	prog->parser->tokens = NULL;
 	if (color->x != (unsigned char)(color->x)
 		|| color->y != (unsigned char)(color->y)
 		|| color->z != (unsigned char)(color->z))
@@ -34,16 +34,6 @@ void	parse_color(t_prog *prog, t_vec3 *color, char *str)
 	color->x /= 255.0;
 	color->y /= 255.0;
 	color->z /= 255.0;
-}
-
-bool	is_normalized(t_vec3 vec)
-{
-	float	length;
-
-	length = sqrt(vec.x * vec.x + vec.y * vec.y + vec.z * vec.z);
-	if (length == 0.0)
-		return (0);
-	return (fabs(length - 1.0) < 0.0001);
 }
 
 void	init_malloc(t_prog *prog)

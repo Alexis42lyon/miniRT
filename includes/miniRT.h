@@ -19,6 +19,7 @@
 # define SIZE_WIN 0.5
 # define SHOW_SRUCT 0
 
+typedef struct s_parser	t_parser;
 typedef struct s_win_scene	t_win_scene;
 typedef struct s_win_button	t_win_button;
 
@@ -41,14 +42,12 @@ typedef struct material
 /* --------------------------------- OBJECT --------------------------------- */
 typedef struct ambient_light
 {
-	bool			is_set;
 	double			ratio;
 	t_vec3			color;
 }	t_ambient_light;
 
 typedef struct camera
 {
-	bool	is_set;
 	t_vec3	origin;
 	t_vec3	direction;
 
@@ -60,7 +59,6 @@ typedef struct camera
 
 typedef struct light
 {
-	bool			is_set;
 	t_vec3			origin;
 	double			ratio;
 	t_mat			material;
@@ -94,10 +92,6 @@ typedef struct cylinder
 
 typedef struct s_scene
 {
-	int				fd;
-	char			*line;
-	char			**tokens;
-	t_list			*map;
 	t_vec3			sky_color;
 	t_ambient_light	ambient_light;
 	t_camera		camera;
@@ -117,6 +111,7 @@ typedef struct s_scene
 
 typedef struct s_prog
 {
+	t_parser		*parser;
 	t_scene			*scene;
 	t_win_scene		*win_scene;
 	t_win_button	*win_button;
