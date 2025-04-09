@@ -26,6 +26,7 @@ SRCS =	main.c			\
 		plane.c			\
 		cylinder.c		\
 		lighting.c		\
+		pipeline.c		\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)

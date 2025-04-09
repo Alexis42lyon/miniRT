@@ -14,6 +14,8 @@ void	print_cam(const t_camera *cam)
 	print_vec(cam->origin);
 	ft_printf("\tdirection:");
 	print_vec(cam->direction);
+	ft_printf("\tdirection normalized:");
+	print_vec(vec3_normalize(cam->direction));
 	ft_printf("\tfov:%d%s\n", cam->fov, RESET);
 }
 
@@ -29,9 +31,9 @@ int	key_hook(int keycode, t_prog *prog)
 	else if (keycode == DOWN_ARR)
 		camera->direction = vec3_add(camera->direction, new_vec3(0, 0.05, 0));
 	else if (keycode == LEFT_ARR)
-		camera->direction = vec3_add(camera->direction, new_vec3(0.05, 0, 0));
+		camera->direction = vec3_add(camera->direction, new_vec3(0, 0, 0.05));
 	else if (keycode == RIGHT_ARR)
-		camera->direction = vec3_add(camera->direction, new_vec3(-0.05, 0, 0));
+		camera->direction = vec3_add(camera->direction, new_vec3(0, 0, -0.05));
 	else if (keycode == 'q')
 		camera->origin = vec3_add(camera->origin, vec3_mult(camera->up, 0.5));
 	else if (keycode == 'e')
@@ -90,9 +92,15 @@ void	init_win(t_prog *prog)
 		free_all(prog);
 	if (create_img(win) == -1)
 		free_all(prog);
-	mlx_loop_hook(prog->win_scene->mlx_ptr, run_pipeline, prog);
+	mlx_loop_hook(prog->win_scene->mlx_ptr, new_frame, prog);
 	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, prog);
 	check_mem((t_info){__FILE__, __LINE__, __func__},
 		ft_calloc(win->height * win->width, sizeof(t_vec3)),
 		(void **)&win->accumulation_data, prog);
+
+	mlx_key_hook(win->win_ptr, key_hook, prog);
+	if (win->mlx_ptr == NULL)
+		return ;
+	init_button_window(prog);
+	mlx_loop(win->mlx_ptr);
 }

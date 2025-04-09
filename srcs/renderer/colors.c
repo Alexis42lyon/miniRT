@@ -18,16 +18,28 @@ t_vec3	normal_color(t_hit hit)
 	return (color);
 }
 
-t_uint	convert_to_rgba(const t_vec3 color)
+t_uint	vec_to_int(const t_vec3 color)
 {
-	unsigned short	r;
-	unsigned short	g;
-	unsigned short	b;
-	unsigned short	a;
+	unsigned char r = (unsigned char)(color.x * 255.0f);
+	unsigned char g = (unsigned char)(color.y * 255.0f);
+	unsigned char b = (unsigned char)(color.z * 255.0f);
+	unsigned char a = 255; // fully opaque
 
-	r = (unsigned short)(color.x * 255.999f);
-	g = (unsigned short)(color.y * 255.999f);
-	b = (unsigned short)(color.z * 255.999f);
-	a = (unsigned short)(255.999f);
 	return ((a << 24) | (r << 16) | (g << 8) | b);
 }
+
+t_vec3	int_to_vec(t_uint color)
+{
+	t_vec3 vec;
+
+	unsigned char r = (color >> 16) & 0xFF;
+	unsigned char g = (color >> 8) & 0xFF;
+	unsigned char b = color & 0xFF;
+
+	vec.x = r / 255.0f;
+	vec.y = g / 255.0f;
+	vec.z = b / 255.0f;
+
+	return vec;
+}
+

@@ -38,6 +38,8 @@ inline double	vec3_lenght_square(const t_vec3 vec)
 
 inline t_vec3	vec3_normalize(const t_vec3 v)
 {
+	if (vec3_lenght_square(v) == 0)
+		return (vec3_zero());
 	return (vec3_divide(v, vec3_lenght(v)));
 }
 

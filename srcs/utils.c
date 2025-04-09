@@ -65,7 +65,7 @@ void	free_all(t_prog *prog)
 	free(prog->scene->spheres);
 	free(prog->scene->planes);
 	free(prog->scene->cylinders);
-	session_result(prog->scene);
+	// session_result(prog->scene);
 	free_parser(prog->parser);
 	if (prog->win_button->win_ptr)
 		mlx_destroy_window(prog->win_button->mlx_ptr,

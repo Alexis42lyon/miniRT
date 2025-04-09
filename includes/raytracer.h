@@ -59,11 +59,10 @@ typedef struct viewport
 	t_vec3			color;
 }	t_viewport;
 
-typedef struct s_win	t_win;
-
 // colors.c
 t_vec3	normal_color(t_hit hit);
-t_uint	convert_to_rgba(const t_vec3 color);
+t_uint	vec_to_int(const t_vec3 color);
+t_vec3	int_to_vec(t_uint color);
 
 // ray.c
 t_ray	get_ray(int i, int j, t_viewport vp);
@@ -73,7 +72,9 @@ t_vec3	ray_to_vec(t_ray r);
 
 // renderer.c
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene);
+void	render(t_viewport vp, t_scene *scene);
 void	start_renderer(t_prog *prog);
+t_viewport viewport(t_win_scene *win, t_scene *scene);
 
 // sphere.c
 double	sphere_hit(const t_sphere sphere, const t_ray ray);

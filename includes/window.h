@@ -4,9 +4,9 @@
 # include "miniRT.h"
 # include <mlx.h>
 
-# define SHOW_BUTTON 0
-# define WIDTH 400
-# define HEIGHT 200
+# define SHOW_BUTTON 1
+# define WIDTH 800
+# define HEIGHT 600
 
 /* ----------------------------------- MLX ---------------------------------- */
 typedef struct s_data
@@ -61,7 +61,8 @@ int		create_trgb(int t, int r, int g, int b);
 void	init_win(t_prog *prog);
 int		key_hook(int keycode, t_prog *prog);
 
-int		run_pipeline(t_prog *prog);
+void	run_pipeline(t_prog *prog);
+int		 new_frame(t_prog *prog);
 
 // button.c
 void	free_scene(t_scene *scene);

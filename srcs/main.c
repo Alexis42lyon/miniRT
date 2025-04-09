@@ -30,7 +30,8 @@ int	main(int ac, char **av)
 	prog.win_button = &win_button;
 	ft_bzero(prog.win_scene, sizeof(t_win_scene));
 	init(&prog, av);
-	start_renderer(&prog);
+	init_win(&prog);
+	// start_renderer(&prog);
 	free_all(&prog);
 	return (0);
 }
