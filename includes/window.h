@@ -4,8 +4,9 @@
 # include "miniRT.h"
 # include <mlx.h>
 
-# define WIDTH 600
-# define HEIGHT 300
+# define SHOW_BUTTON 0
+# define WIDTH 400
+# define HEIGHT 200
 
 /* ----------------------------------- MLX ---------------------------------- */
 typedef struct s_data

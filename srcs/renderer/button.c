@@ -1,5 +1,7 @@
 #include "window.h"
 
+#if SHOW_BUTTON
+
 void	draw_controls(t_prog *prog)
 {
 	t_win_button	*win;
@@ -95,12 +97,17 @@ int	window_button_close(void *param)
 	return (0);
 }
 
+static int button_key_hook(int keycode, t_prog *prog)
+{
+	if (keycode == ESC)
+		free_all(prog);
+	return (0);
+}
+
 void	init_button_window(t_prog *prog)
 {
 	t_win_button	*win;
 
-	if (!prog || !prog->win_scene || !prog->win_scene->mlx_ptr)
-		return ;
 	win = prog->win_button;
 	win->mlx_ptr = prog->win_scene->mlx_ptr;
 	win->win_ptr = mlx_new_window(win->mlx_ptr, 250, 150, "Controls");
@@ -110,8 +117,17 @@ void	init_button_window(t_prog *prog)
 	win->slider_x = 20 + (prog->scene->camera.fov * win->slider_width / 180);
 	win->is_dragging = 0;
 	draw_controls(prog);
-	mlx_hook(win->win_ptr, 17, 1L << 2, window_button_close, prog);
+	mlx_key_hook(win->win_ptr, button_key_hook, prog);
 	mlx_hook(win->win_ptr, 4, 1L << 2, handle_click, prog);
 	mlx_hook(win->win_ptr, 5, 1L << 3, button_release, prog);
 	mlx_hook(win->win_ptr, 6, 1L << 6, mouse_move, prog);
 }
+
+#else
+
+void	init_button_window(t_prog *prog)
+{
+	(void)prog;
+}
+
+#endif

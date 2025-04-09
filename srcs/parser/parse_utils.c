@@ -59,11 +59,24 @@ void	init_malloc(t_prog *prog)
 		(void **)&prog->scene->cylinders, prog);
 }
 
+void	get_atof(char **nptr, double *res)
+{
+	double	fraction;
+
+	(*nptr)++;
+	fraction = 0.1;
+	while (ft_isdigit(**nptr))
+	{
+		*res += (**nptr - '0') * fraction;
+		(*nptr)++;
+		fraction *= 0.1;
+	}
+}
+
 double	check_atof(t_prog *prog, const char *nptr)
 {
 	int		sign;
 	double	res;
-	double	fraction;
 
 	sign = 1;
 	if (*nptr == '-')
@@ -82,16 +95,8 @@ double	check_atof(t_prog *prog, const char *nptr)
 		if (res * sign != (int)(res * sign))
 			print_exit(prog, "Invalid number format");
 	}
-	fraction = 0.1;
 	if (*nptr == '.')
-	{
-		nptr++;
-		while (ft_isdigit(*nptr))
-		{
-			res += (*nptr++ - '0') * fraction;
-			fraction *= 0.1;
-		}
-	}
+		get_atof((char **)&nptr, &res);
 	if (*nptr)
 		print_exit(prog, "Invalid number format");
 	return (res * sign);

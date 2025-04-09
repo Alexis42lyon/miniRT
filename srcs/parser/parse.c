@@ -24,8 +24,6 @@ static void	parse_camera(t_prog *prog, char **tokens)
 	parse_vector(prog, &origin, tokens[1]);
 	prog->scene->camera.origin = origin;
 	parse_vector(prog, &direction, tokens[2]);
-	if (!is_normalized(direction))
-		print_exit(prog, "Invalid camera orientation");
 	prog->scene->camera.direction = direction;
 	prog->scene->camera.fov = check_atof(prog, tokens[3]);
 	if (prog->scene->camera.fov < 0 || prog->scene->camera.fov > 180)
@@ -79,6 +77,8 @@ void	parse_map(t_prog *prog)
 			prog->scene->nb_planes++;
 		else if (!ft_strcmp(prog->scene->tokens[0], "cy"))
 			prog->scene->nb_cylinders++;
+		else if (prog->scene->tokens[0])
+			print_exit(prog, "Invalid identifier");
 		check_mem((t_info){__FILE__, __LINE__, __func__},
 			ft_lstnew(prog->scene->tokens), (void **)&new_node, prog);
 		ft_lstadd_back(&prog->scene->map, new_node);
@@ -121,8 +121,6 @@ void	parse(t_prog *prog)
 			parse_plane(prog, prog->scene->planes + i_plane++, tokens);
 		else if (!ft_strcmp(tokens[0], "cy"))
 			parse_cylinder(prog, prog->scene->cylinders + i_cylinder++, tokens);
-		else if (tokens[0])
-			print_exit(prog, "Invalid identifier");
 		current = current->next;
 	}
 }

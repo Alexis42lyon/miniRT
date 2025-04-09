@@ -66,7 +66,7 @@ void	free_all(t_prog *prog)
 {
 	session_result(prog->scene);
 	free_scene(prog->scene);
-	if (prog->win_scene->win_ptr)
+	if (prog->win_button->win_ptr)
 		mlx_destroy_window(prog->win_button->mlx_ptr,
 			prog->win_button->win_ptr);
 	free_win_scene(prog->win_scene);
