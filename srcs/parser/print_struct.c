@@ -91,7 +91,8 @@ static void	print_ambient_light(const t_ambient_light *ambient)
 	if (ambient->is_set)
 	{
 		printf("Ratio: " CYAN "%.2lf" RESET "\n", ambient->ratio);
-		printf("Color: " CYAN "0x%x" RESET "\n", convert_to_rgba(ambient->color));
+		printf("Color: " CYAN "0x%x" RESET "\n",
+			convert_to_rgba(ambient->color));
 	}
 }
 

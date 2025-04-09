@@ -37,7 +37,8 @@ static void	parse_ambient_light(t_prog *prog, char **tokens)
 	if (ft_arrlen(tokens) != 3)
 		print_exit(prog, "Invalid ambient light format");
 	prog->scene->ambient_light.ratio = check_atof(prog, tokens[1]);
-	if (prog->scene->ambient_light.ratio < 0.0 || prog->scene->ambient_light.ratio > 1.0)
+	if (prog->scene->ambient_light.ratio < 0.0
+		|| prog->scene->ambient_light.ratio > 1.0)
 		print_exit(prog, "Ambient light ratio must be in range [0.0, 1.0]");
 	parse_color(prog, &prog->scene->ambient_light.color, tokens[2]);
 }
@@ -52,7 +53,8 @@ void	parse_map(t_prog *prog)
 		if (ft_strchr(prog->scene->line, '\n'))
 			prog->scene->line[ft_strlen(prog->scene->line) - 1] = '\0';
 		check_mem((t_info){__FILE__, __LINE__, __func__},
-			ft_split(prog->scene->line, ' '), (void **)&prog->scene->tokens, prog);
+			ft_split(prog->scene->line, ' '),
+			(void **)&prog->scene->tokens, prog);
 		if (!ft_strcmp(prog->scene->tokens[0], "A"))
 		{
 			if (prog->scene->ambient_light.is_set)

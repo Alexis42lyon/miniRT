@@ -27,7 +27,9 @@ void	parse_color(t_prog *prog, t_vec3 *color, char *str)
 	color->z = check_atof(prog, prog->scene->tokens[2]);
 	free_arr((void **)prog->scene->tokens);
 	prog->scene->tokens = NULL;
-	if (color->x != (unsigned char)(color->x) || color->y != (unsigned char)(color->y) || color->z != (unsigned char)(color->z))
+	if (color->x != (unsigned char)(color->x)
+		|| color->y != (unsigned char)(color->y)
+		|| color->z != (unsigned char)(color->z))
 		print_exit(prog, "Color values must be in range [0, 255]");
 	color->x /= 255.0;
 	color->y /= 255.0;

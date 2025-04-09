@@ -24,6 +24,7 @@ SRCS =	main.c			\
 		button.c		\
 		sphere.c		\
 		plane.c			\
+		cylinder.c		\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
@@ -60,7 +61,7 @@ $(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
 norm:
 		norminette srcs includes
 
-file = scene1_light
+file = scene1
 
 scene: all
 		./$(NAME) scenes/$(file).rt

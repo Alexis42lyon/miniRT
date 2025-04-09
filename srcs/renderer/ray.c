@@ -22,12 +22,14 @@ t_ray	get_ray(int i, int j, t_viewport vp)
 	return (ray);
 }
 
+t_vec3	cylinder_normal(t_cylinder cy, t_vec3 hit_point);
+
 t_hit	trace_ray(t_ray ray, t_scene *scene)
 {
-	t_hit	hit;
-	double	dist;
-	double	min_dist;
-	size_t	i;
+	t_hit				hit;
+	double				dist;
+	double				min_dist;
+	size_t				i;
 	enum e_object_type	type;
 
 	min_dist = INT_MAX;
@@ -59,7 +61,7 @@ t_hit	trace_ray(t_ray ray, t_scene *scene)
 	i = 0;
 	while (i < scene->nb_cylinders)
 	{
-		// dist = cylinders_hit(scene->cylinders[i], ray);
+		dist = cylinders_hit(scene->cylinders[i], ray);
 		if (dist > 0 && dist < min_dist)
 		{
 			min_dist = dist;
@@ -71,11 +73,21 @@ t_hit	trace_ray(t_ray ray, t_scene *scene)
 	if (hit.obj_index != (size_t)-1)
 	{
 		if (type == SPHERE)
-			hit = hit_result(scene->spheres[hit.obj_index].origin, ray, min_dist, hit.obj_index);
+			hit = hit_result(scene->spheres[hit.obj_index].origin,
+					ray, min_dist, hit.obj_index);
 		else if (type == PLANE)
-			hit = hit_result(scene->planes[hit.obj_index].origin, ray, min_dist, hit.obj_index);
+		{
+			hit = hit_result(scene->planes[hit.obj_index].origin,
+					ray, min_dist, hit.obj_index);
+			hit.normal = scene->planes[hit.obj_index].normal;
+		}
 		else if (type == CYLINDER)
-			hit = hit_result(scene->cylinders[hit.obj_index].origin, ray, min_dist, hit.obj_index);
+		{
+			hit = hit_result(scene->cylinders[hit.obj_index].origin, ray,
+					min_dist, hit.obj_index);
+			hit.normal = cylinder_normal(scene->cylinders[hit.obj_index],
+					hit.point);
+		}
 		hit.type = type;
 		return (hit);
 	}

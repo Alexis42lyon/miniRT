@@ -109,10 +109,10 @@ typedef struct s_scene
 	t_plane			*planes;
 	t_cylinder		*cylinders;
 
-	uint			frame_count;
-	uint			total_render_time;
-	uint			min_render_time;
-	uint			max_render_time;
+	t_uint			frame_count;
+	t_uint			total_render_time;
+	t_uint			min_render_time;
+	t_uint			max_render_time;
 }	t_scene;
 
 typedef struct s_prog
