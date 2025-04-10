@@ -7,6 +7,8 @@
 #include <unistd.h>
 #include "libft/vector.h"
 
+#include <sys/wait.h>
+
 int	main(int ac, char **av)
 {
 	t_prog			prog;
@@ -33,7 +35,6 @@ int	main(int ac, char **av)
 	prog.scene->camera.right = (t_vec3){1, 0, 0}; //TODO: no dynamic
 	prog.scene->camera.up = (t_vec3){0, 1, 0};
 	init_win(&prog);
-	// start_renderer(&prog);
 	free_all(&prog);
 	return (0);
 }

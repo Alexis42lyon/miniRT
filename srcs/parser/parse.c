@@ -1,4 +1,5 @@
 #include "parser.h"
+#include "camera.h"
 
 static void	parse_light(t_prog *prog, char **tokens)
 {
@@ -25,6 +26,8 @@ static void	parse_camera(t_prog *prog, char **tokens)
 	prog->scene->camera.origin = origin;
 	parse_vector(prog, &direction, tokens[2]);
 	prog->scene->camera.forward = direction;
+	prog->scene->camera.right = (t_vec3){1, 0, 0};
+	prog->scene->camera.up = (t_vec3){0, 1, 0};
 	prog->scene->camera.fov = check_atof(prog, tokens[3]);
 	if (prog->scene->camera.fov < 0 || prog->scene->camera.fov > 180)
 		print_exit(prog, "FOV must be in range [0, 180]");

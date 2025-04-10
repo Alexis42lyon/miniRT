@@ -6,7 +6,7 @@ int	in_light(t_scene *scene, t_hit hit, t_vec3 light_dir)
 	t_hit	light_hit;
 	t_ray		ray;
 
-	ray.origin = hit.point;
+	ray.origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));;
 	ray.dir = vec3_mult(light_dir, -1);
 
 	light_hit = trace_ray(ray, scene);	
@@ -23,7 +23,7 @@ t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 
 	t_vec3	light_dir;
 
-	float light_range = 5;
+	float light_range = 10;
 
 	light_dir = vec3_sub(hit.point, scene->light.origin);
 	float	attenuation = light_range / vec3_lenght(light_dir);
@@ -53,15 +53,12 @@ t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 		float d = ft_dot(view_vec, reflect_vec);
 		if (d < 0)
 			d = 0;
-		double	spec = pow(d, 32);
+		double	spec = pow(d, 32); // 32 = normal // 256 = very shiny
 		specular = vec3_mult(scene->light.material.albedo, specular_coef * spec * scene->light.ratio);
 		specular = vec3_multv(specular, mat.albedo);
 		specular = vec3_mult(specular, attenuation);
-
 	}
-
-
-
+	
 	diffuse = vec3_mult(diffuse, attenuation);
 	
 	flags = SPECULAR | AMBIENT | DIFFUSE;
@@ -73,6 +70,5 @@ t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 		merged_pass = vec3_add(merged_pass, diffuse);
 	if (flags & SPECULAR)
 		merged_pass = vec3_add(merged_pass, specular);
-	
 	return merged_pass;
 }

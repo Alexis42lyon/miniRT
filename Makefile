@@ -7,7 +7,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP $(INCLUDES) -g3
 MLXFLAGS = -lX11 -lXext -lbsd -lm
 
-VPATH = srcs:srcs/parser:srcs/renderer
+VPATH = srcs:srcs/parser:srcs/renderer:srcs/camera
 
 SRCS =	main.c			\
 		utils.c			\
@@ -27,6 +27,7 @@ SRCS =	main.c			\
 		cylinder.c		\
 		lighting.c		\
 		pipeline.c		\
+		camera.c		\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)

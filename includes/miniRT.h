@@ -7,6 +7,7 @@
 # include "libft/memory.h"
 # include "libft/string.h"
 # include <stdbool.h>
+# include "camera.h"
 
 # define ESC 65307
 # define LEFT_ARR 65361
@@ -16,7 +17,6 @@
 # define PAGE_UP 65365
 # define PAGE_DOWN 65366
 
-# define SIZE_WIN 0.5
 # define SHOW_SRUCT 0
 
 typedef struct s_parser	t_parser;
@@ -45,16 +45,6 @@ typedef struct ambient_light
 	double			ratio;
 	t_vec3			color;
 }	t_ambient_light;
-
-typedef struct camera
-{
-	t_vec3	origin;
-
-	t_vec3	forward;
-	t_vec3	up;
-	t_vec3	right;
-	int		fov;
-}	t_camera;
 
 typedef struct light
 {
@@ -123,5 +113,7 @@ void	print_exit(t_prog *prog, char *str);
 
 void	print_cam(const t_camera *cam);
 t_mat	default_mat(void);
+
+t_vec3	random_vec(t_uint seed);
 
 #endif

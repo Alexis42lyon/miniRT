@@ -5,8 +5,8 @@
 # include <mlx.h>
 
 # define SHOW_BUTTON 0
-# define WIDTH 800
-# define HEIGHT 600
+# define WIDTH 1200
+# define HEIGHT 1000
 
 /* ----------------------------------- MLX ---------------------------------- */
 typedef struct s_data

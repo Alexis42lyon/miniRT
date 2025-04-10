@@ -7,8 +7,6 @@
 #include <limits.h>
 #include <time.h>
 
-#define GET_VARIABLE_NAME(Variable) (#Variable)
-
 //! TO REMOVE
 #include <stdio.h>
 
@@ -47,10 +45,6 @@ t_viewport viewport(t_win_scene *win, t_scene *scene)
 	vp.vp_height = 2 * tan(vp.cam->fov/2 * 3.1415/ 180) * focal_length;
 	vp.vp_width = vp.vp_height * win->aspect_ratio;
 
-//px_up_left = origin + (forward * focal_length) - (right * vp_width/2) + (up * vp_height/2)
-
-//left = origin + (forward * focal_length) - (right * vp_width/2) + (up * vp_height/2)
-
 	vp.px_up_left = vec3_add(vp.cam->origin, 
 		vec3_add(
 			vec3_sub(
@@ -61,7 +55,6 @@ t_viewport viewport(t_win_scene *win, t_scene *scene)
 
 	vp.horizontal = vec3_mult(vp.cam->right, vp.vp_width);
 	vp.vertical = vec3_mult(vec3_mult(vp.cam->up, -1), vp.vp_height);
-
 
 	return vp;
 }
@@ -74,6 +67,17 @@ t_vec3	random_vec(t_uint seed)
 		random_float(seed ^ 0x3D3D3D3D)
 	});
 }
+
+
+// t_vec3	random_vec(t_uint seed)
+// {
+// 	(void)seed;
+// 	return ((t_vec3){
+// 		(float)rand() / (float)RAND_MAX - 0.5f,
+// 		(float)rand() / (float)RAND_MAX - 0.5f,
+// 		(float)rand() / (float)RAND_MAX - 0.5f
+// 	});
+// }
 
 int get_sp_inter(const t_sphere sphere, const t_ray ray)
 {
@@ -122,10 +126,11 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	ray = get_ray((float)(i) / ((float)vp.witdh), (float)(j) / (float)(vp.height), vp);
 
 	t_uint seed = i + j * vp.win->width;
-	seed *= scene->frame_count;
 
+	seed *= scene->frame_count;
 	for (int i = 0; i < BOUNCES; i++)
 	{
+		seed *= i + 1;
 		hit = trace_ray(ray, scene);
 		if (hit.distance == -1)
 		{
@@ -133,7 +138,6 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 			final_color = vec3_mult(vec3_add(final_color, scene->sky_color), mutiplier);
 			break;
 		}
-
 
 		if (hit.type == SPHERE)
 			mat = scene->spheres[hit.obj_index].material;
@@ -191,7 +195,7 @@ void	add_to_log(t_scene *scene, t_uint render_time)
 	ft_printf(GRAY "\n[LOG]: render time:%dms\n" RESET, render_time);
 	ft_printf(GRAY "[LOG]: frame_count:%d\n" RESET,
 		scene->frame_count);
-	print_cam(&scene->camera);
+	// print_cam(&scene->camera);
 	ft_printf(GREEN "done rendering!\n\n" RESET);
 
 	scene->total_render_time += render_time;
