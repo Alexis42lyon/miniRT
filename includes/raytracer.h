@@ -45,18 +45,15 @@ typedef struct viewport
 	double			vp_height;
 	double			vp_width;
 
-	t_vec3			vp_u;
-	t_vec3			vp_v;
-
-	t_vec3			px_delta_u;
-	t_vec3			px_delta_v;
-
-	t_vec3			vp_up_left;
-	t_vec3			px_00;
+	t_vec3			px_up_left;
 
 	t_camera		*cam;
 
-	t_vec3			color;
+	t_vec3			vertical;
+	t_vec3			horizontal;
+
+	int			witdh;
+	int			height;
 }	t_viewport;
 
 // colors.c
@@ -65,7 +62,7 @@ t_uint	vec_to_int(const t_vec3 color);
 t_vec3	int_to_vec(t_uint color);
 
 // ray.c
-t_ray	get_ray(int i, int j, t_viewport vp);
+t_ray	get_ray(float u, float v, t_viewport vp);
 t_hit	trace_ray(t_ray ray, t_scene *scene);
 t_hit	hit_fail(void);
 t_vec3	ray_to_vec(t_ray r);

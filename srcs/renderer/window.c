@@ -6,17 +6,62 @@
 #include "miniRT.h"
 #include "mlx.h"
 #include <stdio.h>
+#include <math.h>
 
 void	print_cam(const t_camera *cam)
 {
-	ft_printf(GRAY "[LOG]: camera settings\n");
+	ft_printf(GRAY "\n[LOG]: camera settings\n");
 	ft_printf("\torigin:");
 	print_vec(cam->origin);
-	ft_printf("\tdirection:");
-	print_vec(cam->direction);
-	ft_printf("\tdirection normalized:");
-	print_vec(vec3_normalize(cam->direction));
+	ft_printf("\tfoward:");
+	print_vec(cam->forward);
+	ft_printf("\tright:");
+	print_vec(cam->right);
+	ft_printf("\tup:");
+	print_vec(cam->up);
 	ft_printf("\tfov:%d%s\n", cam->fov, RESET);
+}
+
+void	turn_yaw(t_camera *cam, float radian)
+{
+	t_vec3	new_forward;
+	t_vec3	new_right;
+
+	new_forward = vec3_add(
+		vec3_mult(cam->forward, cosf(radian)),
+		vec3_mult(cam->right, sinf(radian))
+	);
+
+	new_right = vec3_add(
+		vec3_mult(vec3_mult(cam->forward, -1), sinf(radian)),
+		vec3_mult(cam->right, cosf(radian))
+	);
+
+	cam->forward = vec3_normalize(new_forward);
+	cam->right = vec3_normalize(new_right);
+	cam->up = vec3_normalize(vec3_cross(cam->right, cam->forward));
+
+}
+
+void	turn_pitch(t_camera *cam, float radian)
+{
+	t_vec3	new_forward;
+	t_vec3	new_up;
+
+	new_forward = vec3_add(
+		vec3_mult(cam->forward, cosf(radian)),
+		vec3_mult(cam->up, -sinf(radian))
+	);
+
+	new_up = vec3_add(
+		vec3_mult(cam->forward, sinf(radian)),
+		vec3_mult(cam->up, cosf(radian))
+	);
+
+	cam->forward = vec3_normalize(new_forward);
+	cam->up = vec3_normalize(new_up);
+	cam->right = vec3_normalize(vec3_cross(cam->forward, cam->up));
+
 }
 
 int	key_hook(int keycode, t_prog *prog)
@@ -27,23 +72,23 @@ int	key_hook(int keycode, t_prog *prog)
 	if (keycode == ESC)
 		free_all(prog);
 	else if (keycode == UP_ARR)
-		camera->direction = vec3_add(camera->direction, new_vec3(0, -0.05, 0));
+		turn_pitch(camera, 10 * (3.1415 / 180.0f));
 	else if (keycode == DOWN_ARR)
-		camera->direction = vec3_add(camera->direction, new_vec3(0, 0.05, 0));
+		turn_pitch(camera, -10 * (3.1415 / 180.0f));
 	else if (keycode == LEFT_ARR)
-		camera->direction = vec3_add(camera->direction, new_vec3(0, 0, 0.05));
+		turn_yaw(camera, -10 * (3.1415 / 180.0f));
 	else if (keycode == RIGHT_ARR)
-		camera->direction = vec3_add(camera->direction, new_vec3(0, 0, -0.05));
+		turn_yaw(camera, 10 * (3.1415 / 180.0f));
 	else if (keycode == 'q')
-		camera->origin = vec3_add(camera->origin, vec3_mult(camera->up, 0.5));
-	else if (keycode == 'e')
 		camera->origin = vec3_add(camera->origin, vec3_mult(camera->up, -0.5));
+	else if (keycode == 'e')
+		camera->origin = vec3_add(camera->origin, vec3_mult(camera->up, 0.5));
 	else if (keycode == 'w')
 		camera->origin = vec3_add(camera->origin,
-				vec3_mult(camera->foward, -0.5));
+				vec3_mult(camera->forward, 0.5));
 	else if (keycode == 's')
 		camera->origin = vec3_add(camera->origin,
-				vec3_mult(camera->foward, 0.5));
+				vec3_mult(camera->forward, -0.5));
 	else if (keycode == 'a')
 		camera->origin = vec3_add(camera->origin,
 				vec3_mult(camera->right, -0.5));
@@ -82,6 +127,8 @@ void	init_win(t_prog *prog)
 	ft_bzero(win, sizeof(t_win_scene));
 	win->height = HEIGHT;
 	win->width = WIDTH;
+	win->aspect_ratio = (float)WIDTH / (float)HEIGHT;
+	printf("%f", win->aspect_ratio);
 	win->mlx_ptr = mlx_init();
 	if (!win->mlx_ptr)
 		free_all(prog);

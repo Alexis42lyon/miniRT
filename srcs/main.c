@@ -30,6 +30,8 @@ int	main(int ac, char **av)
 	prog.win_button = &win_button;
 	ft_bzero(prog.win_scene, sizeof(t_win_scene));
 	init(&prog, av);
+	prog.scene->camera.right = (t_vec3){1, 0, 0}; //TODO: no dynamic
+	prog.scene->camera.up = (t_vec3){0, 1, 0};
 	init_win(&prog);
 	// start_renderer(&prog);
 	free_all(&prog);

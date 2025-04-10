@@ -23,7 +23,7 @@ t_uint	vec_to_int(const t_vec3 color)
 	unsigned char r = (unsigned char)(color.x * 255.0f);
 	unsigned char g = (unsigned char)(color.y * 255.0f);
 	unsigned char b = (unsigned char)(color.z * 255.0f);
-	unsigned char a = 255; // fully opaque
+	unsigned char a = 255;
 
 	return ((a << 24) | (r << 16) | (g << 8) | b);
 }

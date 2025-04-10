@@ -4,7 +4,7 @@
 # include "miniRT.h"
 # include <mlx.h>
 
-# define SHOW_BUTTON 1
+# define SHOW_BUTTON 0
 # define WIDTH 800
 # define HEIGHT 600
 
@@ -26,7 +26,7 @@ typedef struct s_win_scene
 
 	int		view_width;
 	int		view_height;
-	int		aspect_ratio;
+	double	aspect_ratio;
 
 	t_vec3	*accumulation_data;
 

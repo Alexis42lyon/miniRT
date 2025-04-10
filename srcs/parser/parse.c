@@ -24,7 +24,7 @@ static void	parse_camera(t_prog *prog, char **tokens)
 	parse_vector(prog, &origin, tokens[1]);
 	prog->scene->camera.origin = origin;
 	parse_vector(prog, &direction, tokens[2]);
-	prog->scene->camera.direction = direction;
+	prog->scene->camera.forward = direction;
 	prog->scene->camera.fov = check_atof(prog, tokens[3]);
 	if (prog->scene->camera.fov < 0 || prog->scene->camera.fov > 180)
 		print_exit(prog, "FOV must be in range [0, 180]");

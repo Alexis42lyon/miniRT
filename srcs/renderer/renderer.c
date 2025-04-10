@@ -7,6 +7,8 @@
 #include <limits.h>
 #include <time.h>
 
+#define GET_VARIABLE_NAME(Variable) (#Variable)
+
 //! TO REMOVE
 #include <stdio.h>
 
@@ -37,46 +39,31 @@ t_viewport viewport(t_win_scene *win, t_scene *scene)
 	vp.win = win;
 	vp.cam = &scene->camera;
 
-	// Normalize the camera direction vector
-	vp.cam->foward = vec3_normalize(vp.cam->direction);
+	vp.witdh = win->width;
+	vp.height = win->height;
 
-	// Set up camera coordinate system
-	t_vec3 world_up = (t_vec3){0, -1, 0};
-	vp.cam->right = vec3_normalize(vec3_cross(vp.cam->foward, world_up));
-	vp.cam->up = vec3_cross(vp.cam->right, vp.cam->foward);
+	float focal_length = 1.0f;
 
-	// Calculate viewport dimensions based on FOV angle
-	double fov_radians = vp.cam->fov * (3.1415926535 / 180.0); // Convert degrees to radians
+	vp.vp_height = 2 * tan(vp.cam->fov/2 * 3.1415/ 180) * focal_length;
+	vp.vp_width = vp.vp_height * win->aspect_ratio;
 
-	// The focal length determines how "zoomed in" the view is
-	double focal_length = 1.0; // Distance from camera to viewport plane
+//px_up_left = origin + (forward * focal_length) - (right * vp_width/2) + (up * vp_height/2)
 
-	// Calculate viewport height based on the FOV angle
-	vp.vp_height = 2 * focal_length * tan(fov_radians / 2);
-	vp.vp_width = vp.vp_height * ((double)win->width / win->height);
+//left = origin + (forward * focal_length) - (right * vp_width/2) + (up * vp_height/2)
 
-	// Calculate viewport vectors
-	vp.vp_u = vec3_mult(vp.cam->right, vp.vp_width);
-	vp.vp_v = vec3_mult(vp.cam->up, vp.vp_height);
+	vp.px_up_left = vec3_add(vp.cam->origin, 
+		vec3_add(
+			vec3_sub(
+				vec3_mult(vp.cam->forward, focal_length),
+				vec3_mult(vp.cam->right, vp.vp_width/2)
+				),
+			vec3_mult(vp.cam->up, vp.vp_height/2)));
 
-	// Calculate pixel delta vectors
-	vp.px_delta_u = vec3_divide(vp.vp_u, win->width);
-	vp.px_delta_v = vec3_divide(vp.vp_v, win->height);
+	vp.horizontal = vec3_mult(vp.cam->right, vp.vp_width);
+	vp.vertical = vec3_mult(vec3_mult(vp.cam->up, -1), vp.vp_height);
 
-	// Calculate viewport center and upper-left corner
-	t_vec3 view_center = vec3_add(vp.cam->origin, 
-									vec3_mult(vp.cam->foward, focal_length));
 
-	vp.vp_up_left = vec3_sub(
-		vec3_sub(view_center, vec3_divide(vp.vp_u, 2)),
-		vec3_divide(vp.vp_v, 2)
-	);
-
-	// Calculate the position of the first pixel (0,0)
-	vp.px_00 = vec3_add(vp.vp_up_left,
-						vec3_mult(vec3_add(vp.px_delta_u, vp.px_delta_v), 0.5));
-    
-    return vp;
+	return vp;
 }
 
 t_vec3	random_vec(t_uint seed)
@@ -119,13 +106,11 @@ int exposed_to_light(t_sphere sphere, t_vec3 point, t_vec3 light)
 }
 
 
-
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 {
 	t_ray	ray;
 	t_hit	hit;
 	t_mat	mat;
-	// t_vec3	ambiant_color;
 
 	t_vec3	final_color;
 	float	mutiplier = 1.0f;
@@ -134,7 +119,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	ray_color = vec3_mult(scene->ambient_light.color, scene->ambient_light.ratio);
 	final_color = (t_vec3){0.0, 0.0, 0.0};
 
-	ray = get_ray(i, j, vp);
+	ray = get_ray((float)(i) / ((float)vp.witdh), (float)(j) / (float)(vp.height), vp);
 
 	t_uint seed = i + j * vp.win->width;
 	seed *= scene->frame_count;
@@ -221,45 +206,3 @@ void	add_to_log(t_scene *scene, t_uint render_time)
 	if (render_time < scene->min_render_time)
 		scene->min_render_time = render_time;
 }
-
-// int	run_pipeline(t_prog *prog)
-// {
-// 	int			msec;
-// 	clock_t		before;
-// 	clock_t		difference;
-// 	t_viewport	vp;
-
-// 	prog->scene->sky_color = (t_vec3){0.8, 0.9, 0.95};
-// 	prog->scene->sky_color = (t_vec3){0,0,0};
-// 	vp = viewport(prog->win_scene, prog->scene);
-// 	msec = 0;
-// 	before = clock();
-// 	render(vp, prog->scene);
-// 	mlx_put_image_to_window(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr,
-// 		prog->win_scene->img.img, 0, 0);
-// 	difference = clock() - before;
-// 	msec = difference * 1000 / CLOCKS_PER_SEC;
-// 	add_to_log(prog->scene, msec);
-// 	return (0);
-// }
-
-// void	start_renderer(t_prog *prog)
-// {
-// 	t_win_scene	*win;
-// 	t_scene	*scene;
-
-// 	win = prog->win_scene;
-// 	scene = prog->scene;
-
-// 	scene->min_render_time = -1;
-// 	scene->max_render_time = -1;
-// 	scene->total_render_time = 0;
-
-// 	init_win(prog);
-// 	mlx_key_hook(win->win_ptr, key_hook, prog);
-// 	if (win->mlx_ptr == NULL)
-// 		return ;
-// 	run_pipeline(prog);
-// 	init_button_window(prog);
-// 	mlx_loop(win->mlx_ptr);
-// }

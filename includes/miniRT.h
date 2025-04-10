@@ -49,9 +49,8 @@ typedef struct ambient_light
 typedef struct camera
 {
 	t_vec3	origin;
-	t_vec3	direction;
 
-	t_vec3	foward;
+	t_vec3	forward;
 	t_vec3	up;
 	t_vec3	right;
 	int		fov;
