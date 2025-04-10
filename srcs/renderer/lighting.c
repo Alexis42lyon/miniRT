@@ -1,74 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lighting.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
+/*   Updated: 2025/04/10 15:39:08 by mjuncker         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "raytracer.h"
 #include <stdio.h>
 
 int	in_light(t_scene *scene, t_hit hit, t_vec3 light_dir)
 {
 	t_hit	light_hit;
-	t_ray		ray;
+	t_ray	ray;
 
-	ray.origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));;
+	ray.origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));
 	ray.dir = vec3_mult(light_dir, -1);
-
-	light_hit = trace_ray(ray, scene);	
+	light_hit = trace_ray(ray, scene);
 	return (light_hit.distance == -1);
 }
 
+struct light_info	new_info(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
+{
+	struct light_info	info;
+
+	info.light = scene->light;
+	info.ray = ray;
+	info.hit = hit;
+	info.mat = mat;
+	info.light_dir = vec3_sub(hit.point, scene->light.origin);
+	info.attenuation = LIGHT_RANGE / vec3_lenght(info.light_dir);
+	if (info.attenuation < 0)
+		info.attenuation = 0;
+	info.light_dir = vec3_normalize(info.light_dir);
+	return (info);
+}
 
 t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 {
-	t_vec3	diffuse = vec3_zero();
-	t_vec3	specular = vec3_zero();
-	t_vec3	ambient = vec3_zero();
-	short flags;
+	t_vec3				ambient;
+	t_vec3				diffuse;
+	t_vec3				specular;
+	t_vec3				merged_pass;
+	struct light_info	info;
 
-	t_vec3	light_dir;
-
-	float light_range = 10;
-
-	light_dir = vec3_sub(hit.point, scene->light.origin);
-	float	attenuation = light_range / vec3_lenght(light_dir);
-	if (attenuation < 0)
-		attenuation = 0;
-	light_dir = vec3_normalize(light_dir);
-
-	ambient = vec3_multv(mat.albedo, scene->ambient_light.color);
-	ambient = vec3_mult(ambient, scene->ambient_light.ratio);
-
-	if (in_light(scene, hit, light_dir))
+	ambient = vec3_zero();
+	diffuse = vec3_zero();
+	specular = vec3_zero();
+	scene->vp_flags = DIFFUSE | AMBIENT | SPECULAR;
+	info = new_info(scene, hit, mat, ray);
+	ambient = phong_ambient(scene, info.mat);
+	if (in_light(scene, hit, info.light_dir))
 	{
-		// Diffuse = Kd * DOT(N, L) * Od * Ld
-		// Kd = reflection coef
-		// N = normal
-		// L = light
-		// Od = mat albeado
-		// Ld = light color
-		diffuse = vec3_mult(mat.albedo, mat.roughtness * ft_clamp(ft_dot(hit.normal, vec3_mult(light_dir, -1)), 0, 1));
-		diffuse = vec3_multv(diffuse, scene->light.material.albedo);
-		diffuse = vec3_mult(diffuse, scene->light.ratio);
-	
-		float specular_coef = 0.6f;
-		t_vec3	view_vec = vec3_normalize(vec3_sub(ray.origin, hit.point));
-	
-		t_vec3	reflect_vec = vec3_reflect(light_dir, hit.normal);
-		float d = ft_dot(view_vec, reflect_vec);
-		if (d < 0)
-			d = 0;
-		double	spec = pow(d, 32); // 32 = normal // 256 = very shiny
-		specular = vec3_mult(scene->light.material.albedo, specular_coef * spec * scene->light.ratio);
-		specular = vec3_multv(specular, mat.albedo);
-		specular = vec3_mult(specular, attenuation);
+		diffuse = phong_diffuse(info);
+		specular = phong_specular(info);
 	}
-	
-	diffuse = vec3_mult(diffuse, attenuation);
-	
-	flags = SPECULAR | AMBIENT | DIFFUSE;
-
-	t_vec3	merged_pass = vec3_zero();
-	if (flags & AMBIENT)
+	merged_pass = vec3_zero();
+	if (scene->vp_flags & AMBIENT)
 		merged_pass = vec3_add(merged_pass, ambient);
-	if (flags & DIFFUSE)
+	if (scene->vp_flags & DIFFUSE)
 		merged_pass = vec3_add(merged_pass, diffuse);
-	if (flags & SPECULAR)
+	if (scene->vp_flags & SPECULAR)
 		merged_pass = vec3_add(merged_pass, specular);
-	return merged_pass;
+	return (merged_pass);
 }

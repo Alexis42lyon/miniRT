@@ -4,12 +4,16 @@
 # include "miniRT.h"
 # include <math.h>
 
-# define BOUNCES 1
+# define BOUNCES 10
 # define DEFAULT_EMMI_POWER 5
 
-#define SPECULAR 0b0100
-#define DIFFUSE 0b0010
-#define AMBIENT 0b0001
+# define SPECULAR 0b0100
+# define DIFFUSE 0b0010
+# define AMBIENT 0b0001
+
+# define LIGHT_RANGE 10
+# define SPECULAR_COEF 0.6f
+# define SHINY_POWER 32 // 32 = plastic // 256 = glass
 
 enum	e_object_type
 {
@@ -56,6 +60,18 @@ typedef struct viewport
 	int			height;
 }	t_viewport;
 
+struct light_info
+{
+	t_light_source	light;
+	t_vec3			light_dir;
+	float			attenuation;
+	
+	t_mat			mat;
+	
+	t_hit			hit;
+	t_ray			ray;
+};
+
 // colors.c
 t_vec3	normal_color(t_hit hit);
 t_uint	vec_to_int(const t_vec3 color);
@@ -70,7 +86,6 @@ t_vec3	ray_to_vec(t_ray r);
 // renderer.c
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene);
 void	render(t_viewport vp, t_scene *scene);
-void	start_renderer(t_prog *prog);
 t_viewport viewport(t_win_scene *win, t_scene *scene);
 
 // sphere.c
@@ -84,5 +99,11 @@ double	cylinders_hit(const t_cylinder plane, const t_ray ray);
 
 // lighting.c
 t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray);
+
+// phong_model.c
+t_vec3	phong_diffuse(struct light_info info);
+t_vec3	phong_ambient(t_scene *scene, t_mat mat);
+t_vec3	phong_specular(struct light_info info);
+
 
 #endif

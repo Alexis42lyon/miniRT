@@ -92,6 +92,8 @@ typedef struct s_scene
 	t_plane			*planes;
 	t_cylinder		*cylinders;
 
+	short			vp_flags;
+
 	t_uint			frame_count;
 	t_uint			total_render_time;
 	t_uint			min_render_time;

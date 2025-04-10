@@ -134,7 +134,6 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 		hit = trace_ray(ray, scene);
 		if (hit.distance == -1)
 		{
-			// return ((t_vec3){0,0,0});
 			final_color = vec3_mult(vec3_add(final_color, scene->sky_color), mutiplier);
 			break;
 		}
@@ -159,7 +158,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 
 	}
 
-	return (vec3_clamp(final_color, 0 ,1));
+	return (vec3_clamp(final_color, 0, 1));
 }
 
 void	render(t_viewport vp, t_scene *scene)

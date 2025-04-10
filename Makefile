@@ -28,6 +28,7 @@ SRCS =	main.c			\
 		lighting.c		\
 		pipeline.c		\
 		camera.c		\
+		phong_model.c	\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
