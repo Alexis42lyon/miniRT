@@ -45,7 +45,7 @@ t_viewport viewport(t_win_scene *win, t_scene *scene)
 	vp.vp_height = 2 * tan(vp.cam->fov/2 * 3.1415/ 180) * focal_length;
 	vp.vp_width = vp.vp_height * win->aspect_ratio;
 
-	vp.px_up_left = vec3_add(vp.cam->origin, 
+	vp.px_up_left = vec3_add(vp.cam->origin,
 		vec3_add(
 			vec3_sub(
 				vec3_mult(vp.cam->forward, focal_length),
@@ -118,9 +118,9 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 
 	t_vec3	final_color;
 	float	mutiplier = 1.0f;
-	t_vec3	ray_color;
+	// t_vec3	ray_color;
 
-	ray_color = vec3_mult(scene->ambient_light.color, scene->ambient_light.ratio);
+	// ray_color = vec3_mult(scene->ambient_light.color, scene->ambient_light.ratio);
 	final_color = (t_vec3){0.0, 0.0, 0.0};
 
 	ray = get_ray((float)(i) / ((float)vp.witdh), (float)(j) / (float)(vp.height), vp);

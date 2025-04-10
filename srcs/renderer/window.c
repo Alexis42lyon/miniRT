@@ -86,10 +86,9 @@ void	init_win(t_prog *prog)
 	check_mem((t_info){__FILE__, __LINE__, __func__},
 		ft_calloc(win->height * win->width, sizeof(t_vec3)),
 		(void **)&win->accumulation_data, prog);
-
 	mlx_key_hook(win->win_ptr, key_hook, prog);
 	if (win->mlx_ptr == NULL)
-		return ;
+		free_all(prog);
 	init_button_window(prog);
 	mlx_loop(win->mlx_ptr);
 }
