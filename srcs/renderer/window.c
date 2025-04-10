@@ -43,6 +43,8 @@ int	key_hook(int keycode, t_prog *prog)
 		camera->fov++;
 	else if (keycode == 'x')
 		camera->fov--;
+	else if (keycode == 'r')
+		reset_cam_orientation(camera);
 	else
 		return (0);
 	ft_bzero(prog->win_scene->accumulation_data,

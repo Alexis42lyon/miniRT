@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:44:41 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/10 12:33:36 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:50:49 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct camera
 t_camera	new_camera(t_vec3 origin, t_vec3 forward, int fov);
 void	turn_pitch(t_camera *cam, float radian);
 void	turn_yaw(t_camera *cam, float radian);
+void	reset_cam_orientation(t_camera *cam);
 void	print_cam(const t_camera *cam);
 
 #endif

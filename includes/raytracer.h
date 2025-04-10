@@ -4,7 +4,7 @@
 # include "miniRT.h"
 # include <math.h>
 
-# define BOUNCES 4
+# define BOUNCES 1
 # define DEFAULT_EMMI_POWER 5
 
 #define SPECULAR 0b0100

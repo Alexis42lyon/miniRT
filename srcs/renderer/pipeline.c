@@ -15,7 +15,7 @@ void	run_pipeline(t_prog *prog)
 
 void display_frame(t_win_scene *win, t_scene *scene)
 {
-	print_cam(&scene->camera);
+	//print_cam(&scene->camera);
 	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img.img, 0, 0);
 	scene->frame_count++;
 }

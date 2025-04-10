@@ -32,7 +32,7 @@ double	sphere_hit(const t_sphere sphere, const t_ray ray)
 		return (-1);
 	t1 = (-b - sqrt(disc)) / (2 * a);
 	t2 = (-b + sqrt(disc)) / (2 * a);
-	if (t1 < t2)
+	if (t1 > 0)
 		return (t1);
 	return (t2);
 }

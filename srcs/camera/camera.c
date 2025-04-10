@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:46:23 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/10 12:34:15 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/10 13:51:29 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ t_camera	new_camera(t_vec3 origin, t_vec3 forward, int fov)
 	cam.right = (t_vec3){1, 0, 0}; // TODO: to change
 	cam.up = (t_vec3){0, 1, 0};
 	return (cam);
+}
+
+void	reset_cam_orientation(t_camera *cam)
+{
+	cam->forward = (t_vec3){0, 0, -1};
+	cam->up = (t_vec3){0, 1, 0};
+	cam->right = (t_vec3){1, 0, 0};
 }
 
 
