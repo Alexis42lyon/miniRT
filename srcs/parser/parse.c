@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:26 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 10:36:27 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/11 10:40:36 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	parse_camera(t_prog *prog, char **tokens)
 	if (prog->scene->camera.fov < 0 || prog->scene->camera.fov > 180)
 		print_exit(prog, "FOV must be in range [0, 180]");
 	prog->scene->camera = new_camera(prog->scene->camera.origin,
-		prog->scene->camera.forward, fov);
+			prog->scene->camera.forward, fov);
 }
 
 static void	parse_ambient_light(t_prog *prog, char **tokens)
