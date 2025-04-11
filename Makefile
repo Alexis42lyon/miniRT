@@ -65,7 +65,7 @@ $(OBJ_DIR)/%.o: %.c Makefile | $(OBJ_DIR)
 	printf "$(GRAY)compiling: $(BLUE)%-40s $(GRAY)[%d/%d]\n" "$<" "$$(ls obj | wc -l)" "$(words $(SRCS))"
 
 norm:
-		norminette srcs includes
+		norminette srcs includes libft
 
 file = scene1
 
