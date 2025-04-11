@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/11 10:22:42 by abidolet          #+#    #+#             */
+/*   Updated: 2025/04/11 10:22:43 by abidolet         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <miniRT.h>
 #include <math.h>
 #include <parser.h>
@@ -34,19 +46,6 @@ void	parse_color(t_prog *prog, t_vec3 *color, char *str)
 	color->x /= 255.0;
 	color->y /= 255.0;
 	color->z /= 255.0;
-}
-
-void	init_malloc(t_prog *prog)
-{
-	check_mem((t_info){__FILE__, __LINE__, __func__},
-		malloc(sizeof(t_sphere) * (prog->scene->nb_spheres + 1)),
-		(void **)&prog->scene->spheres, prog);
-	check_mem((t_info){__FILE__, __LINE__, __func__},
-		malloc(sizeof(t_plane) * (prog->scene->nb_planes + 1)),
-		(void **)&prog->scene->planes, prog);
-	check_mem((t_info){__FILE__, __LINE__, __func__},
-		malloc(sizeof(t_cylinder) * (prog->scene->nb_cylinders + 1)),
-		(void **)&prog->scene->cylinders, prog);
 }
 
 void	get_atof(char **nptr, double *res)

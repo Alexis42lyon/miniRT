@@ -12,13 +12,10 @@
 int	main(int ac, char **av)
 {
 	t_prog			prog;
+	t_parser		parser;
 	t_scene			scene;
 	t_win_scene		win_scene;
 	t_win_button	win_button;
-
-	ft_bzero(&prog, sizeof(t_prog));
-	ft_bzero(&scene, sizeof(t_scene));
-	ft_bzero(&win_scene, sizeof(win_scene));
 
 	if (ac != 2)
 	{
@@ -31,10 +28,10 @@ int	main(int ac, char **av)
 		print_error("File must have the .rt extension");
 		return (1);
 	}
+	prog.parser = &parser;
 	prog.scene = &scene;
 	prog.win_scene = &win_scene;
 	prog.win_button = &win_button;
-	ft_bzero(prog.win_scene, sizeof(t_win_scene));
 	init(&prog, av);
 	init_win(&prog);
 	free_all(&prog);

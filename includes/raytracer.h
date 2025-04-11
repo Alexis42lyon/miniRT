@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 09:09:23 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 10:20:02 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "miniRT.h"
 # include <math.h>
 
-# define BOUNCES 2
+# define BOUNCES 5
 # define DEFAULT_EMMI_POWER 5
 
 # define SPECULAR 0b0100
@@ -77,9 +77,9 @@ struct light_info
 	t_light_source	light;
 	t_vec3			light_dir;
 	float			attenuation;
-	
+
 	t_mat			mat;
-	
+
 	t_hit			hit;
 	t_ray			ray;
 };
