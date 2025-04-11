@@ -22,7 +22,6 @@ SRCS =	main.c			\
 		renderer.c		\
 		ray.c			\
 		colors.c		\
-		button.c		\
 		sphere.c		\
 		plane.c			\
 		cylinder.c		\

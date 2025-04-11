@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 16:12:17 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:25:53 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 # define LIGHT_RANGE 10
 # define SPECULAR_COEF 0.6f
-# define SHINY_POWER 32 // 32 = plastic // 256 = glass
+# define SHINY_POWER 32
 
 enum	e_object_type
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 16:14:10 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:25:28 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,5 @@ void	init_win(t_prog *prog)
 		ft_calloc(win->height * win->width, sizeof(t_vec3)),
 		(void **)&win->accumulation_data, prog);
 	mlx_key_hook(win->win_ptr, key_hook, prog);
-	init_button_window(prog);
 	mlx_loop(win->mlx_ptr);
 }
