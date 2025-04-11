@@ -11,6 +11,7 @@ VPATH = srcs:srcs/parser:srcs/renderer:srcs/camera
 
 SRCS =	main.c			\
 		utils.c			\
+		free.c			\
 		init.c			\
 		parse.c			\
 		parse_objects.c	\

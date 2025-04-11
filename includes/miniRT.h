@@ -106,14 +106,18 @@ typedef struct s_prog
 	t_win_button	*win_button;
 }	t_prog;
 
-void	free_arr(void **arr);
-void	free_all(t_prog *prog_set);
+// utils.c
 void	check_mem(t_info info, void *mem, void **res, t_prog *prog);
+
+// free.c
+void	free_arr(void **arr);
+void	free_parser(t_parser *parser);
+void	free_all(t_prog *prog_set);
 void	print_exit(t_prog *prog, char *str);
 
+// ?.c
 void	print_cam(const t_camera *cam);
 t_mat	default_mat(void);
-
 t_vec3	random_vec(t_uint seed);
 
 #endif
