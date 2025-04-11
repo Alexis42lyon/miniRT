@@ -12,6 +12,7 @@
 
 void	show_progress(int current, int max)
 {
+	return ;
 	int		i;
 	float	progress;
 

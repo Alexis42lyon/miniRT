@@ -19,18 +19,17 @@ static void	parse_camera(t_prog *prog, char **tokens)
 {
 	t_vec3	origin;
 	t_vec3	direction;
+	float	fov;
 
 	if (ft_arrlen(tokens) != 4)
 		print_exit(prog, "Invalid camera format");
 	parse_vector(prog, &origin, tokens[1]);
 	prog->scene->camera.origin = origin;
 	parse_vector(prog, &direction, tokens[2]);
-	prog->scene->camera.forward = direction;
-	prog->scene->camera.right = (t_vec3){1, 0, 0};
-	prog->scene->camera.up = (t_vec3){0, 1, 0};
-	prog->scene->camera.fov = check_atof(prog, tokens[3]);
+	fov = check_atof(prog, tokens[3]);
 	if (prog->scene->camera.fov < 0 || prog->scene->camera.fov > 180)
 		print_exit(prog, "FOV must be in range [0, 180]");
+	prog->scene->camera = new_camera(origin, direction, fov);
 }
 
 static void	parse_ambient_light(t_prog *prog, char **tokens)

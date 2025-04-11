@@ -6,14 +6,16 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:44:41 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/10 13:50:49 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 10:25:19 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CAMERA_H
 # define CAMERA_H
 
-#include "libft/vector.h"
+# include "libft/vector.h"
+
+# define WORLD_UP (t_vec3){0, 1, 0}
 
 typedef struct camera
 {
