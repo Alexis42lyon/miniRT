@@ -8,22 +8,9 @@
 #include <stdio.h>
 #include <math.h>
 
-int	key_hook(int keycode, t_prog *prog)
+int	key_hook2(int keycode, t_camera	*camera)
 {
-	t_camera	*camera;
-
-	camera = &prog->scene->camera;
-	if (keycode == ESC)
-		free_all(prog);
-	else if (keycode == UP_ARR)
-		turn_pitch(camera, -10 * (3.1415 / 180.0f));
-	else if (keycode == DOWN_ARR)
-		turn_pitch(camera, 10 * (3.1415 / 180.0f));
-	else if (keycode == LEFT_ARR)
-		turn_yaw(camera, -10 * (3.1415 / 180.0f));
-	else if (keycode == RIGHT_ARR)
-		turn_yaw(camera, 10 * (3.1415 / 180.0f));
-	else if (keycode == 'q')
+	if (keycode == 'q')
 		camera->origin = vec3_add(camera->origin, vec3_mult(camera->up, -0.5));
 	else if (keycode == 'e')
 		camera->origin = vec3_add(camera->origin, vec3_mult(camera->up, 0.5));
@@ -46,6 +33,26 @@ int	key_hook(int keycode, t_prog *prog)
 	else if (keycode == 'r')
 		reset_cam_orientation(camera);
 	else
+		return (1);
+	return (0);
+}
+
+int	key_hook(int keycode, t_prog *prog)
+{
+	t_camera	*camera;
+
+	camera = &prog->scene->camera;
+	if (keycode == ESC)
+		free_all(prog);
+	else if (keycode == UP_ARR)
+		turn_pitch(camera, -10 * (3.1415 / 180.0f));
+	else if (keycode == DOWN_ARR)
+		turn_pitch(camera, 10 * (3.1415 / 180.0f));
+	else if (keycode == LEFT_ARR)
+		turn_yaw(camera, -10 * (3.1415 / 180.0f));
+	else if (keycode == RIGHT_ARR)
+		turn_yaw(camera, 10 * (3.1415 / 180.0f));
+	else if (key_hook2(keycode, camera))
 		return (0);
 	ft_bzero(prog->win_scene->accumulation_data,
 		prog->win_scene->height * prog->win_scene->width * sizeof(t_vec3));
@@ -63,10 +70,7 @@ void	init_win(t_prog *prog)
 {
 	t_win_scene	*win;
 
-	prog->win_button->mlx_ptr = NULL;
-	prog->win_button->win_ptr = NULL;
 	win = prog->win_scene;
-	ft_bzero(win, sizeof(t_win_scene));
 	win->height = HEIGHT;
 	win->width = WIDTH;
 	win->aspect_ratio = (float)WIDTH / (float)HEIGHT;

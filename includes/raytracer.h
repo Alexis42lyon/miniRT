@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 13:20:35 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:12:56 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,6 @@ t_hit		hit_result(const t_vec3 origin, const t_ray r, const double t,
 // place.c
 double		plane_hit(void *p_plane, const t_ray ray);
 double		cylinders_hit(void *p_cy, t_ray r);
-t_vec3		cylinder_normal(t_cylinder cy, t_vec3 hit_point);
 
 // lighting.c
 t_vec3		phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray);

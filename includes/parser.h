@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:42:03 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 11:48:26 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:19:49 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "miniRT.h"
 
-# define SHOW_SRUCT 1
+# define SHOW_SRUCT 0
 
 typedef struct s_parser
 {

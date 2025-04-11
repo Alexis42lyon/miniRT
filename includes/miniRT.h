@@ -74,6 +74,13 @@ typedef struct cylinder
 	t_mat			material;
 }	t_cylinder;
 
+typedef struct s_ray_cylinder
+{
+	t_vec3	origin;
+	t_vec3	direction;
+	double	length;
+}	t_ray_cylinder;
+
 /* ---------------------------------- SCENE --------------------------------- */
 
 typedef struct s_scene

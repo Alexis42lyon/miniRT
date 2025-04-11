@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:01:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 13:23:53 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:12:53 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,21 @@
 #include "miniRT.h"
 #include "raytracer.h"
 #include <limits.h>
+
+t_vec3	cylinder_normal(t_cylinder cy, t_vec3 hit_point)
+{
+	t_vec3	cp;
+	double	projection;
+
+	cp = vec3_sub(hit_point, cy.origin);
+	projection = ft_dot(cp, cy.normal);
+	if (fabs(projection) < 1e-6)
+		return (vec3_mult(cy.normal, -1.0));
+	if (fabs(ft_dot(vec3_sub(hit_point, vec3_add(cy.origin,
+						vec3_mult(cy.normal, cy.height))), cy.normal)) < 1e-6)
+		return (cy.normal);
+	return (vec3_normalize(vec3_sub(cp, vec3_mult(cy.normal, projection))));
+}
 
 t_hit	hit_succes(t_scene *scene, t_ray ray, t_hit hit)
 {
