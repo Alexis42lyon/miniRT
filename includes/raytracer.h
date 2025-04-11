@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 16:12:17 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:04:11 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,8 @@ t_vec3		phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray);
 t_vec3		phong_diffuse(struct s_light_info info);
 t_vec3		phong_ambient(t_scene *scene, t_mat mat);
 t_vec3		phong_specular(struct s_light_info info);
+
+// anti_aliasing.c
+void	anti_aliaser(t_viewport	vp, t_scene *scene);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 08:45:57 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 16:37:23 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/11 17:42:39 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	run_pipeline(t_prog *prog)
 	prog->scene->sky_color = (t_vec3){0.9, 0.976470588, 1};
 	vp = viewport(prog->win_scene, prog->scene);
 	render(vp, prog->scene);
+	// anti_aliaser(vp, prog->scene);
 }
 
 void	display_frame(t_win_scene *win, t_scene *scene)
