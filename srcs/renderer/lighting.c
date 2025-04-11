@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/10 15:39:08 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:03:55 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	in_light(t_scene *scene, t_hit hit, t_vec3 light_dir)
 	return (light_hit.distance == -1);
 }
 
-struct light_info	new_info(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
+struct s_light_info	new_info(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 {
-	struct light_info	info;
+	struct s_light_info	info;
 
 	info.light = scene->light;
 	info.ray = ray;
@@ -46,7 +46,7 @@ t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 	t_vec3				diffuse;
 	t_vec3				specular;
 	t_vec3				merged_pass;
-	struct light_info	info;
+	struct s_light_info	info;
 
 	ambient = vec3_zero();
 	diffuse = vec3_zero();

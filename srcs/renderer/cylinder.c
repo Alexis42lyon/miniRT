@@ -78,7 +78,7 @@ static bool	cy_cap(t_ray r, double t, t_cylinder cy, bool top)
 	return (d <= cy.radius * cy.radius + 1e-6);
 }
 
-double	cylinders_hit(t_cylinder cy, t_ray r)
+double	cylinders_hit(void *p_cy, t_ray r)
 {
 	t_vec3	oc;
 	double	abc[3];
@@ -88,41 +88,43 @@ double	cylinders_hit(t_cylinder cy, t_ray r)
 	double	denom;
 	double	cap_t;
 	t_vec3	top_center;
+	t_cylinder *cy;
 
-	oc = vec3_sub(r.origin, cy.origin);
+	cy = (t_cylinder *)p_cy;
+	oc = vec3_sub(r.origin, cy->origin);
 	closest = -1;
-	abc[0] = ft_dot(vec3_cross(r.direction, cy.normal),
-			vec3_cross(r.direction, cy.normal));
-	abc[1] = 2 * ft_dot(vec3_cross(r.direction, cy.normal),
-			vec3_cross(oc, cy.normal));
-	abc[2] = ft_dot(vec3_cross(oc, cy.normal),
-			vec3_cross(oc, cy.normal)) - cy.radius * cy.radius;
+	abc[0] = ft_dot(vec3_cross(r.direction, cy->normal),
+			vec3_cross(r.direction, cy->normal));
+	abc[1] = 2 * ft_dot(vec3_cross(r.direction, cy->normal),
+			vec3_cross(oc, cy->normal));
+	abc[2] = ft_dot(vec3_cross(oc, cy->normal),
+			vec3_cross(oc, cy->normal)) - cy->radius * cy->radius;
 	cy_solve(abc[0], abc[1], abc[2], t);
 	if (t[0] > 1e-6)
 	{
 		y = ft_dot(vec3_sub(vec3_add(r.origin, vec3_scale(r.direction, t[0])),
-					cy.origin), cy.normal);
-		if (y >= 0 && y <= cy.height)
+					cy->origin), cy->normal);
+		if (y >= 0 && y <= cy->height)
 			closest = t[0];
 	}
 	if (closest < 0 && t[1] > 1e-6)
 	{
 		y = ft_dot(vec3_sub(vec3_add(r.origin,
-						vec3_scale(r.direction, t[1])), cy.origin), cy.normal);
-		if (y >= 0 && y <= cy.height)
+						vec3_scale(r.direction, t[1])), cy->origin), cy->normal);
+		if (y >= 0 && y <= cy->height)
 			closest = t[1];
 	}
-	denom = ft_dot(r.direction, cy.normal);
+	denom = ft_dot(r.direction, cy->normal);
 	if (fabs(denom) > 1e-6)
 	{
-		cap_t = ft_dot(vec3_sub(cy.origin, r.origin), cy.normal) / denom;
+		cap_t = ft_dot(vec3_sub(cy->origin, r.origin), cy->normal) / denom;
 		if (cap_t > 1e-6 && (closest < 0 || cap_t < closest)
-			&& cy_cap(r, cap_t, cy, false))
+			&& cy_cap(r, cap_t, *cy, false))
 			closest = cap_t;
-		top_center = vec3_add(cy.origin, vec3_scale(cy.normal, cy.height));
-		cap_t = ft_dot(vec3_sub(top_center, r.origin), cy.normal) / denom;
+		top_center = vec3_add(cy->origin, vec3_scale(cy->normal, cy->height));
+		cap_t = ft_dot(vec3_sub(top_center, r.origin), cy->normal) / denom;
 		if (cap_t > 1e-6 && (closest < 0 || cap_t < closest)
-			&& cy_cap(r, cap_t, cy, true))
+			&& cy_cap(r, cap_t, *cy, true))
 			closest = cap_t;
 	}
 	return (closest);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 10:20:02 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:09:37 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "miniRT.h"
 # include <math.h>
 
-# define BOUNCES 5
+# define BOUNCES 4
 # define DEFAULT_EMMI_POWER 5
 
 # define SPECULAR 0b0100
@@ -40,7 +40,7 @@ typedef struct ray
 	t_vec3	origin;
 	t_vec3	dir;
 
-	int		lenght;
+	int		length;
 }	t_ray;
 
 typedef struct hit_info
@@ -72,7 +72,7 @@ typedef struct viewport
 	int				height;
 }	t_viewport;
 
-struct light_info
+struct s_light_info
 {
 	t_light_source	light;
 	t_vec3			light_dir;
@@ -85,37 +85,39 @@ struct light_info
 };
 
 // colors.c
-t_vec3	normal_color(t_hit hit);
-t_uint	vec_to_int(const t_vec3 color);
-t_vec3	int_to_vec(t_uint color);
+t_vec3		normal_color(t_hit hit);
+t_uint		vec_to_int(const t_vec3 color);
+t_vec3		int_to_vec(t_uint color);
 
 // ray.c
-t_ray	get_ray(float u, float v, t_viewport vp);
-t_hit	trace_ray(t_ray ray, t_scene *scene);
-t_hit	hit_fail(void);
-t_vec3	ray_to_vec(t_ray r);
+t_ray		get_ray(float u, float v, t_viewport vp);
+t_hit		hit_fail(void);
+t_vec3		ray_to_vec(t_ray r);
+
+// intersection.c
+t_hit		trace_ray(t_ray ray, t_scene *scene);
 
 // renderer.c
-t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene);
-void	render(t_viewport vp, t_scene *scene);
-t_viewport viewport(t_win_scene *win, t_scene *scene);
+t_vec3		get_px_col(int i, int j, t_viewport vp, t_scene *scene);
+void		render(t_viewport vp, t_scene *scene);
+t_viewport	viewport(t_win_scene *win, t_scene *scene);
 
 // sphere.c
-double	sphere_hit(const t_sphere sphere, const t_ray ray);
-t_hit	hit_result(const t_vec3 origin, const t_ray r, const double t,
-			const size_t idx);
+double		sphere_hit(void *p_sphere, const t_ray ray);
+t_hit		hit_result(const t_vec3 origin, const t_ray r, const double t,
+				const size_t idx);
 
 // place.c
-double	plane_hit(const t_plane plane, const t_ray ray);
-double	cylinders_hit(const t_cylinder plane, const t_ray ray);
+double		plane_hit(void *p_plane, const t_ray ray);
+double		cylinders_hit(void *p_cy, t_ray r);
+t_vec3		cylinder_normal(t_cylinder cy, t_vec3 hit_point);
 
 // lighting.c
-t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray);
+t_vec3		phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray);
 
 // phong_model.c
-t_vec3	phong_diffuse(struct light_info info);
-t_vec3	phong_ambient(t_scene *scene, t_mat mat);
-t_vec3	phong_specular(struct light_info info);
-
+t_vec3		phong_diffuse(struct s_light_info info);
+t_vec3		phong_ambient(t_scene *scene, t_mat mat);
+t_vec3		phong_specular(struct s_light_info info);
 
 #endif

@@ -12,7 +12,6 @@
 
 void	show_progress(int current, int max)
 {
-	return ;
 	int		i;
 	float	progress;
 
@@ -69,17 +68,6 @@ t_vec3	random_vec(t_uint seed)
 	});
 }
 
-
-// t_vec3	random_vec(t_uint seed)
-// {
-// 	(void)seed;
-// 	return ((t_vec3){
-// 		(float)rand() / (float)RAND_MAX - 0.5f,
-// 		(float)rand() / (float)RAND_MAX - 0.5f,
-// 		(float)rand() / (float)RAND_MAX - 0.5f
-// 	});
-// }
-
 int get_sp_inter(const t_sphere sphere, const t_ray ray)
 {
 	t_vec3	oc;
@@ -119,9 +107,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 
 	t_vec3	final_color;
 	float	mutiplier = 1.0f;
-	// t_vec3	ray_color;
 
-	// ray_color = vec3_mult(scene->ambient_light.color, scene->ambient_light.ratio);
 	final_color = vec3_zero();
 
 	ray = get_ray((float)(i) / ((float)vp.witdh), (float)(j) / (float)(vp.height), vp);

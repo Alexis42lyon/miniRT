@@ -1,17 +1,19 @@
 #include "raytracer.h"
 #include "libft/vector.h"
 
-double	plane_hit(const t_plane plane, const t_ray ray)
+double	plane_hit(void *p_plane, const t_ray ray)
 {
 	t_vec3	oc;
 	double	denominator;
 	double	res;
+	t_plane	*plane;
 
-	denominator = ft_dot(plane.normal, ray.dir);
+	plane = (t_plane *)p_plane;
+	denominator = ft_dot(plane->normal, ray.dir);
 	if (fabs(denominator) < 1e-6)
 		return (-1);
-	oc = vec3_sub(plane.origin, ray.origin);
-	res = ft_dot(oc, plane.normal) / denominator;
+	oc = vec3_sub(plane->origin, ray.origin);
+	res = ft_dot(oc, plane->normal) / denominator;
 	if (res >= 0)
 		return (res);
 	return (-1);

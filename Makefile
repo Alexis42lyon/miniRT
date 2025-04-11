@@ -30,6 +30,7 @@ SRCS =	main.c			\
 		pipeline.c		\
 		camera.c		\
 		phong_model.c	\
+		intersection.c	\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)

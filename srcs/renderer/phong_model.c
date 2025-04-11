@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:18:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/10 15:18:55 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:03:38 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * Od = obj albedo
  * Ld = light albedo
 */
-t_vec3	phong_diffuse(struct light_info info)
+t_vec3	phong_diffuse(struct s_light_info info)
 {
 	t_vec3	diffuse;
 
@@ -48,7 +48,7 @@ t_vec3	phong_ambient(t_scene *scene, t_mat mat)
 	return (ambient);
 }
 
-t_vec3	phong_specular(struct light_info info)
+t_vec3	phong_specular(struct s_light_info info)
 {
 	t_vec3	specular;
 	t_vec3	view_vec;
