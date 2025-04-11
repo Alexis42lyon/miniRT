@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:58:27 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/08 16:53:23 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:27:15 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ t_vec3	vec3_cross(const t_vec3 a, const t_vec3 b);
 
 t_vec3	vec3_clamp(const t_vec3 vec, double min, double max);
 
-float	vec3_dist(t_vec3 v1, t_vec3 v2);
+t_vec3	random_vec(t_uint seed);
 
 #endif

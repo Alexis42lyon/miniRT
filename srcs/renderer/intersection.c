@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:01:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 13:02:59 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:23:53 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ t_hit	hit_succes(t_scene *scene, t_ray ray, t_hit hit)
 	return (hit);
 }
 
-t_hit	get_min_dist(double (*f)(void*, t_ray), size_t n_obj,
-	void *objs, t_ray ray, size_t obj_size)
+t_hit	get_min_dist(double (*f)(void*, t_ray), t_ray ray,
+		struct s_objs_data data)
 {
 	size_t	i;
 	double	dist;
@@ -50,9 +50,9 @@ t_hit	get_min_dist(double (*f)(void*, t_ray), size_t n_obj,
 	i = 0;
 	hit.distance = INT_MAX;
 	hit.obj_index = -1;
-	while (i < n_obj)
+	while (i < data.n_obj)
 	{
-		dist = f((char *)objs + (i * obj_size), ray);
+		dist = f((char *)data.objs + (i * data.size), ray);
 		if (dist > 0 && dist < hit.distance)
 		{
 			hit.distance = dist;
@@ -68,44 +68,23 @@ t_hit	trace_ray(t_ray ray, t_scene *scene)
 	t_hit	hit;
 	t_hit	tmp_hit;
 
-	hit = get_min_dist(sphere_hit, scene->nb_spheres, scene->spheres, ray, sizeof(t_sphere));
+	hit = get_min_dist(sphere_hit, ray, (struct s_objs_data)
+		{scene->spheres, scene->nb_spheres, sizeof(t_sphere)});
 	hit.type = SPHERE;
-	tmp_hit = get_min_dist(plane_hit, scene->nb_planes, scene->planes, ray, sizeof(t_plane));
+	tmp_hit = get_min_dist(plane_hit, ray, (struct s_objs_data)
+		{scene->planes, scene->nb_planes, sizeof(t_plane)});
 	if (tmp_hit.distance != -1 && tmp_hit.distance < hit.distance)
 	{
 		hit = tmp_hit;
 		hit.type = PLANE;
 	}
-	tmp_hit = get_min_dist(cylinders_hit, scene->nb_cylinders, scene->cylinders, ray, sizeof(t_cylinder));
+	tmp_hit = get_min_dist(cylinders_hit, ray, (struct s_objs_data)
+		{scene->cylinders, scene->nb_cylinders, sizeof(t_cylinder)});
 	if (tmp_hit.distance != -1 && tmp_hit.distance < hit.distance)
 	{
 		hit = tmp_hit;
 		hit.type = CYLINDER;
 	}
-	// i = 0;
-	// while (i < scene->nb_planes)
-	// {
-	// 	dist = plane_hit(scene->planes[i], ray);
-	// 	if (dist > 0 && dist < min_dist)
-	// 	{
-	// 		min_dist = dist;
-	// 		hit.obj_index = i;
-	// 		hit.type = PLANE;
-	// 	}
-	// 	i++;
-	// }
-	// i = 0;
-	// while (i < scene->nb_cylinders)
-	// {
-	// 	dist = cylinders_hit(scene->cylinders[i], ray);
-	// 	if (dist > 0 && dist < min_dist)
-	// 	{
-	// 		min_dist = dist;
-	// 		hit.obj_index = i;
-	// 		hit.type = CYLINDER;
-	// 	}
-	// 	i++;
-	// }
 	if (hit.obj_index != (size_t)-1)
 		return (hit_succes(scene, ray, hit));
 	return (hit_fail());

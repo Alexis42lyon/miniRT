@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:44:41 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 10:59:19 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:25:18 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ typedef struct camera
 	t_vec3	forward;
 	t_vec3	up;
 	t_vec3	right;
+
 	int		fov;
+	float	focal_length;
 }	t_camera;
 
 t_camera	new_camera(t_vec3 origin, t_vec3 forward, int fov);

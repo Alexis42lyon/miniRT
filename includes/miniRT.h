@@ -32,7 +32,6 @@ typedef struct material
 {
 	t_vec3	albedo;
 
-	float	metalic;
 	float	roughtness;
 	float	emission_power;
 }	t_mat;
@@ -118,6 +117,5 @@ void	print_exit(t_prog *prog, char *str);
 // ?.c
 void	print_cam(const t_camera *cam);
 t_mat	default_mat(void);
-t_vec3	random_vec(t_uint seed);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 13:09:37 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:20:35 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,13 @@ struct s_light_info
 
 	t_hit			hit;
 	t_ray			ray;
+};
+
+struct s_objs_data
+{
+	void	*objs;
+	size_t	n_obj;
+	size_t	size;
 };
 
 // colors.c
