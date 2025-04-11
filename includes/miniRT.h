@@ -17,9 +17,7 @@
 # define PAGE_UP 65365
 # define PAGE_DOWN 65366
 
-# define SHOW_SRUCT 0
-
-typedef struct s_parser	t_parser;
+typedef struct s_parser		t_parser;
 typedef struct s_win_scene	t_win_scene;
 typedef struct s_win_button	t_win_button;
 

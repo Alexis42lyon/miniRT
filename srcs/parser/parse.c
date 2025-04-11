@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:26 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 10:40:36 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:46:35 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,15 @@ static void	parse_light(t_prog *prog, char **tokens)
 
 static void	parse_camera(t_prog *prog, char **tokens)
 {
-	float	fov;
-
 	if (ft_arrlen(tokens) != 4)
 		print_exit(prog, "Invalid camera format");
 	parse_vector(prog, &prog->scene->camera.origin, tokens[1]);
 	parse_vector(prog, &prog->scene->camera.forward, tokens[2]);
-	fov = check_atof(prog, tokens[3]);
+	prog->scene->camera.fov = check_atof(prog, tokens[3]);
 	if (prog->scene->camera.fov < 0 || prog->scene->camera.fov > 180)
 		print_exit(prog, "FOV must be in range [0, 180]");
 	prog->scene->camera = new_camera(prog->scene->camera.origin,
-			prog->scene->camera.forward, fov);
+			prog->scene->camera.forward, prog->scene->camera.fov);
 }
 
 static void	parse_ambient_light(t_prog *prog, char **tokens)

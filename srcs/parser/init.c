@@ -6,13 +6,41 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:15 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 10:31:08 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/11 11:29:26 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "parser.h"
 #include "window.h"
+
+void	switch_identifier(t_prog *prog, t_parser *parser)
+{
+	if (!ft_strcmp(parser->tokens[0], "A") && parser->ambient_is_set)
+		print_exit(prog, "Ambient light can only be declared once");
+	else if (!ft_strcmp(parser->tokens[0], "A"))
+		parser->ambient_is_set = true;
+	else if (!ft_strcmp(parser->tokens[0], "C"))
+	{
+		if (parser->camera_is_set)
+			print_exit(prog, "Camera can only be declared once");
+		parser->camera_is_set = true;
+	}
+	else if (!ft_strcmp(parser->tokens[0], "L"))
+	{
+		if (parser->light_is_set)
+			print_exit(prog, "Light can only be declared once");
+		parser->light_is_set = true;
+	}
+	else if (!ft_strcmp(parser->tokens[0], "sp"))
+		prog->scene->nb_spheres++;
+	else if (!ft_strcmp(parser->tokens[0], "pl"))
+		prog->scene->nb_planes++;
+	else if (!ft_strcmp(parser->tokens[0], "cy"))
+		prog->scene->nb_cylinders++;
+	else if (parser->tokens[0])
+		print_exit(prog, "Invalid identifier");
+}
 
 void	parse_map(t_prog *prog)
 {
@@ -28,32 +56,7 @@ void	parse_map(t_prog *prog)
 		check_mem((t_info){__FILE__, __LINE__, __func__},
 			ft_split(parser->line, ' '),
 			(void **)&parser->tokens, prog);
-		if (!ft_strcmp(parser->tokens[0], "A"))
-		{
-			if (parser->ambient_is_set)
-				print_exit(prog, "Ambient light can only be declared once");
-			parser->ambient_is_set = true;
-		}
-		else if (!ft_strcmp(parser->tokens[0], "C"))
-		{
-			if (parser->camera_is_set)
-				print_exit(prog, "Camera can only be declared once");
-			parser->camera_is_set = true;
-		}
-		else if (!ft_strcmp(parser->tokens[0], "L"))
-		{
-			if (parser->light_is_set)
-				print_exit(prog, "Light can only be declared once");
-			parser->light_is_set = true;
-		}
-		else if (!ft_strcmp(parser->tokens[0], "sp"))
-			prog->scene->nb_spheres++;
-		else if (!ft_strcmp(parser->tokens[0], "pl"))
-			prog->scene->nb_planes++;
-		else if (!ft_strcmp(parser->tokens[0], "cy"))
-			prog->scene->nb_cylinders++;
-		else if (parser->tokens[0])
-			print_exit(prog, "Invalid identifier");
+		switch_identifier(prog, parser);
 		check_mem((t_info){__FILE__, __LINE__, __func__},
 			ft_lstnew(parser->tokens), (void **)&new_node, prog);
 		ft_lstadd_back(&parser->map, new_node);

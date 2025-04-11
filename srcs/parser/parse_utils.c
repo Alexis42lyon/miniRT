@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:42 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 10:22:43 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/11 12:00:10 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	parse_vector(t_prog *prog, t_vec3 *vec, char *str)
 	check_mem((t_info){__FILE__, __LINE__, __func__},
 		ft_split(str, ','), (void **)&prog->parser->tokens, prog);
 	if (ft_arrlen(prog->parser->tokens) != 3)
-		free_all(prog);
+		print_exit(prog, "Invalid vector format");
 	vec->x = check_atof(prog, prog->parser->tokens[0]);
 	vec->y = check_atof(prog, prog->parser->tokens[1]);
 	vec->z = check_atof(prog, prog->parser->tokens[2]);
@@ -48,7 +48,7 @@ void	parse_color(t_prog *prog, t_vec3 *color, char *str)
 	color->z /= 255.0;
 }
 
-void	get_atof(char **nptr, double *res)
+static void	get_decimal(char **nptr, double *res)
 {
 	double	fraction;
 
@@ -85,7 +85,7 @@ double	check_atof(t_prog *prog, const char *nptr)
 			print_exit(prog, "Invalid number format");
 	}
 	if (*nptr == '.')
-		get_atof((char **)&nptr, &res);
+		get_decimal((char **)&nptr, &res);
 	if (*nptr)
 		print_exit(prog, "Invalid number format");
 	return (res * sign);
