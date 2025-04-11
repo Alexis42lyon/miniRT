@@ -72,22 +72,20 @@ void	init_win(t_prog *prog)
 	win->aspect_ratio = (float)WIDTH / (float)HEIGHT;
 	win->mlx_ptr = mlx_init();
 	if (!win->mlx_ptr)
-		free_all(prog);
+		print_exit(prog, "Mlx init failed");
 	mlx_do_key_autorepeaton(prog->win_scene->mlx_ptr);
 	win->win_ptr = mlx_new_window(win->mlx_ptr, win->width,
 			win->height, "miniRT");
 	if (!win->win_ptr)
-		free_all(prog);
+		print_exit(prog, "Mlx new_window failed");
 	if (create_img(win) == -1)
-		free_all(prog);
+		print_exit(prog, "Mlx create img failed");
 	mlx_loop_hook(prog->win_scene->mlx_ptr, new_frame, prog);
 	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, prog);
 	check_mem((t_info){__FILE__, __LINE__, __func__},
 		ft_calloc(win->height * win->width, sizeof(t_vec3)),
 		(void **)&win->accumulation_data, prog);
 	mlx_key_hook(win->win_ptr, key_hook, prog);
-	if (win->mlx_ptr == NULL)
-		free_all(prog);
 	init_button_window(prog);
 	mlx_loop(win->mlx_ptr);
 }
