@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:17 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 12:24:21 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:03:12 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,25 @@ void	check_mem(t_info info, void *mem, void **res, t_prog *prog)
 			exit(1);
 	}
 	*res = mem;
+}
+
+void	show_progress(int current, int max)
+{
+	int		i;
+	float	progress;
+
+	ft_printf("\033[?25lprogress: [");
+	progress = ((double)current / (double)max) * 100;
+	i = 0;
+	while (i * 5 < progress)
+	{
+		ft_printf(RESET "#");
+		i++;
+	}
+	while (i < 20)
+	{
+		ft_printf(GRAY "-");
+		i++;
+	}
+	ft_printf(RESET "]\033[?25h\r");
 }

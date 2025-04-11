@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 13:33:58 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:18:02 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,30 +18,6 @@
 #include "raytracer.h"
 #include <limits.h>
 #include <time.h>
-
-//! TO REMOVE
-#include <stdio.h>
-
-void	show_progress(int current, int max)
-{
-	int		i;
-	float	progress;
-
-	printf("\033[?25lprogress: [");
-	progress = ((double)current / (double)max) * 100;
-	i = 0;
-	while (i * 5 < progress)
-	{
-		printf(RESET "#");
-		i++;
-	}
-	while (i < 20)
-	{
-		printf(GRAY "-");
-		i++;
-	}
-	printf(RESET "]\033[?25h\r");
-}
 
 t_viewport	viewport(t_win_scene *win, t_scene *scene)
 {
@@ -69,38 +45,34 @@ t_viewport	viewport(t_win_scene *win, t_scene *scene)
 	return (vp);
 }
 
-int	get_sp_inter(const t_sphere sphere, const t_ray ray)
+int	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 {
-	t_vec3	oc;
-	double	a;
-	double	b;
-	double	c;
-	double	disc;
+	t_hit	hit;
+	t_mat	mat;
 
-	oc = vec3_sub(sphere.origin, ray.origin);
-	a = ft_dot(ray.dir, ray.dir);
-	b = -2.0 * ft_dot(ray.dir, oc);
-	c = ft_dot(oc, oc) - sphere.radius * sphere.radius;
-	disc = b * b - 4 * a * c;
-	if (disc < 0)
-		return (-1);
-	return (disc);
-}
-
-int	exposed_to_light(t_sphere sphere, t_vec3 point, t_vec3 light)
-{
-	t_ray	ray;
-
-	ray.origin = point;
-	ray.dir = vec3_add(point, light);
-	return (get_sp_inter(sphere, ray) == 0);
+	hit = trace_ray(*ray, scene);
+	if (hit.distance == -1)
+	{
+		*final_color = vec3_add(*final_color, scene->sky_color);
+		return (1);
+	}
+	if (hit.type == SPHERE)
+		mat = scene->spheres[hit.obj_index].material;
+	else if (hit.type == PLANE)
+		mat = scene->planes[hit.obj_index].material;
+	else if (hit.type == CYLINDER)
+		mat = scene->cylinders[hit.obj_index].material;
+	*final_color = mat.albedo;
+	*final_color = phong_shading(scene, hit, mat, *ray);
+	ray->origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));
+	ray->dir = vec3_reflect(ray->dir,
+			vec3_add(hit.normal, vec3_mult(random_vec(seed), mat.roughtness)));
+	return (0);
 }
 
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 {
 	t_ray	ray;
-	t_hit	hit;
-	t_mat	mat;
 	t_vec3	final_color;
 	float	mutiplier;
 	t_uint	seed;
@@ -114,26 +86,14 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	while (i < BOUNCES)
 	{
 		seed *= i + 1;
-		hit = trace_ray(ray, scene);
-		if (hit.distance == -1)
-		{
-			final_color = vec3_mult(vec3_add(final_color, scene->sky_color), mutiplier);
+		if (bounce(&final_color, scene, &ray, seed) == 1)
 			break ;
-		}
-		if (hit.type == SPHERE)
-			mat = scene->spheres[hit.obj_index].material;
-		else if (hit.type == PLANE)
-			mat = scene->planes[hit.obj_index].material;
-		else if (hit.type == CYLINDER)
-			mat = scene->cylinders[hit.obj_index].material;
-		final_color = vec3_mult(mat.albedo, mutiplier);
-		final_color = phong_shading(scene, hit, mat, ray);
+		final_color = vec3_mult(final_color, mutiplier);
 		mutiplier *= 0.5f;
-		ray.origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));
-		ray.dir = vec3_reflect(ray.dir,
-				vec3_add(hit.normal, vec3_mult(random_vec(seed), mat.roughtness)));
 		i++;
 	}
+	if (i != BOUNCES)
+		final_color = vec3_mult(final_color, mutiplier);
 	return (vec3_clamp(final_color, 0, 1));
 }
 
@@ -143,9 +103,9 @@ void	render(t_viewport vp, t_scene *scene)
 	int		j;
 	t_vec3	color;
 	t_vec3	*accumulation_data;
+	t_vec3	accumulation;
 
 	accumulation_data = vp.win->accumulation_data;
-
 	j = 0;
 	while (j < vp.win->height)
 	{
@@ -153,8 +113,9 @@ void	render(t_viewport vp, t_scene *scene)
 		while (i < vp.win->width)
 		{
 			color = get_px_col(i, j, vp, scene);
-			accumulation_data[i + j * vp.win->width] = vec3_add(accumulation_data[i + j * vp.win->width], color);
-			t_vec3	accumulation = accumulation_data[i + j * vp.win->width];
+			accumulation_data[i + j * vp.win->width] = vec3_add(
+					accumulation_data[i + j * vp.win->width], color);
+			accumulation = accumulation_data[i + j * vp.win->width];
 			accumulation = vec3_divide(accumulation, scene->frame_count);
 			accumulation = vec3_clamp(accumulation, 0, 1);
 			set_pixel(&vp.win->img, i, j, vec_to_int(accumulation));
@@ -163,25 +124,4 @@ void	render(t_viewport vp, t_scene *scene)
 		show_progress(vp.win->width * j + i, vp.win->width * vp.win->height);
 		j++;
 	}
-}
-
-void	add_to_log(t_scene *scene, t_uint render_time)
-{
-	ft_printf(GRAY "\n[LOG]: render time:%dms\n" RESET, render_time);
-	ft_printf(GRAY "[LOG]: frame_count:%d\n" RESET,
-		scene->frame_count);
-	// print_cam(&scene->camera);
-	ft_printf(GREEN "done rendering!\n\n" RESET);
-
-	scene->total_render_time += render_time;
-	if (scene->min_render_time == (t_uint)-1)
-	{
-		scene->min_render_time = render_time;
-		scene->max_render_time = render_time;
-		return ;
-	}
-	if (render_time > scene->max_render_time)
-		scene->max_render_time = render_time;
-	if (render_time < scene->min_render_time)
-		scene->min_render_time = render_time;
 }
