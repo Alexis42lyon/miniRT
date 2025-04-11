@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_objects.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/11 10:22:34 by abidolet          #+#    #+#             */
+/*   Updated: 2025/04/11 10:25:18 by abidolet         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 #include "libft/vector.h"
 
@@ -10,7 +22,7 @@ void	parse_cylinder(t_prog *prog, t_cylinder *cylinder, char **tokens)
 	cylinder->normal = vec3_normalize(cylinder->normal);
 	cylinder->radius = check_atof(prog, tokens[3]);
 	if (cylinder->radius <= 0)
-		print_exit(prog, "Invalid cylinder diameter");
+		print_exit(prog, "Cylinder radius must be positive");
 	cylinder->height = check_atof(prog, tokens[4]);
 	if (cylinder->height <= 0)
 		print_exit(prog, "Cylinder height must be positive");

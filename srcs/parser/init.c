@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/11 10:22:15 by abidolet          #+#    #+#             */
+/*   Updated: 2025/04/11 10:31:08 by abidolet         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <fcntl.h>
 #include "parser.h"
 #include "window.h"
@@ -55,8 +67,18 @@ void	parse_map(t_prog *prog)
 		print_exit(prog, "Missing mandatory elements");
 }
 
-void	init_malloc(t_prog *prog)
+void	init(t_prog *prog, char **av)
 {
+	ft_bzero(prog->parser, sizeof(t_parser));
+	ft_bzero(prog->scene, sizeof(t_scene));
+	ft_bzero(prog->win_scene, sizeof(t_win_scene));
+	ft_bzero(prog->win_button, sizeof(t_win_button));
+	prog->scene->camera.right = (t_vec3){1, 0, 0};
+	prog->scene->camera.up = (t_vec3){0, 1, 0};
+	prog->parser->fd = open(av[1], O_RDONLY);
+	if (prog->parser->fd == -1)
+		print_exit(prog, "File not found or cannot access to the file");
+	parse_map(prog);
 	check_mem((t_info){__FILE__, __LINE__, __func__},
 		malloc(sizeof(t_sphere) * (prog->scene->nb_spheres + 1)),
 		(void **)&prog->scene->spheres, prog);
@@ -66,19 +88,6 @@ void	init_malloc(t_prog *prog)
 	check_mem((t_info){__FILE__, __LINE__, __func__},
 		malloc(sizeof(t_cylinder) * (prog->scene->nb_cylinders + 1)),
 		(void **)&prog->scene->cylinders, prog);
-}
-
-void	init(t_prog *prog, char **av)
-{
-	ft_bzero(prog->parser, sizeof(t_parser));
-	ft_bzero(prog->win_scene, sizeof(t_win_scene));
-	prog->scene->camera.right = (t_vec3){1, 0, 0};
-	prog->scene->camera.up = (t_vec3){0, 1, 0};
-	prog->parser->fd = open(av[1], O_RDONLY);
-	if (prog->parser->fd == -1)
-		print_exit(prog, "File not found or cannot access to the file");
-	parse_map(prog);
-	init_malloc(prog);
 	parse(prog);
 	prog->scene->frame_count = 1;
 	print_scene(prog->scene);

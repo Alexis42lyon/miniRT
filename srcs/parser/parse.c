@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/11 10:22:26 by abidolet          #+#    #+#             */
+/*   Updated: 2025/04/11 10:22:28 by abidolet         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 #include "camera.h"
 
@@ -55,11 +67,13 @@ void	parse(t_prog *prog)
 		else if (!ft_strcmp(tokens[0], "L"))
 			parse_light(prog, tokens);
 		else if (!ft_strcmp(tokens[0], "sp"))
-			parse_sphere(prog, prog->scene->spheres + parser->i_sphere++, tokens);
+			parse_sphere(prog, prog->scene->spheres + parser->i_sphere++,
+				tokens);
 		else if (!ft_strcmp(tokens[0], "pl"))
 			parse_plane(prog, prog->scene->planes + parser->i_plane++, tokens);
 		else if (!ft_strcmp(tokens[0], "cy"))
-			parse_cylinder(prog, prog->scene->cylinders + parser->i_cylinder++, tokens);
+			parse_cylinder(prog, prog->scene->cylinders + parser->i_cylinder++,
+				tokens);
 		current = current->next;
 	}
 }
