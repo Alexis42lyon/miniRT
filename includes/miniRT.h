@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   miniRT.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
+/*   Updated: 2025/04/11 15:18:35 by mjuncker         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINIRT_H
 # define MINIRT_H
 
@@ -113,6 +125,7 @@ typedef struct s_prog
 
 // utils.c
 void	check_mem(t_info info, void *mem, void **res, t_prog *prog);
+void	show_progress(int current, int max);
 
 // free.c
 void	free_arr(void **arr);

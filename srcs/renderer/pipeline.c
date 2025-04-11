@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 08:45:57 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 12:13:10 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:00:54 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	run_pipeline(t_prog *prog)
 {
 	t_viewport	vp;
 
+	prog->scene->sky_color = (t_vec3){0.9, 0.976470588, 1};
 	vp = viewport(prog->win_scene, prog->scene);
 	render(vp, prog->scene);
 }
