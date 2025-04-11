@@ -1,17 +1,84 @@
 #include <fcntl.h>
 #include "parser.h"
+#include "window.h"
+
+void	parse_map(t_prog *prog)
+{
+	t_parser	*parser;
+	t_list		*new_node;
+
+	parser = prog->parser;
+	parser->line = ft_get_next_line(parser->fd);
+	while (parser->line)
+	{
+		if (ft_strchr(parser->line, '\n'))
+			parser->line[ft_strlen(parser->line) - 1] = '\0';
+		check_mem((t_info){__FILE__, __LINE__, __func__},
+			ft_split(parser->line, ' '),
+			(void **)&parser->tokens, prog);
+		if (!ft_strcmp(parser->tokens[0], "A"))
+		{
+			if (parser->ambient_is_set)
+				print_exit(prog, "Ambient light can only be declared once");
+			parser->ambient_is_set = true;
+		}
+		else if (!ft_strcmp(parser->tokens[0], "C"))
+		{
+			if (parser->camera_is_set)
+				print_exit(prog, "Camera can only be declared once");
+			parser->camera_is_set = true;
+		}
+		else if (!ft_strcmp(parser->tokens[0], "L"))
+		{
+			if (parser->light_is_set)
+				print_exit(prog, "Light can only be declared once");
+			parser->light_is_set = true;
+		}
+		else if (!ft_strcmp(parser->tokens[0], "sp"))
+			prog->scene->nb_spheres++;
+		else if (!ft_strcmp(parser->tokens[0], "pl"))
+			prog->scene->nb_planes++;
+		else if (!ft_strcmp(parser->tokens[0], "cy"))
+			prog->scene->nb_cylinders++;
+		else if (parser->tokens[0])
+			print_exit(prog, "Invalid identifier");
+		check_mem((t_info){__FILE__, __LINE__, __func__},
+			ft_lstnew(parser->tokens), (void **)&new_node, prog);
+		ft_lstadd_back(&parser->map, new_node);
+		free(parser->line);
+		parser->line = ft_get_next_line(parser->fd);
+	}
+	parser->tokens = NULL;
+	if (parser->ambient_is_set == false
+		|| parser->camera_is_set == false
+		|| parser->light_is_set == false)
+		print_exit(prog, "Missing mandatory elements");
+}
+
+void	init_malloc(t_prog *prog)
+{
+	check_mem((t_info){__FILE__, __LINE__, __func__},
+		malloc(sizeof(t_sphere) * (prog->scene->nb_spheres + 1)),
+		(void **)&prog->scene->spheres, prog);
+	check_mem((t_info){__FILE__, __LINE__, __func__},
+		malloc(sizeof(t_plane) * (prog->scene->nb_planes + 1)),
+		(void **)&prog->scene->planes, prog);
+	check_mem((t_info){__FILE__, __LINE__, __func__},
+		malloc(sizeof(t_cylinder) * (prog->scene->nb_cylinders + 1)),
+		(void **)&prog->scene->cylinders, prog);
+}
 
 void	init(t_prog *prog, char **av)
 {
-	static char	**av2 = NULL;
-
-	if (!av2)
-		av2 = av;
-	check_mem((t_info){__FILE__, __LINE__, __func__},
-		ft_calloc(sizeof(t_parser), 1), (void **)&prog->parser, NULL);
-	prog->parser->fd = open(av2[1], O_RDONLY);
+	ft_bzero(prog->parser, sizeof(t_parser));
+	ft_bzero(prog->win_scene, sizeof(t_win_scene));
+	prog->scene->camera.right = (t_vec3){1, 0, 0};
+	prog->scene->camera.up = (t_vec3){0, 1, 0};
+	prog->parser->fd = open(av[1], O_RDONLY);
 	if (prog->parser->fd == -1)
 		print_exit(prog, "File not found or cannot access to the file");
+	parse_map(prog);
+	init_malloc(prog);
 	parse(prog);
 	prog->scene->frame_count = 1;
 	print_scene(prog->scene);

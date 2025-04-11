@@ -36,19 +36,6 @@ void	parse_color(t_prog *prog, t_vec3 *color, char *str)
 	color->z /= 255.0;
 }
 
-void	init_malloc(t_prog *prog)
-{
-	check_mem((t_info){__FILE__, __LINE__, __func__},
-		malloc(sizeof(t_sphere) * (prog->scene->nb_spheres + 1)),
-		(void **)&prog->scene->spheres, prog);
-	check_mem((t_info){__FILE__, __LINE__, __func__},
-		malloc(sizeof(t_plane) * (prog->scene->nb_planes + 1)),
-		(void **)&prog->scene->planes, prog);
-	check_mem((t_info){__FILE__, __LINE__, __func__},
-		malloc(sizeof(t_cylinder) * (prog->scene->nb_cylinders + 1)),
-		(void **)&prog->scene->cylinders, prog);
-}
-
 void	get_atof(char **nptr, double *res)
 {
 	double	fraction;

@@ -5,13 +5,16 @@
 
 typedef struct s_parser
 {
-	int				fd;
-	char			*line;
-	char			**tokens;
-	bool 			ambient_is_set;
-	bool			camera_is_set;
-	bool			light_is_set;
-	t_list			*map;
+	int		fd;
+	char	*line;
+	char	**tokens;
+	bool 	ambient_is_set;
+	bool	camera_is_set;
+	bool	light_is_set;
+	int		i_sphere;
+	int		i_plane;
+	int		i_cylinder;
+	t_list	*map;
 }	t_parser;
 
 void	init(t_prog *prog, char **av);

@@ -57,7 +57,6 @@ void	free_parser(t_parser *parser)
 	free(parser->line);
 	free_arr((void **)parser->tokens);
 	ft_lstclear(&parser->map, (void *)free_arr);
-	free(parser);
 }
 
 void	free_all(t_prog *prog)
