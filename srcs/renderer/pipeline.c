@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 08:45:57 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 15:00:54 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:07:37 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	run_pipeline(t_prog *prog)
 void	display_frame(t_win_scene *win, t_scene *scene)
 {
 	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img.img, 0, 0);
+	ft_printf("\nframe " CYAN BOLD "%d" RESET " finished!\n", scene->frame_count);
 	scene->frame_count++;
 }
 

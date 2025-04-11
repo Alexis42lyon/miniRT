@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   io.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:15:47 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/29 11:24:31 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/11 15:53:48 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,19 @@
 # include <unistd.h>
 
 // colors
-# define RESET	"\033[0m"
-# define BLACK	"\033[0;30m"
-# define RED	"\033[0;31m"
-# define GREEN	"\033[0;32m"
-# define YELLOW	"\033[0;33m"
-# define BLUE	"\033[0;34m"
-# define PURPLE	"\033[0;35m"
-# define CYAN	"\033[0;36m"
-# define WHITE	"\033[0;37m"
-# define GRAY	"\033[90m"
+# define RESET		"\033[0m"
+# define BLACK		"\033[0;30m"
+# define RED		"\033[0;31m"
+# define GREEN		"\033[0;32m"
+# define YELLOW		"\033[0;33m"
+# define BLUE		"\033[0;34m"
+# define PURPLE		"\033[0;35m"
+# define CYAN		"\033[0;36m"
+# define WHITE		"\033[0;37m"
+# define GRAY		"\033[90m"
+
+// modifiers
+# define BOLD		"\033[1m"
 
 // Background
 # define B_BLACK	"\033[40m"

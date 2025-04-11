@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 15:18:25 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:14:10 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 
 int	key_hook2(int keycode, t_camera	*camera)
 {
-	if (keycode == 'q')
+	if (keycode == LSHIFT)
 		camera->origin = vec3_add(camera->origin, vec3_mult(camera->up, -0.5));
-	else if (keycode == 'e')
+	else if (keycode == SPACE)
 		camera->origin = vec3_add(camera->origin, vec3_mult(camera->up, 0.5));
 	else if (keycode == 'w')
 		camera->origin = vec3_add(camera->origin,
@@ -64,11 +64,14 @@ int	key_hook(int keycode, t_prog *prog)
 		turn_yaw(camera, -10 * (3.1415 / 180.0f));
 	else if (keycode == RIGHT_ARR)
 		turn_yaw(camera, 10 * (3.1415 / 180.0f));
+	else if (keycode == PAGE_UP)
+		turn_roll(camera, -10 * (3.1415 / 180.0f));
+	else if (keycode == PAGE_DOWN)
+		turn_roll(camera, 10 * (3.1415 / 180.0f));
 	else if (key_hook2(keycode, camera))
 		return (0);
-	ft_bzero(prog->win_scene->accumulation_data,
-		prog->win_scene->height * prog->win_scene->width * sizeof(t_vec3));
-	prog->scene->frame_count = 1;
+	print_cam(&prog->scene->camera);
+	reset_accumulation(prog);
 	return (0);
 }
 

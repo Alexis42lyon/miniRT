@@ -29,6 +29,7 @@ SRCS =	main.c			\
 		lighting.c		\
 		pipeline.c		\
 		camera.c		\
+		cam_transform.c	\
 		phong_model.c	\
 		intersection.c	\
 

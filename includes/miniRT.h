@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 15:18:35 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:12:29 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # define DOWN_ARR 65364
 # define PAGE_UP 65365
 # define PAGE_DOWN 65366
+# define LSHIFT 65505
+# define SPACE 32
+
 
 typedef struct s_parser		t_parser;
 typedef struct s_win_scene	t_win_scene;
@@ -132,6 +135,9 @@ void	free_arr(void **arr);
 void	free_parser(t_parser *parser);
 void	free_all(t_prog *prog_set);
 void	print_exit(t_prog *prog, char *str);
+
+// renderer.c
+void		reset_accumulation(t_prog *prog);
 
 // ?.c
 void	print_cam(const t_camera *cam);

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:17 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 15:03:12 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 16:12:53 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 #include "miniRT.h"
 #include "parser.h"
 #include <stdio.h>
+
+void	reset_accumulation(t_prog *prog)
+{
+	ft_bzero(prog->win_scene->accumulation_data,
+		prog->win_scene->height * prog->win_scene->width * sizeof(t_vec3));
+	prog->scene->frame_count = 1;
+	printf(CYAN BOLD "[LOG]: " RESET CYAN "accumulation data reset\n");
+}
 
 void	session_result(const t_scene *scene)
 {
@@ -49,12 +57,12 @@ void	show_progress(int current, int max)
 	int		i;
 	float	progress;
 
-	ft_printf("\033[?25lprogress: [");
+	ft_printf(BOLD "\033[?25lprogress:[");
 	progress = ((double)current / (double)max) * 100;
 	i = 0;
 	while (i * 5 < progress)
 	{
-		ft_printf(RESET "#");
+		ft_printf(RESET "=" RESET);
 		i++;
 	}
 	while (i < 20)
@@ -62,5 +70,5 @@ void	show_progress(int current, int max)
 		ft_printf(GRAY "-");
 		i++;
 	}
-	ft_printf(RESET "]\033[?25h\r");
+	ft_printf(RESET BOLD "] " GRAY "(%d%%)" RESET "\033[?25h\r", (int)progress);
 }
