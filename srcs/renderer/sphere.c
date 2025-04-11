@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:06 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 12:42:47 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/11 13:15:47 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,19 @@ double	sphere_res(double a, double b, double disc)
 	return (t2);
 }
 
-double	sphere_hit(void *p_sphere, const t_ray ray)
+double	sphere_hit(void *sphere, const t_ray ray)
 {
 	t_vec3	oc;
 	double	a;
 	double	b;
 	double	c;
 	double	disc;
-	t_sphere *sphere;
 
-	sphere = (t_sphere *)p_sphere;
-	oc = vec3_sub(sphere->origin, ray.origin);
+	oc = vec3_sub(((t_sphere *)sphere)->origin, ray.origin);
 	a = ft_dot(ray.dir, ray.dir);
 	b = -2.0 * ft_dot(ray.dir, oc);
-	c = ft_dot(oc, oc) - sphere->radius * sphere->radius;
+	c = ft_dot(oc, oc) - ((t_sphere *)sphere)->radius
+		* ((t_sphere *)sphere)->radius;
 	disc = b * b - 4 * a * c;
 	return (sphere_res(a, b, disc));
 }

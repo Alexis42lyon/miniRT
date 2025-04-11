@@ -35,7 +35,7 @@ typedef struct s_win_scene
 	t_data	img;
 }	t_win_scene;
 
-/* ----------------------------------- BUTTON ---------------------------------- */
+/* ------------------------------- BUTTON ------------------------------ */
 
 # define SLIDER_WIDTH 200
 # define SLIDER_MIN 0
@@ -54,7 +54,7 @@ typedef struct s_win_button
 
 typedef void	(*t_button_func)(t_prog *);
 
-/* ----------------------------------- END BUTTON ---------------------------------- */
+/* ------------------------------- END BUTTON ------------------------------ */
 
 // image.c
 int		create_img(t_win_scene *win);
