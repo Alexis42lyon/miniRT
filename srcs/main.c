@@ -17,6 +17,10 @@ int	main(int ac, char **av)
 	t_win_scene		win_scene;
 	t_win_button	win_button;
 
+	ft_bzero(&prog, sizeof(t_prog));
+	ft_bzero(&scene, sizeof(t_scene));
+	ft_bzero(&win_scene, sizeof(win_scene));
+
 	if (ac != 2)
 	{
 		print_error("Wrong number of arguments");

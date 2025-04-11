@@ -121,7 +121,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	// t_vec3	ray_color;
 
 	// ray_color = vec3_mult(scene->ambient_light.color, scene->ambient_light.ratio);
-	final_color = (t_vec3){0.0, 0.0, 0.0};
+	final_color = vec3_zero();
 
 	ray = get_ray((float)(i) / ((float)vp.witdh), (float)(j) / (float)(vp.height), vp);
 
@@ -157,7 +157,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 			vec3_add(hit.normal, vec3_mult(random_vec(seed), mat.roughtness)));
 
 	}
-
+	// printf("%d %d\n", i, j);
 	return (vec3_clamp(final_color, 0, 1));
 }
 

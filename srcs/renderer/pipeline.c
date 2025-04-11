@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipeline.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/11 08:45:57 by mjuncker          #+#    #+#             */
+/*   Updated: 2025/04/11 09:19:03 by mjuncker         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "raytracer.h"
 #include "window.h"
 
@@ -7,10 +19,6 @@ void	run_pipeline(t_prog *prog)
 
 	vp = viewport(prog->win_scene, prog->scene);
 	render(vp, prog->scene);
-	// anti aliasing
-	// denoiser
-	// post processing
-	// more ...
 }
 
 void	display_frame(t_win_scene *win, t_scene *scene)

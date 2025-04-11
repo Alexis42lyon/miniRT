@@ -6,7 +6,7 @@
 #    By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/24 18:00:56 by mjuncker          #+#    #+#              #
-#    Updated: 2025/04/02 12:58:04 by mjuncker         ###   ########.fr        #
+#    Updated: 2025/04/11 09:04:15 by mjuncker         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,7 +74,9 @@ SRCS =  ft_isalpha.c 		\
 		ft_atos.c			\
 		ft_sortarr.c		\
 		ft_dprintf.c		\
-		ft_vecmath.c		\
+		ft_vec_utils1.c		\
+		ft_vec_utils2.c		\
+		ft_vec_utils3.c		\
 		ft_vecnew.c			\
 		ft_assertion.c		\
 		PCG.c				\
@@ -88,7 +90,7 @@ DEPS = $(OBJ:.o=.d)
 
 # compiler settings
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I$(INCLUDES_D) -D BUFFER_SIZE=20 -MP -MMD
+CFLAGS = -Wall -Werror -Wextra -I$(INCLUDES_D) -D BUFFER_SIZE=20 -MP -MMD -g3
 MAKEFLAGS += -s
 
 # commands

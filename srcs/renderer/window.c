@@ -50,7 +50,6 @@ int	key_hook(int keycode, t_prog *prog)
 	ft_bzero(prog->win_scene->accumulation_data,
 		prog->win_scene->height * prog->win_scene->width * sizeof(t_vec3));
 	prog->scene->frame_count = 1;
-	run_pipeline(prog);
 	return (0);
 }
 

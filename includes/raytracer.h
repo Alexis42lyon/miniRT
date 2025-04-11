@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raytracer.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
+/*   Updated: 2025/04/11 09:09:23 by mjuncker         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef RAYTRACER_H
 # define RAYTRACER_H
 
 # include "miniRT.h"
 # include <math.h>
 
-# define BOUNCES 10
+# define BOUNCES 2
 # define DEFAULT_EMMI_POWER 5
 
 # define SPECULAR 0b0100
@@ -33,11 +45,11 @@ typedef struct ray
 
 typedef struct hit_info
 {
-	t_vec3	point;
-	t_vec3	normal;
-	double	distance;
+	t_vec3				point;
+	t_vec3				normal;
+	double				distance;
 
-	size_t	obj_index;
+	size_t				obj_index;
 	enum e_object_type	type;
 
 }	t_hit;
@@ -56,8 +68,8 @@ typedef struct viewport
 	t_vec3			vertical;
 	t_vec3			horizontal;
 
-	int			witdh;
-	int			height;
+	int				witdh;
+	int				height;
 }	t_viewport;
 
 struct light_info
