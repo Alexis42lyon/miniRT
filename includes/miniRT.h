@@ -77,8 +77,7 @@ typedef struct cylinder
 typedef struct s_ray_cylinder
 {
 	t_vec3	origin;
-	t_vec3	direction;
-	double	length;
+	t_vec3	dir;
 }	t_ray_cylinder;
 
 /* ---------------------------------- SCENE --------------------------------- */
