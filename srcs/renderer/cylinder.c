@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:34:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 14:12:50 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/11 14:45:46 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static bool	cy_cap(t_ray_cylinder r, double t, t_cylinder cy, bool top)
 	return (d <= cy.radius * cy.radius + 1e-6);
 }
 
-static int	machin(t_ray_cylinder r, t_cylinder *cy, int res)
+static int	get_res(t_ray_cylinder r, t_cylinder *cy, int res)
 {
 	double	denom;
 	double	cap_t;
@@ -116,5 +116,5 @@ double	cylinders_hit(void *p_cy, t_ray_cylinder r)
 		if (y >= 0 && y <= cy->height)
 			res = t[1];
 	}
-	return (machin(r, cy, res));
+	return (get_res(r, cy, res));
 }
