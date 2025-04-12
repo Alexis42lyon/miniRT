@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:18:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 11:03:38 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/12 09:24:49 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ t_vec3	phong_specular(struct s_light_info info)
 	d = ft_dot(view_vec, reflect_vec);
 	if (d < 0)
 		d = 0;
-	spec = pow(d, SHINY_POWER);
+	spec = pow(d, info.mat.shyniness);
 	specular = vec3_mult(info.light.material.albedo,
-			SPECULAR_COEF * spec * info.light.ratio);
+			info.mat.spec_coef * spec * info.light.ratio);
 	specular = vec3_multv(specular, info.mat.albedo);
 	specular = vec3_mult(specular, info.attenuation);
 	return (specular);

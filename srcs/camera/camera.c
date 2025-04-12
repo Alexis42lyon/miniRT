@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:46:23 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 16:08:55 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/12 10:56:12 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_camera	new_camera(t_vec3 origin, t_vec3 forward, int fov)
 	cam.forward = vec3_normalize(forward);
 	cam.right = vec3_normalize(vec3_cross(cam.forward, (t_vec3){0, 1, 0}));
 	cam.up = vec3_normalize(vec3_cross(cam.right, cam.forward));
+	cam.rotation_enable = 0;
 	return (cam);
 }
 

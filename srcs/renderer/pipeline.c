@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 08:45:57 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 17:42:39 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/12 10:33:32 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	run_pipeline(t_prog *prog)
 {
 	t_viewport	vp;
 
-	prog->scene->sky_color = (t_vec3){0.9, 0.976470588, 1};
+	prog->scene->sky_color = vec3_mult(prog->scene->ambient_light.color, prog->scene->ambient_light.ratio);
 	vp = viewport(prog->win_scene, prog->scene);
 	render(vp, prog->scene);
 	// anti_aliaser(vp, prog->scene);
@@ -31,10 +31,16 @@ void	display_frame(t_win_scene *win, t_scene *scene)
 	scene->frame_count++;
 }
 
+// void	show_stats(t_prog *prog)
+// {
+	
+// }
+
 int	new_frame(t_prog *prog)
 {
 	ft_printf("\n");
 	run_pipeline(prog);
 	display_frame(prog->win_scene, prog->scene);
+	// show_stats(prog);
 	return (0);
 }

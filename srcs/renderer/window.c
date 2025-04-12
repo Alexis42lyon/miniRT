@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 16:14:10 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/12 10:56:46 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,20 @@ int	window_close(void *prog)
 	return (0);
 }
 
+int mouse_input(int button, int x, int y, t_prog *prog)
+{
+	int m_x = -1;
+	int m_y = -1;
+
+	(void)m_x;
+	(void)m_y;
+	(void)button;
+	(void)prog;
+// mlx_mouse_get_pos(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr, &m_x, &m_y);
+	printf("x: %d | y: %d | b: %d\n", x, y, button);
+	return (0);
+}
+
 void	init_win(t_prog *prog)
 {
 	t_win_scene	*win;
@@ -105,6 +119,7 @@ void	init_win(t_prog *prog)
 		ft_calloc(win->height * win->width, sizeof(t_vec3)),
 		(void **)&win->accumulation_data, prog);
 	mlx_key_hook(win->win_ptr, key_hook, prog);
+	mlx_mouse_hook(win->win_ptr, mouse_input, prog);
 	init_button_window(prog);
 	mlx_loop(win->mlx_ptr);
 }

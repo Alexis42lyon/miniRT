@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 16:37:17 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/12 10:18:01 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ typedef struct material
 {
 	t_vec3	albedo;
 
+	int		shyniness;
 	float	roughtness;
+	float	spec_coef;
 	float	emission_power;
 }	t_mat;
 
@@ -110,7 +112,6 @@ typedef struct s_scene
 	t_cylinder		*cylinders;
 
 	short			vp_flags;
-
 	t_uint			frame_count;
 	t_uint			total_render_time;
 	t_uint			min_render_time;
@@ -123,6 +124,8 @@ typedef struct s_prog
 	t_scene			*scene;
 	t_win_scene		*win_scene;
 	t_win_button	*win_button;
+
+
 }	t_prog;
 
 // utils.c

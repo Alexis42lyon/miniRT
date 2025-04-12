@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 15:44:58 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/12 10:55:39 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # define SHOW_BUTTON 0
 # define WIDTH 720
-# define HEIGHT 480
+# define HEIGHT 420
 
 /* ----------------------------------- MLX ---------------------------------- */
 typedef struct s_data
@@ -44,6 +44,7 @@ typedef struct s_win_scene
 
 	void	*win_ptr;
 	void	*mlx_ptr;
+
 	t_data	img;
 }	t_win_scene;
 

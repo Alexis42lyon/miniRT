@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 17:04:11 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/12 10:34:50 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@
 # include "miniRT.h"
 # include <math.h>
 
-# define BOUNCES 4
+# define BOUNCES 10
 # define DEFAULT_EMMI_POWER 5
 
 # define SPECULAR 0b0100
 # define DIFFUSE 0b0010
 # define AMBIENT 0b0001
 
+# define MAX_TRHEAD 20
+
 # define LIGHT_RANGE 10
-# define SPECULAR_COEF 0.6f
-# define SHINY_POWER 32 // 32 = plastic // 256 = glass
 
 enum	e_object_type
 {
@@ -90,6 +90,18 @@ struct s_objs_data
 	size_t	n_obj;
 	size_t	size;
 };
+
+typedef struct s_thread_contex
+{
+	t_uint	id;
+	
+	int		i;
+	int		j;
+
+	pthread_t	th;
+	t_viewport	vp;
+	t_scene		scene;
+}	t_thread_context;
 
 // colors.c
 t_vec3		normal_color(t_hit hit);

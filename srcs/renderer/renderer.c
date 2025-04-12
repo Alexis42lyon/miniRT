@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 16:12:47 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/12 10:15:47 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "raytracer.h"
 #include <limits.h>
 #include <time.h>
+#include <pthread.h>
 
 t_viewport	viewport(t_win_scene *win, t_scene *scene)
 {
@@ -97,31 +98,50 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	return (vec3_clamp(final_color, 0, 1));
 }
 
-void	render(t_viewport vp, t_scene *scene)
+void	*thread_routine(void *pcontext)
 {
-	int		i;
-	int		j;
+	t_thread_context	*ctx;
 	t_vec3	color;
 	t_vec3	*accumulation_data;
 	t_vec3	accumulation;
 
-	accumulation_data = vp.win->accumulation_data;
-	j = 0;
-	while (j < vp.win->height)
+
+	ctx = (t_thread_context *)pcontext;
+	accumulation_data = ctx->vp.win->accumulation_data;
+	while (ctx->j < ctx->vp.win->height)
 	{
-		i = 0;
-		while (i < vp.win->width)
+		while (ctx->i < ctx->vp.win->width)
 		{
-			color = get_px_col(i, j, vp, scene);
-			accumulation_data[i + j * vp.win->width] = vec3_add(
-					accumulation_data[i + j * vp.win->width], color);
-			accumulation = accumulation_data[i + j * vp.win->width];
-			accumulation = vec3_divide(accumulation, scene->frame_count);
+			color = get_px_col(ctx->i, ctx->j, ctx->vp, &ctx->scene);
+			accumulation_data[ctx->i + ctx->j * ctx->vp.win->width] = vec3_add(
+					accumulation_data[ctx->i + ctx->j * ctx->vp.win->width], color);
+			accumulation = accumulation_data[ctx->i + ctx->j * ctx->vp.win->width];
+			accumulation = vec3_divide(accumulation, ctx->scene.frame_count);
 			accumulation = vec3_clamp(accumulation, 0, 1);
-			set_pixel(&vp.win->img, i, j, vec_to_int(accumulation));
-			i++;
+			set_pixel(&ctx->vp.win->img, ctx->i, ctx->j, vec_to_int(accumulation));
+			ctx->i += MAX_TRHEAD;
 		}
-		show_progress(vp.win->width * j + i, vp.win->width * vp.win->height);
-		j++;
+		ctx->i -= ctx->vp.win->width;
+		ctx->j++;
+	}
+	return (NULL);
+}
+
+void	render(t_viewport vp, t_scene *scene)
+{
+	t_thread_context ctx[MAX_TRHEAD];
+
+	for (size_t x = 0; x < MAX_TRHEAD; x++)
+	{
+		ctx[x].id = x;
+		ctx[x].i = x;
+		ctx[x].j = 0;
+		ctx[x].scene = *scene;
+		ctx[x].vp = vp;
+		pthread_create(&ctx[x].th, NULL, thread_routine, (void *)&(ctx[x]));
+	}
+	for (size_t x = 0; x < MAX_TRHEAD; x++)
+	{
+		pthread_join(ctx[x].th, NULL);
 	}
 }
