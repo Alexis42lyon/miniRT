@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/12 10:18:01 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/12 11:55:05 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,6 @@ typedef struct s_prog
 	t_scene			*scene;
 	t_win_scene		*win_scene;
 	t_win_button	*win_button;
-
-
 }	t_prog;
 
 // utils.c

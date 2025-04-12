@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:17 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 16:12:53 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:02:16 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	reset_accumulation(t_prog *prog)
 	ft_bzero(prog->win_scene->accumulation_data,
 		prog->win_scene->height * prog->win_scene->width * sizeof(t_vec3));
 	prog->scene->frame_count = 1;
-	printf(CYAN BOLD "[LOG]: " RESET CYAN "accumulation data reset\n");
 }
 
 void	session_result(const t_scene *scene)

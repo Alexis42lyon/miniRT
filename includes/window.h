@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/12 10:55:39 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:26:40 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 # include <mlx.h>
 
 # define SHOW_BUTTON 0
-# define WIDTH 720
-# define HEIGHT 420
+# define SHOW_LOGGING 0
+# define WIDTH 1080
+# define HEIGHT 720
 
 /* ----------------------------------- MLX ---------------------------------- */
 typedef struct s_data

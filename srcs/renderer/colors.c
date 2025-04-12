@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:31 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/12 09:24:29 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/12 11:07:55 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 t_mat	default_mat(void)
 {
 	return ((t_mat)
-	{
-		.albedo = {1, 1, 1},
-		.emission_power = -1.0f,
-		.roughtness = 0.8f,
-		.shyniness = 32,
-		.spec_coef = 0.6f,
-	});
+		{
+			.albedo = {1, 1, 1},
+			.emission_power = -1.0f,
+			.roughtness = 0.8f,
+			.shyniness = 32,
+			.spec_coef = 0.6f,
+		});
 }
 
 t_vec3	normal_color(t_hit hit)
