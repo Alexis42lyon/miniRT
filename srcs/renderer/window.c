@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/12 12:22:03 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/12 13:04:52 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@
 #include "mlx.h"
 #include <stdio.h>
 #include <math.h>
+#include "raytracer.h"
 
 int	key_hook2(int keycode, t_camera	*camera)
 {
-	if (keycode == 'q')
+	if (keycode == LSHIFT)
 		camera->origin = vec3_add(camera->origin, vec3_mult(camera->up, -0.5));
-	else if (keycode == 'e')
+	else if (keycode == SPACE)
 		camera->origin = vec3_add(camera->origin, vec3_mult(camera->up, 0.5));
 	else if (keycode == 'w')
 		camera->origin = vec3_add(camera->origin,
@@ -66,10 +67,10 @@ int	key_hook(int keycode, t_prog *prog)
 		turn_yaw(camera, -10 * (3.1415 / 180.0f));
 	else if (keycode == RIGHT_ARR)
 		turn_yaw(camera, 10 * (3.1415 / 180.0f));
-	else if (keycode == PAGE_UP)
-		turn_roll(camera, -10 * (3.1415 / 180.0f));
-	else if (keycode == PAGE_DOWN)
+	else if (keycode == 'e')
 		turn_roll(camera, 10 * (3.1415 / 180.0f));
+	else if (keycode == 'q')
+		turn_roll(camera, -10 * (3.1415 / 180.0f));
 	else if (key_hook2(keycode, camera))
 		return (0);
 	reset_accumulation(prog);
@@ -86,9 +87,13 @@ int pressed(int button, int x, int y, t_prog *prog)
 {
 	if (button == 3)
 	{
+		// mlx_mouse_move(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr,
+		// 0,0);
 		prog->scene->camera.last_x = x;
 		prog->scene->camera.last_y = y;
 		prog->scene->camera.rotation_enable = !prog->scene->camera.rotation_enable;
+		prog->scene->nb_bounces = 1;
+		mlx_mouse_hide(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr);
 		printf(CYAN BOLD "[LOG]: " RESET CYAN "camera rotation enable\n");
 	}
 	return (0);
@@ -100,27 +105,9 @@ int released(int button, int x, int y, t_prog *prog)
 		prog->scene->camera.last_x = x;
 		prog->scene->camera.last_y = y;
 		prog->scene->camera.rotation_enable = !prog->scene->camera.rotation_enable;
+		mlx_mouse_show(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr);
+		prog->scene->nb_bounces = DEFAULT_BOUNCE;
 		printf(CYAN BOLD "[LOG]: " RESET CYAN "camera rotation disable\n");
-	}
-	return (0);
-}
-
-int mouse_input(int button, int x, int y, t_prog *prog)
-{
-	(void)button;
-	(void)prog;
-// mlx_mouse_get_pos(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr, &m_x, &m_y);
-	// printf("x: %d | y: %d | b: %d\n", x, y, button);
-	if (button == 3)
-	{
-		prog->scene->camera.last_x = x;
-		prog->scene->camera.last_y = y;
-		prog->scene->camera.rotation_enable = !prog->scene->camera.rotation_enable;
-		if (prog->scene->camera.rotation_enable)
-			printf(CYAN BOLD "[LOG]: " RESET CYAN "camera rotation enable\n");
-		else
-			printf(CYAN BOLD "[LOG]: " RESET CYAN "camera rotation disable\n");
-
 	}
 	return (0);
 }
@@ -149,7 +136,6 @@ void	init_win(t_prog *prog)
 		ft_calloc(win->height * win->width, sizeof(t_vec3)),
 		(void **)&win->accumulation_data, prog);
 	mlx_key_hook(win->win_ptr, key_hook, prog);
-	// mlx_mouse_hook(win->win_ptr, mouse_input, prog);
 	init_button_window(prog);
 	mlx_hook(win->win_ptr, 4, (1L<<2), pressed, prog);
 	mlx_hook(win->win_ptr, 5, (1L<<3), released, prog);

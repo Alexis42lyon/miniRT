@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/12 11:55:05 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:45:38 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ typedef struct s_scene
 	t_sphere		*spheres;
 	t_plane			*planes;
 	t_cylinder		*cylinders;
+
+	int				nb_bounces;
 
 	short			vp_flags;
 	t_uint			frame_count;

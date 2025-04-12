@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:15 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 11:29:26 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:48:09 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "parser.h"
 #include "window.h"
+#include "raytracer.h"
 
 void	switch_identifier(t_prog *prog, t_parser *parser)
 {
@@ -93,6 +94,7 @@ void	init(t_prog *prog, char **av)
 		(void **)&prog->scene->cylinders, prog);
 	parse(prog);
 	prog->scene->frame_count = 1;
+	prog->scene->nb_bounces = DEFAULT_BOUNCE;
 	print_scene(prog->scene);
 	ft_printf("%sNo error has been found\n%s", GREEN, RESET);
 }

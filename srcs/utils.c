@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:17 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/12 12:02:16 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:54:38 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	reset_accumulation(t_prog *prog)
 	ft_bzero(prog->win_scene->accumulation_data,
 		prog->win_scene->height * prog->win_scene->width * sizeof(t_vec3));
 	prog->scene->frame_count = 1;
+	prog->scene->total_render_time = 0;
+	prog->scene->max_render_time = 0;
+	prog->scene->min_render_time = 0;
 }
 
 void	session_result(const t_scene *scene)

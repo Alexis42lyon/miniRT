@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/12 10:34:50 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:47:30 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "miniRT.h"
 # include <math.h>
 
-# define BOUNCES 10
 # define DEFAULT_EMMI_POWER 5
+# define DEFAULT_BOUNCE 5
 
 # define SPECULAR 0b0100
 # define DIFFUSE 0b0010

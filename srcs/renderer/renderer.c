@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/12 11:05:18 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/12 12:45:46 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 			(float)(j) / (float)(vp.height), vp);
 	seed = (i + (j * vp.win->width)) * scene->frame_count;
 	i = 0;
-	while (i < BOUNCES)
+	while (i < scene->nb_bounces)
 	{
 		seed *= i + 1;
 		if (bounce(&final_color, scene, &ray, seed) == 1)
@@ -100,7 +100,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 		mutiplier *= 0.5f;
 		i++;
 	}
-	if (i != BOUNCES)
+	if (i != scene->nb_bounces)
 		final_color = vec3_mult(final_color, mutiplier);
 	return (vec3_clamp(final_color, 0, 1));
 }
