@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/12 10:15:47 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/12 11:05:18 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,14 @@ int	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 	hit = trace_ray(*ray, scene);
 	if (hit.distance == -1)
 	{
-		*final_color = vec3_add(*final_color, scene->sky_color);
+		t_vec3 unit_direction = vec3_normalize(ray->dir);
+		float a = 0.5 * (unit_direction.y + 1.0);
+		t_vec3 sky_col = vec3_add(
+			vec3_mult((t_vec3){1.0, 1.0, 1.0}, (1.0-a)),
+			vec3_mult(scene->sky_color, a));
+		sky_col = vec3_mult(sky_col, scene->ambient_light.ratio);
+
+		*final_color = vec3_add(*final_color, sky_col);
 		return (1);
 	}
 	if (hit.type == SPHERE)
