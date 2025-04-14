@@ -33,6 +33,7 @@ SRCS =	main.c			\
 		phong_model.c	\
 		intersection.c	\
 		anti_aliasing.c	\
+		input.c			\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)

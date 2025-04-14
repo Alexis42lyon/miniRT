@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 08:45:57 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/12 13:06:00 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:17:24 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	display_frame(t_win_scene *win, t_scene *scene)
 
 void	show_stats(t_prog *prog)
 {
-	ft_printf("\n");
 	ft_printf("\nframe " CYAN BOLD "%d" RESET
 		" render in" CYAN BOLD " %ums\n" RESET, prog->scene->frame_count -1, prog->scene->total_render_time / prog->scene->frame_count -1);
 }

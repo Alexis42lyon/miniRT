@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:44:41 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/12 11:59:25 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:18:09 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define CAMERA_H
 
 # include "libft/vector.h"
+# include <stdint.h>
+
+# define MOVE_FORWARD 0b000001
+# define MOVE_BACKWARD 0b000010
+# define MOVE_LEFT 0b000100
+# define MOVE_RIGHT 0b001000
+# define MOVE_UP 0b010000
+# define MOVE_DOWN 0b100000
 
 typedef struct s_prog	t_prog;
 
@@ -31,9 +39,11 @@ typedef struct camera
 	int		fov;
 	float	focal_length;
 
-	int		rotation_enable;
+	int		movement_enable;
 	int		last_x;
 	int		last_y;
+
+	uint8_t	movekeys;
 
 }	t_camera;
 typedef struct s_win_scene	t_win_scene;
@@ -49,5 +59,11 @@ void		update_cam(t_prog *prog);
 void		reset_cam_orientation(t_camera *cam);
 
 void		print_cam(const t_camera *cam);
+
+int 		mouse_down(int button, int x, int y, t_prog *prog);
+int 		mouse_up(int button, int x, int y, t_prog *prog);
+
+int 		key_down(int keycode, t_prog *prog);
+int 		key_up(int keycode, t_prog *prog);
 
 #endif

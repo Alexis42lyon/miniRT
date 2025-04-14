@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/12 13:04:52 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:21:57 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,94 +21,10 @@
 #include <math.h>
 #include "raytracer.h"
 
-int	key_hook2(int keycode, t_camera	*camera)
-{
-	if (keycode == LSHIFT)
-		camera->origin = vec3_add(camera->origin, vec3_mult(camera->up, -0.5));
-	else if (keycode == SPACE)
-		camera->origin = vec3_add(camera->origin, vec3_mult(camera->up, 0.5));
-	else if (keycode == 'w')
-		camera->origin = vec3_add(camera->origin,
-				vec3_mult(camera->forward, 0.5));
-	else if (keycode == 's')
-		camera->origin = vec3_add(camera->origin,
-				vec3_mult(camera->forward, -0.5));
-	else if (keycode == 'a')
-		camera->origin = vec3_add(camera->origin,
-				vec3_mult(camera->right, -0.5));
-	else if (keycode == 'd')
-		camera->origin = vec3_add(camera->origin,
-				vec3_mult(camera->right, 0.5));
-	else if (keycode == 'z')
-		camera->fov++;
-	else if (keycode == 'x')
-		camera->fov--;
-	else if (keycode == 'r')
-		reset_cam_orientation(camera);
-	else if (keycode == 'c')
-		print_cam(camera);
-	else
-		return (1);
-	return (0);
-}
-
-int	key_hook(int keycode, t_prog *prog)
-{
-	t_camera	*camera;
-
-	camera = &prog->scene->camera;
-	if (keycode == ESC)
-		free_all(prog);
-	else if (keycode == UP_ARR)
-		turn_pitch(camera, -10 * (3.1415 / 180.0f));
-	else if (keycode == DOWN_ARR)
-		turn_pitch(camera, 10 * (3.1415 / 180.0f));
-	else if (keycode == LEFT_ARR)
-		turn_yaw(camera, -10 * (3.1415 / 180.0f));
-	else if (keycode == RIGHT_ARR)
-		turn_yaw(camera, 10 * (3.1415 / 180.0f));
-	else if (keycode == 'e')
-		turn_roll(camera, 10 * (3.1415 / 180.0f));
-	else if (keycode == 'q')
-		turn_roll(camera, -10 * (3.1415 / 180.0f));
-	else if (key_hook2(keycode, camera))
-		return (0);
-	reset_accumulation(prog);
-	return (0);
-}
 
 int	window_close(void *prog)
 {
 	free_all(prog);
-	return (0);
-}
-
-int pressed(int button, int x, int y, t_prog *prog)
-{
-	if (button == 3)
-	{
-		// mlx_mouse_move(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr,
-		// 0,0);
-		prog->scene->camera.last_x = x;
-		prog->scene->camera.last_y = y;
-		prog->scene->camera.rotation_enable = !prog->scene->camera.rotation_enable;
-		prog->scene->nb_bounces = 1;
-		mlx_mouse_hide(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr);
-		printf(CYAN BOLD "[LOG]: " RESET CYAN "camera rotation enable\n");
-	}
-	return (0);
-}
-int released(int button, int x, int y, t_prog *prog)
-{
-	if (button == 3)
-	{
-		prog->scene->camera.last_x = x;
-		prog->scene->camera.last_y = y;
-		prog->scene->camera.rotation_enable = !prog->scene->camera.rotation_enable;
-		mlx_mouse_show(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr);
-		prog->scene->nb_bounces = DEFAULT_BOUNCE;
-		printf(CYAN BOLD "[LOG]: " RESET CYAN "camera rotation disable\n");
-	}
 	return (0);
 }
 
@@ -131,13 +47,18 @@ void	init_win(t_prog *prog)
 	if (create_img(win) == -1)
 		print_exit(prog, "Mlx create img failed");
 	mlx_loop_hook(prog->win_scene->mlx_ptr, new_frame, prog);
-	mlx_hook(win->win_ptr, 17, 1L << 2, window_close, prog);
+	mlx_hook(win->win_ptr, ON_DESTROY, MOUSEDOWN_MASK, window_close, prog);
 	check_mem((t_info){__FILE__, __LINE__, __func__},
 		ft_calloc(win->height * win->width, sizeof(t_vec3)),
 		(void **)&win->accumulation_data, prog);
-	mlx_key_hook(win->win_ptr, key_hook, prog);
 	init_button_window(prog);
-	mlx_hook(win->win_ptr, 4, (1L<<2), pressed, prog);
-	mlx_hook(win->win_ptr, 5, (1L<<3), released, prog);
+	/* ----------------------------- // mouse hooks // ----------------------------- */
+	mlx_hook(win->win_ptr, ON_MOUSEDOWN, MOUSEDOWN_MASK, mouse_down, prog);
+	mlx_hook(win->win_ptr, ON_MOUSEUP, MOUSEUP_MASK, mouse_up, prog);
+	/* ------------------------------ // key hooks // ------------------------------- */
+	mlx_hook(win->win_ptr, ON_KEYDOWN, KEYDOWN_MASK, key_down, prog);
+	mlx_hook(win->win_ptr, ON_KEYUP, KEYUP_MASK, key_up, prog);
 	mlx_loop(win->mlx_ptr);
 }
+
+

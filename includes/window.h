@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/12 12:57:03 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:32:03 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,28 @@
 # include <mlx.h>
 
 # define SHOW_BUTTON 0
-# define SHOW_LOGGING 1
+# define SHOW_LOGGING 0
+
 # define WIDTH 720
 # define HEIGHT 480
 
 /* ----------------------------------- MLX ---------------------------------- */
+
+# define ON_KEYDOWN 2
+# define ON_KEYUP 3
+# define ON_MOUSEDOWN 4
+# define ON_MOUSEUP 5
+# define ON_MOUSEMOVE 6
+# define ON_EXPOSE 12
+# define ON_DESTROY 17
+
+# define KEYDOWN_MASK 1L<<0
+# define KEYUP_MASK 1L<<1
+# define MOUSEDOWN_MASK 1L<<2
+# define MOUSEUP_MASK 1L<<3
+
+/* -------------------------------------------------------------------------- */
+
 typedef struct s_data
 {
 	void	*img;
