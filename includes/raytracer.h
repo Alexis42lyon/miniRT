@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/12 12:47:30 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:14:27 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ struct s_objs_data
 typedef struct s_thread_contex
 {
 	t_uint	id;
-	
+
 	int		i;
 	int		j;
 
@@ -139,6 +139,6 @@ t_vec3		phong_ambient(t_scene *scene, t_mat mat);
 t_vec3		phong_specular(struct s_light_info info);
 
 // anti_aliasing.c
-void	anti_aliaser(t_viewport	vp, t_scene *scene);
+void	anti_aliaser(t_prog *prog, t_viewport *vp, t_win_scene *win);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 08:45:57 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/14 13:17:24 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:59:22 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	run_pipeline(t_prog *prog)
 {
 	t_viewport	vp;
 	static long	last_frame = -1;
-	
+
 	if (last_frame == -1)
 		last_frame = get_current_time_ms();
 
@@ -38,7 +38,7 @@ void	run_pipeline(t_prog *prog)
 	render(vp, prog->scene);
 	prog->scene->total_render_time += get_current_time_ms() - last_frame;
 	last_frame = get_current_time_ms();
-	// anti_aliaser(vp, prog->scene);
+	anti_aliaser(prog, &vp, prog->win_scene);
 }
 
 void	display_frame(t_win_scene *win, t_scene *scene)
