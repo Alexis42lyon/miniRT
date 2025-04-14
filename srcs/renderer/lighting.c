@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lighting.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 11:03:55 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:57:53 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@ struct s_light_info	new_info(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 {
 	struct s_light_info	info;
 
-	info.light = scene->light;
+	info.light = scene->lights[0];
 	info.ray = ray;
 	info.hit = hit;
 	info.mat = mat;
-	info.light_dir = vec3_sub(hit.point, scene->light.origin);
+	info.light_dir = vec3_sub(hit.point, scene->lights[0].origin);
 	info.attenuation = LIGHT_RANGE / vec3_lenght(info.light_dir);
 	if (info.attenuation < 0)
 		info.attenuation = 0;

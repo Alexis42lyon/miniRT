@@ -6,22 +6,22 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:26 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 11:46:35 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:41:03 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "camera.h"
 
-static void	parse_light(t_prog *prog, char **tokens)
+static void	parse_light(t_prog *prog, t_light_source *light, char **tokens)
 {
 	if (ft_arrlen(tokens) != 4)
 		print_exit(prog, "Invalid light format");
-	parse_vector(prog, &prog->scene->light.origin, tokens[1]);
-	prog->scene->light.ratio = check_atof(prog, tokens[2]);
-	if (prog->scene->light.ratio < 0.0 || prog->scene->light.ratio > 1.0)
+	parse_vector(prog, &light->origin, tokens[1]);
+	light->ratio = check_atof(prog, tokens[2]);
+	if (light->ratio < 0.0 || light->ratio > 1.0)
 		print_exit(prog, "Light brightness must be in range [0.0, 1.0]");
-	parse_color(prog, &prog->scene->light.material.albedo, tokens[3]);
+	parse_color(prog, &light->material.albedo, tokens[3]);
 }
 
 static void	parse_camera(t_prog *prog, char **tokens)
@@ -64,7 +64,8 @@ void	parse(t_prog *prog)
 		else if (!ft_strcmp(tokens[0], "C"))
 			parse_camera(prog, tokens);
 		else if (!ft_strcmp(tokens[0], "L"))
-			parse_light(prog, tokens);
+			parse_light(prog, prog->scene->lights + parser->i_light++,
+				tokens);
 		else if (!ft_strcmp(tokens[0], "sp"))
 			parse_sphere(prog, prog->scene->spheres + parser->i_sphere++,
 				tokens);

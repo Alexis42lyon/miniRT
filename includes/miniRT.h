@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/14 13:20:26 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:38:37 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,11 @@ typedef struct s_scene
 	t_vec3			sky_color;
 	t_ambient_light	ambient_light;
 	t_camera		camera;
-	t_light_source	light;
+	size_t			nb_lights;
 	size_t			nb_spheres;
 	size_t			nb_planes;
 	size_t			nb_cylinders;
+	t_light_source	*lights;
 	t_sphere		*spheres;
 	t_plane			*planes;
 	t_cylinder		*cylinders;

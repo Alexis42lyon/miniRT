@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:42:03 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 13:19:49 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:44:07 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "miniRT.h"
 
-# define SHOW_SRUCT 0
+# define SHOW_SRUCT 1
 
 typedef struct s_parser
 {
@@ -24,7 +24,7 @@ typedef struct s_parser
 	char	**tokens;
 	bool	ambient_is_set;
 	bool	camera_is_set;
-	bool	light_is_set;
+	int		i_light;
 	int		i_sphere;
 	int		i_plane;
 	int		i_cylinder;

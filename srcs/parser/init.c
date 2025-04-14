@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:15 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/12 12:48:09 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:38:38 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,7 @@ void	switch_identifier(t_prog *prog, t_parser *parser)
 		parser->camera_is_set = true;
 	}
 	else if (!ft_strcmp(parser->tokens[0], "L"))
-	{
-		if (parser->light_is_set)
-			print_exit(prog, "Light can only be declared once");
-		parser->light_is_set = true;
-	}
+		prog->scene->nb_lights++;
 	else if (!ft_strcmp(parser->tokens[0], "sp"))
 		prog->scene->nb_spheres++;
 	else if (!ft_strcmp(parser->tokens[0], "pl"))
@@ -67,7 +63,7 @@ void	parse_map(t_prog *prog)
 	parser->tokens = NULL;
 	if (parser->ambient_is_set == false
 		|| parser->camera_is_set == false
-		|| parser->light_is_set == false)
+		|| prog->scene->nb_lights == 0)
 		print_exit(prog, "Missing mandatory elements");
 }
 
@@ -83,6 +79,9 @@ void	init(t_prog *prog, char **av)
 	if (prog->parser->fd == -1)
 		print_exit(prog, "File not found or cannot access to the file");
 	parse_map(prog);
+	check_mem((t_info){__FILE__, __LINE__, __func__},
+		malloc(sizeof(t_light_source) * (prog->scene->nb_lights + 1)),
+		(void **)&prog->scene->lights, prog);
 	check_mem((t_info){__FILE__, __LINE__, __func__},
 		malloc(sizeof(t_sphere) * (prog->scene->nb_spheres + 1)),
 		(void **)&prog->scene->spheres, prog);

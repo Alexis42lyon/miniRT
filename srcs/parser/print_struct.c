@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:49 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 12:06:37 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:59:59 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,27 @@
 
 # include <stdio.h>
 # include "raytracer.h"
+
+static void	print_lights(const t_scene *scene)
+{
+	size_t	i;
+
+	printf(CYAN "\n[Lights: %zu]" RESET "\n", scene->nb_lights);
+	if (scene->lights)
+	{
+		i = 0;
+		while (i < scene->nb_lights)
+		{
+			printf(YELLOW "- Lights %zu:" RESET "\n", i + 1);
+			printf("  Origin:\t" GREEN "(%.2lf, %.2lf, %.2lf)" RESET "\n",
+				scene->lights[i].origin.x, scene->lights[i].origin.y, scene->lights[i].origin.z);
+			printf("  Ratio:\t" CYAN "%.2lf" RESET "\n", scene->lights[i].ratio);
+			printf("  Color:\t" CYAN "0x%x" RESET "\n",
+				vec_to_int(scene->lights[i].material.albedo));
+			i++;
+		}
+	}
+}
 
 static void	print_spheres(const t_scene *scene)
 {
@@ -74,19 +95,12 @@ static void	print_cylinders(const t_scene *scene)
 		i = 0;
 		while (i < scene->nb_cylinders)
 		{
-			printf(YELLOW "- Cylinder %zu:" RESET "\n", i + 1);
-			printf("  Origin:\t" GREEN "(%.2lf, %.2lf, %.2lf)" RESET "\n",
-				scene->cylinders[i].origin.x, scene->cylinders[i].origin.y,
-				scene->cylinders[i].origin.z);
-			printf("  Normal:\t" BLUE "(%.2lf, %.2lf, %.2lf)" RESET "\n",
-				scene->cylinders[i].normal.x, scene->cylinders[i].normal.y,
-				scene->cylinders[i].normal.z);
-			printf("  Diameter:\t" CYAN "%.2lf" RESET "\n",
-				scene->cylinders[i].radius);
-			printf("  Height:\t" CYAN "%.2lf" RESET "\n",
-				scene->cylinders[i].height);
-			printf("  Color:\t" CYAN "0x%x" RESET "\n",
-				vec_to_int(scene->cylinders[i].material.albedo));
+			printf(YELLOW "- Cylinder\t%zu:" RESET "\n", i + 1);
+			printf("Origin:\t\t" GREEN "(%.2lf, %.2lf, %.2lf)" RESET "\n",
+				scene->lights[i].origin.x, scene->lights[i].origin.y, scene->lights[i].origin.z);
+			printf("Ratio:\t\t" CYAN "%.2lf" RESET "\n", scene->lights[i].ratio);
+			printf("Color:\t\t" CYAN "0x%x" RESET "\n",
+				vec_to_int(scene->lights[i].material.albedo));
 			i++;
 		}
 	}
@@ -111,12 +125,7 @@ void	print_scene(const t_scene *scene)
 		scene->camera.forward.x, scene->camera.forward.y,
 		scene->camera.forward.z);
 	printf("FOV:\t\t" CYAN "%d" RESET "\n", scene->camera.fov);
-	printf(CYAN "\n[Light]" RESET "\n");
-	printf("Origin:\t\t" GREEN "(%.2lf, %.2lf, %.2lf)" RESET "\n",
-		scene->light.origin.x, scene->light.origin.y, scene->light.origin.z);
-	printf("Ratio:\t\t" CYAN "%.2lf" RESET "\n", scene->light.ratio);
-	printf("Color:\t\t" CYAN "0x%x" RESET "\n",
-		vec_to_int(scene->light.material.albedo));
+	print_lights(scene);
 	print_spheres(scene);
 	print_planes(scene);
 	print_cylinders(scene);
