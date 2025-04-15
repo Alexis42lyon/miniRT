@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:34:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 15:32:25 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/15 12:34:15 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,77 @@
 #include "libft/vector.h"
 #include <math.h>
 
-static void	swap_double(double *a, double *b)
+static double	check_caps(t_ray_cylinder ray, t_cylinder *cy, bool top)
 {
-	double	tmp;
+	t_vec3	cap_center;
+	double	denom;
+	double	t;
+	t_vec3	hit;
 
-	tmp = *a;
-	*a = *b;
-	*b = tmp;
+	cap_center = vec3_add(cy->origin, vec3_mult(cy->normal, cy->height * top));
+	denom = ft_dot(ray.dir, cy->normal);
+	if (fabs(denom) < 1e-6)
+		return (INFINITY);
+	t = ft_dot(vec3_sub(cap_center, ray.origin), cy->normal) / denom;
+	if (t < 1e-6)
+		return (INFINITY);
+	hit = vec3_add(ray.origin, vec3_mult(ray.dir, t));
+	if (vec3_lenght(vec3_sub(hit, cap_center)) > cy->radius)
+		return (INFINITY);
+	return (t);
+}
+
+static double	get_closest(double intersections[3], t_ray_cylinder ray,
+	t_cylinder *cy, double proj)
+{
+	t_vec3	hit;
+	t_vec3	vec;
+	int		i;
+	double	closest;
+
+	hit = vec3_add(ray.origin, vec3_mult(ray.dir, intersections[0]));
+	vec = vec3_sub(hit, cy->origin);
+	proj = ft_dot(vec, cy->normal);
+	if (proj < -1e-6 || proj > cy->height + 1e-6)
+		intersections[0] = INFINITY;
+	intersections[1] = check_caps(ray, cy, 0);
+	intersections[2] = check_caps(ray, cy, 1);
+	closest = HUGE_VAL;
+	i = -1;
+	while (++i < 3)
+		if (intersections[i] > 1e-6 && intersections[i] < closest)
+			closest = intersections[i];
+	if (closest != HUGE_VAL)
+		return (closest);
+	return (-1);
+}
+
+static double	fill_intersection(double intersections[3], t_cylinder *cy,
+	t_ray_cylinder ray, double roots[2])
+{
+	double	proj;
+	t_vec3	origin_vec;
+
+	origin_vec = vec3_sub(ray.origin, cy->origin);
+	proj = ft_dot(origin_vec, cy->normal);
+	if (proj >= 0 && proj <= cy->height && ft_dot(origin_vec,
+			origin_vec) - proj * proj <= cy->radius * cy->radius)
+	{
+		if (roots[1] > 1e-6)
+			intersections[0] = roots[1];
+		else
+			intersections[0] = HUGE_VAL;
+	}
+	else
+	{
+		if (roots[0] > 1e-6)
+			intersections[0] = roots[0];
+		else if (roots[1] > 1e-6)
+			intersections[0] = roots[1];
+		else
+			intersections[0] = HUGE_VAL;
+	}
+	return (proj);
 }
 
 static void	solve_cylinder_eq(double abc[3], double roots[2])
@@ -43,64 +107,29 @@ static void	solve_cylinder_eq(double abc[3], double roots[2])
 	roots[1] = abc[2] / q;
 }
 
-static double	check_caps(t_ray_cylinder ray, t_cylinder *cy, bool top)
+double	cylinders_hit(t_cylinder *cy, t_ray_cylinder ray)
 {
-	t_vec3	cap_center;
-	double	denom;
-	double	t;
-	t_vec3	hit;
+	double		params[3];
+	double		roots[2];
+	double		tmp;
+	double		intersections[3];
+	double		proj;
 
-	cap_center = vec3_add(cy->origin, vec3_mult(cy->normal, cy->height * top));
-	denom = ft_dot(ray.dir, cy->normal);
-	if (fabs(denom) < 1e-6)
-		return (INFINITY);
-	t = ft_dot(vec3_sub(cap_center, ray.origin), cy->normal) / denom;
-	if (t < 1e-6)
-		return (INFINITY);
-	hit = vec3_add(ray.origin, vec3_mult(ray.dir, t));
-	if (vec3_lenght(vec3_sub(hit, cap_center)) > cy->radius)
-		return (INFINITY);
-	return (t);
-}
-
-static double	check_body(t_cylinder *cy, t_ray_cylinder ray, double t)
-{
-	t_vec3	hit;
-	t_vec3	vec;
-	double	proj;
-
-	hit = vec3_add(ray.origin, vec3_mult(ray.dir, t));
-	vec = vec3_sub(hit, cy->origin);
-	proj = ft_dot(vec, cy->normal);
-	if (proj < -1e-6 || proj > cy->height + 1e-6)
-		return (INFINITY);
-	return (t);
-}
-
-double	cylinders_hit(void *obj, t_ray_cylinder ray)
-{
-	double		abc[3];
-	double		t[2];
-	double		res[3];
-	t_cylinder	*cy;
-
-	cy = (t_cylinder *)obj;
-	abc[0] = ft_dot(ray.dir, ray.dir) - pow(ft_dot(ray.dir, cy->normal), 2);
-	abc[1] = 2 * (ft_dot(ray.dir, vec3_sub(ray.origin, cy->origin))
+	params[0] = ft_dot(ray.dir, ray.dir) - pow(ft_dot(ray.dir, cy->normal), 2);
+	params[1] = 2 * (ft_dot(ray.dir, vec3_sub(ray.origin, cy->origin))
 			- ft_dot(ray.dir, cy->normal)
 			* ft_dot(vec3_sub(ray.origin, cy->origin), cy->normal));
-	abc[2] = ft_dot(vec3_sub(ray.origin, cy->origin),
+	params[2] = ft_dot(vec3_sub(ray.origin, cy->origin),
 			vec3_sub(ray.origin, cy->origin))
 		- pow(ft_dot(vec3_sub(ray.origin, cy->origin), cy->normal), 2)
 		- cy->radius * cy->radius;
-	solve_cylinder_eq(abc, t);
-	if (t[0] > t[1])
-		swap_double(&t[0], &t[1]);
-	res[0] = fmin(check_body(cy, ray, t[0]), check_body(cy, ray, t[1]));
-	res[1] = check_caps(ray, cy, false);
-	res[2] = check_caps(ray, cy, true);
-	res[0] = fmin(res[0], fmin(res[1], res[2]));
-	if (res[0] > 1e-6)
-		return (res[0]);
-	return (-1);
+	solve_cylinder_eq(params, roots);
+	if (roots[0] > roots[1])
+	{
+		tmp = roots[0];
+		roots[0] = roots[1];
+		roots[1] = tmp;
+	}
+	proj = fill_intersection(intersections, cy, ray, roots);
+	return (get_closest(intersections, ray, cy, proj));
 }
