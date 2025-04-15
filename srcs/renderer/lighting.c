@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lighting.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/14 16:57:53 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:05:36 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ int	in_light(t_scene *scene, t_hit hit, t_vec3 light_dir)
 	return (light_hit.distance == -1);
 }
 
-struct s_light_info	new_info(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
+struct s_light_info	new_info(t_light_source light, t_hit hit, t_mat mat, t_ray ray)
 {
 	struct s_light_info	info;
 
-	info.light = scene->lights[0];
+	info.light = light;
 	info.ray = ray;
 	info.hit = hit;
 	info.mat = mat;
-	info.light_dir = vec3_sub(hit.point, scene->lights[0].origin);
+	info.light_dir = vec3_sub(hit.point, light.origin);
 	info.attenuation = LIGHT_RANGE / vec3_lenght(info.light_dir);
 	if (info.attenuation < 0)
 		info.attenuation = 0;
@@ -43,21 +43,25 @@ struct s_light_info	new_info(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 {
 	t_vec3				ambient;
-	t_vec3				diffuse;
-	t_vec3				specular;
+	t_vec3				diffuse = vec3_zero();
+	t_vec3				specular = vec3_zero();
 	t_vec3				merged_pass;
 	struct s_light_info	info;
 
+	if (scene->vp_flags & NORMAL)
+		mat.albedo = normal_color(hit);
 	ambient = vec3_zero();
 	diffuse = vec3_zero();
 	specular = vec3_zero();
-	scene->vp_flags = DIFFUSE | AMBIENT | SPECULAR;
-	info = new_info(scene, hit, mat, ray);
-	ambient = phong_ambient(scene, info.mat);
-	if (in_light(scene, hit, info.light_dir))
+	ambient = phong_ambient(scene, mat);
+	for (size_t i = 0; i < scene->nb_lights; i++)
 	{
-		diffuse = phong_diffuse(info);
-		specular = phong_specular(info);
+		info = new_info(scene->lights[i], hit, mat, ray);
+		if (in_light(scene, hit, info.light_dir))
+		{
+			diffuse = vec3_add(diffuse, phong_diffuse(info));
+			specular = vec3_add(specular, phong_specular(info));
+		}
 	}
 	merged_pass = vec3_zero();
 	if (scene->vp_flags & AMBIENT)

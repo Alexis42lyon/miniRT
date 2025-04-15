@@ -45,6 +45,7 @@ int	main(int ac, char **av)
 	prog.win_scene = &win_scene;
 	prog.win_button = &win_button;
 	init(&prog, av);
+	prog.scene->vp_flags = DIFFUSE | AMBIENT | SPECULAR;
 	init_win(&prog);
 	free_all(&prog);
 	return (0);

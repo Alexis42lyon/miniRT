@@ -6,14 +6,16 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:33:51 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/14 15:41:12 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:34:20 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "camera.h"
+#include "libft/io.h"
 #include "miniRT.h"
 #include "raytracer.h"
 #include "window.h"
+#include "parser.h"
 
 int mouse_down(int button, int x, int y, t_prog *prog)
 {
@@ -21,12 +23,12 @@ int mouse_down(int button, int x, int y, t_prog *prog)
 	(void)y;
 	if (button == 4)
 	{
-		prog->scene->camera.fov += 3;
+		prog->scene->camera.fov += 5;
 		reset_accumulation(prog);
 	}
 	if (button == 5)
 	{
-		prog->scene->camera.fov -= 3;
+		prog->scene->camera.fov -= 5;
 		reset_accumulation(prog);
 	}
 	prog->scene->camera.fov = ft_clamp(prog->scene->camera.fov, 0, 180);
@@ -57,7 +59,15 @@ int mouse_up(int button, int x, int y, t_prog *prog)
 
 int key_down(int keycode, t_prog *prog)
 {
-	if (keycode == 'w')
+	if (keycode == '1')
+		prog->scene->vp_flags ^= DIFFUSE;
+	else if (keycode == '2')
+		prog->scene->vp_flags ^= AMBIENT;
+	else if (keycode == '3')
+		prog->scene->vp_flags ^= SPECULAR;
+	else if (keycode == '4')
+		prog->scene->vp_flags ^= NORMAL;
+	else if (keycode == 'w')
 		prog->scene->camera.movekeys |= MOVE_FORWARD;
 	else if (keycode == 'a')
 		prog->scene->camera.movekeys |= MOVE_LEFT;
@@ -78,6 +88,9 @@ int key_down(int keycode, t_prog *prog)
 	}
 	else if (keycode == 'c')
 		print_cam(&prog->scene->camera);
+	else if (keycode == 'x')
+		print_scene(prog->scene);
+	reset_accumulation(prog);
 	return (0);
 }
 

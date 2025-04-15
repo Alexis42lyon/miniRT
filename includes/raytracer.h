@@ -14,7 +14,7 @@
 # define RAYTRACER_H
 
 # include "miniRT.h"
-# include <math.h>
+# include "math.h"
 
 # define DEFAULT_EMMI_POWER 5
 # define DEFAULT_BOUNCE 5
@@ -22,6 +22,7 @@
 # define SPECULAR 0b0100
 # define DIFFUSE 0b0010
 # define AMBIENT 0b0001
+# define NORMAL 0b1000
 
 # define MAX_TRHEAD 20
 
