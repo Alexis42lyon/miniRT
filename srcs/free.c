@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:21:55 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 12:24:35 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/15 11:13:51 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	free_parser(t_parser *parser)
 
 void	free_all(t_prog *prog)
 {
+	free(prog->scene->lights);
 	free(prog->scene->spheres);
 	free(prog->scene->planes);
 	free(prog->scene->cylinders);
