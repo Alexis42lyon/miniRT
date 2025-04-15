@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:26 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/14 16:41:03 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:13:59 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ void	parse(t_prog *prog)
 			parse_plane(prog, prog->scene->planes + parser->i_plane++, tokens);
 		else if (!ft_strcmp(tokens[0], "cy"))
 			parse_cylinder(prog, prog->scene->cylinders + parser->i_cylinder++,
+				tokens);
+		else if (!ft_strcmp(tokens[0], "co"))
+			parse_cylinder(prog, prog->scene->cones + parser->i_cone++,
 				tokens);
 		current = current->next;
 	}

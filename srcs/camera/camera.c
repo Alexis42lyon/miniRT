@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:46:23 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/14 15:33:29 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:33:45 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_camera	new_camera(t_vec3 origin, t_vec3 forward, int fov)
 	cam.movement_enable = 0;
 	cam.movekeys = 0;
 	cam.move_speed = 10;
+	cam.focal_length = 1.0f;
 	cam.sensibility = 0.2f;
 	return (cam);
 }

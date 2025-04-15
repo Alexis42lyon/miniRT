@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:15 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/14 16:38:38 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:39:47 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	switch_identifier(t_prog *prog, t_parser *parser)
 		prog->scene->nb_planes++;
 	else if (!ft_strcmp(parser->tokens[0], "cy"))
 		prog->scene->nb_cylinders++;
+	else if (!ft_strcmp(parser->tokens[0], "co"))
+		prog->scene->nb_cones++;
 	else if (parser->tokens[0])
 		print_exit(prog, "Invalid identifier");
 }
@@ -91,6 +93,9 @@ void	init(t_prog *prog, char **av)
 	check_mem((t_info){__FILE__, __LINE__, __func__},
 		malloc(sizeof(t_cylinder) * (prog->scene->nb_cylinders + 1)),
 		(void **)&prog->scene->cylinders, prog);
+	check_mem((t_info){__FILE__, __LINE__, __func__},
+		malloc(sizeof(t_cylinder) * (prog->scene->nb_cones + 1)),
+		(void **)&prog->scene->cones, prog);
 	parse(prog);
 	prog->scene->frame_count = 1;
 	prog->scene->nb_bounces = DEFAULT_BOUNCE;

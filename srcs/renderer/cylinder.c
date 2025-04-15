@@ -6,15 +6,15 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:34:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/15 12:32:57 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:38:12 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "libft/vector.h"
-#include <math.h>
+#include "raytracer.h"
 
-static double	check_caps(t_ray_cylinder ray, t_cylinder *cy, bool top)
+static double	check_caps(t_ray ray, t_cylinder *cy, bool top)
 {
 	t_vec3	cap_center;
 	double	denom;
@@ -34,7 +34,7 @@ static double	check_caps(t_ray_cylinder ray, t_cylinder *cy, bool top)
 	return (t);
 }
 
-static double	get_closest(double intersections[3], t_ray_cylinder ray,
+static double	get_closest(double intersections[3], t_ray ray,
 	t_cylinder *cy, double proj)
 {
 	t_vec3	hit;
@@ -60,7 +60,7 @@ static double	get_closest(double intersections[3], t_ray_cylinder ray,
 }
 
 static double	fill_intersection(double intersections[3], t_cylinder *cy,
-	t_ray_cylinder ray, double roots[2])
+	t_ray ray, double roots[2])
 {
 	double	proj;
 	t_vec3	origin_vec;
@@ -107,14 +107,15 @@ static void	solve_cylinder_eq(double abc[3], double roots[2])
 	roots[1] = abc[2] / q;
 }
 
-double	cylinders_hit(t_cylinder *cy, t_ray_cylinder ray)
+double	cylinders_hit(void *p, t_ray ray)
 {
+	t_cylinder	*cy;
 	double		params[3];
 	double		roots[2];
 	double		tmp;
 	double		intersections[3];
-	double		proj;
 
+	cy = (t_cylinder *)p;
 	params[0] = ft_dot(ray.dir, ray.dir) - pow(ft_dot(ray.dir, cy->normal), 2);
 	params[1] = 2 * (ft_dot(ray.dir, vec3_sub(ray.origin, cy->origin))
 			- ft_dot(ray.dir, cy->normal)
@@ -130,6 +131,6 @@ double	cylinders_hit(t_cylinder *cy, t_ray_cylinder ray)
 		roots[0] = roots[1];
 		roots[1] = tmp;
 	}
-	proj = fill_intersection(intersections, cy, ray, roots);
-	return (get_closest(intersections, ray, cy, proj));
+	return (get_closest(intersections, ray, cy,
+		fill_intersection(intersections, cy, ray, roots)));
 }

@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/15 14:38:26 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:43:05 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define SPECULAR 0b0100
 # define DIFFUSE 0b0010
 # define AMBIENT 0b0001
+# define NORMAL 0b1000
 
 # define MAX_TRHEAD 20
 

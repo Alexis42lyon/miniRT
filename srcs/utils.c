@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:17 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/12 12:54:38 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/14 15:49:39 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,5 @@ void	show_progress(int current, int max)
 		ft_printf(GRAY "-");
 		i++;
 	}
-	ft_printf(RESET BOLD "] " GRAY "(%d%%)" RESET "\033[?25h\r", (int)progress);
+	ft_printf(RESET BOLD "] " RESET "\033[?25h\r", (int)progress);
 }

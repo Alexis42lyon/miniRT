@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/12 12:45:46 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/14 16:33:29 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_viewport	viewport(t_win_scene *win, t_scene *scene)
 	vp.cam = &scene->camera;
 	vp.witdh = win->width;
 	vp.height = win->height;
-	vp.cam->focal_length = 1.0f;
 	vp.vp_height = 2 * tan(vp.cam->fov / 2 * 3.1415 / 180)
 		* vp.cam->focal_length;
 	vp.vp_width = vp.vp_height * win->aspect_ratio;
@@ -130,6 +129,8 @@ void	*thread_routine(void *pcontext)
 		}
 		ctx->i -= ctx->vp.win->width;
 		ctx->j++;
+		// if (ctx->id == 0)
+		// 	show_progress(ctx->j * ctx->vp.witdh + ctx->i, ctx->vp.witdh * ctx->vp.height);
 	}
 	return (NULL);
 }

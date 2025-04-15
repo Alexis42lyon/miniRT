@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:42:03 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/14 16:44:07 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:03:28 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_parser
 	int		i_sphere;
 	int		i_plane;
 	int		i_cylinder;
+	int		i_cone;
 	t_list	*map;
 }	t_parser;
 

@@ -26,6 +26,7 @@ SRCS =	main.c			\
 		sphere.c		\
 		plane.c			\
 		cylinder.c		\
+		cone.c			\
 		lighting.c		\
 		pipeline.c		\
 		camera.c		\
