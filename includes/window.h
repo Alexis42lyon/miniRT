@@ -19,8 +19,8 @@
 # define SHOW_BUTTON 0
 # define SHOW_LOGGING 1
 
-# define WIDTH 480
-# define HEIGHT 360
+# define WIDTH 720
+# define HEIGHT 480
 
 /* ----------------------------------- MLX ---------------------------------- */
 
@@ -38,7 +38,6 @@
 # define MOUSEUP_MASK 1L<<3
 
 /* -------------------------------------------------------------------------- */
-
 typedef struct s_data
 {
 	void	*img;

@@ -16,6 +16,7 @@
 #include "window.h"
 #include "raytracer.h"
 #include <limits.h>
+#include <stdio.h>
 #include <time.h>
 #include <pthread.h>
 
@@ -44,11 +45,13 @@ t_viewport	viewport(t_win_scene *win, t_scene *scene)
 	return (vp);
 }
 
-int	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
+float	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 {
 	t_hit	hit;
 	t_mat	mat;
+	float	new_mult;
 
+	new_mult = 0.5f;
 	hit = trace_ray(*ray, scene);
 	if (hit.distance == -1)
 	{
@@ -60,7 +63,7 @@ int	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 		sky_col = vec3_mult(sky_col, scene->ambient_light.ratio);
 
 		*final_color = vec3_add(*final_color, sky_col);
-		return (1);
+		return (0);
 	}
 	/*if (hit.type == SPHERE)
 		mat = scene->spheres[hit.obj_index].material;
@@ -78,11 +81,14 @@ int	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 	if (mat.emission_power == 0)
 		*final_color = phong_shading(scene, hit, mat, *ray);
 	else
-	 *final_color = mat.albedo;
+	{
+		new_mult = mat.emission_power;
+		*final_color = mat.albedo;
+	}
 	ray->origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));
 	ray->dir = vec3_reflect(ray->dir,
 			vec3_add(hit.normal, vec3_mult(random_vec(seed), mat.roughtness)));
-	return (0);
+	return (new_mult);
 }
 
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
@@ -91,6 +97,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	t_vec3	final_color;
 	float	mutiplier;
 	t_uint	seed;
+	float	new_mult;
 
 	mutiplier = 1.0f;
 	final_color = vec3_zero();
@@ -101,10 +108,11 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	while (i < scene->nb_bounces)
 	{
 		seed *= i + 1;
-		if (bounce(&final_color, scene, &ray, seed) == 1)
+		new_mult = bounce(&final_color, scene, &ray, seed);
+		if (new_mult == 0)
 			break ;
 		final_color = vec3_mult(final_color, mutiplier);
-		mutiplier *= 0.5f;
+		mutiplier *= new_mult;
 		i++;
 	}
 	if (i != scene->nb_bounces)

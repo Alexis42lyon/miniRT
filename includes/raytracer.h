@@ -18,7 +18,7 @@
 # include <pthread.h>
 
 # define DEFAULT_EMMI_POWER 5
-# define DEFAULT_BOUNCE 5
+# define DEFAULT_BOUNCE 3
 
 # define SPECULAR 0b0100
 # define DIFFUSE 0b0010

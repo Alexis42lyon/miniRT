@@ -25,12 +25,7 @@
 
 void	create_mat(t_mat mats[MAX_MAT])
 {
-	mats[0].albedo = (t_vec3){0.5, 0.5, 0.5};
-	mats[0].emission_power = 0;
-	mats[0].roughtness = 0.5f;
-	mats[0].shyniness = 32;
-	mats[0].spec_coef = 0.6f;
-	mats[0].use_checker = 1;
+	mats[0] = default_mat();
 
 	mats[1].albedo = (t_vec3){0.5, 0.5, 0.5};
 	mats[1].emission_power = 0;
@@ -39,7 +34,7 @@ void	create_mat(t_mat mats[MAX_MAT])
 	mats[1].spec_coef = 0.8f;
 	mats[1].use_checker = 0;
 
-	mats[3].albedo = (t_vec3){1, 1, 1};
+	mats[3].albedo = (t_vec3){1, 0, 0};
 	mats[3].emission_power = 5;
 	mats[3].roughtness = 0.5f;
 	mats[3].shyniness = 32;
