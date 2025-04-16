@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:21:55 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/15 11:13:51 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:20:38 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,15 @@ void	free_win_scene(t_win_scene *win)
 
 void	free_parser(t_parser *parser)
 {
-	if (parser->fd > 0)
-		close(parser->fd);
-	free(parser->line);
-	free_arr((void **)parser->tokens);
-	ft_lstclear(&parser->map, (void *)free_arr);
+	if (parser->is_free == false)
+	{
+		if (parser->fd > 0)
+			close(parser->fd);
+		free(parser->line);
+		free_arr((void **)parser->tokens);
+		ft_lstclear(&parser->map, (void *)free_arr);
+		parser->is_free = true;
+	}
 }
 
 void	free_all(t_prog *prog)
@@ -61,6 +65,7 @@ void	free_all(t_prog *prog)
 	free(prog->scene->spheres);
 	free(prog->scene->planes);
 	free(prog->scene->cylinders);
+	free(prog->scene->cones);
 	free_parser(prog->parser);
 	if (prog->win_button->win_ptr)
 		mlx_destroy_window(prog->win_button->mlx_ptr,

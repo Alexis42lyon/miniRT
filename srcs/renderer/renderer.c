@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   renderer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/14 16:33:29 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/16 11:17:10 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 		mat = scene->planes[hit.obj_index].material;
 	else if (hit.type == CYLINDER)
 		mat = scene->cylinders[hit.obj_index].material;
+	else if (hit.type == CONE)
+		mat = scene->cones[hit.obj_index].material;
 	*final_color = mat.albedo;
 	//*final_color = phong_shading(scene, hit, mat, *ray);
 	*final_color = checker_color(hit, mat);

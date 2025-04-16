@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/14 16:38:37 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:37:22 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,18 +83,12 @@ typedef struct plane
 
 typedef struct cylinder
 {
-	t_vec3			origin;
-	t_vec3			normal;
-	double			radius;
-	double			height;
-	t_mat			material;
-}	t_cylinder;
-
-typedef struct s_ray_cylinder
-{
 	t_vec3	origin;
-	t_vec3	dir;
-}	t_ray_cylinder;
+	t_vec3	normal;
+	double	radius;
+	double	height;
+	t_mat	material;
+}	t_cylinder;
 
 /* ---------------------------------- SCENE --------------------------------- */
 
@@ -107,10 +101,12 @@ typedef struct s_scene
 	size_t			nb_spheres;
 	size_t			nb_planes;
 	size_t			nb_cylinders;
+	size_t			nb_cones;
 	t_light_source	*lights;
 	t_sphere		*spheres;
 	t_plane			*planes;
 	t_cylinder		*cylinders;
+	t_cylinder		*cones;
 
 	int				nb_bounces;
 

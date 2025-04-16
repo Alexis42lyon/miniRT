@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:01:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 14:12:53 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/16 11:13:49 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,28 @@
 #include "miniRT.h"
 #include "raytracer.h"
 #include <limits.h>
+
+t_vec3	cone_normal(t_cylinder co, t_vec3 hit_point)
+{
+	t_vec3	axis;
+	t_vec3	cp;
+	double	projection;
+	t_vec3	base_center;
+	t_vec3	to_hit;
+	double	dist;
+
+	axis = vec3_normalize(co.normal);
+	cp = vec3_sub(hit_point, co.origin);
+	projection = ft_dot(cp, axis);
+	base_center = vec3_add(co.origin, vec3_mult(axis, co.height));
+	to_hit = vec3_sub(hit_point, base_center);
+	dist = ft_dot(to_hit, axis);
+	if (fabs(dist) < 1e-6)
+		return (axis);
+	return (vec3_normalize(vec3_sub(cp,
+			vec3_mult(axis, projection * (1.0 + (co.radius * co.radius)
+				/ (co.height * co.height))))));
+}
 
 t_vec3	cylinder_normal(t_cylinder cy, t_vec3 hit_point)
 {
@@ -49,6 +71,13 @@ t_hit	hit_succes(t_scene *scene, t_ray ray, t_hit hit)
 		hit = hit_result(scene->cylinders[hit.obj_index].origin, ray,
 				hit.distance, hit.obj_index);
 		hit.normal = cylinder_normal(scene->cylinders[hit.obj_index],
+				hit.point);
+	}
+	else if (type == CONE)
+	{
+		hit = hit_result(scene->cones[hit.obj_index].origin, ray,
+				hit.distance, hit.obj_index);
+		hit.normal = cone_normal(scene->cones[hit.obj_index],
 				hit.point);
 	}
 	hit.type = type;
@@ -99,6 +128,13 @@ t_hit	trace_ray(t_ray ray, t_scene *scene)
 	{
 		hit = tmp_hit;
 		hit.type = CYLINDER;
+	}
+	tmp_hit = get_min_dist(cone_hit, ray, (struct s_objs_data)
+		{scene->cones, scene->nb_cones, sizeof(t_cylinder)});
+	if (tmp_hit.distance != -1 && tmp_hit.distance < hit.distance)
+	{
+		hit = tmp_hit;
+		hit.type = CONE;
 	}
 	if (hit.obj_index != (size_t)-1)
 		return (hit_succes(scene, ray, hit));

@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:15 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/14 16:38:38 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:46:06 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,35 @@ void	switch_identifier(t_prog *prog, t_parser *parser)
 		prog->scene->nb_planes++;
 	else if (!ft_strcmp(parser->tokens[0], "cy"))
 		prog->scene->nb_cylinders++;
+	else if (!ft_strcmp(parser->tokens[0], "co"))
+		prog->scene->nb_cones++;
 	else if (parser->tokens[0])
 		print_exit(prog, "Invalid identifier");
 }
 
-void	parse_map(t_prog *prog)
+void	init_malloc(t_prog *prog)
 {
-	t_parser	*parser;
+	check_mem((t_info){__FILE__, __LINE__, __func__},
+		malloc(sizeof(t_light_source) * (prog->scene->nb_lights + 1)),
+		(void **)&prog->scene->lights, prog);
+	check_mem((t_info){__FILE__, __LINE__, __func__},
+		malloc(sizeof(t_sphere) * (prog->scene->nb_spheres + 1)),
+		(void **)&prog->scene->spheres, prog);
+	check_mem((t_info){__FILE__, __LINE__, __func__},
+		malloc(sizeof(t_plane) * (prog->scene->nb_planes + 1)),
+		(void **)&prog->scene->planes, prog);
+	check_mem((t_info){__FILE__, __LINE__, __func__},
+		malloc(sizeof(t_cylinder) * (prog->scene->nb_cylinders + 1)),
+		(void **)&prog->scene->cylinders, prog);
+	check_mem((t_info){__FILE__, __LINE__, __func__},
+		malloc(sizeof(t_cylinder) * (prog->scene->nb_cones + 1)),
+		(void **)&prog->scene->cones, prog);
+}
+
+void	parse_map(t_prog *prog, t_parser *parser)
+{
 	t_list		*new_node;
 
-	parser = prog->parser;
 	parser->line = ft_get_next_line(parser->fd);
 	while (parser->line)
 	{
@@ -78,20 +97,10 @@ void	init(t_prog *prog, char **av)
 	prog->parser->fd = open(av[1], O_RDONLY);
 	if (prog->parser->fd == -1)
 		print_exit(prog, "File not found or cannot access to the file");
-	parse_map(prog);
-	check_mem((t_info){__FILE__, __LINE__, __func__},
-		malloc(sizeof(t_light_source) * (prog->scene->nb_lights + 1)),
-		(void **)&prog->scene->lights, prog);
-	check_mem((t_info){__FILE__, __LINE__, __func__},
-		malloc(sizeof(t_sphere) * (prog->scene->nb_spheres + 1)),
-		(void **)&prog->scene->spheres, prog);
-	check_mem((t_info){__FILE__, __LINE__, __func__},
-		malloc(sizeof(t_plane) * (prog->scene->nb_planes + 1)),
-		(void **)&prog->scene->planes, prog);
-	check_mem((t_info){__FILE__, __LINE__, __func__},
-		malloc(sizeof(t_cylinder) * (prog->scene->nb_cylinders + 1)),
-		(void **)&prog->scene->cylinders, prog);
-	parse(prog);
+	parse_map(prog, prog->parser);
+	init_malloc(prog);
+	parse(prog, prog->parser, prog->scene, prog->parser->map);
+	free_parser(prog->parser);
 	prog->scene->frame_count = 1;
 	prog->scene->nb_bounces = DEFAULT_BOUNCE;
 	print_scene(prog->scene);

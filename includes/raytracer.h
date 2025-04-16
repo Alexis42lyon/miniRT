@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/14 15:14:27 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/15 14:43:05 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define RAYTRACER_H
 
 # include "miniRT.h"
-# include "math.h"
+# include <math.h>
+# include <pthread.h>
 
 # define DEFAULT_EMMI_POWER 5
 # define DEFAULT_BOUNCE 5
@@ -34,6 +35,7 @@ enum	e_object_type
 	PLANE,
 	SPHERE,
 	CYLINDER,
+	CONE
 };
 
 typedef struct ray
@@ -129,7 +131,10 @@ t_hit		hit_result(const t_vec3 origin, const t_ray r, const double t,
 
 // place.c
 double		plane_hit(void *p_plane, const t_ray ray);
-double		cylinders_hit(void *p_cy, t_ray r);
+double		cylinders_hit(void *p, t_ray ray);
+
+// cone.c
+double		cone_hit(void *p, t_ray ray);
 
 // lighting.c
 t_vec3		phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray);
