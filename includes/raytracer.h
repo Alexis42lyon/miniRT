@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/15 14:43:05 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:52:47 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define AMBIENT 0b0001
 # define NORMAL 0b1000
 
-# define MAX_TRHEAD 20
+# define MAX_TRHEAD 8
 
 # define LIGHT_RANGE 10
 
@@ -71,7 +71,7 @@ typedef struct viewport
 	t_vec3			vertical;
 	t_vec3			horizontal;
 
-	int				witdh;
+	int				width;
 	int				height;
 }	t_viewport;
 
@@ -96,15 +96,22 @@ struct s_objs_data
 
 typedef struct s_thread_contex
 {
-	t_uint	id;
+	t_uint		id;
 
-	int		i;
-	int		j;
+	int			i;
+	int			j;
 
 	pthread_t	th;
 	t_viewport	vp;
 	t_scene		scene;
 }	t_thread_context;
+
+typedef struct s_vector3i
+{
+	int	x;
+	int	y;
+	int	z;
+}	t_vec3i;
 
 // colors.c
 t_vec3		normal_color(t_hit hit);
@@ -145,6 +152,9 @@ t_vec3		phong_ambient(t_scene *scene, t_mat mat);
 t_vec3		phong_specular(struct s_light_info info);
 
 // anti_aliasing.c
-void	anti_aliaser(t_prog *prog, t_viewport *vp, t_win_scene *win);
+void		anti_aliaser(t_prog *prog, t_viewport *vp, t_win_scene *win);
+
+// denosing.c
+void		denoiser(t_prog *prog, t_viewport *vp, t_win_scene *win);
 
 #endif
