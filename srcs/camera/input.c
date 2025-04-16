@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:33:51 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/14 16:34:20 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/17 00:40:49 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,22 @@ int key_down(int keycode, t_prog *prog)
 	}
 	else if (keycode == 'c')
 		print_cam(&prog->scene->camera);
+	else if (keycode == 'p')
+	{
+		prog->win_scene->paused = !prog->win_scene->paused;
+		if (prog->win_scene->paused == 1)
+		{
+			// anti_aliaser(prog, prog->win_scene);
+			denoiser(prog, prog->win_scene);
+			mlx_put_image_to_window(prog->win_scene->mlx_ptr,
+								  prog->win_scene->win_ptr,
+								  prog->win_scene->img.img, 0, 0);
+		}
+		else
+		{
+			reset_accumulation(prog);
+		}
+	}
 	else if (keycode == 'x')
 		print_scene(prog->scene);
 	reset_accumulation(prog);

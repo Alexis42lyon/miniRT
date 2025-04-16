@@ -16,11 +16,12 @@ t_mat	default_mat(void)
 {
 	return ((t_mat)
 		{
-			.albedo = {1, 1, 1},
-			.emission_power = -1.0f,
-			.roughtness = 0.8f,
-			.shyniness = 32,
+			.albedo = {1, 0, 1},
+			.emission_power = 0.0f,
+			.roughtness = 0.7f,
+			.shyniness = 126,
 			.spec_coef = 0.6f,
+			.use_checker = 1,
 		});
 }
 

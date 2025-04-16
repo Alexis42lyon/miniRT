@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/16 18:52:47 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/17 00:19:54 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,18 @@
 # include <pthread.h>
 
 # define DEFAULT_EMMI_POWER 5
-# define DEFAULT_BOUNCE 5
+# define DEFAULT_BOUNCE 3
 
 # define SPECULAR 0b0100
 # define DIFFUSE 0b0010
 # define AMBIENT 0b0001
 # define NORMAL 0b1000
+# define DENOISE 0b10000
+# define RENDER_PAUSE 0b100000
 
 # define MAX_TRHEAD 8
 
-# define LIGHT_RANGE 10
+# define LIGHT_RANGE 5
 
 enum	e_object_type
 {
@@ -151,10 +153,13 @@ t_vec3		phong_diffuse(struct s_light_info info);
 t_vec3		phong_ambient(t_scene *scene, t_mat mat);
 t_vec3		phong_specular(struct s_light_info info);
 
+// checker.c
+t_vec3	checker_color(t_hit	hit, t_mat mat);
+
 // anti_aliasing.c
 void		anti_aliaser(t_prog *prog, t_viewport *vp, t_win_scene *win);
 
 // denosing.c
-void		denoiser(t_prog *prog, t_viewport *vp, t_win_scene *win);
+void		denoiser(t_prog *prog, t_win_scene *win);
 
 #endif

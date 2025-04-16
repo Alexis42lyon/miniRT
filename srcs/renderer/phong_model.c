@@ -13,7 +13,7 @@
 #include "raytracer.h"
 
 /*
- *Diffuse = Kd * DOT(N, L) * Od * Ld
+ * Diffuse = Kd * DOT(N, L) * Od * Ld
  * Kd = obj diffuse coef
  * N = normal
  * L = light dir

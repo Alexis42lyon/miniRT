@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:44:41 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/15 10:30:38 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/16 11:53:02 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 # define MOVE_UP 0b010000
 # define MOVE_DOWN 0b100000
 
-typedef struct s_prog	t_prog;
+typedef struct s_prog		t_prog;
+typedef struct s_win_scene	t_win_scene;
 
 typedef struct camera
 {
@@ -46,7 +47,6 @@ typedef struct camera
 	uint8_t	movekeys;
 
 }	t_camera;
-typedef struct s_win_scene	t_win_scene;
 
 t_camera	new_camera(t_vec3 origin, t_vec3 forward, int fov);
 
@@ -60,10 +60,10 @@ void		reset_cam_orientation(t_camera *cam);
 
 void		print_cam(const t_camera *cam);
 
-int 		mouse_down(int button, int x, int y, t_prog *prog);
-int 		mouse_up(int button, int x, int y, t_prog *prog);
+int			mouse_down(int button, int x, int y, t_prog *prog);
+int			mouse_up(int button, int x, int y, t_prog *prog);
 
-int 		key_down(int keycode, t_prog *prog);
-int 		key_up(int keycode, t_prog *prog);
+int			key_down(int keycode, t_prog *prog);
+int			key_up(int keycode, t_prog *prog);
 
 #endif

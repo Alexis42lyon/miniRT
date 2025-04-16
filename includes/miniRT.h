@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/15 14:37:22 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/17 00:39:30 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "libft/memory.h"
 # include "libft/string.h"
 # include <stdbool.h>
+# include <sys/types.h>
 # include "camera.h"
 
 # define ESC 65307
@@ -30,6 +31,7 @@
 # define PAGE_DOWN 65366
 # define LSHIFT 65505
 # define SPACE 32
+# define MAX_MAT 8
 
 typedef struct s_parser		t_parser;
 typedef struct s_win_scene	t_win_scene;
@@ -50,6 +52,7 @@ typedef struct material
 	float	roughtness;
 	float	spec_coef;
 	float	emission_power;
+	bool	use_checker;
 }	t_mat;
 
 /* --------------------------------- OBJECT --------------------------------- */
@@ -64,6 +67,7 @@ typedef struct light
 	t_vec3			origin;
 	double			ratio;
 	t_mat			material;
+	uint			mat_idx;
 }	t_light_source;
 
 typedef struct sphere
@@ -71,6 +75,7 @@ typedef struct sphere
 	t_vec3			origin;
 	double			radius;
 	t_mat			material;
+	uint			mat_idx;
 	struct sphere	*next;
 }	t_sphere;
 
@@ -78,6 +83,7 @@ typedef struct plane
 {
 	t_vec3			origin;
 	t_vec3			normal;
+	uint			mat_idx;
 	t_mat			material;
 }	t_plane;
 
@@ -88,6 +94,7 @@ typedef struct cylinder
 	double	radius;
 	double	height;
 	t_mat	material;
+	uint			mat_idx;
 }	t_cylinder;
 
 /* ---------------------------------- SCENE --------------------------------- */
@@ -110,6 +117,7 @@ typedef struct s_scene
 
 	int				nb_bounces;
 
+	t_mat			materials[MAX_MAT];
 	short			vp_flags;
 	t_uint			frame_count;
 	t_uint			total_render_time;

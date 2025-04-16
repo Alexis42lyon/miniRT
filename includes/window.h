@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/14 15:50:34 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/17 00:40:04 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <mlx.h>
 
 # define SHOW_BUTTON 0
-# define SHOW_LOGGING 0
+# define SHOW_LOGGING 1
 
 # define WIDTH 720
 # define HEIGHT 480
@@ -38,7 +38,6 @@
 # define MOUSEUP_MASK 1L<<3
 
 /* -------------------------------------------------------------------------- */
-
 typedef struct s_data
 {
 	void	*img;
@@ -64,6 +63,8 @@ typedef struct s_win_scene
 	void	*mlx_ptr;
 
 	t_data	img;
+
+	bool	paused;
 }	t_win_scene;
 
 /* ------------------------------- BUTTON ------------------------------ */

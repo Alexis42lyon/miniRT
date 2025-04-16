@@ -13,6 +13,7 @@
 #include "libft/vector.h"
 #include "raytracer.h"
 
+// TODO: when type == PLANE origin is often 0,0,0
 t_hit	hit_result(const t_vec3 origin, const t_ray r, const double t,
 	const size_t idx)
 {
