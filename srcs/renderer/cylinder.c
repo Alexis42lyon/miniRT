@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:34:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/15 14:38:12 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/16 11:23:13 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,5 +132,5 @@ double	cylinders_hit(void *p, t_ray ray)
 		roots[1] = tmp;
 	}
 	return (get_closest(intersections, ray, cy,
-		fill_intersection(intersections, cy, ray, roots)));
+			fill_intersection(intersections, cy, ray, roots)));
 }
