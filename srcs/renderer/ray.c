@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "libft/vector.h"
-#include "miniRT.h"
 #include "raytracer.h"
 #include <limits.h>
 

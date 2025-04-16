@@ -34,6 +34,7 @@ SRCS =	main.c			\
 		intersection.c	\
 		anti_aliasing.c	\
 		input.c			\
+		checker.c		\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)

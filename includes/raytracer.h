@@ -142,4 +142,6 @@ t_vec3		phong_specular(struct s_light_info info);
 // anti_aliasing.c
 void	anti_aliaser(t_prog *prog, t_viewport *vp, t_win_scene *win);
 
+t_vec3	checker_color(t_hit	hit, t_mat mat);
+	
 #endif

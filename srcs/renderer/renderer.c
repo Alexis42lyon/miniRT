@@ -13,7 +13,6 @@
 #include "libft/math.h"
 #include "libft/vector.h"
 #include "miniRT.h"
-#include "mlx.h"
 #include "window.h"
 #include "raytracer.h"
 #include <limits.h>
@@ -28,7 +27,7 @@ t_viewport	viewport(t_win_scene *win, t_scene *scene)
 	vp.cam = &scene->camera;
 	vp.witdh = win->width;
 	vp.height = win->height;
-	vp.vp_height = 2 * tan(vp.cam->fov / 2 * 3.1415 / 180)
+	vp.vp_height = 2 * tan((double)vp.cam->fov / 2 * 3.1415 / 180)
 		* vp.cam->focal_length;
 	vp.vp_width = vp.vp_height * win->aspect_ratio;
 	vp.px_up_left = vec3_add(vp.cam->origin,
@@ -70,7 +69,9 @@ int	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 	else if (hit.type == CYLINDER)
 		mat = scene->cylinders[hit.obj_index].material;
 	*final_color = mat.albedo;
-	*final_color = phong_shading(scene, hit, mat, *ray);
+	//*final_color = phong_shading(scene, hit, mat, *ray);
+	*final_color = checker_color(hit, mat);
+
 	ray->origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));
 	ray->dir = vec3_reflect(ray->dir,
 			vec3_add(hit.normal, vec3_mult(random_vec(seed), mat.roughtness)));
