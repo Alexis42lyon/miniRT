@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:01:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/15 16:17:16 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/16 11:13:49 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,8 @@ t_hit	hit_succes(t_scene *scene, t_ray ray, t_hit hit)
 	{
 		hit = hit_result(scene->cones[hit.obj_index].origin, ray,
 				hit.distance, hit.obj_index);
-		// hit.normal = scene->cones[hit.obj_index].normal;
 		hit.normal = cone_normal(scene->cones[hit.obj_index],
-				hit.normal);
+				hit.point);
 	}
 	hit.type = type;
 	return (hit);

@@ -9,32 +9,33 @@ MLXFLAGS = -lX11 -lXext -lbsd -lm
 
 VPATH = srcs:srcs/parser:srcs/renderer:srcs/camera
 
-SRCS =	main.c			\
-		utils.c			\
-		free.c			\
-		init.c			\
-		parse.c			\
-		parse_objects.c	\
-		parse_utils.c	\
-		print_struct.c	\
-		image.c			\
-		window.c		\
-		renderer.c		\
-		ray.c			\
-		colors.c		\
-		button.c		\
-		sphere.c		\
-		plane.c			\
-		cylinder.c		\
-		cone.c			\
-		lighting.c		\
-		pipeline.c		\
-		camera.c		\
-		cam_transform.c	\
-		phong_model.c	\
-		intersection.c	\
-		anti_aliasing.c	\
-		input.c			\
+SRCS =	main.c					\
+		utils.c					\
+		free.c					\
+		init.c					\
+		parse.c					\
+		parse_objects.c			\
+		parse_utils.c			\
+		print_struct.c			\
+		print_struct_utils.c	\
+		image.c					\
+		window.c				\
+		renderer.c				\
+		ray.c					\
+		colors.c				\
+		button.c				\
+		sphere.c				\
+		plane.c					\
+		cylinder.c				\
+		cone.c					\
+		lighting.c				\
+		pipeline.c				\
+		camera.c				\
+		cam_transform.c			\
+		phong_model.c			\
+		intersection.c			\
+		anti_aliasing.c			\
+		input.c					\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)

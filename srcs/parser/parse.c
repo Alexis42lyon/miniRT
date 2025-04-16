@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:26 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/15 13:13:59 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:45:48 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,10 @@ static void	parse_ambient_light(t_prog *prog, char **tokens)
 	parse_color(prog, &prog->scene->ambient_light.color, tokens[2]);
 }
 
-void	parse(t_prog *prog)
+void	parse(t_prog *prog, t_parser *parser, t_scene *scene, t_list *current)
 {
-	t_parser	*parser;
-	t_list		*current;
-	char		**tokens;
+	char	**tokens;
 
-	parser = prog->parser;
-	current = parser->map;
 	while (current)
 	{
 		tokens = (char **)current->content;
@@ -64,19 +60,16 @@ void	parse(t_prog *prog)
 		else if (!ft_strcmp(tokens[0], "C"))
 			parse_camera(prog, tokens);
 		else if (!ft_strcmp(tokens[0], "L"))
-			parse_light(prog, prog->scene->lights + parser->i_light++,
-				tokens);
+			parse_light(prog, scene->lights + parser->i_light++, tokens);
 		else if (!ft_strcmp(tokens[0], "sp"))
-			parse_sphere(prog, prog->scene->spheres + parser->i_sphere++,
-				tokens);
+			parse_sphere(prog, scene->spheres + parser->i_sphere++, tokens);
 		else if (!ft_strcmp(tokens[0], "pl"))
-			parse_plane(prog, prog->scene->planes + parser->i_plane++, tokens);
+			parse_plane(prog, scene->planes + parser->i_plane++, tokens);
 		else if (!ft_strcmp(tokens[0], "cy"))
-			parse_cylinder(prog, prog->scene->cylinders + parser->i_cylinder++,
+			parse_cylinder(prog, scene->cylinders + parser->i_cylinder++,
 				tokens);
 		else if (!ft_strcmp(tokens[0], "co"))
-			parse_cylinder(prog, prog->scene->cones + parser->i_cone++,
-				tokens);
+			parse_cylinder(prog, scene->cones + parser->i_cone++, tokens);
 		current = current->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 12:38:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/15 15:17:06 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/16 09:56:14 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,10 @@ static double	find_closest_intersection(double intersections[3])
 
 static double	check_cone_cap(t_ray ray, t_cylinder *co)
 {
+	t_vec3	normalized_dir;
 	t_vec3	cap_center;
 	double	denom;
 	double	t;
-	t_vec3	hit;
-	t_vec3	normalized_dir;
 
 	normalized_dir = vec3_normalize(co->normal);
 	cap_center = vec3_add(co->origin, vec3_mult(normalized_dir, co->height));
@@ -45,48 +44,26 @@ static double	check_cone_cap(t_ray ray, t_cylinder *co)
 	t = ft_dot(vec3_sub(cap_center, ray.origin), normalized_dir) / denom;
 	if (t < 1e-6)
 		return (HUGE_VAL);
-	hit = vec3_add(ray.origin, vec3_mult(ray.dir, t));
-	if (vec3_lenght(vec3_sub(hit, cap_center)) > co->radius)
+	if (vec3_lenght(vec3_sub(vec3_add(ray.origin,
+					vec3_mult(ray.dir, t)), cap_center)) > co->radius)
 		return (HUGE_VAL);
 	return (t);
 }
 
-static void	solve_cone_eq(t_cylinder *co, t_ray ray, double params[3])
+static double	process_inter(double roots[2], t_cylinder *co, t_ray ray)
 {
-	double	angle;
-	double	cos_sq;
-	t_vec3	delta_p;
-	double	dv;
-	double	dp;
-	t_vec3	normalized_dir;
-
-	normalized_dir = vec3_normalize(co->normal);
-	angle = atan(co->radius / co->height);
-	cos_sq = pow(cos(angle), 2);
-	delta_p = vec3_sub(ray.origin, co->origin);
-	dv = ft_dot(ray.dir, normalized_dir);
-	dp = ft_dot(delta_p, normalized_dir);
-	params[0] = dv * dv - cos_sq;
-	params[1] = 2 * (dv * dp - ft_dot(ray.dir, delta_p) * cos_sq);
-	params[2] = dp * dp - ft_dot(delta_p, delta_p) * cos_sq;
-}
-
-static double	process_intersections(double roots[2], t_cylinder *co,
-					t_ray ray, double intersections[3])
-{
-	t_vec3	hit;
-	double	h;
 	int		i;
-	t_vec3	normalized_dir;
+	double	h;
+	double	intersections[3];
 
-	normalized_dir = vec3_normalize(co->normal);
 	i = -1;
 	while (++i < 2)
 	{
 		if (roots[i] > 1e-6)
 		{
-			hit = vec3_add(ray.origin, vec3_mult(ray.dir, roots[i]));
-			h = ft_dot(vec3_sub(hit, co->origin), normalized_dir);
+			h = ft_dot(vec3_sub(vec3_add(ray.origin,
+							vec3_mult(ray.dir, roots[i])), co->origin),
+					vec3_normalize(co->normal));
 			if (h >= 0.0 && h <= co->height)
 				intersections[i] = roots[i];
 			else
@@ -99,12 +76,29 @@ static double	process_intersections(double roots[2], t_cylinder *co,
 	return (find_closest_intersection(intersections));
 }
 
+static void	solve_cone_eq(t_cylinder *co, t_ray ray, double params[3])
+{
+	t_vec3	normalized_dir;
+	double	cos_sq;
+	t_vec3	delta_p;
+	double	dv;
+	double	dp;
+
+	normalized_dir = vec3_normalize(co->normal);
+	cos_sq = pow(cos(atan(co->radius / co->height)), 2);
+	delta_p = vec3_sub(ray.origin, co->origin);
+	dv = ft_dot(ray.dir, normalized_dir);
+	dp = ft_dot(delta_p, normalized_dir);
+	params[0] = dv * dv - cos_sq;
+	params[1] = 2 * (dv * dp - ft_dot(ray.dir, delta_p) * cos_sq);
+	params[2] = dp * dp - ft_dot(delta_p, delta_p) * cos_sq;
+}
+
 double	cone_hit(void *p, t_ray ray)
 {
 	t_cylinder	*co;
 	double		params[3];
 	double		roots[2];
-	double		intersections[3];
 	double		discriminant;
 
 	co = (t_cylinder *)p;
@@ -114,5 +108,5 @@ double	cone_hit(void *p, t_ray ray)
 		return (-1.0);
 	roots[0] = (-params[1] - sqrt(discriminant)) / (2 * params[0]);
 	roots[1] = (-params[1] + sqrt(discriminant)) / (2 * params[0]);
-	return (process_intersections(roots, co, ray, intersections));
+	return (process_inter(roots, co, ray));
 }

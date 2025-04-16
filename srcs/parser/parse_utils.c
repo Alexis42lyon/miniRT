@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:42 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 12:00:10 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/16 10:05:47 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,18 @@ void	parse_color(t_prog *prog, t_vec3 *color, char *str)
 	color->z /= 255.0;
 }
 
-static void	get_decimal(char **nptr, double *res)
+static void	get_decimal(t_prog *prog, char *nptr, double *res)
 {
 	double	fraction;
 
-	(*nptr)++;
 	fraction = 0.1;
-	while (ft_isdigit(**nptr))
+	while (ft_isdigit(*nptr))
 	{
-		*res += (**nptr - '0') * fraction;
-		(*nptr)++;
+		*res += (*nptr++ - '0') * fraction;
 		fraction *= 0.1;
 	}
+	if (*nptr)
+		print_exit(prog, "Invalid number format");
 }
 
 double	check_atof(t_prog *prog, const char *nptr)
@@ -85,8 +85,6 @@ double	check_atof(t_prog *prog, const char *nptr)
 			print_exit(prog, "Invalid number format");
 	}
 	if (*nptr == '.')
-		get_decimal((char **)&nptr, &res);
-	if (*nptr)
-		print_exit(prog, "Invalid number format");
+		get_decimal(prog, (char *)++nptr, &res);
 	return (res * sign);
 }
