@@ -13,7 +13,6 @@
 #include "libft/vector.h"
 #include "raytracer.h"
 #include <math.h>
-#include "stdlib.h"
 
 t_vec3	checker_color(t_hit	hit, t_mat mat)
 {
@@ -21,16 +20,13 @@ t_vec3	checker_color(t_hit	hit, t_mat mat)
 	int	y;
 	int	z;
 
+	(void)mat;
 	x = floor(hit.point.x);
 	y = floor(hit.point.y);
-	z = floor(hit.point.z) ;
+	z = floor(hit.point.z);
 
-	x = abs(x);
-	y = abs(y);
-	z = abs(z);
-	if (z % 2 != 0 && x % 2 == 0 && y % 2 == 0)
+
+	if ((x + y + z) % 2 == 0)
 		return ((t_vec3){0,0,0});
-	//if ((x % 2 == 0 && y % 2 != 0) || (x % 2 != 0 && y % 2 == 0))
-	//	return (t_vec3){0,0,0};
 	return (mat.albedo);
 }
