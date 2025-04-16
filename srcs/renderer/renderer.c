@@ -62,7 +62,7 @@ int	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 		*final_color = vec3_add(*final_color, sky_col);
 		return (1);
 	}
-	if (hit.type == SPHERE)
+	/*if (hit.type == SPHERE)
 		mat = scene->spheres[hit.obj_index].material;
 	else if (hit.type == PLANE)
 		mat = scene->planes[hit.obj_index].material;
@@ -70,10 +70,15 @@ int	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 		mat = scene->cylinders[hit.obj_index].material;
 	else if (hit.type == CONE)
 		mat = scene->cones[hit.obj_index].material;
-	*final_color = mat.albedo;
-	//*final_color = phong_shading(scene, hit, mat, *ray);
-	*final_color = checker_color(hit, mat);
-
+	else
+	 mat = default_mat();*/
+	mat = scene->materials[hit.obj_index % MAX_MAT];
+	if (mat.use_checker)
+		mat.albedo = checker_color(hit, mat);
+	if (mat.emission_power == 0)
+		*final_color = phong_shading(scene, hit, mat, *ray);
+	else
+	 *final_color = mat.albedo;
 	ray->origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));
 	ray->dir = vec3_reflect(ray->dir,
 			vec3_add(hit.normal, vec3_mult(random_vec(seed), mat.roughtness)));

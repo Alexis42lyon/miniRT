@@ -53,22 +53,22 @@ t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 	ambient = vec3_zero();
 	diffuse = vec3_zero();
 	specular = vec3_zero();
-	ambient = phong_ambient(scene, mat);
+	if (scene->vp_flags & AMBIENT)
+		ambient = phong_ambient(scene, mat);
 	for (size_t i = 0; i < scene->nb_lights; i++)
 	{
 		info = new_info(scene->lights[i], hit, mat, ray);
 		if (in_light(scene, hit, info.light_dir))
 		{
-			diffuse = vec3_add(diffuse, phong_diffuse(info));
-			specular = vec3_add(specular, phong_specular(info));
+			if (scene->vp_flags & DIFFUSE)
+				diffuse = vec3_add(diffuse, phong_diffuse(info));
+			if (scene->vp_flags & SPECULAR)
+				specular = vec3_add(specular, phong_specular(info));
 		}
 	}
 	merged_pass = vec3_zero();
-	if (scene->vp_flags & AMBIENT)
-		merged_pass = vec3_add(merged_pass, ambient);
-	if (scene->vp_flags & DIFFUSE)
-		merged_pass = vec3_add(merged_pass, diffuse);
-	if (scene->vp_flags & SPECULAR)
-		merged_pass = vec3_add(merged_pass, specular);
+	merged_pass = vec3_add(merged_pass, ambient);
+	merged_pass = vec3_add(merged_pass, diffuse);
+	merged_pass = vec3_add(merged_pass, specular);
 	return (merged_pass);
 }
