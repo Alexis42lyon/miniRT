@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:15 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/16 10:46:06 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/17 13:44:56 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,13 @@ void	init_malloc(t_prog *prog)
 		(void **)&prog->scene->cones, prog);
 }
 
-void	parse_map(t_prog *prog, t_parser *parser)
+void	parse_file(t_prog *prog, t_parser *parser, char *file)
 {
-	t_list		*new_node;
+	t_list	*new_node;
 
+	prog->parser->fd = open(file, O_RDONLY);
+	if (prog->parser->fd == -1)
+		print_exit(prog, "File not found");
 	parser->line = ft_get_next_line(parser->fd);
 	while (parser->line)
 	{
@@ -86,7 +89,7 @@ void	parse_map(t_prog *prog, t_parser *parser)
 		print_exit(prog, "Missing mandatory elements");
 }
 
-void	init(t_prog *prog, char **av)
+void	init(t_prog *prog, char *file)
 {
 	ft_bzero(prog->parser, sizeof(t_parser));
 	ft_bzero(prog->scene, sizeof(t_scene));
@@ -94,10 +97,8 @@ void	init(t_prog *prog, char **av)
 	ft_bzero(prog->win_button, sizeof(t_win_button));
 	prog->scene->camera.right = (t_vec3){1, 0, 0};
 	prog->scene->camera.up = (t_vec3){0, 1, 0};
-	prog->parser->fd = open(av[1], O_RDONLY);
-	if (prog->parser->fd == -1)
-		print_exit(prog, "File not found or cannot access to the file");
-	parse_map(prog, prog->parser);
+	parse_material(prog, prog->parser);
+	parse_file(prog, prog->parser, file);
 	init_malloc(prog);
 	parse(prog, prog->parser, prog->scene, prog->parser->map);
 	free_parser(prog->parser);
@@ -105,4 +106,5 @@ void	init(t_prog *prog, char **av)
 	prog->scene->nb_bounces = DEFAULT_BOUNCE;
 	print_scene(prog->scene);
 	ft_printf("%sNo error has been found\n%s", GREEN, RESET);
+	prog->scene->vp_flags = DIFFUSE | AMBIENT | SPECULAR;
 }

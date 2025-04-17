@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/17 00:39:30 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/17 14:08:06 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct info
 
 typedef struct material
 {
+	char	*name;
 	t_vec3	albedo;
 
 	int		shyniness;
@@ -76,7 +77,6 @@ typedef struct sphere
 	double			radius;
 	t_mat			material;
 	uint			mat_idx;
-	struct sphere	*next;
 }	t_sphere;
 
 typedef struct plane
@@ -94,7 +94,7 @@ typedef struct cylinder
 	double	radius;
 	double	height;
 	t_mat	material;
-	uint			mat_idx;
+	uint	mat_idx;
 }	t_cylinder;
 
 /* ---------------------------------- SCENE --------------------------------- */
@@ -117,7 +117,7 @@ typedef struct s_scene
 
 	int				nb_bounces;
 
-	t_mat			materials[MAX_MAT];
+	t_mat			*materials;
 	short			vp_flags;
 	t_uint			frame_count;
 	t_uint			total_render_time;

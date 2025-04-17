@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:02 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/12 09:05:13 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/17 17:40:35 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,8 @@ int	main(int ac, char **av)
 	prog.scene = &scene;
 	prog.win_scene = &win_scene;
 	prog.win_button = &win_button;
-	init(&prog, av);
-	prog.scene->vp_flags = DIFFUSE | AMBIENT | SPECULAR;
-	create_mat(scene.materials);
+	init(&prog, av[1]);
+	// create_mat(scene.materials);
 	init_win(&prog);
 	free_all(&prog);
 	return (0);
