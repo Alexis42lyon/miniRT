@@ -6,12 +6,28 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 10:47:22 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/16 10:52:35 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/17 22:57:35 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include <stdio.h>
+
+void	print_material(t_mat material)
+{
+	printf("  Albedo:\t" CYAN "0x%x" RESET "\n",
+		vec_to_int(material.albedo));
+	printf("  Emission:\t" CYAN "%.2lf" RESET "\n",
+		material.emission_power);
+	printf("  Roughtness:\t" CYAN "%.2lf" RESET "\n",
+		material.roughtness);
+	printf("  Shyniness:\t" CYAN "%d" RESET "\n",
+		material.shyniness);
+	printf("  Specular:\t" CYAN "%.2lf" RESET "\n",
+		material.spec_coef);
+	printf("  Checker:\t" CYAN "%d" RESET "\n",
+		material.use_checker);
+}
 
 void	print_spheres(const t_scene *scene)
 {
@@ -29,8 +45,7 @@ void	print_spheres(const t_scene *scene)
 				scene->spheres[i].origin.z);
 			printf("  Diameter:\t" CYAN "%.2lf" RESET "\n",
 				scene->spheres[i].radius);
-			printf("  Color:\t" CYAN "0x%x" RESET "\n",
-				vec_to_int(scene->spheres[i].material.albedo));
+			print_material(scene->spheres[i].material);
 			i++;
 		}
 	}
@@ -53,8 +68,7 @@ void	print_planes(const t_scene *scene)
 			printf("  Normal:\t" BLUE "(%.2lf, %.2lf, %.2lf)" RESET "\n",
 				scene->planes[i].normal.x, scene->planes[i].normal.y,
 				scene->planes[i].normal.z);
-			printf("  Color:\t" CYAN "0x%x" RESET "\n",
-				vec_to_int(scene->planes[i].material.albedo));
+			print_material(scene->spheres[i].material);
 			i++;
 		}
 	}
@@ -81,8 +95,7 @@ void	print_cylinders(const t_scene *scene)
 				scene->cylinders[i].radius);
 			printf("Height:\t\t" CYAN "%.2lf" RESET "\n",
 				scene->cylinders[i].height);
-			printf("Color:\t\t" CYAN "0x%x" RESET "\n",
-				vec_to_int(scene->cylinders[i].material.albedo));
+			print_material(scene->spheres[i].material);
 			i++;
 		}
 	}
@@ -109,8 +122,7 @@ void	print_cones(const t_scene *scene)
 				scene->cones[i].radius);
 			printf("Height:\t\t" CYAN "%.2lf" RESET "\n",
 				scene->cones[i].height);
-			printf("Color:\t\t" CYAN "0x%x" RESET "\n",
-				vec_to_int(scene->cones[i].material.albedo));
+			print_material(scene->spheres[i].material);
 			i++;
 		}
 	}
