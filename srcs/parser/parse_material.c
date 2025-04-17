@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 10:00:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/17 23:55:13 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/17 23:59:19 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	fill_material(t_prog *prog, t_mat *mat, t_list *current)
 		tokens = (char **)current->content;
 		if (ft_arrlen(tokens) != 7)
 			print_exit(prog, "Invalid material format");
-		mat[i].name = ft_strdup(tokens[0]);
+		mat[i].name = tokens[0];
 		parse_color(prog, &mat[i].albedo, tokens[1]);
 		mat[i].emission_power = check_atof(prog, tokens[2]);
 		mat[i].roughtness = check_atof(prog, tokens[3]);
