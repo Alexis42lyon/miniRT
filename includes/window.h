@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/17 23:58:15 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/18 00:40:01 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # define SHOW_BUTTON 0
 # define SHOW_LOGGING 1
 
-# define WIDTH 10
-# define HEIGHT 10
+# define WIDTH 720
+# define HEIGHT 480
 
 /* ----------------------------------- MLX ---------------------------------- */
 

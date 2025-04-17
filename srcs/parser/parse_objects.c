@@ -6,14 +6,14 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:34 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/17 23:56:01 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/18 00:40:28 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "libft/vector.h"
 
-static int find_material_index(t_prog *prog, char *material_name)
+static int	find_material_index(t_prog *prog, char *material_name)
 {
 	uint	i;
 

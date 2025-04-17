@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 10:00:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/17 23:59:19 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/18 00:39:25 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ void	parse_color(t_prog *prog, t_vec3 *color, char *str);
 static void	fill_material(t_prog *prog, t_mat *mat, t_list *current)
 {
 	char	**tokens;
-	int		nb_id = prog->parser->nb_id;
+	int		i;
 
-	mat = malloc(sizeof(t_mat) * (nb_id));
-	if (!mat)
-		print_exit(prog, "Material allocation failed");
-	int i = 0;
+	check_mem((t_info){__FILE__, __LINE__, __func__},
+		malloc(sizeof(t_mat) * (prog->parser->nb_id)),
+		(void **)&mat, prog);
+	i = 0;
 	while (current)
 	{
 		tokens = (char **)current->content;
@@ -41,8 +41,6 @@ static void	fill_material(t_prog *prog, t_mat *mat, t_list *current)
 		i++;
 	}
 	prog->scene->materials = mat;
-	free_arr((void **)tokens);
-	tokens = NULL;
 }
 
 void	parse_material(t_prog *prog, t_parser *parser)
