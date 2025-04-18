@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:21:55 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/16 10:20:38 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/18 00:33:21 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,11 @@ void	free_parser(t_parser *parser)
 {
 	if (parser->is_free == false)
 	{
+		if (parser->fd_mat > 0)
+			close(parser->fd_mat);
 		if (parser->fd > 0)
 			close(parser->fd);
+		ft_lstclear(&parser->mat_chained, (void *)free_arr);
 		free(parser->line);
 		free_arr((void **)parser->tokens);
 		ft_lstclear(&parser->map, (void *)free_arr);
@@ -61,6 +64,7 @@ void	free_parser(t_parser *parser)
 
 void	free_all(t_prog *prog)
 {
+	free(prog->scene->materials);
 	free(prog->scene->lights);
 	free(prog->scene->spheres);
 	free(prog->scene->planes);

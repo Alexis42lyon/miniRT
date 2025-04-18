@@ -18,6 +18,7 @@ SRCS =	main.c					\
 		parse_utils.c			\
 		print_struct.c			\
 		print_struct_utils.c	\
+		parse_material.c		\
 		image.c					\
 		window.c				\
 		renderer.c				\
@@ -83,7 +84,7 @@ scene: all
 		./$(NAME) scenes/$(file).rt
 
 leaks: all
-		valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME) scenes/$(file).rt
+		valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=all ./$(NAME) scenes/$(file).rt
 
 clean:
 	rm -rf $(OBJ_DIR)
