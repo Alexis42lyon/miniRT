@@ -39,6 +39,7 @@ t_hit	hit_fail(void)
 		{0, 0, 0},
 		-1,
 		-1,
+		-1,
 		NONE,
 	});
 }

@@ -16,6 +16,7 @@
 # include "miniRT.h"
 # include <math.h>
 # include <pthread.h>
+#include <stddef.h>
 
 # define DEFAULT_EMMI_POWER 5
 # define DEFAULT_BOUNCE 3
@@ -55,6 +56,7 @@ typedef struct hit_info
 	double				distance;
 
 	size_t				obj_index;
+	size_t				mat_idx;
 	enum e_object_type	type;
 
 }	t_hit;

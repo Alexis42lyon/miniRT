@@ -58,13 +58,17 @@ t_hit	hit_succes(t_scene *scene, t_ray ray, t_hit hit)
 
 	type = hit.type;
 	if (type == SPHERE)
+	{
 		hit = hit_result(scene->spheres[hit.obj_index].origin,
 				ray, hit.distance, hit.obj_index);
+		hit.mat_idx = scene->spheres[hit.obj_index].mat_idx;
+	}
 	else if (type == PLANE)
 	{
 		hit = hit_result(scene->planes[hit.obj_index].origin,
 				ray, hit.distance, hit.obj_index);
 		hit.normal = scene->planes[hit.obj_index].normal;
+		hit.mat_idx = scene->planes[hit.obj_index].mat_idx;
 	}
 	else if (type == CYLINDER)
 	{
@@ -72,6 +76,7 @@ t_hit	hit_succes(t_scene *scene, t_ray ray, t_hit hit)
 				hit.distance, hit.obj_index);
 		hit.normal = cylinder_normal(scene->cylinders[hit.obj_index],
 				hit.point);
+		hit.mat_idx = scene->cylinders[hit.obj_index].mat_idx;
 	}
 	else if (type == CONE)
 	{
@@ -79,6 +84,7 @@ t_hit	hit_succes(t_scene *scene, t_ray ray, t_hit hit)
 				hit.distance, hit.obj_index);
 		hit.normal = cone_normal(scene->cones[hit.obj_index],
 				hit.point);
+		hit.mat_idx = scene->cones[hit.obj_index].mat_idx;
 	}
 	hit.type = type;
 	return (hit);

@@ -13,7 +13,6 @@
 #include "libft/math.h"
 #include "libft/vector.h"
 #include "miniRT.h"
-#include "mlx.h"
 #include "window.h"
 #include "raytracer.h"
 #include <limits.h>
@@ -29,7 +28,7 @@ t_viewport	viewport(t_win_scene *win, t_scene *scene)
 	vp.cam = &scene->camera;
 	vp.width = win->width;
 	vp.height = win->height;
-	vp.vp_height = 2 * tan(vp.cam->fov / 2 * 3.1415 / 180)
+	vp.vp_height = 2 * tan((float)vp.cam->fov / 2 * 3.1415 / 180)
 		* vp.cam->focal_length;
 	vp.vp_width = vp.vp_height * win->aspect_ratio;
 	vp.px_up_left = vec3_add(vp.cam->origin,
@@ -66,17 +65,7 @@ float	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 		*final_color = vec3_add(*final_color, sky_col);
 		return (0);
 	}
-	/*if (hit.type == SPHERE)
-		mat = scene->spheres[hit.obj_index].material;
-	else if (hit.type == PLANE)
-		mat = scene->planes[hit.obj_index].material;
-	else if (hit.type == CYLINDER)
-		mat = scene->cylinders[hit.obj_index].material;
-	else if (hit.type == CONE)
-		mat = scene->cones[hit.obj_index].material;
-	else
-	 mat = default_mat();*/
-	mat = scene->materials[hit.obj_index % MAX_MAT];
+	mat = scene->materials[hit.mat_idx];
 	if (mat.use_checker)
 		mat.albedo = checker_color(hit, mat);
 	if (mat.emission_power == 0)
