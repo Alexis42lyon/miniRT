@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:02 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/12 09:05:13 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:48:19 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "libft/vector.h"
-
+#include "texture.h"
 #include <sys/wait.h>
 
 void	create_mat(t_mat mats[MAX_MAT])
@@ -29,9 +29,9 @@ void	create_mat(t_mat mats[MAX_MAT])
 
 	mats[1].albedo = (t_vec3){0.5, 0.5, 0.5};
 	mats[1].emission_power = 0;
-	mats[1].roughtness = 0.03f;
-	mats[1].shyniness = 256;
-	mats[1].spec_coef = 0.8f;
+	mats[1].roughtness = 0.02f;
+	mats[1].shyniness = 1024;
+	mats[1].spec_coef = 1.8f;
 	mats[1].use_checker = 0;
 
 	mats[3].albedo = (t_vec3){1, 0, 0};
@@ -50,7 +50,7 @@ void	create_mat(t_mat mats[MAX_MAT])
 
 	mats[4].albedo = (t_vec3){0.0, 1, 0.5};
 	mats[4].emission_power = 0;
-	mats[4].roughtness = 0.1f;
+	mats[4].roughtness = 0.3f;
 	mats[4].shyniness = 256;
 	mats[4].spec_coef = 0.9f;
 	mats[4].use_checker = 0;
@@ -81,6 +81,9 @@ int	main(int ac, char **av)
 	prog.win_button = &win_button;
 	init(&prog, av);
 	prog.scene->vp_flags = DIFFUSE | AMBIENT | SPECULAR;
+	ppm_image("/home/mjuncker/github/Milestone04/miniRT/assets/map.ppm", &prog);
+	return (0);
+
 	create_mat(scene.materials);
 	init_win(&prog);
 	free_all(&prog);

@@ -15,7 +15,7 @@
 
 # include "miniRT.h"
 
-# define SHOW_SRUCT 1
+# define SHOW_SRUCT 0
 
 typedef struct s_parser
 {

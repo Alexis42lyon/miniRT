@@ -7,7 +7,7 @@ CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP $(INCLUDES) -g3
 MLXFLAGS = -lX11 -lXext -lbsd -lm
 
-VPATH = srcs:srcs/parser:srcs/renderer:srcs/camera
+VPATH = srcs:srcs/parser:srcs/renderer:srcs/camera:srcs/textures
 
 SRCS =	main.c					\
 		utils.c					\
@@ -38,6 +38,9 @@ SRCS =	main.c					\
 		denoising.c				\
 		input.c					\
 		checker.c				\
+		ppm_loader.c			\
+		ppm_header.c			\
+		ppm_utils.c				\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)

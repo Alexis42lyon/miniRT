@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   texture_parser.c                                   :+:      :+:    :+:   */
+/*   ppm_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/15 11:48:28 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/15 11:49:44 by mjuncker         ###   ########.fr       */
+/*   Created: 2025/04/17 12:29:14 by mjuncker          #+#    #+#             */
+/*   Updated: 2025/04/17 12:30:37 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <unistd.h>
+#include "texture.h"
+#include "libft/io.h"
 
-int parse_texture(char *path)
+void	print_ppm_header(t_ppm_header header, const char *name)
 {
-    int fd;
-
-    fd = open(path, O_RDONLY);
-    if (fd == -1)
-        return (-1);
-    return (0);
+	ft_printf(GRAY "%s header:\n", name);
+	ft_printf("\ttype:......%s\n", header.type);
+	ft_printf("\twidth:.....%u\n", header.width);
+	ft_printf("\theight:....%u\n", header.height);
+	ft_printf("\tvalues:....%u\n", header.max_values);
+	ft_printf(RESET "\n");
 }
+
+
