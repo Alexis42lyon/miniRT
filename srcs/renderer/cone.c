@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 12:38:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/16 09:56:14 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/20 11:39:54 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,13 +100,15 @@ double	cone_hit(void *p, t_ray ray)
 	double		params[3];
 	double		roots[2];
 	double		discriminant;
+	double		tmp;
 
 	co = (t_cylinder *)p;
 	solve_cone_eq(co, ray, params);
 	discriminant = params[1] * params[1] - 4 * params[0] * params[2];
 	if (discriminant < 0.0)
 		return (-1.0);
-	roots[0] = (-params[1] - sqrt(discriminant)) / (2 * params[0]);
-	roots[1] = (-params[1] + sqrt(discriminant)) / (2 * params[0]);
+	tmp = sqrt(discriminant);
+	roots[0] = (-params[1] - tmp) / (2 * params[0]);
+	roots[1] = (-params[1] + tmp) / (2 * params[0]);
 	return (process_inter(roots, co, ray));
 }

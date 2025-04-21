@@ -6,16 +6,17 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:34 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/18 00:40:28 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/20 11:35:59 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "libft/vector.h"
+#include <stdio.h>
 
 static int	find_material_index(t_prog *prog, char *material_name)
 {
-	uint	i;
+	unsigned int	i;
 
 	if (prog->scene->materials == NULL)
 		print_exit(prog, "No materials loaded");
@@ -26,7 +27,7 @@ static int	find_material_index(t_prog *prog, char *material_name)
 			return (i);
 		i++;
 	}
-	print_exit(prog, "material not found");
+	print_exit(prog, "Material not found");
 	return (-1);
 }
 
@@ -43,7 +44,7 @@ void	parse_cylinder(t_prog *prog, t_cylinder *cylinder, char **tokens)
 	cylinder->height = check_atof(prog, tokens[4]);
 	if (cylinder->height <= 0)
 		print_exit(prog, "Cylinder height must be positive");
-	cylinder->mat_idx = find_material_index(prog, tokens[3]);
+	cylinder->mat_idx = find_material_index(prog, tokens[5]);
 	cylinder->material = prog->scene->materials[cylinder->mat_idx];
 }
 

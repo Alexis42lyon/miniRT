@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/14 15:21:57 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/20 11:54:33 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	init_win(t_prog *prog)
 	win = prog->win_scene;
 	win->height = HEIGHT;
 	win->width = WIDTH;
+	win->half_width = HEIGHT / 2;
+	win->half_height = WIDTH / 2;
 	win->aspect_ratio = (float)WIDTH / (float)HEIGHT;
 	win->mlx_ptr = mlx_init();
 	if (!win->mlx_ptr)

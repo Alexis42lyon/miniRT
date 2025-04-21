@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:06 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 13:15:47 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/20 11:38:41 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ double	sphere_res(double a, double b, double disc)
 {
 	double	t1;
 	double	t2;
+	double	tmp;
 
 	if (disc < 0)
 		return (-1);
-	t1 = (-b - sqrt(disc)) / (2 * a);
-	t2 = (-b + sqrt(disc)) / (2 * a);
+	tmp = sqrt(disc);
+	t1 = (-b - tmp) / (2 * a);
+	t2 = (-b + tmp) / (2 * a);
 	if (t1 > 0)
 		return (t1);
 	return (t2);
