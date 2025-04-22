@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:15 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/20 11:53:43 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/22 14:46:21 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,12 @@ void	init(t_prog *prog, char *file)
 	parse_file(prog, prog->parser, file);
 	init_malloc(prog);
 	parse(prog, prog->parser, prog->scene, prog->parser->map);
-	free_parser(prog->parser);
+	// free_parser(prog->parser);
 	prog->scene->frame_count = 1;
 	prog->scene->nb_bounces = DEFAULT_BOUNCE;
 	print_scene(prog->scene);
 	ft_printf("%sNo error has been found\n%s", GREEN, RESET);
 	prog->scene->vp_flags = DIFFUSE | AMBIENT | SPECULAR;
+	prog->scene->denoise_enabled = true;
+	prog->scene->prev_accumulation_data = NULL;
 }
