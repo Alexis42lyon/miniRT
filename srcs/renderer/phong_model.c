@@ -6,11 +6,12 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:18:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/12 09:24:49 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/22 10:45:03 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytracer.h"
+#include "texture.h"
 
 /*
  * Diffuse = Kd * DOT(N, L) * Od * Ld
@@ -30,6 +31,7 @@ t_vec3	phong_diffuse(struct s_light_info info)
 	diffuse = vec3_multv(diffuse, info.light.material.albedo);
 	diffuse = vec3_mult(diffuse, info.light.ratio);
 	diffuse = vec3_mult(diffuse, info.attenuation);
+
 	return (vec3_clamp(diffuse, 0, 1));
 }
 

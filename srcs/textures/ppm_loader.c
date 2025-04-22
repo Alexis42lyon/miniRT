@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:47:10 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/17 13:57:33 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:16:31 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_ppm_image		ppm_image(char *path, t_prog *prog)
 	header_assert(img.header, prog);
 	img.values = parse_image(&img.header, fd, prog);
 	print_ppm_header(img.header, path);
-	ft_printf(GREEN "[SUCCESS]: %s is loaded\n" RESET, path);
+	ft_log(SUCCESS, "%s is loaded\n", path);
 	return (img);
 }
 

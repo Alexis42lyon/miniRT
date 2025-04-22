@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:46:23 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/20 11:17:57 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:17:29 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	reset_cam_orientation(t_camera *cam)
 
 void	print_cam(const t_camera *cam)
 {
-	ft_printf(GRAY "[LOG]: camera settings\n");
+	ft_log(LOG, "camera settings");
 	ft_printf("\torigin:");
 	print_vec(cam->origin);
 	ft_printf(RED "\tfoward:\t");

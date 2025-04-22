@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   renderer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/16 23:42:57 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/22 09:26:52 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ float	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 		return (0);
 	}
 	mat = scene->materials[hit.mat_idx];
-	if (hit.type == SPHERE)
+	if (0)
 	{
 		mat.use_checker = 0;
 		sp_coordinate_to_uv(hit.normal, &u, &v);

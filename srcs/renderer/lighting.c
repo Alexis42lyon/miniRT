@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/14 17:05:36 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/22 09:27:41 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	in_light(t_scene *scene, t_hit hit, t_vec3 light_dir)
 	float	u, v;
 
 	sp_coordinate_to_uv(hit.normal, &u, &v);
-	if (vec3_lenght_square(get_px(u, v, &scene->bump_map)) > 0.1)
-		return (0);
+	// if (vec3_lenght_square(get_px(u, v, &scene->bump_map)) > 0.1)
+	// 	return (0);
 
 	ray.origin =vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));
 	ray.dir = vec3_mult(light_dir, -1);

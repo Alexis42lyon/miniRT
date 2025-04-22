@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:33:51 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/22 09:06:03 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:17:55 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int mouse_down(int button, int x, int y, t_prog *prog)
 		mlx_mouse_get_pos(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr, &prog->scene->camera.last_x, &prog->scene->camera.last_y);
 		prog->scene->camera.movement_enable = 1;
 		prog->scene->nb_bounces = 1;
-		ft_printf(CYAN BOLD "[LOG]:" RESET CYAN "camera rotation enable\n");
+		ft_log(LOG, "camera rotation enable");
 	}
 	return (0);
 }
@@ -53,7 +53,7 @@ int mouse_up(int button, int x, int y, t_prog *prog)
 		mlx_mouse_show(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr);
 		prog->scene->nb_bounces = DEFAULT_BOUNCE;
 		prog->scene->camera.movement_enable = 0;
-		ft_printf(CYAN BOLD "[LOG]:" RESET CYAN "camera rotation disable\n");
+		ft_log(LOG, "camera rotation disable");
 	}
 	return (0);
 }

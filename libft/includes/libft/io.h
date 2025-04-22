@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:15:47 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 15:53:48 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/22 11:16:22 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # define CYAN		"\033[0;36m"
 # define WHITE		"\033[0;37m"
 # define GRAY		"\033[90m"
-
 // modifiers
 # define BOLD		"\033[1m"
 
@@ -46,6 +45,15 @@
 
 # define FD 1024
 
+typedef enum lvl_log
+{
+	LOG = 0,
+	SUCCESS,
+	WARNING,
+	ERROR,
+	ALERT,
+}	t_lvl_log;
+
 // debug.c
 void	success(const char *msg);
 void	warning(const char *msg);
@@ -64,6 +72,7 @@ int		ft_putaddr(long int nbr, char *base, int fd);
 // printf functions
 int		ft_printf(const char *s, ...);
 int		ft_dprintf(int fd, const char *s, ...);
+int		ft_log(const t_lvl_log log, const char *s, ...);
 
 // assestions
 void	print_error(const char *msg);
