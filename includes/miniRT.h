@@ -37,6 +37,24 @@ typedef struct s_parser		t_parser;
 typedef struct s_win_scene	t_win_scene;
 typedef struct s_win_button	t_win_button;
 
+typedef struct ppm_header
+{
+
+	char	type[2];
+
+	uint	width;
+	uint	height;
+
+	uint	max_values;
+
+}	t_ppm_header;
+
+typedef struct ppm_image
+{
+	t_ppm_header	header;
+	t_vec3			*values;
+
+}	t_ppm_image;
 typedef struct info
 {
 	const char	*file;
@@ -51,6 +69,8 @@ typedef struct material
 
 	int		shyniness;
 	float	roughtness;
+	float	metalic;
+
 	float	spec_coef;
 	float	emission_power;
 	bool	use_checker;
@@ -118,6 +138,8 @@ typedef struct s_scene
 	int				nb_bounces;
 
 	t_mat			*materials;
+	t_ppm_image		bump_map;
+
 	short			vp_flags;
 	t_uint			frame_count;
 	t_uint			total_render_time;

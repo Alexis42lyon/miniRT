@@ -33,31 +33,34 @@ t_ppm_header	invalid_header(void)
 			});
 }
 
-uint	get_next_value(char **line, int fd)
+uint	get_next_value(int fd)
 {
 	uint	val;
-	
-	if (*line == NULL)
-		return (-1);
-	while (is_whitespace((*line)[0]))
-		(*line)++;
-	if ((*line)[0] == '\n' || (*line)[0] == '#' || (*line)[0] == '\0')
+
+	int		nb_read;
+	char	c[1];
+
+	nb_read = read(fd, c, 1);
+	while (is_whitespace(c[0]) && nb_read != 0)
 	{
-		*line = ft_get_next_line(fd);
-		if (!line)
-			return (-1);
-		return (get_next_value(line, fd));
+		nb_read = read(fd, c, 1);
+
 	}
-	val = ft_atoi(*line);
-	if ((*line)[0] == '#')
+	if (c[0] == '#')
 	{
-		*line = ft_get_next_line(fd);
-		if (!line)
-			return (-1);
-		return (val);
+		while (c[0] != '\n' && nb_read != 0)
+		{
+			nb_read = read(fd, c, 1);
+		}
 	}
-	while (((*line)[0] >= '0' && (*line)[0] <= '9'))
-		(*line)++;
+
+	val = 0;
+	while ((c[0] >= '0' && c[0] <= '9') && nb_read != 0)
+	{
+		val *= 10;
+		val += c[0] - '0';
+		nb_read = read(fd, &c, 1);
+	}
 	return (val);
 }
 
@@ -77,20 +80,17 @@ int	header_assert(t_ppm_header header, t_prog *prog)
 t_ppm_header parse_header(int fd)
 {
 	t_ppm_header	header;
-	char			*line;
+	char			buff[2];
 
 	ft_bzero(&header, sizeof(t_ppm_header));
 
-	line = ft_get_next_line(fd);	
-	if (!line)
-		return (invalid_header());
-	header.type[0] = line[0];
-	header.type[1] = line[1];
-	line += 2;
-	header.width = get_next_value(&line, fd);
-	header.height = get_next_value(&line, fd);
-	header.max_values = get_next_value(&line, fd);
-    return (header);
+	read(fd, buff, 2);
+	header.type[0] = buff[0];
+	header.type[1] = buff[1];
+	header.width = get_next_value(fd);
+	header.height = get_next_value(fd);
+	header.max_values = get_next_value(fd);
+	return (header);
 }
 
 

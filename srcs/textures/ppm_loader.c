@@ -27,9 +27,9 @@ t_ppm_image		ppm_image(char *path, t_prog *prog)
 	fd = open(path, O_RDONLY);
 	img.header = parse_header(fd);
 	header_assert(img.header, prog);
-	print_ppm_header(img.header, path);
 	img.values = parse_image(&img.header, fd, prog);
-
+	print_ppm_header(img.header, path);
+	ft_printf(GREEN "[SUCCESS]: %s is loaded\n" RESET, path);
 	return (img);
 }
 
@@ -47,46 +47,24 @@ void	print_values(t_vec3* values, t_ppm_header *header)
 t_vec3	*parse_image(t_ppm_header *header, int fd, t_prog *prog)
 {
 	t_vec3	*values;
-	char	*line;
-	unsigned char	res;
+	unsigned char	buff[3];
 	uint		i = 0;
-	uint		j = 0;
+	int			nb_read;
 
 	values = malloc(header->width * header->height * sizeof(t_vec3));
 	if (!values)
 		print_exit(prog, "malloc failed");
 	
-	line = ft_get_next_line(fd);
-	if (!line)
-		print_exit(prog, "malloc failed");
-	res = line[i];
-	i++;
-	while (line && i < header->width * header->height)
+	nb_read = -1;
+	while (nb_read != 0)
 	{
-		if (line[i] == '\n')
-		{
-			line = ft_get_next_line(fd);
-		}
-		if (res > header->max_values)
-		{
-			free(values);
-			print_exit(prog, "overflow in ppm file");
-		}
-		if (j == 0)
-			values[i].x = res / (double)header->max_values;
-		else if (j == 1)
-			values[i - 1].y = res / (double)header->max_values;
-		else if (j == 2)
-			values[i - 2].z = res / (double)header->max_values;
-		j++;
-		j %= 3;
-		res = line[i++];
-		if (!line || line[i] == '\n')
-		{
-			line = ft_get_next_line(fd);
-		}
+		nb_read = read(fd, buff, 3);
+		if (nb_read == -1)
+			print_exit(prog, "read call failed");
+		values[i].x = (double)buff[0] / header->max_values;
+		values[i].y = (double)buff[1] / header->max_values;
+		values[i].z = (double)buff[2] / header->max_values;
+		i++;
 	}
-	print_values(values, header);
 	return (values);
-}
-
+}	

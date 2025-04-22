@@ -10,15 +10,53 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+ *
+ * ==164737== Invalid write of size 8
+==164737==    at 0x40D1BB: parse_image (ppm_loader.c:64)
+==164737==    by 0x40D0BD: ppm_image (ppm_loader.c:30)
+==164737==    by 0x402725: main (main.c:44)
+==164737==  Address 0x572bc40 is 0 bytes after a block of size 6,220,800 alloc'd
+==164737==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==164737==    by 0x40D133: parse_image (ppm_loader.c:54)
+==164737==    by 0x40D0BD: ppm_image (ppm_loader.c:30)
+==164737==    by 0x402725: main (main.c:44)
+==164737== 
+==164737== Invalid write of size 8
+==164737==    at 0x40D1E3: parse_image (ppm_loader.c:65)
+==164737==    by 0x40D0BD: ppm_image (ppm_loader.c:30)
+==164737==    by 0x402725: main (main.c:44)
+==164737==  Address 0x572bc48 is 8 bytes after a block of size 6,220,800 alloc'd
+==164737==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==164737==    by 0x40D133: parse_image (ppm_loader.c:54)
+==164737==    by 0x40D0BD: ppm_image (ppm_loader.c:30)
+==164737==    by 0x402725: main (main.c:44)
+==164737== 
+==164737== Invalid write of size 8
+==164737==    at 0x40D20F: parse_image (ppm_loader.c:66)
+==164737==    by 0x40D0BD: ppm_image (ppm_loader.c:30)
+==164737==    by 0x402725: main (main.c:44)
+==164737==  Address 0x572bc50 is 16 bytes after a block of size 6,220,800 alloc'd
+==164737==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==164737==    by 0x40D133: parse_image (ppm_loader.c:54)
+==164737==    by 0x40D0BD: ppm_image (ppm_loader.c:30)
+==164737==    by 0x402725: main (main.c:44)
+==164737== 
+ * */
+
 #include "libft/math.h"
+#include "libft/string.h"
 #include "libft/vector.h"
 #include "miniRT.h"
+#include "texture.h"
 #include "window.h"
 #include "raytracer.h"
+#include <inttypes.h>
 #include <limits.h>
 #include <stdio.h>
 #include <time.h>
 #include <pthread.h>
+#include <unistd.h>
 
 t_viewport	viewport(t_win_scene *win, t_scene *scene)
 {
@@ -50,8 +88,9 @@ float	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 	t_hit	hit;
 	t_mat	mat;
 	float	new_mult;
+	float u, v;
 
-	new_mult = 0.5f;
+	new_mult = 0.7f;
 	hit = trace_ray(*ray, scene);
 	if (hit.distance == -1)
 	{
@@ -66,13 +105,19 @@ float	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 		return (0);
 	}
 	mat = scene->materials[hit.mat_idx];
+	if (hit.type == SPHERE)
+	{
+		mat.use_checker = 0;
+		sp_coordinate_to_uv(hit.normal, &u, &v);
+		mat.albedo = get_px(u, v, &scene->bump_map);
+	}
 	if (mat.use_checker)
 		mat.albedo = checker_color(hit, mat);
 	if (mat.emission_power == 0)
 		*final_color = phong_shading(scene, hit, mat, *ray);
 	else
 	{
-		new_mult = mat.emission_power;
+		new_mult += mat.emission_power;
 		*final_color = mat.albedo;
 	}
 	ray->origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));

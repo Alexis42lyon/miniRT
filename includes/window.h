@@ -17,7 +17,7 @@
 # include <mlx.h>
 
 # define SHOW_BUTTON 0
-# define SHOW_LOGGING 1
+# define SHOW_LOGGING 0
 
 # define WIDTH 720
 # define HEIGHT 480

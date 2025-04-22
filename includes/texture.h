@@ -13,30 +13,11 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include "libft/vector.h"
-#include "miniRT.h"
+# include "libft/vector.h"
+# include "miniRT.h"
 
 # include <stdint.h>
-#include <sys/types.h>
-
-typedef struct ppm_header
-{
-
-	char	type[2];
-
-	uint	width;
-	uint	height;
-
-	uint	max_values;
-
-}	t_ppm_header;
-
-typedef struct ppm_image
-{
-	t_ppm_header	header;
-	t_vec3			*values;
-
-}	t_ppm_image;
+# include <sys/types.h>
 
 t_ppm_header	parse_header(int fd);
 int				header_assert(t_ppm_header header, t_prog *prog);
@@ -44,8 +25,7 @@ int				header_assert(t_ppm_header header, t_prog *prog);
 t_vec3			*parse_image(t_ppm_header *header, int fd, t_prog *prog);
 t_ppm_image		ppm_image(char *path, t_prog *prog);
 
-t_ppm_header	get_px(int x, int y, t_ppm_image *image);
+t_vec3	get_px(float u, float v, t_ppm_image *image);
 void			print_ppm_header(t_ppm_header header, const char *name);
-uint				get_next_value(char **line, int fd);
 
 #endif // !TEXTURE_H

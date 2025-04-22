@@ -18,8 +18,8 @@
 # include <pthread.h>
 #include <stddef.h>
 
-# define DEFAULT_EMMI_POWER 5
-# define DEFAULT_BOUNCE 3
+# define DEFAULT_EMMI_POWER 1
+# define DEFAULT_BOUNCE 10
 
 # define SPECULAR 0b0100
 # define DIFFUSE 0b0010
@@ -30,7 +30,7 @@
 
 # define MAX_TRHEAD 8
 
-# define LIGHT_RANGE 5
+# define LIGHT_RANGE 50
 
 enum	e_object_type
 {
@@ -139,6 +139,7 @@ t_viewport	viewport(t_win_scene *win, t_scene *scene);
 double		sphere_hit(void *p_sphere, const t_ray ray);
 t_hit		hit_result(const t_vec3 origin, const t_ray r, const double t,
 				const size_t idx);
+void	sp_coordinate_to_uv(t_vec3 normal, float *u, float *v);
 
 // place.c
 double		plane_hit(void *p_plane, const t_ray ray);
