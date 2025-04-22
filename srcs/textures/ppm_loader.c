@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:47:10 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/22 12:16:31 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/22 12:59:03 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,12 @@ t_ppm_image		ppm_image(char *path, t_prog *prog)
 	fd = open(path, O_RDONLY);
 	img.header = parse_header(fd);
 	header_assert(img.header, prog);
-	img.values = parse_image(&img.header, fd, prog);
+	img.values = parse_image(&img.header, fd);
+	close(fd);
+	if (img.values == NULL)
+		print_exit(prog, "image parsing failed");
 	print_ppm_header(img.header, path);
-	ft_log(SUCCESS, "%s is loaded\n", path);
+	ft_log(SUCCESS, "%s is loaded", path);
 	return (img);
 }
 
@@ -44,23 +47,27 @@ void	print_values(t_vec3* values, t_ppm_header *header)
 	}
 }
 
-t_vec3	*parse_image(t_ppm_header *header, int fd, t_prog *prog)
+t_vec3	*parse_image(t_ppm_header *header, int fd)
 {
 	t_vec3	*values;
 	unsigned char	buff[3];
-	uint		i = 0;
+	int		i = 0;
 	int			nb_read;
 
-	values = malloc(header->width * header->height * sizeof(t_vec3));
+	values = malloc(((header->width * header->height) + 2) * sizeof(t_vec3));
 	if (!values)
-		print_exit(prog, "malloc failed");
-	
+		return (NULL);
 	nb_read = -1;
 	while (nb_read != 0)
 	{
 		nb_read = read(fd, buff, 3);
 		if (nb_read == -1)
-			print_exit(prog, "read call failed");
+		{
+			free(values);
+			return (NULL);
+		}
+		if (nb_read != 3)
+			break ;
 		values[i].x = (double)buff[0] / header->max_values;
 		values[i].y = (double)buff[1] / header->max_values;
 		values[i].z = (double)buff[2] / header->max_values;

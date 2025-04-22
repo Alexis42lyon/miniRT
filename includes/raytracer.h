@@ -30,7 +30,7 @@
 
 # define MAX_TRHEAD 8
 
-# define LIGHT_RANGE 50
+# define LIGHT_RANGE 10
 
 enum	e_object_type
 {

@@ -12,7 +12,6 @@
 
 #include "camera.h"
 #include "libft/io.h"
-#include <math.h>
 #include "window.h"
 
 t_camera	new_camera(t_vec3 origin, t_vec3 forward, int fov)
@@ -29,6 +28,8 @@ t_camera	new_camera(t_vec3 origin, t_vec3 forward, int fov)
 	cam.move_speed = 10;
 	cam.focal_length = 1.0f;
 	cam.sensibility = 0.2f;
+	cam.last_x = 0;
+	cam.last_y = 0;
 	return (cam);
 }
 
@@ -64,10 +65,8 @@ void	update_cam(t_prog *prog)
 		cam->origin = vec3_add(cam->origin, vec3_mult(cam->up, -0.1));
 
 	reset_accumulation(prog);
-		mlx_mouse_move(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr, prog->win_scene->half_width, prog->win_scene->half_height);
+	mlx_mouse_move(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr, cam->last_x, cam->last_y);
 	mlx_mouse_get_pos(win->mlx_ptr, win->win_ptr, &x, &y);
-	cam->last_x = x;
-	cam->last_y = y;
 }
 
 void	reset_cam_orientation(t_camera *cam)

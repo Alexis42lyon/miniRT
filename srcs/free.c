@@ -70,6 +70,7 @@ void	free_all(t_prog *prog)
 	free(prog->scene->planes);
 	free(prog->scene->cylinders);
 	free(prog->scene->cones);
+	free(prog->scene->bump_map.values);
 	free_parser(prog->parser);
 	if (prog->win_button->win_ptr)
 		mlx_destroy_window(prog->win_button->mlx_ptr,

@@ -35,8 +35,6 @@ int mouse_down(int button, int x, int y, t_prog *prog)
 	if (button == 3)
 	{
 		prog->scene->vp_flags = AMBIENT;
-		mlx_mouse_move(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr, prog->win_scene->half_width, prog->win_scene->half_height);
-		mlx_mouse_hide(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr);
 		mlx_mouse_get_pos(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr, &prog->scene->camera.last_x, &prog->scene->camera.last_y);
 		prog->scene->camera.movement_enable = 1;
 		prog->scene->nb_bounces = 1;
@@ -50,7 +48,7 @@ int mouse_up(int button, int x, int y, t_prog *prog)
 	(void)y;
 	if (button == 3)
 	{
-		mlx_mouse_show(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr);
+		prog->scene->vp_flags = AMBIENT | SPECULAR | DIFFUSE;
 		prog->scene->nb_bounces = DEFAULT_BOUNCE;
 		prog->scene->camera.movement_enable = 0;
 		ft_log(LOG, "camera rotation disable");

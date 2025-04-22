@@ -22,7 +22,7 @@
 t_ppm_header	parse_header(int fd);
 int				header_assert(t_ppm_header header, t_prog *prog);
 
-t_vec3			*parse_image(t_ppm_header *header, int fd, t_prog *prog);
+t_vec3			*parse_image(t_ppm_header *header, int fd);
 t_ppm_image		ppm_image(char *path, t_prog *prog);
 
 t_vec3	get_px(float u, float v, t_ppm_image *image);
