@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/18 00:40:01 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/21 21:09:10 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef struct s_win_scene
 	char	*name;
 	int		width;
 	int		height;
+	int		half_width;
+	int		half_height;
 
 	int		view_width;
 	int		view_height;

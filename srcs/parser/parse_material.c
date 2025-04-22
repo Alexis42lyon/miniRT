@@ -6,15 +6,13 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 10:00:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/18 00:39:25 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/21 20:44:58 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "parser.h"
 #include <fcntl.h>
-
-void	parse_color(t_prog *prog, t_vec3 *color, char *str);
 
 static void	fill_material(t_prog *prog, t_mat *mat, t_list *current)
 {
@@ -47,9 +45,9 @@ void	parse_material(t_prog *prog, t_parser *parser)
 {
 	t_list	*new_node;
 
-	parser->fd_mat = open("scenes/material.rt", O_RDONLY);
+	parser->fd_mat = open(MATERIAL_FILE, O_RDONLY);
 	if (parser->fd_mat == -1)
-		print_exit(prog, "material.rt not found");
+		print_exit(prog, "material file not found");
 	parser->line = ft_get_next_line(parser->fd_mat);
 	while (parser->line)
 	{

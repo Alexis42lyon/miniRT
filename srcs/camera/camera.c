@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:46:23 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/14 16:33:45 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/20 11:17:57 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,18 @@ void	update_cam(t_prog *prog)
 	int			y;
 	t_camera	*cam;
 	t_win_scene	*win;
-	
+	static const float	test = 3.1415 / 180.0f;
+
 	cam = &prog->scene->camera;
 	win = prog->win_scene;
 	if (!cam->movement_enable)
 		return ;
 	mlx_mouse_get_pos(win->mlx_ptr, win->win_ptr, &x, &y);
-	turn_yaw(cam, ((cam->last_x - x) * cam->sensibility) * (3.1415 / 180.0f));
+	turn_yaw(cam, ((cam->last_x - x) * cam->sensibility) * (test));
 	if (cam->forward.z < 0)
-		turn_pitch(cam, ((cam->last_y - y) * cam->sensibility) * (3.1415 / 180.0f));
+		turn_pitch(cam, ((cam->last_y - y) * cam->sensibility) * (test));
 	else
-		turn_pitch(cam, ((cam->last_y - y) * -cam->sensibility) * (3.1415 / 180.0f));
+		turn_pitch(cam, ((cam->last_y - y) * -cam->sensibility) * (test));
 	if (cam->movekeys & MOVE_FORWARD)
 		cam->origin = vec3_add(cam->origin, vec3_mult(cam->forward, 0.1));
 	if (cam->movekeys & MOVE_BACKWARD)
@@ -63,7 +64,7 @@ void	update_cam(t_prog *prog)
 		cam->origin = vec3_add(cam->origin, vec3_mult(cam->up, -0.1));
 
 	reset_accumulation(prog);
-		mlx_mouse_move(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr, WIDTH / 2, HEIGHT / 2);
+		mlx_mouse_move(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr, prog->win_scene->half_width, prog->win_scene->half_height);
 	mlx_mouse_get_pos(win->mlx_ptr, win->win_ptr, &x, &y);
 	cam->last_x = x;
 	cam->last_y = y;

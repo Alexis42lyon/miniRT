@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:33:51 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/17 00:40:49 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/22 09:06:03 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int mouse_down(int button, int x, int y, t_prog *prog)
 	prog->scene->camera.fov = ft_clamp(prog->scene->camera.fov, 0, 180);
 	if (button == 3)
 	{
-		mlx_mouse_move(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr, WIDTH / 2, HEIGHT / 2);
+		prog->scene->vp_flags = AMBIENT;
+		mlx_mouse_move(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr, prog->win_scene->half_width, prog->win_scene->half_height);
 		mlx_mouse_hide(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr);
 		mlx_mouse_get_pos(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr, &prog->scene->camera.last_x, &prog->scene->camera.last_y);
 		prog->scene->camera.movement_enable = 1;
@@ -93,15 +94,12 @@ int key_down(int keycode, t_prog *prog)
 		prog->win_scene->paused = !prog->win_scene->paused;
 		if (prog->win_scene->paused == 1)
 		{
-			// anti_aliaser(prog, prog->win_scene);
 			denoiser(prog, prog->win_scene);
+			anti_aliaser(prog, prog->win_scene);
 			mlx_put_image_to_window(prog->win_scene->mlx_ptr,
 								  prog->win_scene->win_ptr,
 								  prog->win_scene->img.img, 0, 0);
-		}
-		else
-		{
-			reset_accumulation(prog);
+			ft_printf("Denoising done\n");
 		}
 	}
 	else if (keycode == 'x')

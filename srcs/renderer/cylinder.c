@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:34:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/16 11:23:13 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/21 20:40:44 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ static void	solve_cylinder_eq(double abc[3], double roots[2])
 {
 	double	discriminant;
 	double	q;
+	double	tmp;
 
 	discriminant = abc[1] * abc[1] - 4 * abc[0] * abc[2];
 	if (discriminant < 0)
@@ -99,10 +100,11 @@ static void	solve_cylinder_eq(double abc[3], double roots[2])
 		roots[1] = INFINITY;
 		return ;
 	}
+	tmp = sqrt(discriminant);
 	if (abc[1] > 0)
-		q = -0.5 * (abc[1] + sqrt(discriminant));
+		q = -0.5 * (abc[1] + tmp);
 	else
-		q = -0.5 * (abc[1] - sqrt(discriminant));
+		q = -0.5 * (abc[1] - tmp);
 	roots[0] = q / abc[0];
 	roots[1] = abc[2] / q;
 }

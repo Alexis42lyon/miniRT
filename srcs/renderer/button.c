@@ -46,11 +46,11 @@ int	handle_click(int button, int x, int y, t_prog *prog)
 	{
 		if (x >= win->slider_x - 5 && x <= win->slider_x + 5
 			&& y >= 75 && y <= 90)
-			win->is_dragging = 1;
-		else if (x >= 20 && x <= 120 && y >= 20 && y <= 50)
 		{
-			run_pipeline(prog);
-			print_scene(prog->scene);
+			win->is_dragging = 1;
+			mlx_clear_window(win->mlx_ptr, win->win_ptr);
+			usleep(100000);
+			new_frame(prog);
 		}
 	}
 	return (0);

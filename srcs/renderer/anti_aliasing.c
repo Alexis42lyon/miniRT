@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 17:01:58 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/16 19:05:21 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/21 21:44:16 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,90 +15,75 @@
 #include <math.h>
 #include <stdlib.h>
 
-static float	get_luminance(int color)
+static t_vec3	vec3_scale(t_vec3 v, float s)
 {
-	return (0.299f * ((color >> 16) & 0xFF) + 0.587f
-		* ((color >> 8) & 0xFF) + 0.114f
-		* (color & 0xFF));
+	return ((t_vec3){v.x * s, v.y * s, v.z * s});
 }
 
-static int	blend_pixels(int x, int y, int *buffer, int width, int height)
+static t_vec3	bilinear_sample(t_vec3 *buffer, int width, int height, float u, float v)
 {
-	t_vec3i	color;
-	int		count;
-	int		dy;
-	int		dx;
-	int		nx;
-	int		ny;
-	int		pixel;
-
-	color = (t_vec3i){0, 0, 0};
-	count = 0;
-	dy = -1;
-	while (dy <= 1)
-	{
-		dx = -1;
-		while (dx <= 1)
-		{
-			nx = x + dx;
-			ny = y + dy;
-			if (nx >= 0 && nx < width && ny >= 0 && ny < height)
-			{
-				pixel = buffer[ny * width + nx];
-				color.x += (pixel >> 16) & 0xFF;
-				color.y += (pixel >> 8) & 0xFF;
-				color.z += pixel & 0xFF;
-				count++;
-			}
-			dx++;
-		}
-		dy++;
-	}
-	return (((color.x / count) << 16)
-		| ((color.y / count) << 8)
-		| (color.z / count));
+	int		x0 = (int)fmax(0, fmin(u, width - 1));
+	int		y0 = (int)fmax(0, fmin(v, height - 1));
+	int		x1 = fmin(x0 + 1, width - 1);
+	int		y1 = fmin(y0 + 1, height - 1);
+	float	dx = u - x0;
+	float	dy = v - y0;
+	t_vec3	c00 = buffer[y0 * width + x0];
+	t_vec3	c10 = buffer[y0 * width + x1];
+	t_vec3	c01 = buffer[y1 * width + x0];
+	t_vec3	c11 = buffer[y1 * width + x1];
+	t_vec3	c0 = vec3_add(vec3_scale(c00, 1 - dx), vec3_scale(c10, dx));
+	t_vec3	c1 = vec3_add(vec3_scale(c01, 1 - dx), vec3_scale(c11, dx));
+	return (vec3_add(vec3_scale(c0, 1 - dy), vec3_scale(c1, dy)));
 }
 
-void	anti_aliaser(t_prog *prog, t_viewport *vp, t_win_scene *win)
+void	anti_aliaser(t_prog *prog, t_win_scene *win)
 {
-	int		*img_data;
-	int		*buffer;
-	float	luma_diff;
-	int		y;
-	int		x;
-	int		dy;
-	int		dx;
+	const int	w = win->width;
+	const int	h = win->height;
+	t_vec3		*src;
+	t_vec3		*dst;
+	t_data		*img = &win->img;
 
-	img_data = (int *)mlx_get_data_addr(win->img.img, &win->img.bits_per_pixel,
-			&win->img.line_length, &win->img.endian);
 	check_mem((t_info){__FILE__, __LINE__, __func__},
-		malloc(vp->width * vp->height * sizeof(int)),
-		(void **)&buffer, prog);
-	ft_memcpy(buffer, img_data, vp->width * vp->height * sizeof(int));
-	y = 0;
-	while (++y < vp->height - 1)
+		malloc(w * h * sizeof(t_vec3)),
+		(void **)&src, prog);
+	check_mem((t_info){__FILE__, __LINE__, __func__},
+		malloc(w * h * sizeof(t_vec3)),
+		(void **)&dst, prog);
+	for (int y = 0; y < h; y++)
 	{
-		x = 0;
-		while (++x < vp->width - 1)
+		for (int x = 0; x < w; x++)
 		{
-			luma_diff = 0.0f;
-			dy = -2;
-			while (++dy <= 1)
+			int		color = *(int *)(img->addr + y * img->line_length + x * (img->bits_per_pixel / 8));
+			src[y * w + x] = int_to_vec(color);
+		}
+	}
+	for (int y = 0; y < h; y++)
+	{
+		for (int x = 0; x < w; x++)
+		{
+			t_vec3	sum = {0};
+			for (float i = 0.125f; i < 1.0f; i += 0.25f)
 			{
-				dx = -2;
-				while (++dx <= 1)
+				for (float j = 0.125f; j < 1.0f; j += 0.25f)
 				{
-					if (dx == 0 && dy == 0)
-						continue ;
-					luma_diff += fabs(get_luminance(buffer[y * vp->width + x])
-							- get_luminance(buffer[(y + dy)
-								* vp->width + (x + dx)]));
+					float	u = x + i;
+					float	v = y + j;
+					sum = vec3_add(sum, bilinear_sample(src, w, h, u, v));
 				}
 			}
-			if (luma_diff > 0.12f)
-				img_data[y * vp->width + x] = blend_pixels(x, y, buffer,
-						vp->width, vp->height);
+			dst[y * w + x] = vec3_scale(sum, 1.0f / 16.0f);
 		}
 	}
-	free(buffer);
+	for (int y = 0; y < h; y++)
+	{
+		for (int x = 0; x < w; x++)
+		{
+			int	color = vec_to_int(dst[y * w + x]);
+			*(int *)(img->addr + y * img->line_length + x * (img->bits_per_pixel / 8)) = color;
+		}
+	}
+	free(src);
+	free(dst);
 }
