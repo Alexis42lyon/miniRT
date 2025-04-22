@@ -86,6 +86,9 @@ scene: all
 leaks: all
 		valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=all ./$(NAME) scenes/$(file).rt
 
+callgrind: all
+		valgrind --tool=callgrind --dump-instr=yes --collect-jumps=yes --callgrind-out-file=result.out  ./miniRT scenes/scene1.rt
+
 clean:
 	rm -rf $(OBJ_DIR)
 	$(MAKE) -C libft clean > /dev/null 2>&1

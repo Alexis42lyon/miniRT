@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:02 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/18 08:41:54 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/22 09:11:37 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(int ac, char **av)
 	prog.win_scene = &win_scene;
 	prog.win_button = &win_button;
 	init(&prog, av[1]);
-	prog.scene->bump_map = ppm_image("/home/mjuncker/github/Milestone04/miniRT/assets/earth.ppm", &prog);
+	prog.scene->bump_map = ppm_image("./assets/earth.ppm", &prog);
 	init_win(&prog);
 	free_all(&prog);
 	return (0);
