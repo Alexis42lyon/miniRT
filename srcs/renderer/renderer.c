@@ -88,7 +88,6 @@ float	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 	t_hit	hit;
 	t_mat	mat;
 	float	new_mult;
-	float u, v;
 
 	new_mult = 0.7f;
 	hit = trace_ray(*ray, scene);
@@ -105,11 +104,12 @@ float	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 		return (0);
 	}
 	mat = scene->materials[hit.mat_idx];
-	if (0)
+	float u, v;
+	if (hit.type == SPHERE && ft_strcmp(mat.name, "earth") == 0)
 	{
 		mat.use_checker = 0;
 		sp_coordinate_to_uv(hit.normal, &u, &v);
-		mat.albedo = get_px(u, v, &scene->bump_map);
+		mat.albedo = get_px(u, v, &scene->texture);
 	}
 	if (mat.use_checker)
 		mat.albedo = checker_color(hit, mat);

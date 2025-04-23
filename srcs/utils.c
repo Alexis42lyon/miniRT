@@ -10,14 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
+#include "libft/io.h"
 #include "window.h"
 #include "miniRT.h"
-#include "parser.h"
 #include <stdio.h>
 
 void	reset_accumulation(t_prog *prog)
 {
+	if (prog->scene->frame_count > 2)
+		ft_log(WARNING, "accumulation restarting");
 	ft_bzero(prog->win_scene->accumulation_data,
 		prog->win_scene->height * prog->win_scene->width * sizeof(t_vec3));
 	prog->scene->frame_count = 1;

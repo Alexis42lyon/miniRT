@@ -10,8 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "miniRT.h"
 #include "raytracer.h"
 #include "window.h"
+#include <stdlib.h>
 #include <sys/time.h>
 
 static long	get_current_time_ms(void)
@@ -45,22 +47,13 @@ void	display_frame(t_win_scene *win, t_scene *scene)
 	scene->frame_count++;
 }
 
-#if SHOW_LOGGING
-
 void	show_stats(t_prog *prog)
 {
-	ft_printf("\nframe " CYAN BOLD "%d" RESET
-		" render in" CYAN BOLD " %ums\n" RESET, prog->scene->frame_count -1, prog->scene->total_render_time / prog->scene->frame_count -1);
+	if ((prog->scene->vp_flags & SHOW_FRAME) == 0)
+		return ;
+	ft_log(LOG, "frame " CYAN BOLD "%d" RESET
+		" render in" CYAN BOLD " %ums" RESET, prog->scene->frame_count -1, prog->scene->total_render_time / prog->scene->frame_count -1);
 }
-
-#else
-
-void	show_stats(t_prog *prog)
-{
-	(void)prog;
-}
-
-#endif
 
 int	new_frame(t_prog *prog)
 {

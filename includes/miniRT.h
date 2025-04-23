@@ -138,9 +138,11 @@ typedef struct s_scene
 	int				nb_bounces;
 
 	t_mat			*materials;
-	t_ppm_image		bump_map;
 
-	short			vp_flags;
+	t_ppm_image		bump_map;
+	t_ppm_image		texture;
+
+	int				vp_flags;
 	t_uint			frame_count;
 	t_uint			total_render_time;
 	t_uint			min_render_time;

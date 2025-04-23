@@ -107,6 +107,4 @@ void	init(t_prog *prog, char *file)
 	print_scene(prog->scene);
 	ft_printf("%sNo error has been found\n%s", GREEN, RESET);
 	prog->scene->vp_flags = DIFFUSE | AMBIENT | SPECULAR;
-	prog->scene->denoise_enabled = true;
-	prog->scene->prev_accumulation_data = NULL;
 }

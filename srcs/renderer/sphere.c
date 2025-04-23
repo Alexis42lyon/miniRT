@@ -17,11 +17,8 @@
 
 void	sp_coordinate_to_uv(t_vec3 normal, float *u, float *v)
 {
-	// print_vec(normal);
-	normal = vec3_mult(normal, -1);
-	*u = 0.5 + (atan2(normal.z, normal.x) / (2 * 3.1415926535)) ;
-	*v = 0.5 + (asin(normal.y) / 3.1415926535) ;
-	// printf("u:%f, v:%f\n", *u, *v);
+	*u = 0.5 - (atan2(normal.z, normal.x) / (2 * 3.1415926535)) ;
+	*v = 0.5 - (asin(normal.y) / 3.1415926535);
 }
 
 // TODO: when type == PLANE origin is often 0,0,0
