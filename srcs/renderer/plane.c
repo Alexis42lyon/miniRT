@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:17:10 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/23 11:35:07 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:22:49 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ double	plane_hit(void *p_plane, const t_ray ray)
 
 	plane = (t_plane *)p_plane;
 	denominator = ft_dot(plane->normal, ray.dir);
-	if (fabs(denominator) < 1e-4)
-		return (-1);
+	if (fabs(denominator) < 1e-6)
+		return (-1.0);
 	oc = vec3_sub(plane->origin, ray.origin);
 	res = ft_dot(oc, plane->normal) / denominator;
 	if (res >= 1e-3)

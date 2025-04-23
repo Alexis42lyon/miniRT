@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/23 13:28:04 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:26:35 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ typedef struct light
 	t_vec3			origin;
 	double			ratio;
 	t_mat			material;
-	uint			mat_idx;
+	int				mat_idx;
 }	t_light_source;
 
 typedef struct sphere
@@ -99,14 +99,14 @@ typedef struct sphere
 	t_vec3			origin;
 	double			radius;
 	t_mat			material;
-	uint			mat_idx;
+	int				mat_idx;
 }	t_sphere;
 
 typedef struct plane
 {
 	t_vec3			origin;
 	t_vec3			normal;
-	uint			mat_idx;
+	int				mat_idx;
 	t_mat			material;
 }	t_plane;
 
@@ -117,7 +117,7 @@ typedef struct cylinder
 	double	radius;
 	double	height;
 	t_mat	material;
-	uint	mat_idx;
+	int		mat_idx;
 }	t_cylinder;
 
 /* ---------------------------------- SCENE --------------------------------- */
