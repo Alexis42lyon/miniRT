@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:42:03 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/18 09:52:11 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/23 14:25:53 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	print_spheres(const t_scene *scene);
 void	print_planes(const t_scene *scene);
 void	print_cylinders(const t_scene *scene);
 void	print_cones(const t_scene *scene);
+
+int	find_material_index(t_prog *prog, char *material_name);
 
 // renderer/colors.c
 t_uint	vec_to_int(const t_vec3 color);
