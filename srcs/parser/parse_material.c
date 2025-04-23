@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 10:00:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/23 13:27:49 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:49:21 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static void	fill_material(t_prog *prog, t_mat *mat, t_list *current)
 		mat[i].shyniness = check_atof(prog, tokens[4]);
 		mat[i].spec_coef = check_atof(prog, tokens[5]);
 		mat[i].use_checker = (bool)check_atof(prog, tokens[6]);
-		mat[i].normal_map = ppm_image(tokens[7], prog);
-		mat[i].texture_map = ppm_image(tokens[8], prog);
+		mat[i].texture_map = ppm_image(tokens[7], prog);
+		mat[i].normal_map = ppm_image(tokens[8], prog);
 		current = current->next;
 		i++;
 	}
