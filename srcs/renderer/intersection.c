@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:01:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/23 11:27:33 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/23 12:50:45 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_hit	hit_succes(t_scene *scene, t_ray ray, t_hit hit)
 	}
 	else if (type == PLANE)
 	{
-		hit = hit_result(scene->cylinders[hit.obj_index].origin, ray,
+		hit = hit_result(scene->planes[hit.obj_index].origin, ray,
 			hit.distance, hit.obj_index);
 		if (ft_dot(ray.dir, scene->planes[hit.obj_index].normal) > 0)
 			scene->planes[hit.obj_index].normal = vec3_mult(scene->planes[hit.obj_index].normal, -1.0);

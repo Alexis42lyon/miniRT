@@ -6,27 +6,29 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 10:00:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/21 20:44:58 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/23 12:38:16 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "parser.h"
 #include <fcntl.h>
+#include "texture.h"
 
 static void	fill_material(t_prog *prog, t_mat *mat, t_list *current)
 {
 	char	**tokens;
 	int		i;
 
+	prog->parser->tokens = NULL;
 	check_mem((t_info){__FILE__, __LINE__, __func__},
-		malloc(sizeof(t_mat) * (prog->parser->nb_id)),
+		malloc(sizeof(t_mat) * (prog->parser->nb_id + 1)),
 		(void **)&mat, prog);
 	i = 0;
 	while (current)
 	{
 		tokens = (char **)current->content;
-		if (ft_arrlen(tokens) != 7)
+		if (ft_arrlen(tokens) != 9)
 			print_exit(prog, "Invalid material format");
 		mat[i].name = tokens[0];
 		parse_color(prog, &mat[i].albedo, tokens[1]);
@@ -35,6 +37,14 @@ static void	fill_material(t_prog *prog, t_mat *mat, t_list *current)
 		mat[i].shyniness = check_atof(prog, tokens[4]);
 		mat[i].spec_coef = check_atof(prog, tokens[5]);
 		mat[i].use_checker = (bool)check_atof(prog, tokens[6]);
+		if (ft_strcmp(tokens[7], "#"))
+			*mat[i].normal_map = ppm_image(tokens[7], prog);
+		else
+			mat[i].normal_map = NULL;
+		if (ft_strcmp(tokens[7], "#"))
+			*mat[i].texture_map = ppm_image(tokens[8], prog);
+		else
+			mat[i].normal_map = NULL;
 		current = current->next;
 		i++;
 	}

@@ -3,46 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   renderer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/22 12:49:43 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/23 12:44:08 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
- *
- * ==164737== Invalid write of size 8
-==164737==    at 0x40D1BB: parse_image (ppm_loader.c:64)
-==164737==    by 0x40D0BD: ppm_image (ppm_loader.c:30)
-==164737==    by 0x402725: main (main.c:44)
-==164737==  Address 0x572bc40 is 0 bytes after a block of size 6,220,800 alloc'd
-==164737==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==164737==    by 0x40D133: parse_image (ppm_loader.c:54)
-==164737==    by 0x40D0BD: ppm_image (ppm_loader.c:30)
-==164737==    by 0x402725: main (main.c:44)
-==164737== 
-==164737== Invalid write of size 8
-==164737==    at 0x40D1E3: parse_image (ppm_loader.c:65)
-==164737==    by 0x40D0BD: ppm_image (ppm_loader.c:30)
-==164737==    by 0x402725: main (main.c:44)
-==164737==  Address 0x572bc48 is 8 bytes after a block of size 6,220,800 alloc'd
-==164737==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==164737==    by 0x40D133: parse_image (ppm_loader.c:54)
-==164737==    by 0x40D0BD: ppm_image (ppm_loader.c:30)
-==164737==    by 0x402725: main (main.c:44)
-==164737== 
-==164737== Invalid write of size 8
-==164737==    at 0x40D20F: parse_image (ppm_loader.c:66)
-==164737==    by 0x40D0BD: ppm_image (ppm_loader.c:30)
-==164737==    by 0x402725: main (main.c:44)
-==164737==  Address 0x572bc50 is 16 bytes after a block of size 6,220,800 alloc'd
-==164737==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
-==164737==    by 0x40D133: parse_image (ppm_loader.c:54)
-==164737==    by 0x40D0BD: ppm_image (ppm_loader.c:30)
-==164737==    by 0x402725: main (main.c:44)
-==164737== 
- * */
 
 #include "libft/math.h"
 #include "libft/string.h"

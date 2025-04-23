@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ppm_loader.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:47:10 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/22 12:59:03 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/23 12:42:12 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,4 @@ t_vec3	*parse_image(t_ppm_header *header, int fd)
 		i++;
 	}
 	return (values);
-}	
+}

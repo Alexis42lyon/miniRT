@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:21:55 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/18 00:33:21 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/23 12:46:47 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	free_all(t_prog *prog)
 	free(prog->scene->cylinders);
 	free(prog->scene->cones);
 	free(prog->scene->bump_map.values);
+	free(prog->scene->texture.values);
 	free_parser(prog->parser);
 	if (prog->win_button->win_ptr)
 		mlx_destroy_window(prog->win_button->mlx_ptr,
