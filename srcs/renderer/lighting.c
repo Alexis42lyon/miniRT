@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "libft/vector.h"
-#include "mlx_int.h"
 #include "raytracer.h"
 #include "texture.h"
 #include <stdio.h>
@@ -51,15 +50,15 @@ t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 	t_vec3				specular = vec3_zero();
 	t_vec3				merged_pass;
 	struct s_light_info	info;
-	// float	u, v;
+	float	u, v;
 
-	// sp_coordinate_to_uv(hit.normal, &u, &v);
+	sp_coordinate_to_uv(hit.normal, &u, &v);
 
-	// if (mat.normal_map)
-	// {
-	// 	hit.normal = vec3_normalize(vec3_add(vec3_mult(
-	// 				get_px(u, v, mat.normal_map), 2.0), (t_vec3){-1,-1,-1}));
-	// }
+	if (mat.normal_map.values)
+	{
+		hit.normal = vec3_normalize(vec3_add(vec3_mult(
+					get_px(u, v, &mat.normal_map), 2.0), (t_vec3){-1,-1,-1}));
+	}
 	if (scene->vp_flags & NORMAL)
 		mat.albedo = normal_color(hit);
 	ambient = vec3_zero();

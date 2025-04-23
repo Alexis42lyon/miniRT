@@ -17,13 +17,12 @@
 void	print_ppm_header(t_ppm_header header, const char *name)
 {
 	ft_log(LOG, "%s header:", name);
-	ft_log(LOG, "   type:........%s", header.type);
-	ft_log(LOG, "   width:.......%u", header.width);
-	ft_log(LOG, "   height:......%u", header.height);
-	ft_log(LOG, "   values:......%u", header.max_values);
+	ft_printf("\ttype:........%s\n", header.type);
+	ft_printf("\twidth:.......%u\n", header.width);
+	ft_printf("\theight:......%u\n", header.height);
+	ft_printf("\tvalues:......%u\n", header.max_values);
 }
 
-#include <stdio.h>
 t_vec3	get_px(float u, float v, t_ppm_image *image)
 {
 	int x;

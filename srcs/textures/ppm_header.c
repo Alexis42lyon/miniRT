@@ -14,7 +14,6 @@
 #include "libft/memory.h"
 #include "miniRT.h"
 #include "texture.h"
-#include "libft/io.h"
 #include "libft/string.h"
 #include "libft/is.h"
 

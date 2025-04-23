@@ -19,7 +19,7 @@
 #include <stddef.h>
 
 # define DEFAULT_EMMI_POWER 1
-# define DEFAULT_BOUNCE 5
+# define DEFAULT_BOUNCE 1
 
 # define AMBIENT 0b0001
 # define DIFFUSE 0b0010

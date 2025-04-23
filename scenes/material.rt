@@ -1,6 +1,9 @@
-default 155,155,155 0.0 0.7 126 0.6 1 /home/abidolet/Documents/Milestone_4/miniRT/assets/earth.ppm #
-earth 255,255,255 0.0 1 0 0.0 0 # #
+default 155,155,155 0.0 0.7 126 0.6 1 # # 
+earth 200,200,200 0.0 1 0 0.0 0  ./assets/earth.ppm ./assets/earthnormal.ppm
 1 128,128,128 0 0.03 256 0.8 0 # #
 2 255,80,80 0 1.0 12 0.8 0 # #
 3 255,0,255 5 0.5 32 0.6 0 # #
 4 0,25,128 0 0.1 256 0.9 0 # #
+stone 255,255,255 0 0.1 0 0.0 0 ./assets/stone_color.ppm ./assets/stone_normal.ppm
+moon 255,255,255 0 0.1 0 0.0 0 ./assets/moon_color.ppm ./assets/moon_normal.ppm
+mars 255,255,255 0 0.1 0 0.0 0 ./assets/mars_color.ppm ./assets/mars_normal.ppm

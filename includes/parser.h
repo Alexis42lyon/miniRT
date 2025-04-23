@@ -16,7 +16,7 @@
 # include "miniRT.h"
 
 # define MATERIAL_FILE "scenes/material.rt"
-# define SHOW_SRUCT 1
+# define SHOW_SRUCT 0
 
 typedef struct s_parser
 {

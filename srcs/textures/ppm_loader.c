@@ -24,8 +24,8 @@ t_ppm_image		ppm_image(char *path, t_prog *prog)
 	t_ppm_image	img;
 	int			fd;
 
-	if (!ft_strcmp(path, "#"))
-		return ((t_ppm_image){.header = invalid_header()});
+	if (path[0] == '#')
+		return ((t_ppm_image){.header = invalid_header(), .values = NULL});
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		print_exit(prog, "no such file or directory");

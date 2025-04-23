@@ -57,11 +57,12 @@ void	show_stats(t_prog *prog)
 
 int	new_frame(t_prog *prog)
 {
-	if (prog->win_scene->paused)
+	static int a = 2;
+	if (prog->win_scene->paused || a == 1)
 		return (0);
 	run_pipeline(prog);
 	display_frame(prog->win_scene, prog->scene);
 	show_stats(prog);
-
+	a++;
 	return (0);
 }
