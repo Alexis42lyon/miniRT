@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/21 21:43:17 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/23 11:29:40 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define DENOISE 0b10000
 # define RENDER_PAUSE 0b100000
 
-# define MAX_TRHEAD 8
+# define MAX_TRHEAD 20
 
 # define LIGHT_RANGE 10
 

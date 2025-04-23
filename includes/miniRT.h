@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/17 14:08:06 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/22 11:47:59 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,9 @@ typedef struct s_scene
 	t_uint			total_render_time;
 	t_uint			min_render_time;
 	t_uint			max_render_time;
+
+	t_vec3			*prev_accumulation_data;
+	bool			denoise_enabled;
 }	t_scene;
 
 typedef struct s_prog

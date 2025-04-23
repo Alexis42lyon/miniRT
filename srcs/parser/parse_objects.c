@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:34 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/20 11:35:59 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/23 11:35:30 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	parse_plane(t_prog *prog, t_plane *plane, char **tokens)
 	parse_vector(prog, &plane->origin, tokens[1]);
 	parse_vector(prog, &plane->normal, tokens[2]);
 	plane->normal = vec3_normalize(plane->normal);
+	// if (plane->normal.y < 0)
+	// 	plane->normal = vec3_mult(plane->normal, -1.0);
 	plane->mat_idx = find_material_index(prog, tokens[3]);
 	plane->material = prog->scene->materials[plane->mat_idx];
 }

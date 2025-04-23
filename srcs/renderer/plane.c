@@ -6,12 +6,13 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:17:10 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 13:17:12 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/23 11:35:07 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytracer.h"
 #include "libft/vector.h"
+#include <stdio.h>
 
 double	plane_hit(void *p_plane, const t_ray ray)
 {
@@ -22,11 +23,11 @@ double	plane_hit(void *p_plane, const t_ray ray)
 
 	plane = (t_plane *)p_plane;
 	denominator = ft_dot(plane->normal, ray.dir);
-	if (fabs(denominator) < 1e-6)
+	if (fabs(denominator) < 1e-4)
 		return (-1);
 	oc = vec3_sub(plane->origin, ray.origin);
 	res = ft_dot(oc, plane->normal) / denominator;
-	if (res >= 0)
+	if (res >= 1e-3)
 		return (res);
 	return (-1);
 }
