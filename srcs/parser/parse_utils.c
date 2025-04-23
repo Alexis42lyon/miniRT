@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:42 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/17 23:55:20 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/23 11:57:36 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 void	parse_vector(t_prog *prog, t_vec3 *vec, char *str)
 {
+	if (ft_strchr(ft_strchr(ft_strchr(str, ',') + 1, ',') + 1, ','))
+		print_exit(prog, "Invalid vector format");
 	check_mem((t_info){__FILE__, __LINE__, __func__},
 		ft_split(str, ','), (void **)&prog->parser->tokens, prog);
 	if (ft_arrlen(prog->parser->tokens) != 3)
