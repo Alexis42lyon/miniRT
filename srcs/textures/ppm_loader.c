@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:47:10 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/23 13:31:47 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:34:37 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_ppm_image		ppm_image(char *path, t_prog *prog)
 	t_ppm_image	img;
 	int			fd;
 
-	if (ft_strcmp(path, "#"))
+	if (!ft_strcmp(path, "#"))
 		return ((t_ppm_image){.header = invalid_header()});
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
