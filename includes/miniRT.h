@@ -71,6 +71,9 @@ typedef struct material
 	float	roughtness;
 	float	metalic;
 
+	t_ppm_image *normal_map;
+	t_ppm_image *texture_map;
+
 	float	spec_coef;
 	float	emission_power;
 	bool	use_checker;
