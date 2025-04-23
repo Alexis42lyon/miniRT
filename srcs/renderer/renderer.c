@@ -71,11 +71,10 @@ float	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 	}
 	mat = scene->materials[hit.mat_idx];
 	float u, v;
-	if (hit.type == SPHERE && ft_strcmp(mat.name, "earth") == 0)
+	if (mat.texture_map)
 	{
-		mat.use_checker = 0;
 		sp_coordinate_to_uv(hit.normal, &u, &v);
-		mat.albedo = get_px(u, v, &scene->texture);
+		mat.albedo = get_px(u, v, mat.texture_map);
 	}
 	if (mat.use_checker)
 		mat.albedo = checker_color(hit, mat);

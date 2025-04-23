@@ -30,5 +30,5 @@ t_vec3	vec3_zero(void)
 
 void	print_vec(t_vec3 vec)
 {
-	printf("(x: %lf, y: %lf, z: %lf)\n", vec.x, vec.y, vec.z);
+	printf("(x: % lf, y: % lf, z: % lf)\n", vec.x, vec.y, vec.z);
 }

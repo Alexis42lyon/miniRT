@@ -41,8 +41,6 @@ int	main(int ac, char **av)
 	prog.win_scene = &win_scene;
 	prog.win_button = &win_button;
 	init(&prog, av[1]);
-	prog.scene->bump_map = ppm_image("./assets/earthnormal.ppm", &prog);
-	prog.scene->texture = ppm_image("./assets/earth.ppm", &prog);
 	init_win(&prog);
 	free_all(&prog);
 	return (0);
