@@ -19,16 +19,17 @@
 #include <stddef.h>
 
 # define DEFAULT_EMMI_POWER 1
-# define DEFAULT_BOUNCE 10
+# define DEFAULT_BOUNCE 5
 
-# define SPECULAR 0b0100
-# define DIFFUSE 0b0010
 # define AMBIENT 0b0001
+# define DIFFUSE 0b0010
+# define SPECULAR 0b0100
 # define NORMAL 0b1000
 # define DENOISE 0b10000
 # define RENDER_PAUSE 0b100000
+# define SHOW_FRAME 0b1000000
 
-# define MAX_TRHEAD 8
+# define MAX_TRHEAD 20
 
 # define LIGHT_RANGE 10
 

@@ -11,15 +11,10 @@
 /* ************************************************************************** */
 
 #include "window.h"
-#include "libft/io.h"
 #include "libft/memory.h"
-#include "libft/string.h"
 #include "libft/vector.h"
 #include "miniRT.h"
 #include "mlx.h"
-#include <stdio.h>
-#include <math.h>
-#include "raytracer.h"
 
 
 int	window_close(void *prog)

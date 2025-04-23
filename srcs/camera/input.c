@@ -102,6 +102,11 @@ int key_down(int keycode, t_prog *prog)
 	}
 	else if (keycode == 'x')
 		print_scene(prog->scene);
+	else if (keycode == 'f')
+	{
+		prog->scene->vp_flags ^= SHOW_FRAME;
+		return (0);
+	}
 	reset_accumulation(prog);
 	return (0);
 }
