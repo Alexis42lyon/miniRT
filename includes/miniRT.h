@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/22 11:47:59 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:28:04 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ typedef struct material
 	float	roughtness;
 	float	metalic;
 
-	t_ppm_image *normal_map;
-	t_ppm_image *texture_map;
+	t_ppm_image normal_map;
+	t_ppm_image texture_map;
 
 	float	spec_coef;
 	float	emission_power;

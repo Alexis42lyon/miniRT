@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/23 12:44:08 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/23 13:28:50 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ float	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 		return (0);
 	}
 	mat = scene->materials[hit.mat_idx];
-	float u, v;
-	if (mat.texture_map)
-	{
-		sp_coordinate_to_uv(hit.normal, &u, &v);
-		mat.albedo = get_px(u, v, mat.texture_map);
-	}
+	// float u, v;
+	// if (mat.texture_map)
+	// {
+	// 	sp_coordinate_to_uv(hit.normal, &u, &v);
+	// 	mat.albedo = get_px(u, v, mat.texture_map);
+	// }
 	if (mat.use_checker)
 		mat.albedo = checker_color(hit, mat);
 	if (mat.emission_power == 0)
