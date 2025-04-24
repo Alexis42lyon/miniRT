@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/23 12:49:14 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/24 23:16:33 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,25 +69,6 @@ typedef struct s_win_scene
 	bool	paused;
 }	t_win_scene;
 
-/* ------------------------------- BUTTON ------------------------------ */
-
-# define SLIDER_WIDTH 200
-# define SLIDER_MIN 0
-# define SLIDER_MAX 180
-
-typedef struct s_win_button
-{
-	void	*win_ptr;
-	void	*mlx_ptr;
-	int		width;
-	int		height;
-	int		slider_x;
-	int		slider_width;
-	int		is_dragging;
-}	t_win_button;
-
-typedef void	(*t_button_func)(t_prog *);
-
 /* ------------------------------- END BUTTON ------------------------------ */
 
 // image.c
@@ -97,6 +78,7 @@ int		create_trgb(int t, int r, int g, int b);
 
 // window.c
 void	init_win(t_prog *prog);
+int		window_close(void *prog);
 int		key_hook(int keycode, t_prog *prog);
 
 void	run_pipeline(t_prog *prog);

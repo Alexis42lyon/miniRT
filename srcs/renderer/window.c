@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/20 11:54:33 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/24 17:09:04 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "libft/vector.h"
 #include "miniRT.h"
 #include "mlx.h"
-
 
 int	window_close(void *prog)
 {
@@ -57,5 +56,3 @@ void	init_win(t_prog *prog)
 	mlx_hook(win->win_ptr, ON_KEYUP, KEYUP_MASK, key_up, prog);
 	mlx_loop(win->mlx_ptr);
 }
-
-

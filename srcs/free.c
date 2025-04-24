@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:21:55 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/23 12:46:47 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/24 22:19:06 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,6 @@ void	free_all(t_prog *prog)
 	free(prog->scene->cylinders);
 	free(prog->scene->cones);
 	free_parser(prog->parser);
-	if (prog->win_button->win_ptr)
-		mlx_destroy_window(prog->win_button->mlx_ptr,
-			prog->win_button->win_ptr);
 	free_win_scene(prog->win_scene);
 	exit(0);
 }
