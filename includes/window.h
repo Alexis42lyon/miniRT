@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/24 11:00:43 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/25 10:13:30 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,25 +76,6 @@ typedef struct s_win_scene
 	bool	paused;
 }	t_win_scene;
 
-/* ------------------------------- BUTTON ------------------------------ */
-
-# define SLIDER_WIDTH 200
-# define SLIDER_MIN 0
-# define SLIDER_MAX 180
-
-typedef struct s_win_button
-{
-	void	*win_ptr;
-	void	*mlx_ptr;
-	int		width;
-	int		height;
-	int		slider_x;
-	int		slider_width;
-	int		is_dragging;
-}	t_win_button;
-
-typedef void	(*t_button_func)(t_prog *);
-
 /* ------------------------------- END BUTTON ------------------------------ */
 
 // image.c
@@ -105,6 +86,7 @@ unsigned int	get_pixel(t_data *data, int x, int y);
 
 // window.c
 void	init_win(t_prog *prog);
+int		window_close(void *prog);
 int		key_hook(int keycode, t_prog *prog);
 
 void	run_pipeline(t_prog *prog);

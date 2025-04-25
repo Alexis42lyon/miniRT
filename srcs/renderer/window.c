@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/24 08:40:53 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/25 10:13:34 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "libft/vector.h"
 #include "miniRT.h"
 #include "mlx.h"
-
 
 int	window_close(void *prog)
 {
@@ -60,5 +59,3 @@ void	init_win(t_prog *prog)
 	mlx_hook(win->win_ptr, ON_KEYUP, KEYUP_MASK, key_up, prog);
 	mlx_loop(win->mlx_ptr);
 }
-
-

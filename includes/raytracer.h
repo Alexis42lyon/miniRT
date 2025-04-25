@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/24 10:20:13 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/25 10:13:24 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@
 # define DENOISE 0b10000
 # define RENDER_PAUSE 0b100000
 # define SHOW_FRAME 0b1000000
-
 # define MAX_TRHEAD 20
-
 # define LIGHT_RANGE 10
 
 enum	e_object_type
