@@ -42,6 +42,7 @@ SRCS =	main.c					\
 		ppm_loader.c			\
 		ppm_header.c			\
 		ppm_utils.c				\
+		effects.c				\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)

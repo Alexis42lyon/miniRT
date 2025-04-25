@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/23 13:28:50 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:54:46 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_viewport	viewport(t_win_scene *win, t_scene *scene)
 	return (vp);
 }
 
-float	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
+float	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed, t_vec3 *dof_px)
 {
 	t_hit	hit;
 	t_mat	mat;
@@ -70,6 +70,14 @@ float	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
 		*final_color = vec3_add(*final_color, sky_col);
 		return (0);
 	}
+	if (vec3_lenght_square(*dof_px) == 0)
+	{
+		dof_px->x = hit.distance / scene->camera.focal_length;
+		dof_px->y = hit.distance / scene->camera.focal_length;
+		dof_px->z = hit.distance / scene->camera.focal_length;
+		*dof_px = vec3_clamp(*dof_px, 0, 1);
+	}
+
 	mat = scene->materials[hit.mat_idx];
 	float u, v;
 	if (mat.texture_map.header.type[0] != -1)
@@ -99,24 +107,25 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	float	mutiplier;
 	t_uint	seed;
 	float	new_mult;
+	int	x;
 
 	mutiplier = 1.0f;
 	final_color = vec3_zero();
 	ray = get_ray((float)(i) / ((float)vp.width),
 			(float)(j) / (float)(vp.height), vp);
 	seed = (i + (j * vp.win->width)) * scene->frame_count;
-	i = 0;
-	while (i < scene->nb_bounces)
+	x = 0;
+	while (x < scene->nb_bounces)
 	{
-		seed *= i + 1;
-		new_mult = bounce(&final_color, scene, &ray, seed);
+		seed *= x + 1;
+		new_mult = bounce(&final_color, scene, &ray, seed, &vp.win->depth_map[i + j * vp.width]);
 		if (new_mult == 0)
 			break ;
 		final_color = vec3_mult(final_color, mutiplier);
 		mutiplier *= new_mult;
-		i++;
+		x++;
 	}
-	if (i != scene->nb_bounces)
+	if (x != scene->nb_bounces)
 		final_color = vec3_mult(final_color, mutiplier);
 	return (vec3_clamp(final_color, 0, 1));
 }

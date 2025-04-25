@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/23 11:29:40 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:20:13 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <stddef.h>
 
 # define DEFAULT_EMMI_POWER 1
-# define DEFAULT_BOUNCE 1
+# define DEFAULT_BOUNCE 20
 
 # define AMBIENT 0b0001
 # define DIFFUSE 0b0010

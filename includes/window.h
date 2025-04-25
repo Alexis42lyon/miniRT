@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/23 12:49:14 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/24 11:00:43 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,17 @@
 
 # include "miniRT.h"
 # include <mlx.h>
+#include <sys/types.h>
 
 # define SHOW_BUTTON 0
 # define SHOW_LOGGING 0
 
-# define WIDTH 720
-# define HEIGHT 480
+# define WIDTH 480
+# define HEIGHT 370
+
+# define INVERT 0b0001
+# define DEPTH_OF_FIELD 0b0010
+# define DEPTH_MAP 0b0100
 
 /* ----------------------------------- MLX ---------------------------------- */
 
@@ -60,11 +65,13 @@ typedef struct s_win_scene
 	double	aspect_ratio;
 
 	t_vec3	*accumulation_data;
+	t_vec3	*depth_map;
 
 	void	*win_ptr;
 	void	*mlx_ptr;
 
 	t_data	img;
+	uint	img_flags;
 
 	bool	paused;
 }	t_win_scene;
@@ -94,6 +101,7 @@ typedef void	(*t_button_func)(t_prog *);
 int		create_img(t_win_scene *win);
 void	set_pixel(t_data *data, int x, int y, int color);
 int		create_trgb(int t, int r, int g, int b);
+unsigned int	get_pixel(t_data *data, int x, int y);
 
 // window.c
 void	init_win(t_prog *prog);
@@ -104,5 +112,10 @@ int		new_frame(t_prog *prog);
 
 // button.c
 void	init_button_window(t_prog *prog);
+
+// effects.c
+void	invert_effect(t_win_scene *win, int i, int j);
+void	depth_of_field(t_win_scene *win, int i, int j);
+void	depth_effect(t_win_scene *win, int i, int j);
 
 #endif

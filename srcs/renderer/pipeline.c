@@ -6,15 +6,17 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 08:45:57 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/17 00:40:49 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:33:25 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "camera.h"
 #include "miniRT.h"
 #include "raytracer.h"
 #include "window.h"
-#include <stdlib.h>
+#include <strings.h>
 #include <sys/time.h>
+#include "libft/vector.h"
 
 static long	get_current_time_ms(void)
 {
@@ -26,17 +28,42 @@ static long	get_current_time_ms(void)
 	return (time);
 }
 
+void	apply_effect(t_win_scene *win)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	while (j < win->height)
+	{
+		i = 0;
+		while (i < win->width)
+		{
+			if (win->img_flags & INVERT)
+				invert_effect(win, i, j);
+			if (win->img_flags & DEPTH_OF_FIELD)
+				depth_of_field(win, i, j);	
+			if (win->img_flags & DEPTH_MAP)
+				depth_effect(win, i, j);
+			i++;
+		}
+		j++;
+	}
+}
+
 void	run_pipeline(t_prog *prog)
 {
 	t_viewport	vp;
-	static long	last_frame = -1;
+	long	last_frame = -1;
 
-	if (last_frame == -1)
-		last_frame = get_current_time_ms();
+	last_frame = get_current_time_ms();
 	update_cam(prog);
 	prog->scene->sky_color = vec3_mult(prog->scene->ambient_light.color, prog->scene->ambient_light.ratio);
 	vp = viewport(prog->win_scene, prog->scene);
+	
 	render(vp, prog->scene);
+	apply_effect(prog->win_scene);
+
 	prog->scene->total_render_time += get_current_time_ms() - last_frame;
 	last_frame = get_current_time_ms();
 }
@@ -57,6 +84,7 @@ void	show_stats(t_prog *prog)
 
 int	new_frame(t_prog *prog)
 {
+	bzero(prog->win_scene->depth_map, prog->win_scene->height * prog->win_scene->width * sizeof(t_vec3));
 	static int a = 2;
 	if (prog->win_scene->paused || a == 1)
 		return (0);

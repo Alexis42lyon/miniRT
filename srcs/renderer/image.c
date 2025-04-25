@@ -34,6 +34,16 @@ void	set_pixel(t_data *data, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
+unsigned int	get_pixel(t_data *data, int x, int y)
+{
+	void			*dst;
+	unsigned int	color;
+		
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	color = *(unsigned int *)dst;
+	return (color);
+}
+
 int	create_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);

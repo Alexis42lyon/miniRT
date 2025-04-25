@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:33:51 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/22 12:17:55 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/24 10:58:14 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int mouse_down(int button, int x, int y, t_prog *prog)
 	prog->scene->camera.fov = ft_clamp(prog->scene->camera.fov, 0, 180);
 	if (button == 3)
 	{
-		prog->scene->vp_flags = AMBIENT;
+		// prog->scene->vp_flags = AMBIENT;
 		mlx_mouse_get_pos(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr, &prog->scene->camera.last_x, &prog->scene->camera.last_y);
 		prog->scene->camera.movement_enable = 1;
 		prog->scene->nb_bounces = 1;
@@ -58,7 +58,22 @@ int mouse_up(int button, int x, int y, t_prog *prog)
 
 int key_down(int keycode, t_prog *prog)
 {
-	if (keycode == '1')
+	if (keycode == 'i')
+	{
+		prog->win_scene->img_flags ^= INVERT;
+		return 0;
+	}
+	if (keycode == 'h')
+	{
+		prog->win_scene->img_flags ^= DEPTH_OF_FIELD;
+		return 0;
+	}
+	if (keycode == 'v')
+	{
+		prog->win_scene->img_flags ^= DEPTH_MAP;
+		return 0;
+	}
+	else if (keycode == '1')
 		prog->scene->vp_flags ^= DIFFUSE;
 	else if (keycode == '2')
 		prog->scene->vp_flags ^= AMBIENT;
