@@ -6,12 +6,13 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:25:03 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/05 11:27:41 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/25 10:54:54 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/math.h"
 #include <limits.h>
+#include <stdlib.h>
 
 static int	call_func(int n, void (*f)(int, void *), void *param)
 {

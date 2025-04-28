@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/25 10:13:30 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/25 13:39:03 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 # include "miniRT.h"
 # include <mlx.h>
-#include <sys/types.h>
+# include <sys/types.h>
 
 # define SHOW_BUTTON 0
 # define SHOW_LOGGING 0
 
-# define WIDTH 480
-# define HEIGHT 370
+# define WIDTH 720
+# define HEIGHT 480
 
 # define INVERT 0b0001
 # define DEPTH_OF_FIELD 0b0010
@@ -71,7 +71,7 @@ typedef struct s_win_scene
 	void	*mlx_ptr;
 
 	t_data	img;
-	uint	img_flags;
+	t_uint	img_flags;
 
 	bool	paused;
 }	t_win_scene;

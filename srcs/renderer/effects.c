@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 08:27:13 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/24 11:07:50 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:48:28 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,12 @@ void	depth_effect(t_win_scene *win, int i, int j)
 	set_pixel(&win->img, i, j, vec_to_int(win->depth_map[i + j * win->width]));
 }
 
-
 static float	gaussien(int i, int j, float sigma)
 {
 	float s;
 
 	s = 2.0f * sigma * sigma;
-    return (1.0f / (M_PI * s)) * exp(-(i * i + j * j) / s);
+    return (1.0f / (3.1415 * s)) * exp(-(i * i + j * j) / s);
 }
 
 float	*create_dof_kernel(const int size)
@@ -58,7 +57,6 @@ float	*create_dof_kernel(const int size)
 		while (j <= half)
 		{
 			value = gaussien(i, j, sigma);
-			// printf("%f\n", value);
 			kernel[(i + half) * size + (j + half)] = value;
 			sum += value;
 			j++;
@@ -66,17 +64,13 @@ float	*create_dof_kernel(const int size)
 		i++;
 	}
 	i = 0;
-	// printf("sum:%f\n", sum);
 	while (i < size * size)
 	{
-		// printf("before:%f", kernel[i]);
 		kernel[i] /= sum;
-		// printf("    after:%f\n", kernel[i]);
 		i++;
 	}
 	return (kernel);
 }
-
 
 void	depth_of_field(t_win_scene *win, int i, int j)
 {
@@ -108,12 +102,11 @@ void	depth_of_field(t_win_scene *win, int i, int j)
 		}
 		dx++;
 	}
+	free(kernel);
 	final = vec3_clamp(final, 0, 1);
-	
-	float t = vec3_lenght(win->depth_map[i + j * win->width]);  // 0 = near, 1 = far
+	float t = vec3_lenght(win->depth_map[i + j * win->width]);
 	t = ft_clamp(t, 0, 1);
 	t_vec3 dof = vec3_add(vec3_mult(int_to_vec(get_pixel(&win->img, i, j)), (1.0 - t)), vec3_mult(final, t));
 	set_pixel(&win->img, i, j,  vec_to_int(dof));
 }
-
 

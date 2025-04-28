@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:01:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/23 14:18:44 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/28 15:53:23 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,26 +127,26 @@ t_hit	trace_ray(t_ray ray, t_scene *scene)
 	hit.type = SPHERE;
 	tmp_hit = get_min_dist(plane_hit, ray, (struct s_objs_data)
 		{scene->planes, scene->nb_planes, sizeof(t_plane)});
-	if (tmp_hit.distance != -1 && tmp_hit.distance < hit.distance)
+	if (tmp_hit.distance != -1 && tmp_hit.distance < hit.distance && tmp_hit.distance < ray.length)
 	{
 		hit = tmp_hit;
 		hit.type = PLANE;
 	}
 	tmp_hit = get_min_dist(cylinders_hit, ray, (struct s_objs_data)
 		{scene->cylinders, scene->nb_cylinders, sizeof(t_cylinder)});
-	if (tmp_hit.distance != -1 && tmp_hit.distance < hit.distance)
+	if (tmp_hit.distance != -1 && tmp_hit.distance < hit.distance && tmp_hit.distance < ray.length)
 	{
 		hit = tmp_hit;
 		hit.type = CYLINDER;
 	}
 	tmp_hit = get_min_dist(cone_hit, ray, (struct s_objs_data)
 		{scene->cones, scene->nb_cones, sizeof(t_cylinder)});
-	if (tmp_hit.distance != -1 && tmp_hit.distance < hit.distance)
+	if (tmp_hit.distance != -1 && tmp_hit.distance < hit.distance && tmp_hit.distance < ray.length)
 	{
 		hit = tmp_hit;
 		hit.type = CONE;
 	}
-	if (hit.obj_index != (size_t)-1)
+	if (hit.obj_index != (size_t) - 1)
 		return (hit_succes(scene, ray, hit));
 	return (hit_fail());
 }

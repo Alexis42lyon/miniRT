@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ppm_loader.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:47:10 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/23 13:34:37 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/28 11:36:49 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ t_ppm_image		ppm_image(char *path, t_prog *prog)
 	close(fd);
 	if (img.values == NULL)
 		print_exit(prog, "image parsing failed");
-	print_ppm_header(img.header, path);
+	// print_ppm_header(img.header, path);
 	ft_log(SUCCESS, "%s is loaded", path);
 	return (img);
 }
 
 void	print_values(t_vec3* values, t_ppm_header *header)
 {
-	uint	i = 0;
+	t_uint	i = 0;
 
 	while (i < header->width * header->height)
 	{

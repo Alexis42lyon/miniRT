@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 08:45:57 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/24 10:33:25 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/25 11:46:20 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include <sys/time.h>
 #include "libft/vector.h"
 
-static long	get_current_time_ms(void)
+long	get_current_time_ms(void)
 {
 	long long		time;
 	struct timeval	tv;

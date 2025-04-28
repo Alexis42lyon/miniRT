@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lighting.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/23 13:28:58 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/28 15:45:06 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include "texture.h"
 #include <stdio.h>
 
-int	in_light(t_scene *scene, t_hit hit, t_vec3 light_dir)
+int	in_light(t_scene *scene, t_hit hit, struct s_light_info infos)
 {
 	t_hit	light_hit;
 	t_ray	ray;
 
-
-	ray.origin =vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));
-	ray.dir = vec3_mult(light_dir, -1);
+	ray.origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));
+	ray.dir = vec3_mult(infos.light_dir, -1);
+	ray.length = vec3_lenght(vec3_sub(infos.light.origin, ray.origin));
 	light_hit = trace_ray(ray, scene);
 	return (light_hit.distance == -1);
 }
@@ -46,8 +46,8 @@ struct s_light_info	new_info(t_light_source light, t_hit hit, t_mat mat, t_ray r
 t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 {
 	t_vec3				ambient;
-	t_vec3				diffuse = vec3_zero();
-	t_vec3				specular = vec3_zero();
+	t_vec3				diffuse;
+	t_vec3				specular;
 	t_vec3				merged_pass;
 	struct s_light_info	info;
 	float	u, v;
@@ -64,12 +64,12 @@ t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 	ambient = vec3_zero();
 	diffuse = vec3_zero();
 	specular = vec3_zero();
-	if (scene->vp_flags & AMBIENT)
-		ambient = phong_ambient(scene, mat);
+	// if (scene->vp_flags & AMBIENT)
+	// 	ambient = phong_ambient(scene, mat);
 	for (size_t i = 0; i < scene->nb_lights; i++)
 	{
 		info = new_info(scene->lights[i], hit, mat, ray);
-		if (in_light(scene, hit, info.light_dir))
+		if (in_light(scene, hit, info))
 		{
 			if (scene->vp_flags & DIFFUSE)
 				diffuse = vec3_add(diffuse, phong_diffuse(info));

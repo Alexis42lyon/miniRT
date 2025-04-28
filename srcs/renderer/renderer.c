@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   renderer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/24 10:54:46 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/28 15:53:08 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,11 @@ float	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed, t_vec
 	if (mat.use_checker)
 		mat.albedo = checker_color(hit, mat);
 	if (mat.emission_power == 0)
-		*final_color = phong_shading(scene, hit, mat, *ray);
+	{
+		*final_color = vec3_add(*final_color, phong_shading(scene, hit, mat, *ray));
+		new_mult *= vec3_lenght_square(mat.albedo) / 3 + 0.5;
+		// printf("%lf\n", new_mult);
+	}
 	else
 	{
 		new_mult += mat.emission_power;
@@ -122,7 +126,6 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 		if (new_mult == 0)
 			break ;
 		final_color = vec3_mult(final_color, mutiplier);
-		mutiplier *= new_mult;
 		x++;
 	}
 	if (x != scene->nb_bounces)
@@ -155,8 +158,6 @@ void	*thread_routine(void *pcontext)
 		}
 		ctx->i -= ctx->vp.win->width;
 		ctx->j++;
-		// if (ctx->id == 0)
-		// 	show_progress(ctx->j * ctx->vp.width + ctx->i, ctx->vp.width * ctx->vp.height);
 	}
 	return (NULL);
 }

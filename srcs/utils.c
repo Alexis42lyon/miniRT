@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:17 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/14 15:49:39 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/25 11:46:31 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,13 @@ void	check_mem(t_info info, void *mem, void **res, t_prog *prog)
 	*res = mem;
 }
 
-void	show_progress(int current, int max)
+void	show_progress(int current, int max, const char *name)
 {
 	int		i;
 	float	progress;
 
-	ft_printf(BOLD "\033[?25lprogress:[");
+	ft_printf(BLUE "[LOG]: " RESET);
+	ft_printf(BOLD "%s: [", name);
 	progress = ((double)current / (double)max) * 100;
 	i = 0;
 	while (i * 5 < progress)
@@ -74,4 +75,6 @@ void	show_progress(int current, int max)
 		i++;
 	}
 	ft_printf(RESET BOLD "] " RESET "\033[?25h\r", (int)progress);
+	if (current >= max)
+		ft_printf("\n");
 }

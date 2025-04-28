@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:16:33 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/24 08:54:56 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/25 11:55:42 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@
 
 # define FREE1 0b0001
 # define FREE2 0b0010
+
+struct string_ass
+{
+	char *string;
+	int	to_free;
+};
 
 // string convertions
 int		ft_atoi(const char *nptr);
@@ -45,6 +51,7 @@ char	*ft_charjoin(char *s1, char const c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	**ft_split(char const *s, char c);
 char	*ft_strdup(const char *s);
+char 	*ft_strassemble(struct string_ass *strings);
 
 // string search
 char	*ft_strchr(const char *s, int c);

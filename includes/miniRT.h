@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/23 14:26:35 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/25 11:46:35 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ typedef struct ppm_header
 
 	char	type[2];
 
-	uint	width;
-	uint	height;
+	t_uint	width;
+	t_uint	height;
 
-	uint	max_values;
+	t_uint	max_values;
 
 }	t_ppm_header;
 
@@ -162,7 +162,7 @@ typedef struct s_prog
 
 // utils.c
 void	check_mem(t_info info, void *mem, void **res, t_prog *prog);
-void	show_progress(int current, int max);
+void	show_progress(int current, int max, const char *name);
 
 // free.c
 void	free_arr(void **arr);
@@ -176,5 +176,6 @@ void	reset_accumulation(t_prog *prog);
 // ?.c
 void	print_cam(const t_camera *cam);
 t_mat	default_mat(void);
+long	get_current_time_ms(void);
 
 #endif

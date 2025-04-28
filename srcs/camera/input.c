@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:33:51 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/24 10:58:14 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/28 14:16:15 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "raytracer.h"
 #include "window.h"
 #include "parser.h"
+#include "texture.h"
 
 int mouse_down(int button, int x, int y, t_prog *prog)
 {
@@ -34,7 +35,6 @@ int mouse_down(int button, int x, int y, t_prog *prog)
 	prog->scene->camera.fov = ft_clamp(prog->scene->camera.fov, 0, 180);
 	if (button == 3)
 	{
-		// prog->scene->vp_flags = AMBIENT;
 		mlx_mouse_get_pos(prog->win_scene->mlx_ptr, prog->win_scene->win_ptr, &prog->scene->camera.last_x, &prog->scene->camera.last_y);
 		prog->scene->camera.movement_enable = 1;
 		prog->scene->nb_bounces = 1;
@@ -58,6 +58,13 @@ int mouse_up(int button, int x, int y, t_prog *prog)
 
 int key_down(int keycode, t_prog *prog)
 {
+	if (keycode == 65453)
+	{
+		prog->scene->nb_bounces--;
+		ft_log(LOG, "bounce:%d", prog->scene->nb_bounces);
+	}
+	else if (keycode == 65451)
+		prog->scene->nb_bounces++;
 	if (keycode == 'i')
 	{
 		prog->win_scene->img_flags ^= INVERT;
@@ -120,6 +127,11 @@ int key_down(int keycode, t_prog *prog)
 	else if (keycode == 'f')
 	{
 		prog->scene->vp_flags ^= SHOW_FRAME;
+		return (0);
+	}
+	else if (keycode == 'g')
+	{
+		save_image_to_ppm(prog->win_scene);
 		return (0);
 	}
 	reset_accumulation(prog);

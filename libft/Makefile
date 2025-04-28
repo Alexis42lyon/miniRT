@@ -6,7 +6,7 @@
 #    By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/24 18:00:56 by mjuncker          #+#    #+#              #
-#    Updated: 2025/04/22 11:02:33 by mjuncker         ###   ########.fr        #
+#    Updated: 2025/04/25 12:09:22 by mjuncker         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,6 +81,7 @@ SRCS =  ft_isalpha.c 		\
 		ft_assertion.c		\
 		PCG.c				\
 		ft_log.c			\
+		ft_assemble.c		\
 
 OBJ = $(SRCS:.c=.o)
 

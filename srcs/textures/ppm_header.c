@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:48:28 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/17 12:45:41 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/25 12:40:43 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <stdint.h>
 
 t_ppm_header	invalid_header(void)
 {
@@ -32,9 +33,9 @@ t_ppm_header	invalid_header(void)
 			});
 }
 
-uint	get_next_value(int fd)
+t_uint	get_next_value(int fd)
 {
-	uint	val;
+	t_uint	val;
 
 	int		nb_read;
 	char	c[1];
@@ -80,10 +81,13 @@ t_ppm_header parse_header(int fd)
 {
 	t_ppm_header	header;
 	char			buff[2];
+	int				nb_read;
 
 	ft_bzero(&header, sizeof(t_ppm_header));
 
-	read(fd, buff, 2);
+	nb_read = read(fd, buff, 2);
+	if (nb_read != 2)
+		return (invalid_header());
 	header.type[0] = buff[0];
 	header.type[1] = buff[1];
 	header.width = get_next_value(fd);
