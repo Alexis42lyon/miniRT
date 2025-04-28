@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:42:03 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/23 14:25:53 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/28 23:09:29 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_parser
 	bool		is_free;
 
 	int			fd_mat;
-	size_t		nb_id;
 	t_list		*mat_chained;
 }	t_parser;
 

@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/23 14:26:35 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/28 23:09:39 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ typedef struct s_scene
 	int				nb_bounces;
 
 	t_mat			*materials;
+	size_t			nb_materials;
 
 	int				vp_flags;
 	t_uint			frame_count;

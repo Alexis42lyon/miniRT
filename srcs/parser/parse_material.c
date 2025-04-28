@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 10:00:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/23 14:39:09 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/28 23:11:30 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 #include <fcntl.h>
 #include "texture.h"
 
-static void	check_duplicate_name(t_prog *prog, t_mat *mat, int nb_id)
+static void	check_duplicate_name(t_prog *prog, t_mat *mat, int nb_mat)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (i < nb_id)
+	while (i < nb_mat)
 	{
 		j = i + 1;
-		while (j < nb_id)
+		while (j < nb_mat)
 		{
 			if (ft_strcmp(mat[i].name, mat[j].name) == 0)
 				print_exit(prog, "Duplicate material name");
@@ -41,7 +41,7 @@ int	find_material_index(t_prog *prog, char *material_name)
 	if (!prog->scene->materials)
 		print_exit(prog, "No materials loaded");
 	i = 0;
-	while (i < prog->parser->nb_id)
+	while (i < prog->scene->nb_materials)
 	{
 		if (ft_strcmp(prog->scene->materials[i].name, material_name) == 0)
 			return (i);
@@ -57,7 +57,7 @@ static void	fill_material(t_prog *prog, t_mat *mat, t_list *current)
 
 	prog->parser->tokens = NULL;
 	check_mem((t_info){__FILE__, __LINE__, __func__},
-		malloc(sizeof(t_mat) * (prog->parser->nb_id + 1)),
+		malloc(sizeof(t_mat) * (prog->scene->nb_materials + 1)),
 		(void **)&mat, prog);
 	i = 0;
 	while (current)
@@ -98,12 +98,12 @@ void	parse_material(t_prog *prog, t_parser *parser)
 		check_mem((t_info){__FILE__, __LINE__, __func__},
 			ft_lstnew(parser->tokens), (void **)&new_node, prog);
 		ft_lstadd_back(&parser->mat_chained, new_node);
-		parser->nb_id++;
+		prog->scene->nb_materials++;
 		free(parser->line);
 		parser->line = ft_get_next_line(parser->fd_mat);
 	}
-	if (parser->nb_id == 0)
+	if (prog->scene->nb_materials == 0)
 		print_exit(prog, "No materials found");
 	fill_material(prog, prog->scene->materials, parser->mat_chained);
-	check_duplicate_name(prog, prog->scene->materials, parser->nb_id);
+	check_duplicate_name(prog, prog->scene->materials, prog->scene->nb_materials);
 }
