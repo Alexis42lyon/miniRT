@@ -7,7 +7,7 @@
 #define TAB_COLOR 0x444444
 #define ACTIVE_TAB_COLOR 0x666666
 #define TEXT_COLOR 0xFFFFFF
-#define CONTROL_WINDOW_WIDTH 200
+#define CONTROL_WINDOW_WIDTH 300
 
 #define SLIDER_WIDTH 150
 #define SLIDER_HEIGHT 20
@@ -69,5 +69,11 @@ typedef struct s_win_button
 }	t_win_button;
 
 void	init_button_window(t_prog *prog);
+
+// put_string_win.c
+void	put_string_win(t_prog *prog, t_win_button *win_btn);
+
+// slider.c
+void	draw_slider(int x, int y, float value, t_data *img);
 
 #endif

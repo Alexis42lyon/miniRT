@@ -13,7 +13,7 @@ ifeq ($(MODE), debug)
 	CFLAGS += -g3 -D DEFAULT_BOUNCE=1
 endif
 
-VPATH = srcs:srcs/parser:srcs/renderer:srcs/camera:srcs/textures
+VPATH = srcs:srcs/parser:srcs/renderer:srcs/camera:srcs/textures:srcs/button
 
 SRCS =	main.c					\
 		utils.c					\
@@ -30,7 +30,6 @@ SRCS =	main.c					\
 		renderer.c				\
 		ray.c					\
 		colors.c				\
-		button.c				\
 		sphere.c				\
 		plane.c					\
 		cylinder.c				\
@@ -49,7 +48,10 @@ SRCS =	main.c					\
 		ppm_header.c			\
 		ppm_utils.c				\
 		effects.c				\
-		ppm_saver.c
+		ppm_saver.c				\
+		button.c				\
+		put_string_win.c		\
+		slider.c				\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
@@ -62,7 +64,7 @@ GREEN 			= \033[32m
 YELLOW 			= \033[33m
 BLUE 			= \033[34m
 
-all: 
+all:
 	$(MAKE) libft
 	$(MAKE) mlx
 	$(MAKE) $(BIN)
