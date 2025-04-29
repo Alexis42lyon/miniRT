@@ -1,11 +1,17 @@
 NAME = miniRT
+MODE ?= release
 
-OBJ_DIR = obj
+OBJ_DIR = obj-$(MODE)
 INCLUDES = -Iincludes -Ilibft/includes -Imlx
+LIBS = libft/bin/libft.a mlx/libmlx.a
 
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -MMD -MP $(INCLUDES)
 MLXFLAGS = -lX11 -lXext -lbsd -lm
+
+ifeq ($(MODE), debug)
+	CFLAGS += -g3 -D DEFAULT_BOUNCE=1
+endif
 
 VPATH = srcs:srcs/parser:srcs/renderer:srcs/camera:srcs/textures
 
@@ -43,76 +49,76 @@ SRCS =	main.c					\
 		ppm_header.c			\
 		ppm_utils.c				\
 		effects.c				\
-		ppm_saver.c				\
+		ppm_saver.c
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
+BIN = $(NAME)
 
-MODE ?= release
-
-ifeq ($(MODE), debug)
-	CFLAGS += -g3 -D DEFAULT_BOUNCE=1
-endif
-
-
-RESET 			= \033[0m
+RESET			= \033[0m
 GRAY			= \033[90m
 RED 			= \033[31m
 GREEN 			= \033[32m
 YELLOW 			= \033[33m
 BLUE 			= \033[34m
 
-all: $(OBJ_DIR) libft mlx $(NAME)
+all: 
+	$(MAKE) libft
+	$(MAKE) mlx
+	$(MAKE) $(BIN)
 	printf "$(RESET)"
 
+debug:
+	$(MAKE) MODE=debug
+
+release:
+	$(MAKE) MODE=release
+
 $(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)
 
 libft:
-	@echo "Compiling libft..."
-	@$(MAKE) -C libft
+	$(MAKE) -C libft
 
 mlx:
-	@echo "Compiling mlx..."
-	@$(MAKE) -C mlx > /dev/null 2>&1
+	$(MAKE) -C mlx > /dev/null 2>&1
 
-$(NAME): $(OBJS) libft mlx Makefile
-	$(CC) $(CFLAGS) $(OBJS) libft/bin/libft.a mlx/libmlx.a -o $(NAME) $(MLXFLAGS)
+$(BIN): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $@ $(MLXFLAGS)
 
-$(OBJ_DIR)/%.o: %.c Makefile | $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -c $< -o $@
-	printf "$(GRAY)compiling: $(BLUE)%-40s $(GRAY)[%d/%d]\n" "$<" "$$(ls obj | wc -l)" "$(words $(SRCS))"
+$(OBJ_DIR)/%.o: %.c Makefile $(LIBS)| $(OBJ_DIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+	printf "$(GRAY)compiling: $(BLUE)%-40s $(GRAY)[%d/%d]\n" "$<" "$$(ls $(OBJ_DIR) | grep -c '\.o')" "$(words $(SRCS))"
 
 norm:
-		norminette srcs includes
+	norminette srcs includes
 
 file = scene1
 
 scene: all
-		./$(NAME) scenes/$(file).rt
+	./$(BIN) scenes/$(file).rt
 
 leaks: all
-		valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=all ./$(NAME) scenes/$(file).rt
+	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=all ./$(BIN) scenes/$(file).rt
 
 callgrind: all
-		valgrind --tool=callgrind --dump-instr=yes --collect-jumps=yes ./$(NAME) scenes/$(file).rt
+	valgrind --tool=callgrind --dump-instr=yes --collect-jumps=yes ./$(BIN) scenes/$(file).rt
 
 clean:
-	rm -rf $(OBJ_DIR)
-	$(MAKE) -C libft clean > /dev/null 2>&1
+	rm -rf obj-debug obj-release
+	$(MAKE) -C libft clean
 	$(MAKE) -C mlx clean > /dev/null 2>&1
 
-fclean:
-	rm -rf $(OBJ_DIR)
+fclean: clean
 	rm -f $(NAME)
-	$(MAKE) -C libft fclean > /dev/null 2>&1
+	$(MAKE) -C libft fclean
 	$(MAKE) -C mlx clean > /dev/null 2>&1
-	rm -f mlx/libmlx.a > /dev/null 2>&1
+	rm -f mlx/libmlx.a
 
 re: fclean all
 
-.PHONY: all libft mlx leaks clean fclean re
+.PHONY: all libft mlx leaks clean fclean re debug release
 
 -include $(DEPS)
 .SILENT:
-
+MAKEFLAGS=--no-print-directory
