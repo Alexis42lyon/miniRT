@@ -5,6 +5,11 @@
 !mlx
 !scenes
 !srcs
+!srcs/button
+!srcs/camera
+!srcs/parser
+!srcs/renderer
+!srcs/textures
 !Makefile
 !*.h
 !*.c
