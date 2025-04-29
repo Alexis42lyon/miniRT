@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/25 11:46:35 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/29 08:57:27 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ typedef struct s_scene
 	int				nb_bounces;
 
 	t_mat			*materials;
+	size_t			nb_materials;
 
 	int				vp_flags;
 	t_uint			frame_count;

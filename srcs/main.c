@@ -6,13 +6,14 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:02 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/28 10:39:38 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/29 08:57:43 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "texture.h"
 #include "window.h"
 #include "parser.h"
+#include "button.h"
 #include <stdbool.h>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -23,6 +24,7 @@ int	main(int ac, char **av)
 	t_parser		parser;
 	t_scene			scene;
 	t_win_scene		win_scene;
+	t_win_button	win_button;
 
 	if (ac != 2)
 	{
@@ -38,6 +40,7 @@ int	main(int ac, char **av)
 	prog.parser = &parser;
 	prog.scene = &scene;
 	prog.win_scene = &win_scene;
+	prog.win_button = &win_button;
 	init(&prog, av[1]);
 	init_win(&prog);
 	free_all(&prog);

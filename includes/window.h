@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/25 13:39:03 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/29 08:57:34 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <mlx.h>
 # include <sys/types.h>
 
-# define SHOW_BUTTON 0
 # define SHOW_LOGGING 0
 
 # define WIDTH 720
