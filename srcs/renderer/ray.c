@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:01:00 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/28 11:44:31 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/28 16:08:08 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ t_ray	get_ray(float u, float v, t_viewport vp)
 t_hit	hit_fail(void)
 {
 	return ((t_hit){
-		{0, 0, 0},
-		{0, 0, 0},
-		-1,
-		-1,
-		-1,
-		NONE,
+		.point = {0, 0, 0},
+		.normal = {0, 0, 0},
+		.distance = -1,
+		.obj_index = -1,
+		.mat = default_mat(),
+		.type = NONE,
 	});
 }

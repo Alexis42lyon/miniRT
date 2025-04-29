@@ -4,7 +4,7 @@ OBJ_DIR = obj
 INCLUDES = -Iincludes -Ilibft/includes -Imlx
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -MMD -MP $(INCLUDES) -g3
+CFLAGS = -Wall -Werror -Wextra -MMD -MP $(INCLUDES)
 MLXFLAGS = -lX11 -lXext -lbsd -lm
 
 VPATH = srcs:srcs/parser:srcs/renderer:srcs/camera:srcs/textures
@@ -47,6 +47,12 @@ SRCS =	main.c					\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
+
+MODE ?= release
+
+ifeq ($(MODE), debug)
+	CFLAGS += -g3 -D DEFAULT_BOUNCE=1
+endif
 
 
 RESET 			= \033[0m

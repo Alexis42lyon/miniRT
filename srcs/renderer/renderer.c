@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/28 15:53:08 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/28 16:27:53 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,25 +50,17 @@ t_viewport	viewport(t_win_scene *win, t_scene *scene)
 	return (vp);
 }
 
-float	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed, t_vec3 *dof_px)
+t_hit	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed, t_vec3 *dof_px)
 {
 	t_hit	hit;
-	t_mat	mat;
-	float	new_mult;
 
-	new_mult = 0.7f;
+	(void)final_color;
+	(void)seed;
 	hit = trace_ray(*ray, scene);
 	if (hit.distance == -1)
 	{
-		t_vec3 unit_direction = vec3_normalize(ray->dir);
-		float a = 0.5 * (unit_direction.y + 1.0);
-		t_vec3 sky_col = vec3_add(
-			vec3_mult((t_vec3){1.0, 1.0, 1.0}, (1.0-a)),
-			vec3_mult(scene->sky_color, a));
-		sky_col = vec3_mult(sky_col, scene->ambient_light.ratio);
-
-		*final_color = vec3_add(*final_color, sky_col);
-		return (0);
+		// *final_color = vec3_add(*final_color, sky_col);
+		return (hit_fail());
 	}
 	if (vec3_lenght_square(*dof_px) == 0)
 	{
@@ -78,42 +70,38 @@ float	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed, t_vec
 		*dof_px = vec3_clamp(*dof_px, 0, 1);
 	}
 
-	mat = scene->materials[hit.mat_idx];
 	float u, v;
-	if (mat.texture_map.header.type[0] != -1)
+	if (hit.mat.texture_map.header.type[0] != -1)
 	{
 		sp_coordinate_to_uv(hit.normal, &u, &v);
-		mat.albedo = vec3_multv(mat.albedo, get_px(u, v, &mat.texture_map));
+		hit.mat.albedo = vec3_multv(hit.mat.albedo, get_px(u, v, &hit.mat.texture_map));
 	}
-	if (mat.use_checker)
-		mat.albedo = checker_color(hit, mat);
-	if (mat.emission_power == 0)
+	if (hit.mat.use_checker)
+		hit.mat.albedo = checker_color(hit, hit.mat);
+	if (hit.mat.emission_power == 0)
 	{
-		*final_color = vec3_add(*final_color, phong_shading(scene, hit, mat, *ray));
-		new_mult *= vec3_lenght_square(mat.albedo) / 3 + 0.5;
+		// *final_color = vec3_add(*final_color, phong_shading(scene, hit, hit.mat, *ray));
 		// printf("%lf\n", new_mult);
 	}
 	else
 	{
-		new_mult += mat.emission_power;
-		*final_color = mat.albedo;
+		// *final_color = hit.mat.albedo;
 	}
-	ray->origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));
-	ray->dir = vec3_reflect(ray->dir,
-			vec3_add(hit.normal, vec3_mult(random_vec(seed), mat.roughtness)));
-	return (new_mult);
+
+	return (hit);
 }
 
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 {
 	t_ray	ray;
 	t_vec3	final_color;
-	float	mutiplier;
+	t_vec3	radiance;
 	t_uint	seed;
-	float	new_mult;
+	t_hit	hit;
 	int	x;
+	// float	mult = 0.5f;
 
-	mutiplier = 1.0f;
+	radiance = scene->ambient_light.color;
 	final_color = vec3_zero();
 	ray = get_ray((float)(i) / ((float)vp.width),
 			(float)(j) / (float)(vp.height), vp);
@@ -122,14 +110,26 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	while (x < scene->nb_bounces)
 	{
 		seed *= x + 1;
-		new_mult = bounce(&final_color, scene, &ray, seed, &vp.win->depth_map[i + j * vp.width]);
-		if (new_mult == 0)
+		hit = bounce(&final_color, scene, &ray, seed, &vp.win->depth_map[i + j * vp.width]);
+		if (hit.distance == -1)
+		{
+			t_vec3 unit_direction = vec3_normalize(ray.dir);
+			float a = 0.5 * (unit_direction.y + 1.0);
+			t_vec3 sky_col = vec3_add(
+			vec3_mult((t_vec3){1.0, 1.0, 1.0}, (1.0-a)),
+			vec3_mult(scene->sky_color, a));
+			sky_col = vec3_mult(sky_col, scene->ambient_light.ratio);
+			final_color = vec3_add(final_color, sky_col);
 			break ;
-		final_color = vec3_mult(final_color, mutiplier);
+		}
+		final_color = vec3_add(final_color, vec3_multv(vec3_divide(hit.mat.albedo, 3.1415), radiance));
+		final_color = vec3_add(final_color, phong_shading(scene, hit, hit.mat, ray));
+		radiance = vec3_multv(radiance, hit.mat.albedo);
+		ray.origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));
+		ray.dir = vec3_reflect(ray.dir,
+			vec3_add(hit.normal, vec3_mult(random_vec(seed), hit.mat.roughtness)));
 		x++;
 	}
-	if (x != scene->nb_bounces)
-		final_color = vec3_mult(final_color, mutiplier);
 	return (vec3_clamp(final_color, 0, 1));
 }
 

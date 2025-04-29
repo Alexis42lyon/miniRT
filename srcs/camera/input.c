@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:33:51 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/28 14:16:15 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/29 08:28:58 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ int key_down(int keycode, t_prog *prog)
 		ft_log(LOG, "bounce:%d", prog->scene->nb_bounces);
 	}
 	else if (keycode == 65451)
+	{
 		prog->scene->nb_bounces++;
+		ft_log(LOG, "bounce:%d", prog->scene->nb_bounces);
+	}
 	if (keycode == 'i')
 	{
 		prog->win_scene->img_flags ^= INVERT;

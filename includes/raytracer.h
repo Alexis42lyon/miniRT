@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/28 15:53:16 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/29 08:49:14 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@
 #include <stddef.h>
 
 # define DEFAULT_EMMI_POWER 1
-# define DEFAULT_BOUNCE 2
+
+# ifndef DEFAULT_BOUNCE
+# define DEFAULT_BOUNCE 10
+# endif
 
 # define AMBIENT 0b0001
 # define DIFFUSE 0b0010
@@ -55,7 +58,7 @@ typedef struct hit_info
 	double				distance;
 
 	size_t				obj_index;
-	size_t				mat_idx;
+	t_mat				mat;
 	enum e_object_type	type;
 
 }	t_hit;
