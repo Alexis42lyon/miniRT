@@ -14,6 +14,8 @@
 #define SLIDER_HANDLE_WIDTH 10
 #define SLIDER_COLOR 0x888888
 #define SLIDER_HANDLE_COLOR 0xFFFFFF
+#define SLIDER_RATIO_AMBIENT_WIDTH 25
+#define SLIDER_RATIO_AMBIENT_HEIGHT 80
 
 typedef int	(*t_button_func)(t_prog *);
 
@@ -68,12 +70,16 @@ typedef struct s_win_button
 	int				is_dragging;
 }	t_win_button;
 
+// button.c
 void	init_button_window(t_prog *prog);
+void	draw_button_window(t_prog *prog, t_win_button *win_btn);
 
 // put_string_win.c
 void	put_string_win(t_prog *prog, t_win_button *win_btn);
 
 // slider.c
 void	draw_slider(int x, int y, float value, t_data *img);
+// tabs.c
+void	handle_tabs(t_prog *prog, t_win_button *win_btn, int x, int y);
 
 #endif

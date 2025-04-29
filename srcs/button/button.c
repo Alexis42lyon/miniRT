@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:08:54 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/29 18:42:56 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/29 19:00:26 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	draw_tabs(t_data *img, t_win_button *win_btn)
 		draw_tab_objects(win_btn, img, (win_btn->width - 30) / SUB_COUNT);
 }
 
-static void	draw_button_window(t_prog *prog, t_win_button *win_btn)
+void	draw_button_window(t_prog *prog, t_win_button *win_btn)
 {
 	t_data	img;
 
@@ -84,7 +84,8 @@ static void	draw_button_window(t_prog *prog, t_win_button *win_btn)
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
 			&img.line_length, &img.endian);
 	draw_tabs(&img, win_btn);
-	draw_slider(50, 100, win_btn->ambient_ratio, &img);
+	if (win_btn->current_tab == TAB_LIGHTS)
+		draw_slider(SLIDER_RATIO_AMBIENT_WIDTH, SLIDER_RATIO_AMBIENT_HEIGHT, win_btn->ambient_ratio, &img);
 	mlx_put_image_to_window(win_btn->mlx_ptr, win_btn->win_ptr, img.img, 0, 0);
 	mlx_destroy_image(win_btn->mlx_ptr, img.img);
 	put_string_win(prog, win_btn);
@@ -119,8 +120,8 @@ static int	handle_button_click(int button, int x, int y, t_prog *prog)
 	if (button == 1)
 	{
 		handle_tabs(prog, win_btn, x, y);
-		if (win_btn->current_tab == TAB_LIGHTS && x >= 25
-			&& x <= 25 + SLIDER_WIDTH && y >= 80 && y <= 80 + SLIDER_HEIGHT)
+		if (win_btn->current_tab == TAB_LIGHTS && x >= SLIDER_RATIO_AMBIENT_WIDTH
+			&& x <= SLIDER_RATIO_AMBIENT_WIDTH + SLIDER_WIDTH && y >= SLIDER_RATIO_AMBIENT_HEIGHT && y <= SLIDER_RATIO_AMBIENT_HEIGHT + SLIDER_HEIGHT)
 			win_btn->is_dragging = 1;
 	}
 	return (0);
