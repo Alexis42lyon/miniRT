@@ -14,8 +14,8 @@
 #define SLIDER_HANDLE_WIDTH 10
 #define SLIDER_COLOR 0x888888
 #define SLIDER_HANDLE_COLOR 0xFFFFFF
-#define SLIDER_RATIO_AMBIENT_WIDTH 25
-#define SLIDER_RATIO_AMBIENT_HEIGHT 80
+#define SLIDER_RATIO_AMBIENT_WIDTH 120
+#define SLIDER_RATIO_AMBIENT_HEIGHT 75
 
 typedef int	(*t_button_func)(t_prog *);
 
@@ -34,6 +34,18 @@ enum e_subtab
 	SUB_CONE,
 	SUB_COUNT
 };
+
+typedef struct s_color_picker
+{
+	int		x;
+	int		y;
+	int		width;
+	int		height;
+	int		r;
+	int		g;
+	int		b;
+	bool	is_dragging;
+}	t_color_picker;
 
 typedef struct s_button
 {
@@ -66,7 +78,6 @@ typedef struct s_win_button
 	t_tab_data		tabs[TAB_COUNT];
 	t_button		tab_buttons[TAB_COUNT];
 	t_button		ratio_slider;
-	float			ambient_ratio;
 	int				is_dragging;
 }	t_win_button;
 

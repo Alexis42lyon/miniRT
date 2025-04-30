@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:20:06 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/29 16:56:45 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/30 13:35:00 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,16 @@ static void	put_string_objects(t_win_button *win_btn)
 	}
 }
 
-static void	put_string_lights(t_win_button *win_btn)
+static void	put_string_lights(t_prog *prog, t_win_button *win_btn)
 {
-	char	ratio_str[32];
+	char		ratio_str[12];
 
-	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr, 25, 50,
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		CONTROL_WINDOW_WIDTH / 2 - 50, TAB_HEIGHT + 25,
 		TEXT_COLOR, "Ambient Lightning:");
-	snprintf(ratio_str, 32, "Ratio: %.2f", win_btn->ambient_ratio);
-	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr, 25, 70,
+	snprintf(ratio_str, 12, "Ratio: %.2f", prog->scene->ambient_light.ratio);
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		20, SLIDER_RATIO_AMBIENT_HEIGHT + 13,
 		TEXT_COLOR, ratio_str);
 }
 
@@ -65,12 +67,12 @@ void	put_string_win(t_prog *prog, t_win_button *win_btn)
 	while (++i < TAB_COUNT)
 	{
 		mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
-			win_btn->tab_buttons[i].x + 10 - i,
+			win_btn->tab_buttons[i].x + 30 - i * 2,
 			win_btn->tab_buttons[i].y + TAB_HEIGHT / 2 + 5,
 			TEXT_COLOR, win_btn->tab_buttons[i].text);
 	}
 	if (win_btn->current_tab == TAB_LIGHTS)
-		put_string_lights(win_btn);
+		put_string_lights(prog, win_btn);
 	else if (win_btn->current_tab == TAB_OBJECTS)
 		put_string_objects(win_btn);
 	else if (win_btn->current_tab == TAB_MATERIALS)
