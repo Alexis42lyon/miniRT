@@ -73,10 +73,10 @@ all:
 	printf "$(RESET)"
 
 debug:
-	$(MAKE) MODE=debug
+	$(MAKE) MODE=debug scene
 
 release:
-	$(MAKE) MODE=release
+	$(MAKE) MODE=release scene
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
