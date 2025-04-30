@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:33:51 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/29 08:28:58 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/30 10:47:41 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int key_down(int keycode, t_prog *prog)
 		prog->scene->vp_flags ^= SPECULAR;
 	else if (keycode == '4')
 		prog->scene->vp_flags ^= NORMAL;
+	else if (keycode == '5')
+		prog->scene->vp_flags ^= UV;
 	else if (keycode == 'w')
 		prog->scene->camera.movekeys |= MOVE_FORWARD;
 	else if (keycode == 'a')

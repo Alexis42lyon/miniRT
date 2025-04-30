@@ -1,10 +1,10 @@
 default 125,125,150 0.0 1 126 0.6 1 # # 
-monkey 125,125,150 0.0 1 126 0.6 0 ./assets/monkey.ppm # 
+monkey 125,125,150 5 1 126 0.6 0 ./assets/monkey.ppm # 
 white 170,170,170 0.0 1.0 0 0.0 0 # # 
 red 170,20,20 0.0 1.0 512 0.0 0 # # 
 e_red 170,20,20 15 1.0 0 0.0 0 # # 
 green 20,170,20 0.0 1.0 0 0.0 0 # # 
-earth 200,200,200 0.0 1 0 0.0 0  ./assets/earth.ppm ./assets/earthnormal.ppm
+earth 200,200,200 2 1 0 0.0 0  ./assets/earth.ppm ./assets/earthnormal.ppm
 stone 255,255,255 0 1 0 0.0 0 ./assets/stone_color.ppm ./assets/stone_normal.ppm
 mars 255,255,255 0 0.1 0 0.0 0 ./assets/mars_color.ppm ./assets/mars_normal.ppm
 metal 70,50,50 0.0 0.5 512 1.0 0 # # 

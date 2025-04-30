@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/29 13:22:54 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/30 10:46:00 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define DIFFUSE 0b0010
 # define SPECULAR 0b0100
 # define NORMAL 0b1000
-# define DENOISE 0b10000
+# define UV 0b10000
 # define RENDER_PAUSE 0b100000
 # define SHOW_FRAME 0b1000000
 # define MAX_TRHEAD 20

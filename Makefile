@@ -10,7 +10,7 @@ CFLAGS = -Wall -Werror -Wextra -MMD -MP $(INCLUDES)
 MLXFLAGS = -lX11 -lXext -lbsd -lm
 
 ifeq ($(MODE), debug)
-	CFLAGS += -g3 -D DEFAULT_BOUNCE=1
+	CFLAGS = -Wall -Wextra -MMD -MP $(INCLUDES) -g3 -D DEFAULT_BOUNCE=2
 endif
 
 VPATH = srcs:srcs/parser:srcs/renderer:srcs/camera:srcs/textures:srcs/button

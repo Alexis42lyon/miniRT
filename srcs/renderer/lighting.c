@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/29 12:33:32 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/30 10:51:01 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 					get_px(u, v, &mat.normal_map), 2.0), (t_vec3){-1,-1,-1}));
 	}
 	if (scene->vp_flags & NORMAL)
+	{
 		mat.albedo = normal_color(hit);
+		return mat.albedo;
+	}
 	ambient = vec3_zero();
 	diffuse = vec3_zero();
 	specular = vec3_zero();

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/29 16:10:24 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:58:19 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,12 @@ t_hit	bounce(t_scene *scene, t_ray *ray, t_vec3 *dof_px)
 		hit.mat.albedo = vec3_multv(hit.mat.albedo, get_px(u, v, &hit.mat.texture_map));
 	}
 
-	// if (hit.type == SPHERE || hit.type == CYLINDER || hit.type == CONE)
-	// {
-	// 	get_uv(scene, hit, &u, &v);
-	// 	hit.mat.albedo = (t_vec3){u, v, 0};
-	// }
+	if (scene->vp_flags & UV)
+	{
+		get_uv(scene, hit, &u, &v);
+		hit.mat.albedo = (t_vec3){u, v, 0};
+		hit.mat.emission_power = 5;
+	}
 	if (hit.mat.use_checker)
 		hit.mat.albedo = checker_color(hit, hit.mat);
 	return (hit);
@@ -92,7 +93,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	t_hit	hit;
 	int	x;
 
-	radiance = scene->ambient_light.color;
+	radiance = vec3_mult(scene->ambient_light.color, scene->ambient_light.ratio);
 	final_color = vec3_zero();
 	ray = get_ray((float)(i) / ((float)vp.width),
 			(float)(j) / (float)(vp.height), vp);
@@ -110,7 +111,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 			vec3_mult((t_vec3){1.0, 1.0, 1.0}, (1.0-a)),
 			vec3_mult(scene->sky_color, a));
 			sky_col = vec3_mult(sky_col, scene->ambient_light.ratio);
-			final_color = vec3_add(final_color, sky_col);
+			final_color = vec3_add(final_color, vec3_divide(sky_col, x + 1));
 			break ;
 		}
 		if (hit.mat.emission_power != 0)

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:11:54 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/25 12:20:52 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/30 13:42:59 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*create_save_path(void)
 	strings[0].to_free = 0;
 	strings[1].string = "miniRT_render_";
 	strings[1].to_free = 0;
-	strings[2].string = ft_itoa(get_current_time_ms());
+	strings[2].string = ft_itoa(ft_abs((int)get_current_time_ms()));
 	strings[2].to_free = 1;
 	strings[3].string = ".ppm";
 	strings[3].to_free = 0;
