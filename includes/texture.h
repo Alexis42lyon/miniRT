@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 12:12:29 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/25 11:49:10 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/29 14:03:32 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # include "libft/vector.h"
 # include "miniRT.h"
+# include "raytracer.h"
 
 # include <stdint.h>
 # include <sys/types.h>
@@ -32,5 +33,8 @@ t_vec3	get_px(float u, float v, t_ppm_image *image);
 void			print_ppm_header(t_ppm_header header, const char *name);
 
 void	save_image_to_ppm(t_win_scene *win);
+
+// uv.h
+void	get_uv(t_scene *scene, t_hit hit, float *u, float *v);
 
 #endif // !TEXTURE_H

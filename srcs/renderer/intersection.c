@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:01:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/28 15:54:35 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/29 12:27:04 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,9 +122,16 @@ t_hit	trace_ray(t_ray ray, t_scene *scene)
 	t_hit	hit;
 	t_hit	tmp_hit;
 
-	hit = get_min_dist(sphere_hit, ray, (struct s_objs_data)
+	ft_bzero(&hit, sizeof(t_hit));
+	hit.distance = 2147483648;
+	hit.obj_index = -1;
+	tmp_hit = get_min_dist(sphere_hit, ray, (struct s_objs_data)
 		{scene->spheres, scene->nb_spheres, sizeof(t_sphere)});
-	hit.type = SPHERE;
+	if (tmp_hit.distance != -1 && tmp_hit.distance < ray.length)
+	{
+		hit = tmp_hit;
+		hit.type = SPHERE;
+	}	
 	tmp_hit = get_min_dist(plane_hit, ray, (struct s_objs_data)
 		{scene->planes, scene->nb_planes, sizeof(t_plane)});
 	if (tmp_hit.distance != -1 && tmp_hit.distance < hit.distance && tmp_hit.distance < ray.length)

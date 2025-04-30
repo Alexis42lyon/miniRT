@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/29 08:49:14 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/29 13:22:54 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <math.h>
 # include <pthread.h>
 #include <stddef.h>
-
-# define DEFAULT_EMMI_POWER 1
 
 # ifndef DEFAULT_BOUNCE
 # define DEFAULT_BOUNCE 10
@@ -33,6 +31,10 @@
 # define SHOW_FRAME 0b1000000
 # define MAX_TRHEAD 20
 # define LIGHT_RANGE 2
+
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
 
 enum	e_object_type
 {
@@ -141,7 +143,6 @@ t_viewport	viewport(t_win_scene *win, t_scene *scene);
 double		sphere_hit(void *p_sphere, const t_ray ray);
 t_hit		hit_result(const t_vec3 origin, const t_ray r, const double t,
 				const size_t idx);
-void	sp_coordinate_to_uv(t_vec3 normal, float *u, float *v);
 
 // place.c
 double		plane_hit(void *p_plane, const t_ray ray);

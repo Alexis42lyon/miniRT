@@ -53,6 +53,7 @@ SRCS =	main.c					\
 		put_string_win.c		\
 		slider.c				\
 		tabs.c					\
+		uv.c					\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)

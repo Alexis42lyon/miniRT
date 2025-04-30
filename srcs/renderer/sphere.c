@@ -3,25 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:06 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/20 11:38:41 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/29 12:00:43 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/vector.h"
 #include "raytracer.h"
-#include <math.h>
 #include <stdio.h>
 
-void	sp_coordinate_to_uv(t_vec3 normal, float *u, float *v)
-{
-	*u = 0.5 - (atan2(normal.z, normal.x) / (2 * 3.1415926535)) ;
-	*v = 0.5 - (asin(normal.y) / 3.1415926535);
-}
-
-// TODO: when type == PLANE origin is often 0,0,0
 t_hit	hit_result(const t_vec3 origin, const t_ray r, const double t,
 	const size_t idx)
 {

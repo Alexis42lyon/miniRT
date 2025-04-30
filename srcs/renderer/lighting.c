@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/28 15:45:06 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/29 12:33:32 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 	struct s_light_info	info;
 	float	u, v;
 
-	sp_coordinate_to_uv(hit.normal, &u, &v);
+	get_uv(scene, hit, &u, &v);
 
 	if (mat.normal_map.values)
 	{
@@ -64,8 +64,6 @@ t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 	ambient = vec3_zero();
 	diffuse = vec3_zero();
 	specular = vec3_zero();
-	// if (scene->vp_flags & AMBIENT)
-	// 	ambient = phong_ambient(scene, mat);
 	for (size_t i = 0; i < scene->nb_lights; i++)
 	{
 		info = new_info(scene->lights[i], hit, mat, ray);
