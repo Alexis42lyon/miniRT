@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/29 16:35:11 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:07:28 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,25 +78,25 @@ typedef struct s_win_scene
 /* ------------------------------- END BUTTON ------------------------------ */
 
 // image.c
-int		create_img(t_win_scene *win);
-void	set_pixel(t_data *data, int x, int y, int color);
-int		create_trgb(int t, int r, int g, int b);
+int				create_img(t_win_scene *win);
+void			set_pixel(t_data *data, int x, int y, int color);
+int				create_trgb(int t, int r, int g, int b);
 unsigned int	get_pixel(t_data *data, int x, int y);
 
 // window.c
-void	init_win(t_prog *prog);
-int		window_close(void *prog);
-int		key_hook(int keycode, t_prog *prog);
+void			init_win(t_prog *prog);
+int				window_close(void *prog);
+int				key_hook(int keycode, t_prog *prog);
 
-void	run_pipeline(t_prog *prog);
-int		new_frame(t_prog *prog);
+void			run_pipeline(t_prog *prog);
+int				new_frame(t_prog *prog);
 
 // button.c
-void	init_button_window(t_prog *prog);
+void			init_button_window(t_prog *prog);
 
 // effects.c
-void	invert_effect(t_win_scene *win, int i, int j);
-void	depth_of_field(t_win_scene *win, int i, int j);
-void	depth_effect(t_win_scene *win, int i, int j);
+void			invert_effect(t_win_scene *win, int i, int j);
+void			depth_of_field(t_win_scene *win, int i, int j);
+void			depth_effect(t_win_scene *win, int i, int j);
 
 #endif

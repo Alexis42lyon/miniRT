@@ -1,6 +1,8 @@
 #ifndef BUTTON_H
 # define BUTTON_H
 
+# include "window.h"
+
 #define SHOW_BUTTON 1
 #define TAB_COUNT 3
 #define TAB_HEIGHT 30
@@ -79,6 +81,7 @@ typedef struct s_win_button
 	t_button		tab_buttons[TAB_COUNT];
 	t_button		ratio_slider;
 	int				is_dragging;
+	int				index_color_picked_light;
 }	t_win_button;
 
 // button.c

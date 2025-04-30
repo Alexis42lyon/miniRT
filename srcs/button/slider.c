@@ -6,12 +6,15 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:02:04 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/29 16:55:51 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:47:22 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "window.h"
 #include "button.h"
+
+#if SHOW_BUTTON
+
+#include "window.h"
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -40,3 +43,5 @@ void	draw_slider(int x, int y, float value, t_data *img)
 					* (img->bits_per_pixel / 8)) = SLIDER_HANDLE_COLOR;
 	}
 }
+
+#endif

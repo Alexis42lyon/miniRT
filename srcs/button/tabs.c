@@ -6,12 +6,15 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 18:42:44 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/30 11:19:22 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:48:17 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "window.h"
 #include "button.h"
+
+#if SHOW_BUTTON
+
+#include "window.h"
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -55,3 +58,5 @@ void	handle_tabs(t_prog *prog, t_win_button *win_btn, int x, int y)
 		}
 	}
 }
+
+#endif

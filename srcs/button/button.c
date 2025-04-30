@@ -6,17 +6,18 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:08:54 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/30 13:33:58 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:06:44 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "window.h"
 #include "button.h"
+
+#if SHOW_BUTTON
+
+#include "window.h"
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
-
-#if SHOW_BUTTON
 
 static void	draw_tab_objects(t_win_button *win_btn, t_data *img)
 {
@@ -156,15 +157,22 @@ void	init_button_window(t_prog *prog)
 	int				i;
 	const float		tab_width = CONTROL_WINDOW_WIDTH / TAB_COUNT;
 
+	if (WIDTH < CONTROL_WINDOW_WIDTH || HEIGHT < 100)
+	{
+		ft_dprintf(2, RED "Error: Window width is too small for button window.\n");
+		return ;
+	}
 	win_btn = prog->win_button;
-	*win_btn = (t_win_button){
+	*win_btn = (t_win_button)
+	{
 		.width = CONTROL_WINDOW_WIDTH,
 		.height = prog->win_scene->height,
 		.mlx_ptr = prog->win_scene->mlx_ptr,
 		.win_ptr = mlx_new_window(prog->win_scene->mlx_ptr,
 			CONTROL_WINDOW_WIDTH, prog->win_scene->height, "Control Panel"),
 		.current_tab = TAB_LIGHTS,
-		.is_dragging = 0
+		.is_dragging = 0,
+		.index_color_picked_light = 0,
 	};
 	i = -1;
 	while (++i < TAB_COUNT)

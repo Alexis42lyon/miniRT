@@ -6,12 +6,15 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:20:06 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/30 13:35:00 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/30 14:47:27 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "window.h"
 #include "button.h"
+
+#if SHOW_BUTTON
+
+#include "window.h"
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -48,7 +51,8 @@ static void	put_string_objects(t_win_button *win_btn)
 
 static void	put_string_lights(t_prog *prog, t_win_button *win_btn)
 {
-	char		ratio_str[12];
+	char	ratio_str[12];
+	char	color_ambient_light[23];
 
 	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
 		CONTROL_WINDOW_WIDTH / 2 - 50, TAB_HEIGHT + 25,
@@ -57,6 +61,14 @@ static void	put_string_lights(t_prog *prog, t_win_button *win_btn)
 	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
 		20, SLIDER_RATIO_AMBIENT_HEIGHT + 13,
 		TEXT_COLOR, ratio_str);
+	snprintf(color_ambient_light, 23, "Color: (%d, %d, %d)",
+		(int)(prog->scene->ambient_light.color.x * 255),
+		(int)(prog->scene->ambient_light.color.y * 255),
+		(int)(prog->scene->ambient_light.color.z) * 255);
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		CONTROL_WINDOW_WIDTH / 2 - 60, SLIDER_RATIO_AMBIENT_HEIGHT * 1.5 + 13,
+		TEXT_COLOR, color_ambient_light);
+
 }
 
 void	put_string_win(t_prog *prog, t_win_button *win_btn)
@@ -78,3 +90,5 @@ void	put_string_win(t_prog *prog, t_win_button *win_btn)
 	else if (win_btn->current_tab == TAB_MATERIALS)
 		put_string_materials(prog, win_btn);
 }
+
+#endif
