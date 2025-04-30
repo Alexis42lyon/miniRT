@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:08:54 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/30 15:06:44 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:16:50 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 #if SHOW_BUTTON
 
-#include "window.h"
-#include <math.h>
-#include <stdio.h>
-#include <string.h>
+# include "window.h"
+# include <math.h>
+# include <stdio.h>
+# include <string.h>
 
 static void	draw_tab_objects(t_win_button *win_btn, t_data *img)
 {
@@ -159,7 +159,8 @@ void	init_button_window(t_prog *prog)
 
 	if (WIDTH < CONTROL_WINDOW_WIDTH || HEIGHT < 100)
 	{
-		ft_dprintf(2, RED "Error: Window width is too small for button window.\n");
+		ft_dprintf(2, RED
+			"Error: Window width is too small for button window.\n");
 		return ;
 	}
 	win_btn = prog->win_button;

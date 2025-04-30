@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:20:06 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/30 14:47:27 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/04/30 15:16:33 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 #if SHOW_BUTTON
 
-#include "window.h"
-#include <math.h>
-#include <stdio.h>
-#include <string.h>
+# include "window.h"
+# include <math.h>
+# include <stdio.h>
+# include <string.h>
 
 static void	put_string_materials(t_prog *prog, t_win_button *win_btn)
 {
@@ -68,7 +68,6 @@ static void	put_string_lights(t_prog *prog, t_win_button *win_btn)
 	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
 		CONTROL_WINDOW_WIDTH / 2 - 60, SLIDER_RATIO_AMBIENT_HEIGHT * 1.5 + 13,
 		TEXT_COLOR, color_ambient_light);
-
 }
 
 void	put_string_win(t_prog *prog, t_win_button *win_btn)
