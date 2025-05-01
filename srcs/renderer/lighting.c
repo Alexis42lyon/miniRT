@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/30 10:51:01 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 11:01:28 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	in_light(t_scene *scene, t_hit hit, struct s_light_info infos)
 	return (light_hit.distance == -1);
 }
 
-struct s_light_info	new_info(t_light_source light, t_hit hit, t_mat mat, t_ray ray)
+struct s_light_info	new_info(
+	t_light_source light, t_hit hit, t_mat mat, t_ray ray)
 {
 	struct s_light_info	info;
 
@@ -43,17 +44,26 @@ struct s_light_info	new_info(t_light_source light, t_hit hit, t_mat mat, t_ray r
 	return (info);
 }
 
+t_light_pass	new_pass(void)
+{
+	return ((t_light_pass){
+		.ambient = vec3_zero(),
+		.diffuse = vec3_zero(),
+		.specular = vec3_zero(),
+		.merged_pass = vec3_zero()
+	});
+}
+
+
 t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 {
-	t_vec3				ambient;
-	t_vec3				diffuse;
-	t_vec3				specular;
-	t_vec3				merged_pass;
+	t_light_pass		pass;
 	struct s_light_info	info;
-	float	u, v;
+	float				u;
+	float				v;
 
+	pass = new_pass();
 	get_uv(scene, hit, &u, &v);
-
 	if (mat.normal_map.values)
 	{
 		hit.normal = vec3_normalize(vec3_add(vec3_mult(
@@ -64,23 +74,19 @@ t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 		mat.albedo = normal_color(hit);
 		return mat.albedo;
 	}
-	ambient = vec3_zero();
-	diffuse = vec3_zero();
-	specular = vec3_zero();
 	for (size_t i = 0; i < scene->nb_lights; i++)
 	{
 		info = new_info(scene->lights[i], hit, mat, ray);
 		if (in_light(scene, hit, info))
 		{
 			if (scene->vp_flags & DIFFUSE)
-				diffuse = vec3_add(diffuse, phong_diffuse(info));
+				pass.diffuse = vec3_add(pass.diffuse, phong_diffuse(info));
 			if (scene->vp_flags & SPECULAR)
-				specular = vec3_add(specular, phong_specular(info));
+				pass.specular = vec3_add(pass.specular, phong_specular(info));
 		}
 	}
-	merged_pass = vec3_zero();
-	merged_pass = vec3_add(merged_pass, ambient);
-	merged_pass = vec3_add(merged_pass, diffuse);
-	merged_pass = vec3_add(merged_pass, specular);
-	return (merged_pass);
+	pass.merged_pass = vec3_add(pass.merged_pass, pass.ambient);
+	pass.merged_pass = vec3_add(pass.merged_pass, pass.diffuse);
+	pass.merged_pass = vec3_add(pass.merged_pass, pass.specular);
+	return (pass.merged_pass);
 }

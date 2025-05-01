@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/29 15:49:17 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 12:21:27 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ typedef struct s_scene
 	t_mat			*materials;
 	size_t			nb_materials;
 
-	int				vp_flags;
+	t_uint			vp_flags;
 	t_uint			frame_count;
 	t_uint			total_render_time;
 	t_uint			min_render_time;
@@ -178,5 +178,6 @@ void	reset_accumulation(t_prog *prog);
 void	print_cam(const t_camera *cam);
 t_mat	default_mat(void);
 long	get_current_time_ms(void);
+void	show_stats(t_prog *prog);
 
 #endif

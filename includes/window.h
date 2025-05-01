@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 09:38:46 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 11:35:31 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 # define INVERT 0b0001
 # define DEPTH_OF_FIELD 0b0010
 # define DEPTH_MAP 0b0100
+# define PIXEL 0b1000
+# define CHROMA 0b10000
+# define GRAYSCALE 0b100000
 
 /* ----------------------------------- MLX ---------------------------------- */
 
@@ -98,5 +101,8 @@ void			init_button_window(t_prog *prog);
 void			invert_effect(t_win_scene *win, int i, int j);
 void			depth_of_field(t_win_scene *win, int i, int j);
 void			depth_effect(t_win_scene *win, int i, int j);
+void			chromatic_aberation(t_win_scene *win, int i, int j);
+void			grayscale(t_win_scene *win, int i, int j);
+void			pixelate(t_win_scene *win, int i, int j);
 
 #endif

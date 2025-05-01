@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 08:41:57 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 10:53:41 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
 # endif
+
+typedef struct light_pass
+{
+	t_vec3	ambient;
+	t_vec3	diffuse;
+	t_vec3	specular;
+	t_vec3	merged_pass;
+}	t_light_pass;
 
 enum	e_object_type
 {
@@ -133,6 +141,11 @@ t_vec3		ray_to_vec(t_ray r);
 
 // intersection.c
 t_hit		trace_ray(t_ray ray, t_scene *scene);
+t_vec3		cylinder_normal(t_cylinder cy, t_vec3 hit_point);
+t_vec3		cone_normal(t_cylinder co, t_vec3 hit_point);
+t_hit		get_min_dist(double (*f)(void*, t_ray), t_ray ray,
+			struct s_objs_data data);
+int			is_closest(t_hit hit, t_hit new_hit, t_ray ray);
 
 // renderer.c
 t_vec3		get_px_col(int i, int j, t_viewport vp, t_scene *scene);
@@ -167,5 +180,8 @@ void		anti_aliaser(t_prog *prog, t_win_scene *win);
 
 // denosing.c
 void		denoiser(t_prog *prog, t_win_scene *win);
+
+// hit.c
+t_hit		hit_succes(t_scene *scene, t_ray ray, t_hit hit);
 
 #endif

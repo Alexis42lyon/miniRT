@@ -54,6 +54,8 @@ SRCS =	main.c					\
 		slider.c				\
 		tabs.c					\
 		uv.c					\
+		hit.c					\
+		depth_of_field.c		\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)

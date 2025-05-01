@@ -6,14 +6,25 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:17 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/25 11:46:31 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 10:34:33 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/io.h"
 #include "window.h"
 #include "miniRT.h"
+#include "raytracer.h"
+
 #include <stdio.h>
+
+void	show_stats(t_prog *prog)
+{
+	if ((prog->scene->vp_flags & SHOW_FRAME) == 0)
+		return ;
+	ft_log(LOG, "frame " CYAN BOLD "%d" RESET
+		" render in" CYAN BOLD " %ums" RESET, prog->scene->frame_count -1,
+		prog->scene->total_render_time / prog->scene->frame_count -1);
+}
 
 void	reset_accumulation(t_prog *prog)
 {

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:47:10 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/28 11:36:49 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 09:47:44 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-t_ppm_image		ppm_image(char *path, t_prog *prog)
+t_ppm_image	ppm_image(char *path, t_prog *prog)
 {
 	t_ppm_image	img;
 	int			fd;
@@ -35,15 +35,15 @@ t_ppm_image		ppm_image(char *path, t_prog *prog)
 	close(fd);
 	if (img.values == NULL)
 		print_exit(prog, "image parsing failed");
-	// print_ppm_header(img.header, path);
 	ft_log(SUCCESS, "%s is loaded", path);
 	return (img);
 }
 
-void	print_values(t_vec3* values, t_ppm_header *header)
+void	print_values(t_vec3 *values, t_ppm_header *header)
 {
-	t_uint	i = 0;
+	t_uint	i;
 
+	i = 0;
 	while (i < header->width * header->height)
 	{
 		print_vec(values[i]);
@@ -51,13 +51,22 @@ void	print_values(t_vec3* values, t_ppm_header *header)
 	}
 }
 
+void	assign_values(
+	t_vec3 *value, unsigned char buff[3], t_ppm_header *header)
+{
+	value->x = (double)buff[0] / header->max_values;
+	value->y = (double)buff[1] / header->max_values;
+	value->z = (double)buff[2] / header->max_values;
+}
+
 t_vec3	*parse_image(t_ppm_header *header, int fd)
 {
-	t_vec3	*values;
+	t_vec3			*values;
 	unsigned char	buff[3];
-	int		i = 0;
-	int			nb_read;
+	int				i;
+	int				nb_read;
 
+	i = 0;
 	values = malloc(((header->width * header->height) + 2) * sizeof(t_vec3));
 	if (!values)
 		return (NULL);
@@ -72,9 +81,7 @@ t_vec3	*parse_image(t_ppm_header *header, int fd)
 		}
 		if (nb_read != 3)
 			break ;
-		values[i].x = (double)buff[0] / header->max_values;
-		values[i].y = (double)buff[1] / header->max_values;
-		values[i].z = (double)buff[2] / header->max_values;
+		assign_values(&values[i], buff, header);
 		i++;
 	}
 	return (values);

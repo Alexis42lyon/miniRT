@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:44:41 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/16 11:53:02 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/01 12:01:24 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct camera
 	int		last_x;
 	int		last_y;
 
-	uint8_t	movekeys;
+	t_uint	movekeys;
 
 }	t_camera;
 

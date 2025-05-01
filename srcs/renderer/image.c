@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:16:12 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/10 14:16:13 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 11:12:28 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ unsigned int	get_pixel(t_data *data, int x, int y)
 {
 	void			*dst;
 	unsigned int	color;
-		
+
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	color = *(unsigned int *)dst;
 	return (color);

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:11:54 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/30 13:42:59 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 09:51:57 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	write_values(t_win_scene *win, int fd)
 	t_vec3	color;
 
 	j = 0;
-	
 	while (j < win->height)
 	{
 		i = 0;
@@ -39,10 +38,12 @@ void	write_values(t_win_scene *win, int fd)
 		{
 			color = int_to_vec(get_pixel(&win->img, i, j));
 			color = vec3_mult(color, 255);
-			ft_dprintf(fd, "%c%c%c", (char)color.x, (char)color.y, (char)color.z);
+			ft_dprintf(fd, "%c%c%c",
+				(char)color.x, (char)color.y, (char)color.z);
 			i++;
 		}
-		show_progress(i + j * win->width, win->height * win->width, "saving image");
+		show_progress(i + j * win->width,
+			win->height * win->width, "saving image");
 		j++;
 	}
 }
@@ -76,7 +77,6 @@ void	save_image_to_ppm(t_win_scene *win)
 	header.width = win->width;
 	header.height = win->height;
 	header.max_values = 255;
-
 	name = create_save_path();
 	if (name == NULL)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:33:51 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/30 10:47:41 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 12:21:30 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "window.h"
 #include "parser.h"
 #include "texture.h"
+
+int	toggle_flag(int to_check, const int *options, const int *flags, t_uint *flag);
 
 int mouse_down(int button, int x, int y, t_prog *prog)
 {
@@ -56,8 +58,65 @@ int mouse_up(int button, int x, int y, t_prog *prog)
 	return (0);
 }
 
+int	toggle_effects(int keycode, t_prog *prog)
+{
+	const int	options[] = {'1', '2', '3', '4', '5', 0};
+	const int	flags[] = {INVERT, PIXEL, CHROMA, DEPTH_OF_FIELD};
+
+	return (toggle_flag(keycode, &options[0], &flags[0], &prog->win_scene->img_flags));
+}
+
+int	toggle_movement(int keycode, t_prog *prog)
+{
+	const int	options[] = {'w', 'a', 's', 'd', LSHIFT, SPACE, 0};
+	const int	flags[] = {MOVE_FORWARD, MOVE_LEFT, MOVE_BACKWARD, MOVE_RIGHT, MOVE_DOWN, MOVE_UP};
+
+	if (toggle_flag(keycode, &options[0], &flags[0], &prog->scene->camera.movekeys))
+	{
+		reset_accumulation(prog);
+		return (1);
+	}
+	return (0);
+}
+
+int	toggle_pass(int keycode, t_prog *prog)
+{
+	const int	options[] = {'e', 'r', 't', 'y', 'u', 'i', 0};
+	const int	flags[] = {AMBIENT, DIFFUSE, SPECULAR, UV, NORMAL, DEPTH_MAP};
+
+	if (toggle_flag(keycode, &options[0], &flags[0], &prog->scene->vp_flags))
+	{
+		return (1);
+	}
+	return (0);
+}
+
+int	toggle_flag(int to_check, const int *options, const int *flags, t_uint *flag)
+{
+	int			i;
+
+	i = 0;
+	while (options[i])
+	{
+		if (to_check == options[i])
+		{
+			*flag ^= flags[i];
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+
 int key_down(int keycode, t_prog *prog)
 {
+	if (toggle_effects(keycode, prog))
+		return (0);
+	if (toggle_movement(keycode, prog))
+		return (0);
+	if (toggle_pass(keycode, prog))
+		return (0);
 	if (keycode == 65453)
 	{
 		prog->scene->nb_bounces--;
@@ -68,43 +127,6 @@ int key_down(int keycode, t_prog *prog)
 		prog->scene->nb_bounces++;
 		ft_log(LOG, "bounce:%d", prog->scene->nb_bounces);
 	}
-	if (keycode == 'i')
-	{
-		prog->win_scene->img_flags ^= INVERT;
-		return 0;
-	}
-	if (keycode == 'h')
-	{
-		prog->win_scene->img_flags ^= DEPTH_OF_FIELD;
-		return 0;
-	}
-	if (keycode == 'v')
-	{
-		prog->win_scene->img_flags ^= DEPTH_MAP;
-		return 0;
-	}
-	else if (keycode == '1')
-		prog->scene->vp_flags ^= DIFFUSE;
-	else if (keycode == '2')
-		prog->scene->vp_flags ^= AMBIENT;
-	else if (keycode == '3')
-		prog->scene->vp_flags ^= SPECULAR;
-	else if (keycode == '4')
-		prog->scene->vp_flags ^= NORMAL;
-	else if (keycode == '5')
-		prog->scene->vp_flags ^= UV;
-	else if (keycode == 'w')
-		prog->scene->camera.movekeys |= MOVE_FORWARD;
-	else if (keycode == 'a')
-		prog->scene->camera.movekeys |= MOVE_LEFT;
-	else if (keycode == 's')
-		prog->scene->camera.movekeys |= MOVE_BACKWARD;
-	else if (keycode == 'd')
-		prog->scene->camera.movekeys |= MOVE_RIGHT;
-	else if (keycode == SPACE)
-		prog->scene->camera.movekeys |= MOVE_UP;
-	else if (keycode == LSHIFT)
-		prog->scene->camera.movekeys |= MOVE_DOWN;
 	else if (keycode == ESC)
 		free_all(prog);
 	else if (keycode == 'r')
@@ -112,7 +134,7 @@ int key_down(int keycode, t_prog *prog)
 		reset_cam_orientation(&prog->scene->camera);
 		reset_accumulation(prog);
 	}
-	else if (keycode == 'c')
+	else if (keycode == 'n')
 		print_cam(&prog->scene->camera);
 	else if (keycode == 'p')
 	{
@@ -127,7 +149,7 @@ int key_down(int keycode, t_prog *prog)
 			ft_printf("Denoising done\n");
 		}
 	}
-	else if (keycode == 'x')
+	else if (keycode == 'm')
 		print_scene(prog->scene);
 	else if (keycode == 'f')
 	{
@@ -145,17 +167,8 @@ int key_down(int keycode, t_prog *prog)
 
 int key_up(int keycode, t_prog *prog)
 {
-	if (keycode == 'w')
-		prog->scene->camera.movekeys ^= MOVE_FORWARD;
-	else if (keycode == 'a')
-		prog->scene->camera.movekeys ^= MOVE_LEFT;
-	else if (keycode == 's')
-		prog->scene->camera.movekeys ^= MOVE_BACKWARD;
-	else if (keycode == 'd')
-		prog->scene->camera.movekeys ^= MOVE_RIGHT;
-	else if (keycode == SPACE)
-		prog->scene->camera.movekeys ^= MOVE_UP;
-	else if (keycode == LSHIFT)
-		prog->scene->camera.movekeys ^= MOVE_DOWN;
+	if (toggle_movement(keycode, prog))
+		return (0);
+	
 	return (0);
 }

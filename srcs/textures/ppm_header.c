@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:48:28 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/25 12:40:43 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 09:41:04 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,35 +25,28 @@
 t_ppm_header	invalid_header(void)
 {
 	return ((t_ppm_header){
-			.type[0] = -1,
-			.type[1] = -1,
-			.width = -1,
-			.height = -1,
-			.max_values = -1,
-			});
+		.type[0] = -1,
+		.type[1] = -1,
+		.width = -1,
+		.height = -1,
+		.max_values = -1,
+	});
 }
 
 t_uint	get_next_value(int fd)
 {
 	t_uint	val;
-
 	int		nb_read;
 	char	c[1];
 
 	nb_read = read(fd, c, 1);
 	while (is_whitespace(c[0]) && nb_read != 0)
-	{
 		nb_read = read(fd, c, 1);
-
-	}
 	if (c[0] == '#')
 	{
 		while (c[0] != '\n' && nb_read != 0)
-		{
 			nb_read = read(fd, c, 1);
-		}
 	}
-
 	val = 0;
 	while ((c[0] >= '0' && c[0] <= '9') && nb_read != 0)
 	{
@@ -77,14 +70,13 @@ int	header_assert(t_ppm_header header, t_prog *prog)
 	return (0);
 }
 
-t_ppm_header parse_header(int fd)
+t_ppm_header	parse_header(int fd)
 {
 	t_ppm_header	header;
 	char			buff[2];
 	int				nb_read;
 
 	ft_bzero(&header, sizeof(t_ppm_header));
-
 	nb_read = read(fd, buff, 2);
 	if (nb_read != 2)
 		return (invalid_header());
@@ -95,5 +87,3 @@ t_ppm_header parse_header(int fd)
 	header.max_values = get_next_value(fd);
 	return (header);
 }
-
-

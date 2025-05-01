@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:01:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/29 12:27:04 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 10:27:44 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,21 @@ t_vec3	cone_normal(t_cylinder co, t_vec3 hit_point)
 {
 	t_vec3	axis;
 	t_vec3	cp;
-	double	projection;
+	double	dist;
 	t_vec3	base_center;
 	t_vec3	to_hit;
-	double	dist;
 
 	axis = vec3_normalize(co.normal);
 	cp = vec3_sub(hit_point, co.origin);
-	projection = ft_dot(cp, axis);
 	base_center = vec3_add(co.origin, vec3_mult(axis, co.height));
 	to_hit = vec3_sub(hit_point, base_center);
 	dist = ft_dot(to_hit, axis);
 	if (fabs(dist) < 1e-6)
 		return (axis);
 	return (vec3_normalize(vec3_sub(cp,
-			vec3_mult(axis, projection * (1.0 + (co.radius * co.radius)
-				/ (co.height * co.height))))));
+				vec3_mult(axis, ft_dot(cp, axis)
+					* (1.0 + (co.radius * co.radius)
+						/ (co.height * co.height))))));
 }
 
 t_vec3	cylinder_normal(t_cylinder cy, t_vec3 hit_point)
@@ -51,47 +50,6 @@ t_vec3	cylinder_normal(t_cylinder cy, t_vec3 hit_point)
 						vec3_mult(cy.normal, cy.height))), cy.normal)) < 1e-6)
 		return (cy.normal);
 	return (vec3_normalize(vec3_sub(cp, vec3_mult(cy.normal, projection))));
-}
-
-t_hit	hit_succes(t_scene *scene, t_ray ray, t_hit hit)
-{
-	enum e_object_type	type;
-
-	type = hit.type;
-	if (type == SPHERE)
-	{
-		hit = hit_result(scene->spheres[hit.obj_index].origin,
-				ray, hit.distance, hit.obj_index);
-		hit.mat = scene->materials[scene->spheres[hit.obj_index].mat_idx];
-	}
-	else if (type == PLANE)
-	{
-		hit = hit_result(scene->planes[hit.obj_index].origin, ray,
-			hit.distance, hit.obj_index);
-		if (ft_dot(ray.dir, scene->planes[hit.obj_index].normal) > 0)
-			hit.normal = vec3_mult(scene->planes[hit.obj_index].normal, -1.0);
-		else
-			hit.normal = scene->planes[hit.obj_index].normal;
-		hit.mat = scene->materials[scene->planes[hit.obj_index].mat_idx];
-	}
-	else if (type == CYLINDER)
-	{
-		hit = hit_result(scene->cylinders[hit.obj_index].origin, ray,
-				hit.distance, hit.obj_index);
-		hit.normal = cylinder_normal(scene->cylinders[hit.obj_index],
-				hit.point);
-		hit.mat = scene->materials[scene->cylinders[hit.obj_index].mat_idx];
-	}
-	else if (type == CONE)
-	{
-		hit = hit_result(scene->cones[hit.obj_index].origin, ray,
-				hit.distance, hit.obj_index);
-		hit.normal = cone_normal(scene->cones[hit.obj_index],
-				hit.point);
-		hit.mat = scene->materials[scene->cones[hit.obj_index].mat_idx];
-	}
-	hit.type = type;
-	return (hit);
 }
 
 t_hit	get_min_dist(double (*f)(void*, t_ray), t_ray ray,
@@ -117,43 +75,51 @@ t_hit	get_min_dist(double (*f)(void*, t_ray), t_ray ray,
 	return (hit);
 }
 
-t_hit	trace_ray(t_ray ray, t_scene *scene)
+int	is_closest(t_hit hit, t_hit new_hit, t_ray ray)
 {
-	t_hit	hit;
-	t_hit	tmp_hit;
-
-	ft_bzero(&hit, sizeof(t_hit));
-	hit.distance = 2147483648;
-	hit.obj_index = -1;
-	tmp_hit = get_min_dist(sphere_hit, ray, (struct s_objs_data)
-		{scene->spheres, scene->nb_spheres, sizeof(t_sphere)});
-	if (tmp_hit.distance != -1 && tmp_hit.distance < ray.length)
-	{
-		hit = tmp_hit;
-		hit.type = SPHERE;
-	}	
-	tmp_hit = get_min_dist(plane_hit, ray, (struct s_objs_data)
-		{scene->planes, scene->nb_planes, sizeof(t_plane)});
-	if (tmp_hit.distance != -1 && tmp_hit.distance < hit.distance && tmp_hit.distance < ray.length)
-	{
-		hit = tmp_hit;
-		hit.type = PLANE;
-	}
-	tmp_hit = get_min_dist(cylinders_hit, ray, (struct s_objs_data)
-		{scene->cylinders, scene->nb_cylinders, sizeof(t_cylinder)});
-	if (tmp_hit.distance != -1 && tmp_hit.distance < hit.distance && tmp_hit.distance < ray.length)
-	{
-		hit = tmp_hit;
-		hit.type = CYLINDER;
-	}
-	tmp_hit = get_min_dist(cone_hit, ray, (struct s_objs_data)
-		{scene->cones, scene->nb_cones, sizeof(t_cylinder)});
-	if (tmp_hit.distance != -1 && tmp_hit.distance < hit.distance && tmp_hit.distance < ray.length)
-	{
-		hit = tmp_hit;
-		hit.type = CONE;
-	}
-	if (hit.obj_index != (size_t) - 1)
-		return (hit_succes(scene, ray, hit));
-	return (hit_fail());
+	return (new_hit.distance != -1
+		&& new_hit.distance < hit.distance
+		&& new_hit.distance < ray.length
+	);
 }
+
+// t_hit	trace_ray(t_ray ray, t_scene *scene)
+// {
+// 	t_hit	hit;
+// 	t_hit	tmp_hit;
+
+// 	ft_bzero(&hit, sizeof(t_hit));
+// 	hit.distance = 2147483648;
+// 	hit.obj_index = -1;
+// 	tmp_hit = get_min_dist(sphere_hit, ray, (struct s_objs_data)
+// 		{scene->spheres, scene->nb_spheres, sizeof(t_sphere)});
+// 	if (tmp_hit.distance != -1 && tmp_hit.distance < ray.length)
+// 	{
+// 		hit = tmp_hit;
+// 		hit.type = SPHERE;
+// 	}
+// 	tmp_hit = get_min_dist(plane_hit, ray, (struct s_objs_data)
+// 		{scene->planes, scene->nb_planes, sizeof(t_plane)});
+// 	if (is_closest(hit, tmp_hit, ray))
+// 	{
+// 		hit = tmp_hit;
+// 		hit.type = PLANE;
+// 	}
+// 	tmp_hit = get_min_dist(cylinders_hit, ray, (struct s_objs_data)
+// 		{scene->cylinders, scene->nb_cylinders, sizeof(t_cylinder)});
+// 	if (is_closest(hit, tmp_hit, ray))
+// 	{
+// 		hit = tmp_hit;
+// 		hit.type = CYLINDER;
+// 	}
+// 	tmp_hit = get_min_dist(cone_hit, ray, (struct s_objs_data)
+// 		{scene->cones, scene->nb_cones, sizeof(t_cylinder)});
+// 	if (is_closest(hit, tmp_hit, ray))
+// 	{
+// 		hit = tmp_hit;
+// 		hit.type = CONE;
+// 	}
+// 	if (hit.obj_index != (size_t) - 1)
+// 		return (hit_succes(scene, ray, hit));
+// 	return (hit_fail());
+// }
