@@ -6,6 +6,5 @@ sp  0,0,0                  0.5         moon
 sp  -2.1,0,-1                  1           e_red
 sp  0,1.1,0                  0.5           green
 
-cy  1,0,0  0,1,0  0.5  1.42     earth
 
 pl  0,-0.8,0        0,1,0               earth

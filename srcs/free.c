@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:21:55 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/01 09:36:21 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 12:47:50 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ void	free_win_scene(t_win_scene *win)
 	}
 	if (win->accumulation_data)
 		free(win->accumulation_data);
-	if (win->depth_map)
-		free(win->depth_map);
 }
 
 void	free_parser(t_parser *parser)

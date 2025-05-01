@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 08:45:57 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 11:56:00 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:20:40 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ void	apply_effect(t_win_scene *win)
 		i = 0;
 		while (i < win->width)
 		{
-			if (win->img_flags & DEPTH_MAP)
-				depth_effect(win, i, j);
+			vp_filter(win, i, j);
 			if (win->img_flags & DEPTH_OF_FIELD)
 				depth_of_field(win, i, j);
 			if (win->img_flags & INVERT)
@@ -78,10 +77,27 @@ void	display_frame(t_win_scene *win, t_scene *scene)
 	scene->frame_count++;
 }
 
+void	new_pass(t_win_scene *win)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	while (j < win->height)
+	{
+		i = 0;
+		while (i < win->width)
+		{
+			ft_bzero(&win->pass[i + j * win->width], sizeof(t_render_pass));
+			i++;
+		}
+		j++;
+	}
+}
+
 int	new_frame(t_prog *prog)
 {
-	ft_bzero(prog->win_scene->depth_map,
-		prog->win_scene->height * prog->win_scene->width * sizeof(t_vec3));
+	new_pass(prog->win_scene);
 	if (prog->win_scene->paused)
 		return (0);
 	run_pipeline(prog);

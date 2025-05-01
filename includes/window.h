@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 11:35:31 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:27:34 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,20 @@
 # define WIDTH 720
 # define HEIGHT 480
 
+/* --------------------------------- effect --------------------------------- */
 # define INVERT 0b0001
 # define DEPTH_OF_FIELD 0b0010
-# define DEPTH_MAP 0b0100
 # define PIXEL 0b1000
 # define CHROMA 0b10000
 # define GRAYSCALE 0b100000
+
+/* ----------------------------- viewport flags ----------------------------- */
+# define AMBIENT 0b0001
+# define DIFFUSE 0b0010
+# define SPECULAR 0b0100
+# define NORMAL 0b1000
+# define UV 0b10000
+# define DEPTH_MAP 0b100000
 
 /* ----------------------------------- MLX ---------------------------------- */
 
@@ -54,6 +62,17 @@ typedef struct s_data
 	int		endian;
 }	t_data;
 
+typedef struct render_pass
+{
+	t_vec3	ambient;
+	t_vec3	diffuse;
+	t_vec3	specular;
+	t_vec3	depth_map;
+	t_vec3	uv;
+	t_vec3	normal;
+	t_vec3	merged_pass;
+}	t_render_pass;
+
 typedef struct s_win_scene
 {
 	char	*name;
@@ -66,14 +85,15 @@ typedef struct s_win_scene
 	int		view_height;
 	double	aspect_ratio;
 
-	t_vec3	*accumulation_data;
-	t_vec3	*depth_map;
+	t_vec3			*accumulation_data;
+	t_render_pass	*pass;
 
 	void	*win_ptr;
 	void	*mlx_ptr;
 
 	t_data	img;
 	t_uint	img_flags;
+	t_uint	vp_flags;
 
 	bool	paused;
 }	t_win_scene;
@@ -100,7 +120,7 @@ void			init_button_window(t_prog *prog);
 // effects.c
 void			invert_effect(t_win_scene *win, int i, int j);
 void			depth_of_field(t_win_scene *win, int i, int j);
-void			depth_effect(t_win_scene *win, int i, int j);
+void			vp_filter(t_win_scene *win, int i, int j);
 void			chromatic_aberation(t_win_scene *win, int i, int j);
 void			grayscale(t_win_scene *win, int i, int j);
 void			pixelate(t_win_scene *win, int i, int j);

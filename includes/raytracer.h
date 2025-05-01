@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 10:53:41 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:24:14 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,13 @@
 # include "miniRT.h"
 # include <math.h>
 # include <pthread.h>
-#include <stddef.h>
+# include <stddef.h>
+# include "window.h"
 
 # ifndef DEFAULT_BOUNCE
 # define DEFAULT_BOUNCE 10
 # endif
 
-# define AMBIENT 0b0001
-# define DIFFUSE 0b0010
-# define SPECULAR 0b0100
-# define NORMAL 0b1000
-# define UV 0b10000
 # define RENDER_PAUSE 0b100000
 # define SHOW_FRAME 0b1000000
 # define MAX_TRHEAD 20
@@ -35,14 +31,6 @@
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
 # endif
-
-typedef struct light_pass
-{
-	t_vec3	ambient;
-	t_vec3	diffuse;
-	t_vec3	specular;
-	t_vec3	merged_pass;
-}	t_light_pass;
 
 enum	e_object_type
 {
@@ -165,7 +153,7 @@ double		cylinders_hit(void *p, t_ray ray);
 double		cone_hit(void *p, t_ray ray);
 
 // lighting.c
-t_vec3		phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray);
+void		phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray, t_render_pass *pass);
 
 // phong_model.c
 t_vec3		phong_diffuse(struct s_light_info info);

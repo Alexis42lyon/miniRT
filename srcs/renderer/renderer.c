@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 09:37:10 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:36:06 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_viewport	viewport(t_win_scene *win, t_scene *scene)
 	return (vp);
 }
 
-t_hit	bounce(t_scene *scene, t_ray *ray, t_vec3 *dof_px)
+t_hit	bounce(t_scene *scene, t_ray *ray, t_render_pass *pass)
 {
 	t_hit	hit;
 	float u, v;
@@ -59,12 +59,12 @@ t_hit	bounce(t_scene *scene, t_ray *ray, t_vec3 *dof_px)
 	hit = trace_ray(*ray, scene);
 	if (hit.distance == -1)
 		return (hit_fail());
-	if (vec3_lenght_square(*dof_px) == 0)
+	if (vec3_lenght_square(pass->depth_map) == 0)
 	{
-		dof_px->x = hit.distance / scene->camera.focal_length;
-		dof_px->y = hit.distance / scene->camera.focal_length;
-		dof_px->z = hit.distance / scene->camera.focal_length;
-		*dof_px = vec3_clamp(*dof_px, 0, 1);
+		pass->depth_map.x = hit.distance / scene->camera.focal_length;
+		pass->depth_map.y = hit.distance / scene->camera.focal_length;
+		pass->depth_map.z = hit.distance / scene->camera.focal_length;
+		pass->depth_map = vec3_clamp(pass->depth_map, 0, 1);
 	}
 
 	if (hit.mat.texture_map.header.type[0] != -1)
@@ -72,16 +72,21 @@ t_hit	bounce(t_scene *scene, t_ray *ray, t_vec3 *dof_px)
 		get_uv(scene, hit, &u, &v);
 		hit.mat.albedo = vec3_multv(hit.mat.albedo, get_px(u, v, &hit.mat.texture_map));
 	}
-
-	if (scene->vp_flags & UV)
-	{
-		get_uv(scene, hit, &u, &v);
-		hit.mat.albedo = (t_vec3){u, v, 0};
-		hit.mat.emission_power = 5;
-	}
 	if (hit.mat.use_checker)
 		hit.mat.albedo = checker_color(hit, hit.mat);
 	return (hit);
+}
+
+t_vec3	create_merge_pass(t_render_pass *pass, t_uint flags)
+{
+	pass->merged_pass = vec3_zero();
+	if (flags & AMBIENT)
+		pass->merged_pass = vec3_add(pass->merged_pass, pass->ambient);
+	if (flags & DIFFUSE)
+		pass->merged_pass = vec3_add(pass->merged_pass, pass->diffuse);
+	if (flags & SPECULAR)
+		pass->merged_pass = vec3_add(pass->merged_pass, pass->specular);
+	return (pass->merged_pass);
 }
 
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
@@ -102,7 +107,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	while (x < scene->nb_bounces)
 	{
 		seed *= x + 1;
-		hit = bounce(scene, &ray, &vp.win->depth_map[i + j * vp.width]);
+		hit = bounce(scene, &ray, &vp.win->pass[i + j * vp.width]);
 		if (hit.distance == -1)
 		{
 			t_vec3 unit_direction = vec3_normalize(ray.dir);
@@ -119,8 +124,9 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 		else
 			radiance = vec3_multv(radiance, hit.mat.albedo);
 		final_color = vec3_add(final_color, vec3_multv(vec3_divide(hit.mat.albedo, 3.1415), radiance));
+		phong_shading(scene, hit, hit.mat, ray, &vp.win->pass[i + j * vp.width]);
 		if (hit.mat.emission_power == 0)
-		final_color = vec3_add(final_color, phong_shading(scene, hit, hit.mat, ray));
+			final_color = vec3_add(final_color, create_merge_pass(&vp.win->pass[i + j * vp.width], vp.win->vp_flags));
 		
 		ray.origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));
 		ray.dir = vec3_reflect(ray.dir,

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 08:27:13 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 11:36:10 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:34:09 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,14 @@ void	invert_effect(t_win_scene *win, int i, int j)
 	set_pixel(&win->img, i, j, 0xFFFFFF - get_pixel(&win->img, i, j));
 }
 
-void	depth_effect(t_win_scene *win, int i, int j)
+void	vp_filter(t_win_scene *win, int i, int j)
 {
-	set_pixel(&win->img, i, j, vec_to_int(win->depth_map[i + j * win->width]));
+	if (win->vp_flags & DEPTH_MAP)
+		set_pixel(&win->img, i, j, vec_to_int(win->pass[i + j * win->width].depth_map));
+	if (win->vp_flags & UV)
+		set_pixel(&win->img, i, j, vec_to_int(win->pass[i + j * win->width].uv));
+	if (win->vp_flags & NORMAL)
+		set_pixel(&win->img, i, j, vec_to_int(win->pass[i + j * win->width].normal));
 }
 
 int	do_offset(int i, int offset, int max)

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 11:03:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 11:03:54 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 12:48:27 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	depth_of_field(t_win_scene *win, int i, int j)
 	}
 	free(kernel);
 	final = vec3_clamp(final, 0, 1);
-	float t = vec3_lenght(win->depth_map[i + j * win->width]);
+	float t = vec3_lenght(win->pass[i + j * win->width].depth_map);
 	t = ft_clamp(t, 0, 1);
 	t_vec3 dof = vec3_add(vec3_mult(int_to_vec(get_pixel(&win->img, i, j)), (1.0 - t)), vec3_mult(final, t));
 	set_pixel(&win->img, i, j,  vec_to_int(dof));

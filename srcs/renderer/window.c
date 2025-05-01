@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/25 12:22:30 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 12:35:08 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	init_win(t_prog *prog)
 		ft_calloc(win->height * win->width, sizeof(t_vec3)),
 		(void **)&win->accumulation_data, prog);
 	check_mem((t_info){__FILE__, __LINE__, __func__},
-		ft_calloc(win->height * win->width, sizeof(t_vec3)),
-		(void **)&win->depth_map, prog);
+		ft_calloc(win->height * win->width, sizeof(t_render_pass)),
+		(void **)&win->pass, prog);
 	init_button_window(prog);
 	/* ----------------------------- // mouse hooks // ----------------------------- */
 	mlx_hook(win->win_ptr, ON_MOUSEDOWN, MOUSEDOWN_MASK, mouse_down, prog);

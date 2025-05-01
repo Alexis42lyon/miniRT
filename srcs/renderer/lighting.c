@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 11:01:28 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:33:49 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "raytracer.h"
 #include "texture.h"
 #include <stdio.h>
+#include "window.h"
 
 int	in_light(t_scene *scene, t_hit hit, struct s_light_info infos)
 {
@@ -44,49 +45,29 @@ struct s_light_info	new_info(
 	return (info);
 }
 
-t_light_pass	new_pass(void)
+void	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray, t_render_pass *pass)
 {
-	return ((t_light_pass){
-		.ambient = vec3_zero(),
-		.diffuse = vec3_zero(),
-		.specular = vec3_zero(),
-		.merged_pass = vec3_zero()
-	});
-}
-
-
-t_vec3	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
-{
-	t_light_pass		pass;
 	struct s_light_info	info;
 	float				u;
 	float				v;
 
-	pass = new_pass();
 	get_uv(scene, hit, &u, &v);
 	if (mat.normal_map.values)
 	{
 		hit.normal = vec3_normalize(vec3_add(vec3_mult(
 					get_px(u, v, &mat.normal_map), 2.0), (t_vec3){-1,-1,-1}));
 	}
-	if (scene->vp_flags & NORMAL)
-	{
-		mat.albedo = normal_color(hit);
-		return mat.albedo;
-	}
+	if (vec3_lenght_square(pass->uv) == 0)
+		pass->uv = (t_vec3){u, v, 0};
+	if (vec3_lenght_square(pass->normal) == 0)
+		pass->normal = normal_color(hit);
 	for (size_t i = 0; i < scene->nb_lights; i++)
 	{
 		info = new_info(scene->lights[i], hit, mat, ray);
 		if (in_light(scene, hit, info))
 		{
-			if (scene->vp_flags & DIFFUSE)
-				pass.diffuse = vec3_add(pass.diffuse, phong_diffuse(info));
-			if (scene->vp_flags & SPECULAR)
-				pass.specular = vec3_add(pass.specular, phong_specular(info));
+			pass->diffuse = vec3_add(pass->diffuse, phong_diffuse(info));
+			pass->specular = vec3_add(pass->specular, phong_specular(info));
 		}
 	}
-	pass.merged_pass = vec3_add(pass.merged_pass, pass.ambient);
-	pass.merged_pass = vec3_add(pass.merged_pass, pass.diffuse);
-	pass.merged_pass = vec3_add(pass.merged_pass, pass.specular);
-	return (pass.merged_pass);
 }

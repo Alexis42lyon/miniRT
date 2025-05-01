@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:33:51 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 12:21:30 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:35:30 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int mouse_up(int button, int x, int y, t_prog *prog)
 	(void)y;
 	if (button == 3)
 	{
-		prog->scene->vp_flags = AMBIENT | SPECULAR | DIFFUSE;
 		prog->scene->nb_bounces = DEFAULT_BOUNCE;
 		prog->scene->camera.movement_enable = 0;
 		ft_log(LOG, "camera rotation disable");
@@ -81,11 +80,12 @@ int	toggle_movement(int keycode, t_prog *prog)
 
 int	toggle_pass(int keycode, t_prog *prog)
 {
-	const int	options[] = {'e', 'r', 't', 'y', 'u', 'i', 0};
+	const int	options[] = {'z', 'x', 'c', 'v', 'b', 'n', 0};
 	const int	flags[] = {AMBIENT, DIFFUSE, SPECULAR, UV, NORMAL, DEPTH_MAP};
 
-	if (toggle_flag(keycode, &options[0], &flags[0], &prog->scene->vp_flags))
+	if (toggle_flag(keycode, &options[0], &flags[0], &prog->win_scene->vp_flags))
 	{
+		reset_accumulation(prog);
 		return (1);
 	}
 	return (0);
@@ -136,32 +136,12 @@ int key_down(int keycode, t_prog *prog)
 	}
 	else if (keycode == 'n')
 		print_cam(&prog->scene->camera);
-	else if (keycode == 'p')
-	{
-		prog->win_scene->paused = !prog->win_scene->paused;
-		if (prog->win_scene->paused == 1)
-		{
-			denoiser(prog, prog->win_scene);
-			anti_aliaser(prog, prog->win_scene);
-			mlx_put_image_to_window(prog->win_scene->mlx_ptr,
-								  prog->win_scene->win_ptr,
-								  prog->win_scene->img.img, 0, 0);
-			ft_printf("Denoising done\n");
-		}
-	}
 	else if (keycode == 'm')
 		print_scene(prog->scene);
 	else if (keycode == 'f')
-	{
-		prog->scene->vp_flags ^= SHOW_FRAME;
-		return (0);
-	}
+		prog->win_scene->vp_flags ^= SHOW_FRAME;
 	else if (keycode == 'g')
-	{
 		save_image_to_ppm(prog->win_scene);
-		return (0);
-	}
-	reset_accumulation(prog);
 	return (0);
 }
 

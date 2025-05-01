@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:17 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/01 10:34:33 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 13:16:24 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 void	show_stats(t_prog *prog)
 {
-	if ((prog->scene->vp_flags & SHOW_FRAME) == 0)
+	if ((prog->win_scene->vp_flags & SHOW_FRAME) == 0)
 		return ;
 	ft_log(LOG, "frame " CYAN BOLD "%d" RESET
 		" render in" CYAN BOLD " %ums" RESET, prog->scene->frame_count -1,
