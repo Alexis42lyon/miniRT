@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/30 15:58:19 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 08:39:57 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_hit	bounce(t_scene *scene, t_ray *ray, t_vec3 *dof_px)
 	if (scene->vp_flags & UV)
 	{
 		get_uv(scene, hit, &u, &v);
-		hit.mat.albedo = (t_vec3){u, v, 0};
+		hit.mat.albedo = (t_vec3){0, v, 0};
 		hit.mat.emission_power = 5;
 	}
 	if (hit.mat.use_checker)
@@ -119,6 +119,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 		else
 			radiance = vec3_multv(radiance, hit.mat.albedo);
 		final_color = vec3_add(final_color, vec3_multv(vec3_divide(hit.mat.albedo, 3.1415), radiance));
+		if (hit.mat.emission_power == 0)
 		final_color = vec3_add(final_color, phong_shading(scene, hit, hit.mat, ray));
 		
 		ray.origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));

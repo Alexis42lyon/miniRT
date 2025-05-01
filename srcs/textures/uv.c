@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:56:00 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/30 16:07:56 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 09:29:56 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include "raytracer.h"
 #include <math.h>
 #include <stdio.h>
-
-# define PLANE_UV_SCALING 100
 
 void	sp_coordinate_to_uv(t_vec3 normal, float *u, float *v);
 void	co_coordinate_to_uv(t_hit hit, t_cylinder *cy, float *u, float *v);
@@ -37,25 +35,29 @@ void	get_uv(t_scene *scene, t_hit hit, float *u, float *v)
 
 void	pl_coordinate_to_uv(t_hit hit, t_plane *plane, float *u, float *v)
 {
-	t_vec3	tangent;
-	t_vec3	bitangent;
+	const float	uv_scaling = 0.5f;
+	t_vec3		tangent;
+	t_vec3		bitangent;
+	t_vec3		axis;
 
-	tangent = vec3_normalize(vec3_cross((t_vec3){0, 1, 1}, plane->normal));
+	axis = (t_vec3){0, 1, 0};
+	if (fabsf(ft_dot(plane->normal, axis)) > 0.999f)
+		axis = (t_vec3){1,0,0};
+	tangent = vec3_normalize(vec3_cross(axis, plane->normal));
 	bitangent = vec3_normalize(vec3_cross(plane->normal, tangent));
 
 	*u = ft_dot(tangent, vec3_sub(plane->origin, hit.point));
 	*v = ft_dot(bitangent, vec3_sub(plane->origin, hit.point));
 
-	if (*u < 0)
-		*u *= -1;
-	if (*v < 0)
-		*v *= -1;
-	*u = (float)((int)(*u * 100) % 100) / 100;
-	*v = (float)((int)(*v * 100) % 100) / 100;
-	if (hit.point.x < 0)
-		*u = 1 - *u;
-	if (hit.point.z < 0)
-		*v = 1 - *v;
+	*u *= uv_scaling;
+	*v *= uv_scaling;
+	*u = fmodf(*u, 1.0f);
+	if (*u < 0.0f) 
+		*u += 1.0f;
+
+	*v = fmodf(*v, 1.0f);
+	if (*v < 0.0f)
+		*v += 1.0f;
 }
 
 void	sp_coordinate_to_uv(t_vec3 normal, float *u, float *v)

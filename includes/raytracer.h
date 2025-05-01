@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/30 10:46:00 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 08:41:57 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define RENDER_PAUSE 0b100000
 # define SHOW_FRAME 0b1000000
 # define MAX_TRHEAD 20
-# define LIGHT_RANGE 2
+# define LIGHT_RANGE 5
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
