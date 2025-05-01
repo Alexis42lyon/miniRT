@@ -6,13 +6,14 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:21:55 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/25 12:24:54 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 09:36:21 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "window.h"
 #include "parser.h"
+#include "texture.h"
 
 void	free_arr(void **arr)
 {
@@ -65,14 +66,30 @@ void	free_parser(t_parser *parser)
 	}
 }
 
+void	clean_materials(t_mat *mats, size_t nb_mat)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < nb_mat)
+	{
+		if (is_header_valid(&mats[i].normal_map.header))
+			free(mats[i].normal_map.values);
+		if (is_header_valid(&mats[i].texture_map.header))
+			free(mats[i].texture_map.values);
+		i++;
+	}
+}
+
 void	free_all(t_prog *prog)
 {
-	free(prog->scene->materials);
 	free(prog->scene->lights);
 	free(prog->scene->spheres);
 	free(prog->scene->planes);
 	free(prog->scene->cylinders);
 	free(prog->scene->cones);
+	clean_materials(prog->scene->materials, prog->scene->nb_materials);
+	free(prog->scene->materials);
 	free_parser(prog->parser);
 	free_win_scene(prog->win_scene);
 	exit(0);

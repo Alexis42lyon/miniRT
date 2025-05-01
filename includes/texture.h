@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 12:12:29 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/29 14:03:32 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 09:35:05 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_ppm_header	invalid_header(void);
 
 t_vec3	get_px(float u, float v, t_ppm_image *image);
 void			print_ppm_header(t_ppm_header header, const char *name);
+int	is_header_valid(t_ppm_header *header);
 
 void	save_image_to_ppm(t_win_scene *win);
 

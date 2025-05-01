@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 08:39:57 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/01 09:37:10 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ t_hit	bounce(t_scene *scene, t_ray *ray, t_vec3 *dof_px)
 	if (scene->vp_flags & UV)
 	{
 		get_uv(scene, hit, &u, &v);
-		hit.mat.albedo = (t_vec3){0, v, 0};
+		hit.mat.albedo = (t_vec3){u, v, 0};
 		hit.mat.emission_power = 5;
 	}
 	if (hit.mat.use_checker)
