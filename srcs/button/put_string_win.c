@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:20:06 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/30 15:16:33 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/04 22:22:49 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,66 @@
 # include <stdio.h>
 # include <string.h>
 
+static void	put_mat_info(t_prog *prog, t_win_button *win_btn, t_mat *mat)
+{
+	char	buffer[50];
+
+	(void)prog;
+	snprintf(buffer, sizeof(buffer), "Red: %d", (int)(mat->albedo.x * 255));
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		TEXT_X_POS, SLIDER_MAT_RED_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
+
+	snprintf(buffer, sizeof(buffer), "Green: %d", (int)(mat->albedo.y * 255));
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		TEXT_X_POS, SLIDER_MAT_GREEN_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
+
+	snprintf(buffer, sizeof(buffer), "Blue: %d", (int)(mat->albedo.z * 255));
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		TEXT_X_POS, SLIDER_MAT_BLUE_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
+
+	snprintf(buffer, sizeof(buffer), "Shininess: %d", mat->shyniness);
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		TEXT_X_POS, SLIDER_MAT_SHININESS_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
+
+	snprintf(buffer, sizeof(buffer), "Roughness: %.2f", mat->roughtness);
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		TEXT_X_POS, SLIDER_MAT_ROUGHNESS_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
+
+	snprintf(buffer, sizeof(buffer), "Spec Coef: %.2f", mat->spec_coef);
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		TEXT_X_POS, SLIDER_MAT_SPEC_COEF_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
+
+	snprintf(buffer, sizeof(buffer), "Emission: %.2f", mat->emission_power);
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		TEXT_X_POS, SLIDER_MAT_EMISSION_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
+
+	snprintf(buffer, sizeof(buffer), "Checker: %s", mat->use_checker ? "ON" : "OFF");
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		TEXT_X_POS, SLIDER_MAT_CHECKER_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
+}
+
 static void	put_string_materials(t_prog *prog, t_win_button *win_btn)
 {
-	size_t	i;
+	char	buffer[50];
+	t_mat	*mat;
 
-	i = -1;
-	while (++i < prog->scene->nb_materials)
+	if (prog->scene->nb_materials == 0)
 	{
 		mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
-			25, 50 + i * 20,
-			TEXT_COLOR, prog->scene->materials[i].name);
+			TEXT_X_POS, SLIDER_MAT_SELECTOR_HEIGHT + TEXT_Y_OFFSET,
+			TEXT_COLOR, "No materials");
+		return ;
+	}
+	if (prog->scene->selected_material < prog->scene->nb_materials)
+	{
+		snprintf(buffer, sizeof(buffer), "%s",
+			prog->scene->materials[prog->scene->selected_material].name);
+		mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+			TEXT_X_POS, SLIDER_MAT_SELECTOR_HEIGHT + TEXT_Y_OFFSET,
+			TEXT_COLOR, buffer);
+
+		mat = &prog->scene->materials[prog->scene->selected_material];
+		put_mat_info(prog, win_btn, mat);
 	}
 }
 
@@ -49,25 +99,91 @@ static void	put_string_objects(t_win_button *win_btn)
 	}
 }
 
+void	draw_light_button(t_data *img, t_light_button light_btn)
+{
+	int	i;
+	int	j;
+
+	i = light_btn.x - 1;
+	while (++i < light_btn.x + light_btn.width)
+	{
+		j = light_btn.y - 1;
+		while (++j < light_btn.y + light_btn.height)
+		{
+			if (light_btn.is_selected)
+				*(int *)(img->addr + j * img->line_length + i
+					* (img->bits_per_pixel / 8)) = LIGHT_SELECTED_COLOR;
+			else
+				*(int *)(img->addr + j * img->line_length + i
+					* (img->bits_per_pixel / 8)) = LIGHT_UNSELECTED_COLOR;
+		}
+	}
+}
+
+static void	put_light_info(t_prog *prog, t_win_button *win_btn, t_light_source *light)
+{
+	char	buffer[50];
+
+	(void)prog;
+	snprintf(buffer, sizeof(buffer), "Ratio: %.2f", light->ratio);
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		TEXT_X_POS, SLIDER_LIGHT_RATIO_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
+	snprintf(buffer, sizeof(buffer), "Red: %d", (int)(light->material.albedo.x * 255));
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		TEXT_X_POS, SLIDER_LIGHT_RED_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
+	snprintf(buffer, sizeof(buffer), "Green: %d", (int)(light->material.albedo.y * 255));
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		TEXT_X_POS, SLIDER_LIGHT_GREEN_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
+	snprintf(buffer, sizeof(buffer), "Blue: %d", (int)(light->material.albedo.z * 255));
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		TEXT_X_POS, SLIDER_LIGHT_BLUE_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
+}
+
+static void	put_ambient_info(t_prog *prog, t_win_button *win_btn)
+{
+	char	buffer[50];
+
+	snprintf(buffer, sizeof(buffer), "Ratio: %.2f", prog->scene->ambient_light.ratio);
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		TEXT_X_POS, SLIDER_LIGHT_RATIO_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
+	snprintf(buffer, sizeof(buffer), "Red: %d", (int)(prog->scene->ambient_light.color.x * 255));
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		TEXT_X_POS, SLIDER_LIGHT_RED_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
+	snprintf(buffer, sizeof(buffer), "Green: %d", (int)(prog->scene->ambient_light.color.y * 255));
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		TEXT_X_POS, SLIDER_LIGHT_GREEN_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
+	snprintf(buffer, sizeof(buffer), "Blue: %d", (int)(prog->scene->ambient_light.color.z * 255));
+	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+		TEXT_X_POS, SLIDER_LIGHT_BLUE_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
+}
+
 static void	put_string_lights(t_prog *prog, t_win_button *win_btn)
 {
-	char	ratio_str[12];
-	char	color_ambient_light[23];
+	char			buffer[50];
+	t_light_source	*light;
 
-	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
-		CONTROL_WINDOW_WIDTH / 2 - 50, TAB_HEIGHT + 25,
-		TEXT_COLOR, "Ambient Lightning:");
-	snprintf(ratio_str, 12, "Ratio: %.2f", prog->scene->ambient_light.ratio);
-	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
-		20, SLIDER_RATIO_AMBIENT_HEIGHT + 13,
-		TEXT_COLOR, ratio_str);
-	snprintf(color_ambient_light, 23, "Color: (%d, %d, %d)",
-		(int)(prog->scene->ambient_light.color.x * 255),
-		(int)(prog->scene->ambient_light.color.y * 255),
-		(int)(prog->scene->ambient_light.color.z) * 255);
-	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
-		CONTROL_WINDOW_WIDTH / 2 - 60, SLIDER_RATIO_AMBIENT_HEIGHT * 1.5 + 13,
-		TEXT_COLOR, color_ambient_light);
+	if (prog->scene->selected_light == 0)
+		mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+			TEXT_X_POS, SLIDER_LIGHT_SELECTOR_HEIGHT + TEXT_Y_OFFSET,
+			TEXT_COLOR, "Ambient Light");
+	else if (prog->scene->selected_light <= prog->scene->nb_lights)
+	{
+		snprintf(buffer, sizeof(buffer), "Light %ld", prog->scene->selected_light);
+		mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+			TEXT_X_POS, SLIDER_LIGHT_SELECTOR_HEIGHT + TEXT_Y_OFFSET,
+			TEXT_COLOR, buffer);
+	}
+	else
+		mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
+			TEXT_X_POS, SLIDER_LIGHT_SELECTOR_HEIGHT + TEXT_Y_OFFSET,
+			TEXT_COLOR, "None");
+	if (prog->scene->selected_light == 0)
+		put_ambient_info(prog, win_btn);
+	else if (prog->scene->selected_light <= prog->scene->nb_lights)
+	{
+		light = &prog->scene->lights[prog->scene->selected_light - 1];
+		put_light_info(prog, win_btn, light);
+	}
 }
 
 void	put_string_win(t_prog *prog, t_win_button *win_btn)

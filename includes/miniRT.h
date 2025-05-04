@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 13:16:18 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/04 22:45:24 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct s_win_button	t_win_button;
 
 typedef struct ppm_header
 {
-
 	char	type[2];
 
 	t_uint	width;
@@ -55,6 +54,7 @@ typedef struct ppm_image
 	t_vec3			*values;
 
 }	t_ppm_image;
+
 typedef struct info
 {
 	const char	*file;
@@ -64,19 +64,19 @@ typedef struct info
 
 typedef struct material
 {
-	char	*name;
-	t_vec3	albedo;
+	char		*name;
+	t_vec3		albedo;
 
-	int		shyniness;
-	float	roughtness;
-	float	metalic;
+	int			shyniness;
+	float		roughtness;
+	float		metalic;
 
-	t_ppm_image normal_map;
-	t_ppm_image texture_map;
+	t_ppm_image	normal_map;
+	t_ppm_image	texture_map;
 
-	float	spec_coef;
-	float	emission_power;
-	bool	use_checker;
+	float		spec_coef;
+	float		emission_power;
+	bool		use_checker;
 }	t_mat;
 
 /* --------------------------------- OBJECT --------------------------------- */
@@ -139,6 +139,9 @@ typedef struct s_scene
 	t_cylinder		*cones;
 
 	int				nb_bounces;
+
+	size_t			selected_light;
+	size_t			selected_material;
 
 	t_mat			*materials;
 	size_t			nb_materials;
