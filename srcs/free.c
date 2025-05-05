@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:21:55 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/05 15:47:07 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 17:01:45 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,6 @@ void	print_exit(t_prog *prog, char *str)
 	if (prog)
 		free_all(prog);
 	exit(1);
-}
-
-void	free_win(t_win_scene *win, t_win_button *win_btn)
-{
-	if (win->img.img)
-		mlx_destroy_image(win->mlx_ptr, win->img.img);
-	if (win->win_ptr)
-		mlx_destroy_window(win->mlx_ptr, win->win_ptr);
-	if (win->mlx_ptr)
-	{
-		mlx_destroy_display(win->mlx_ptr);
-		free(win->mlx_ptr);
-		if (win_btn->mlx_ptr)
-			free(win_btn->win_ptr);
-	}
-	if (win->accumulation_data)
-		free(win->accumulation_data);
-	if (win->pass)
-		free(win->pass);
 }
 
 void	free_parser(t_parser *parser)

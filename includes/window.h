@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 16:33:05 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 17:04:59 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <mlx.h>
 # include <sys/types.h>
 
-# define WIDTH 480
-# define HEIGHT 360
+# define WIDTH 720
+# define HEIGHT 480
 
 /* --------------------------------- effect --------------------------------- */
 # define INVERT 0b00000001
@@ -47,7 +47,7 @@
 # define ON_EXPOSE 12
 # define ON_DESTROY 17
 
-# define SSAA_FACTOR 1
+# define SSAA_FACTOR 2
 
 /* -------------------------------------------------------------------------- */
 typedef struct s_data
@@ -80,7 +80,6 @@ typedef struct render_pass
 
 typedef struct s_win_scene
 {
-	char			*name;
 	int				width;
 	int				height;
 	int				half_width;
@@ -117,6 +116,7 @@ void			display_frame(t_win_scene *win, t_scene *scene);
 // window.c
 void			init_win(t_prog *prog);
 int				window_close(void *prog);
+void			free_win(t_win_scene *win, t_win_button *win_btn);
 
 void			run_pipeline(t_prog *prog);
 int				new_frame(t_prog *prog);

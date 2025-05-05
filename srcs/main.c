@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:02 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/05 16:24:03 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:37:12 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,10 @@ int	main(int ac, char **av)
 	t_win_button	win_button;
 
 	if (ac != 2)
-	{
-		print_error("Wrong number of arguments");
-		return (1);
-	}
+		print_exit(NULL, "Wrong number of arguments");
 	else if (!ft_strrchr(av[1], '.')
 		|| ft_strcmp(ft_strrchr(av[1], '.'), ".rt"))
-	{
-		print_error("File must have the .rt extension");
-		return (1);
-	}
-	// ft_log(LOG, "w:%d h:%d", WIDTH * SSAA_FACTOR, HEIGHT * SSAA_FACTOR);
-	// exit(0);
+		print_exit(NULL, "File must have the .rt extension");
 	pre_check();
 	prog.parser = &parser;
 	prog.scene = &scene;
@@ -55,5 +47,4 @@ int	main(int ac, char **av)
 	init(&prog, av[1]);
 	init_win(&prog);
 	free_all(&prog);
-	return (0);
 }

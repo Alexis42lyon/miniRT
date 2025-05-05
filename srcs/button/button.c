@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:08:54 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/05 14:52:57 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/05 17:04:08 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,8 +331,8 @@ void	init_button_window(t_prog *prog)
 
 	if (HEIGHT < 250)
 	{
-		ft_dprintf(2, RED
-			"Error: Window height is too small for panel control.\n", RESET);
+		ft_log(ERROR,
+			"Error: Window height is too small for panel control.");
 		return ;
 	}
 	win_btn = prog->win_button;
