@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:20:06 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/05 16:27:27 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:54:30 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,13 @@ static void	put_light_info(t_win_button *win_btn, t_light_source *light)
 	snprintf(buffer, sizeof(buffer), "Blue: %d", (int)(light->material.albedo.z * 255));
 	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
 		TEXT_X_POS, SLIDER_LIGHT_BLUE_HEIGHT + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
-	snprintf(buffer, sizeof(buffer), "Pos x: % .2f      +   -", light->origin.x);
+	snprintf(buffer, sizeof(buffer), "Pos x: % 9.2f  +   -", light->origin.x);
 	mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
 		TEXT_X_POS, SLIDER_LIGHT_BLUE_HEIGHT + 20 + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
-	snprintf(buffer, sizeof(buffer), "Pos y: % .2f      +   -", light->origin.y);
+	snprintf(buffer, sizeof(buffer), "Pos y: % 9.2f  +   -", light->origin.y);
 		mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
 			TEXT_X_POS, SLIDER_LIGHT_BLUE_HEIGHT + 40 + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
-	snprintf(buffer, sizeof(buffer), "Pos z: % .2f      +   -", light->origin.z);
+	snprintf(buffer, sizeof(buffer), "Pos z: % 9.2f  +   -", light->origin.z);
 		mlx_string_put(win_btn->mlx_ptr, win_btn->win_ptr,
 			TEXT_X_POS, SLIDER_LIGHT_BLUE_HEIGHT + 60 + TEXT_Y_OFFSET, TEXT_COLOR, buffer);
 }
