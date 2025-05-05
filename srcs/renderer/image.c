@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:16:12 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/02 13:56:01 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:47:40 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	create_img(t_win_scene *win)
 {
-	win->img.img = mlx_new_image(win->mlx_ptr, win->width, win->height);
+	win->img.img = mlx_new_image(win->mlx_ptr, win->width * SSAA_FACTOR, win->height * SSAA_FACTOR);
 	if (!win->img.img)
 		return (-1);
 	win->img.addr = mlx_get_data_addr(win->img.img, &win->img.bits_per_pixel,

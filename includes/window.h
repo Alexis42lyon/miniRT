@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 10:38:43 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:47:22 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 # define SHOW_LOGGING 0
 
-# define WIDTH 720
-# define HEIGHT 480
+# define WIDTH 480
+# define HEIGHT 370
 
 /* --------------------------------- effect --------------------------------- */
 # define INVERT 0b0000001
@@ -52,6 +52,8 @@
 # define KEYUP_MASK 1L<<1
 # define MOUSEDOWN_MASK 1L<<2
 # define MOUSEUP_MASK 1L<<3
+
+#define SSAA_FACTOR 1
 
 /* -------------------------------------------------------------------------- */
 typedef struct s_data
@@ -101,6 +103,7 @@ typedef struct s_win_scene
 	void			*mlx_ptr;
 
 	t_data			img;
+	t_data			final_image;
 	t_uint			img_flags;
 	t_uint			vp_flags;
 

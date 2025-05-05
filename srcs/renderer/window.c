@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 10:56:50 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:47:07 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,10 @@ void	init_win(t_prog *prog)
 	mlx_hook(win->win_ptr, ON_DESTROY, MOUSEDOWN_MASK, window_close, prog);
 	check_mem((t_info){__FILE__, __LINE__, __func__},
 		ft_calloc(win->height * win->width, sizeof(t_vec3)),
+		(void **)&win->final_image, prog);
+
+	check_mem((t_info){__FILE__, __LINE__, __func__},
+		ft_calloc((win->height * SSAA_FACTOR) * (win->width * SSAA_FACTOR), sizeof(t_vec3)),
 		(void **)&win->accumulation_data, prog);
 	check_mem((t_info){__FILE__, __LINE__, __func__},
 		ft_calloc(win->height * win->width, sizeof(t_render_pass)),

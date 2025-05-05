@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 08:45:57 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/02 14:18:51 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:07:08 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	run_pipeline(t_prog *prog)
 	vp = viewport(prog->win_scene, prog->scene);
 	render(vp, prog->scene);
 	apply_effect(prog->win_scene);
+	// anti_aliaser(vp, prog->scene);
 	prog->scene->total_render_time += get_current_time_ms() - last_frame;
 }
 

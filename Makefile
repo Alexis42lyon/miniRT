@@ -57,6 +57,7 @@ SRCS =	main.c					\
 		hit.c					\
 		depth_of_field.c		\
 		renderer_utils.c		\
+		anti_aliasing.c			\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
