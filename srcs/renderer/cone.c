@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 12:38:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/20 11:39:54 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:01:11 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static double	check_cone_cap(t_ray ray, t_cylinder *co)
 	t = ft_dot(vec3_sub(cap_center, ray.origin), normalized_dir) / denom;
 	if (t < 1e-6)
 		return (HUGE_VAL);
-	if (vec3_lenght(vec3_sub(vec3_add(ray.origin,
+	if (vec3_length(vec3_sub(vec3_add(ray.origin,
 					vec3_mult(ray.dir, t)), cap_center)) > co->radius)
 		return (HUGE_VAL);
 	return (t);

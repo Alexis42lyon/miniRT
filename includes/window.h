@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 11:47:22 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:33:05 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,17 @@
 # include <mlx.h>
 # include <sys/types.h>
 
-# define SHOW_LOGGING 0
-
 # define WIDTH 480
-# define HEIGHT 370
+# define HEIGHT 360
 
 /* --------------------------------- effect --------------------------------- */
-# define INVERT 0b0000001
-# define DEPTH_OF_FIELD 0b0000010
-# define PIXEL 0b0001000
-# define CHROMA 0b0010000
-# define GRAYSCALE 0b0100000
-# define POSTERIZE 0b1000000
+# define INVERT 0b00000001
+# define DEPTH_OF_FIELD 0b00000010
+# define PIXEL 0b00010000
+# define CHROMA 0b00100000
+# define GRAYSCALE 0b01000000
+# define POSTERIZE 0b10000000
+# define ANTIALIASING 0b100000000
 
 /* ----------------------------- viewport flags ----------------------------- */
 # define AMBIENT 0b0001
@@ -48,12 +47,7 @@
 # define ON_EXPOSE 12
 # define ON_DESTROY 17
 
-# define KEYDOWN_MASK 1L<<0
-# define KEYUP_MASK 1L<<1
-# define MOUSEDOWN_MASK 1L<<2
-# define MOUSEUP_MASK 1L<<3
-
-#define SSAA_FACTOR 1
+# define SSAA_FACTOR 1
 
 /* -------------------------------------------------------------------------- */
 typedef struct s_data
@@ -91,6 +85,7 @@ typedef struct s_win_scene
 	int				height;
 	int				half_width;
 	int				half_height;
+	int				scale_factor;
 
 	int				view_width;
 	int				view_height;

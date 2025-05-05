@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 10:23:32 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:01:11 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	in_light(t_scene *scene, t_hit hit, struct s_light_info infos)
 
 	ray.origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));
 	ray.dir = vec3_mult(infos.light_dir, -1);
-	ray.length = vec3_lenght(vec3_sub(infos.light.origin, ray.origin));
+	ray.length = vec3_length(vec3_sub(infos.light.origin, ray.origin));
 	light_hit = trace_ray(ray, scene);
 	return (light_hit.distance == -1);
 }
@@ -38,7 +38,7 @@ struct s_light_info	new_info(
 	info.hit = hit;
 	info.mat = mat;
 	info.light_dir = vec3_sub(hit.point, light.origin);
-	info.attenuation = LIGHT_RANGE / vec3_lenght(info.light_dir);
+	info.attenuation = LIGHT_RANGE / vec3_length(info.light_dir);
 	if (info.attenuation < 0)
 		info.attenuation = 0;
 	info.light_dir = vec3_normalize(info.light_dir);
@@ -66,7 +66,7 @@ t_vec3	recalculate_normal(t_scene *scene, t_hit hit,
 				)
 			);
 	*world_normal = vec3_normalize(*world_normal);
-	if (vec3_lenght_square(pass->uv) == 0)
+	if (vec3_length_square(pass->uv) == 0)
 		pass->uv = (t_vec3){u, v, 0};
 	return (*world_normal);
 }

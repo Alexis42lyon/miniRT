@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 10:27:30 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 11:47:01 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 11:53:01 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ t_viewport	viewport(t_win_scene *win, t_scene *scene)
 
 	vp.win = win;
 	vp.cam = &scene->camera;
-	vp.width = win->width * SSAA_FACTOR;
-	vp.height = win->height * SSAA_FACTOR;
+	vp.width = win->width;
+	vp.height = win->height;
 	vp.vp_height = 2 * tan((float)vp.cam->fov / 2 * 3.1415 / 180)
 		* vp.cam->focal_length;
 	vp.vp_width = vp.vp_height * win->aspect_ratio;

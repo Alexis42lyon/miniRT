@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:58:27 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/02 12:52:06 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:01:11 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,13 @@ t_vec3	new_vec3(double x, double y, double z);
 t_vec3	vec3_zero(void);
 
 t_vec3	vec3_add(const t_vec3 v1, const t_vec3 v2);
-double	vec3_lenght(const t_vec3 vec);
+double	vec3_length(const t_vec3 vec);
 t_vec3	vec3_sub(const t_vec3 v1, const t_vec3 v2);
 void	print_vec(t_vec3 vec);
 t_vec3	vec3_divide(const t_vec3 v1, const double d);
 t_vec3	vec3_mult(const t_vec3 v1, const double d);
 t_vec3	vec3_normalize(const t_vec3 v);
-double	vec3_lenght_square(const t_vec3 vec);
+double	vec3_length_square(const t_vec3 vec);
 
 t_vec3	vec3_multv(const t_vec3 v1, const t_vec3 v2);
 

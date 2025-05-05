@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:34:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/29 12:00:15 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:01:11 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static double	check_caps(t_ray ray, t_cylinder *cy, bool top)
 	if (t < 1e-6)
 		return (INFINITY);
 	hit = vec3_add(ray.origin, vec3_mult(ray.dir, t));
-	if (vec3_lenght(vec3_sub(hit, cap_center)) > cy->radius)
+	if (vec3_length(vec3_sub(hit, cap_center)) > cy->radius)
 		return (INFINITY);
 	return (t);
 }

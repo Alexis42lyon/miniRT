@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 09:48:40 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/05 08:38:23 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 14:17:17 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "window.h"
 
-# define SHOW_BUTTON 1
+# define SHOW_BUTTON 0
 # define TAB_COUNT 3
 # define TAB_HEIGHT 30
 # define TAB_COLOR 0x444444

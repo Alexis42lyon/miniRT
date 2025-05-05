@@ -6,7 +6,7 @@ INCLUDES = -Iincludes -Ilibft/includes -Imlx
 LIBS = libft/bin/libft.a mlx/libmlx.a
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -MD -MP $(INCLUDES) -O3
+CFLAGS = -Wall -Werror -Wextra -MD -MP $(INCLUDES) -g3
 MLXFLAGS = -lX11 -lXext -lbsd -lm
 
 ifeq ($(MODE), debug)
@@ -57,7 +57,7 @@ SRCS =	main.c					\
 		hit.c					\
 		depth_of_field.c		\
 		renderer_utils.c		\
-		anti_aliasing.c			\
+		antialiaser.c			\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
@@ -110,7 +110,7 @@ leaks: all
 	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=all ./$(BIN) scenes/$(file).rt
 
 callgrind: all
-	valgrind --tool=callgrind --dump-instr=yes --collect-jumps=yes ./$(BIN) scenes/$(file).rt
+	valgrind --tool=memcheck  ./$(BIN) scenes/$(file).rt
 
 clean:
 	rm -rf obj-debug obj-release

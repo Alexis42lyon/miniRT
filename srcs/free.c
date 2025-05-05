@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:21:55 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/05 08:40:20 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:47:07 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ void	free_arr(void **arr)
 void	print_exit(t_prog *prog, char *str)
 {
 	print_error(str);
-	free_all(prog);
+	if (prog)
+		free_all(prog);
+	exit(1);
 }
 
 void	free_win(t_win_scene *win, t_win_button *win_btn)

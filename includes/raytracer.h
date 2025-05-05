@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 11:46:28 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:33:13 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@
 
 # define RENDER_PAUSE 0b100000
 # define SHOW_FRAME 0b1000000
-# define MAX_TRHEAD 20
+# define MAX_THREAD 20
 # define LIGHT_RANGE 10
-
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
@@ -108,8 +107,20 @@ typedef struct s_thread_contex
 
 	pthread_t	th;
 	t_viewport	vp;
+	t_win_scene	*win;
 	t_scene		scene;
 }	t_thread_context;
+
+typedef struct s_thread_aliasing
+{
+	t_uint		id;
+
+	int			start_row;
+	int			end_row;
+
+	pthread_t	th;
+	t_win_scene	*win;
+}	t_thread_aliasing;
 
 typedef struct frame_data
 {
@@ -184,6 +195,4 @@ t_vec3			checker_color(t_hit	hit, t_mat mat);
 // hit.c
 t_hit			hit_succes(t_scene *scene, t_ray ray, t_hit hit);
 
-
-void	anti_aliaser(t_viewport vp, t_scene *scene);
 #endif

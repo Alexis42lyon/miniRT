@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 08:45:57 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 11:07:08 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:29:57 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include <strings.h>
 #include <sys/time.h>
 #include "libft/vector.h"
+
+void	anti_aliaser(t_win_scene *win);
 
 long	get_current_time_ms(void)
 {
@@ -34,10 +36,10 @@ void	apply_effect(t_win_scene *win)
 	int	j;
 
 	j = -1;
-	while (++j < win->height)
+	while (++j < HEIGHT)
 	{
 		i = 0;
-		while (i < win->width)
+		while (i < WIDTH)
 		{
 			vp_filter(win, i, j);
 			if (win->img_flags & GRAYSCALE)
@@ -66,8 +68,8 @@ void	run_pipeline(t_prog *prog)
 	update_cam(prog);
 	vp = viewport(prog->win_scene, prog->scene);
 	render(vp, prog->scene);
+	anti_aliaser(prog->win_scene);
 	apply_effect(prog->win_scene);
-	// anti_aliaser(vp, prog->scene);
 	prog->scene->total_render_time += get_current_time_ms() - last_frame;
 }
 

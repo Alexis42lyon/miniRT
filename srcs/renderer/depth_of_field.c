@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 11:03:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 10:40:16 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:19:04 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ float	*create_dof_kernel(const int size)
 	float		sum;
 	int			i;
 
-	kernel = ft_calloc(size * size, sizeof(float));
+	kernel = ft_calloc((size ) * (size), sizeof(float));
 	if (!kernel)
 		return (NULL);
 	sum = populate_kernel(half, sigma, size, kernel);
@@ -102,3 +102,4 @@ void	create_blur_pixel(t_gaussien_dof *dof, int i, int j, t_win_scene *win)
 		dx++;
 	}
 }
+

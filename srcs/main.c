@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:02 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/29 08:57:43 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:24:03 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <sys/wait.h>
+
+void	pre_check(void)
+{
+	if (SSAA_FACTOR != (int)SSAA_FACTOR || SSAA_FACTOR < 1)
+		print_exit(NULL, "SSAA_FACTOR is invalid");
+	if (DEFAULT_BOUNCE != (int)DEFAULT_BOUNCE || DEFAULT_BOUNCE < 1)
+		print_exit(NULL, "DEFAULT_BOUNCE is invalid");
+}
 
 int	main(int ac, char **av)
 {
@@ -37,6 +45,9 @@ int	main(int ac, char **av)
 		print_error("File must have the .rt extension");
 		return (1);
 	}
+	// ft_log(LOG, "w:%d h:%d", WIDTH * SSAA_FACTOR, HEIGHT * SSAA_FACTOR);
+	// exit(0);
+	pre_check();
 	prog.parser = &parser;
 	prog.scene = &scene;
 	prog.win_scene = &win_scene;

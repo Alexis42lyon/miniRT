@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:27:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/02 16:11:59 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:26:09 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ int	toggle_flag(int to_check, const int *options,
 
 int	toggle_effects(int keycode, t_prog *prog)
 {
-	const int	options[] = {'1', '2', '3', '4', '5', '6', 0};
+	const int	options[] = {'1', '2', '3', '4', '5', '6', '7', 0};
 	const int	flags[] = {
 		GRAYSCALE, PIXEL, INVERT,
-		CHROMA, POSTERIZE, DEPTH_OF_FIELD
+		CHROMA, POSTERIZE, DEPTH_OF_FIELD, ANTIALIASING
 	};
 
 	return (toggle_flag(keycode, &options[0], &flags[0],

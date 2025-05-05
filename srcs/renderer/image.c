@@ -6,19 +6,31 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:16:12 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 11:47:40 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:33:38 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window.h"
+#include "raytracer.h"
 
 int	create_img(t_win_scene *win)
 {
-	win->img.img = mlx_new_image(win->mlx_ptr, win->width * SSAA_FACTOR, win->height * SSAA_FACTOR);
+	win->img.img = mlx_new_image(win->mlx_ptr, win->width, win->height);
 	if (!win->img.img)
 		return (-1);
 	win->img.addr = mlx_get_data_addr(win->img.img, &win->img.bits_per_pixel,
 			&win->img.line_length, &win->img.endian);
+	if (!win->img.addr)
+	{
+		return (-1);
+	}
+	win->final_image.img = mlx_new_image(win->mlx_ptr,
+			win->width / SSAA_FACTOR, win->height / SSAA_FACTOR);
+	if (!win->final_image.img)
+		return (-1);
+	win->final_image.addr = mlx_get_data_addr(win->final_image.img,
+			&win->final_image.bits_per_pixel,
+			&win->final_image.line_length, &win->final_image.endian);
 	if (!win->img.addr)
 	{
 		return (-1);
@@ -51,6 +63,7 @@ int	create_trgb(int t, int r, int g, int b)
 
 void	display_frame(t_win_scene *win, t_scene *scene)
 {
-	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img.img, 0, 0);
+	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr,
+		win->final_image.img, 0, 0);
 	scene->frame_count++;
 }

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 11:40:26 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:01:11 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_hit	bounce(t_scene *scene, t_ray *ray, t_render_pass *pass)
 	hit = trace_ray(*ray, scene);
 	if (hit.distance == -1)
 		return (hit_fail());
-	if (vec3_lenght_square(pass->depth_map) == 0)
+	if (vec3_length_square(pass->depth_map) == 0)
 	{
 		pass->depth_map.x = hit.distance / scene->camera.focal_length;
 		pass->depth_map.y = hit.distance / scene->camera.focal_length;
@@ -81,7 +81,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	return (vec3_clamp(frame.final_color, 0, 1));
 }
 
-void	*thread_routine(void *pcontext)
+static void	*thread_routine(void *pcontext)
 {
 	t_thread_context	*ctx;
 	t_vec3				color;
@@ -97,7 +97,7 @@ void	*thread_routine(void *pcontext)
 			set_pixel(&ctx->vp.win->img, ctx->i, ctx->j, vec_to_int(
 					process_accumulation(accumulation_data, ctx, color)
 					));
-			ctx->i += MAX_TRHEAD;
+			ctx->i += MAX_THREAD;
 		}
 		ctx->i -= ctx->vp.win->width;
 		ctx->j++;
@@ -107,11 +107,11 @@ void	*thread_routine(void *pcontext)
 
 void	render(t_viewport vp, t_scene *scene)
 {
-	t_thread_context	ctx[MAX_TRHEAD];
+	t_thread_context	ctx[MAX_THREAD];
 	size_t				i;
 
 	i = 0;
-	while (i < MAX_TRHEAD)
+	while (i < MAX_THREAD)
 	{
 		ctx[i].id = i;
 		ctx[i].i = i;
@@ -122,7 +122,7 @@ void	render(t_viewport vp, t_scene *scene)
 		i++;
 	}
 	i = 0;
-	while (i < MAX_TRHEAD)
+	while (i < MAX_THREAD)
 	{
 		pthread_join(ctx[i].th, NULL);
 		i++;
