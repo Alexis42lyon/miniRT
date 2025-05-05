@@ -51,8 +51,6 @@ SRCS =	main.c					\
 		ppm_saver.c				\
 		button.c				\
 		put_string_win.c		\
-		slider.c				\
-		tabs.c					\
 		uv.c					\
 		hit.c					\
 		depth_of_field.c		\

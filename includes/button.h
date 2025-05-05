@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 09:48:40 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/05 16:36:19 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/05 23:28:16 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,36 +32,21 @@
 # define TEXT_X_POS 20
 # define TEXT_Y_OFFSET 12
 
-# define SLIDER_AMBIENT_RATIO_HEIGHT 40
-# define SLIDER_AMBIENT_RED_HEIGHT 60
-# define SLIDER_AMBIENT_GREEN_HEIGHT 80
-# define SLIDER_AMBIENT_BLUE_HEIGHT 100
+# define SLID_LIGHT_SELECT_H 40
+# define SLID_LIGHT_RATIO_H 80
+# define SLID_LIGHT_R_H 100
+# define SLID_LIGHT_G_H 120
+# define SLID_LIGHT_B_H 140
 
-# define LIGHT_BUTTON_WIDTH 90
-# define LIGHT_BUTTON_HEIGHT 20
-# define LIGHT_BUTTON_MARGIN 5
-# define LIGHTS_PER_COLUMN 3
-# define AMBIENT_LIGHT_HEIGHT 40
-# define LIGHTS_START_HEIGHT 120
-# define LIGHT_SELECTED_COLOR 0xAAAAAA
-# define LIGHT_UNSELECTED_COLOR 0x666666
-
-# define SLIDER_LIGHT_SELECTOR_HEIGHT 40
-# define MAX_LIGHT_SELECTOR_WIDTH 150
-# define SLIDER_LIGHT_RATIO_HEIGHT 80
-# define SLIDER_LIGHT_RED_HEIGHT 100
-# define SLIDER_LIGHT_GREEN_HEIGHT 120
-# define SLIDER_LIGHT_BLUE_HEIGHT 140
-
-# define SLIDER_MAT_SELECTOR_HEIGHT 40
-# define SLIDER_MAT_RED_HEIGHT 80
-# define SLIDER_MAT_GREEN_HEIGHT 100
-# define SLIDER_MAT_BLUE_HEIGHT 120
-# define SLIDER_MAT_SHININESS_HEIGHT 140
-# define SLIDER_MAT_ROUGHNESS_HEIGHT 160
-# define SLIDER_MAT_SPEC_COEF_HEIGHT 180
-# define SLIDER_MAT_EMISSION_HEIGHT 200
-# define SLIDER_MAT_CHECKER_HEIGHT 220
+# define SLID_MAT_SELECT_H 40
+# define SLID_MAT_RED_H 80
+# define SLID_MAT_GREEN_H 100
+# define SLID_MAT_BLUE_H 120
+# define SLID_MAT_SHINI_H 140
+# define SLID_MAT_ROUGH_H 160
+# define SLID_MAT_SPEC_H 180
+# define SLID_MAT_EMIS_H 200
+# define SLID_MAT_CHECK_H 220
 # define MAX_EMISSION_POWER 50.0f
 # define MAX_MAT_SHININESS 1024
 
@@ -69,6 +54,25 @@
 # define LIGHT_POS_BUTTON_HEIGHT 15
 # define LIGHT_POS_Y_POS 160
 # define OFFSET_BUTTON 20
+
+# define SPHERE_DIAM_Y_POS 180
+# define SPHERE_COLOR_Y_POS 260
+# define SPHERE_POS_Y_POS 100
+# define SPHERE_BUTTON_WIDTH 20
+# define SPHERE_BUTTON_HEIGHT 15
+# define SPHERE_SLIDER_X_POS 120
+# define SPHERE_MAT_SELEC_H 160
+# define SLID_SPHERE_SELECT_H 70
+
+# define PLANE_POS_Y_POS 100
+# define PLANE_MAT_SELECT_H 160
+# define SLID_PLANE_SELECT_H 70
+
+# define CYLINDER_POS_Y_POS 100
+# define CYLINDER_DIAMETER_Y_POS 180
+# define CYLINDER_HEIGHT_Y_POS 200
+# define CYLINDER_MAT_SELECT_H 220
+# define SLID_CYLINDER_SELECT_H 70
 
 typedef int	(*t_button_func)(t_prog *);
 
@@ -88,16 +92,6 @@ enum e_subtab
 	SUB_COUNT
 };
 
-typedef struct s_light_button
-{
-	int		x;
-	int		y;
-	int		width;
-	int		height;
-	int		index;
-	bool	is_selected;
-}	t_light_button;
-
 typedef struct s_button
 {
 	int				x;
@@ -108,6 +102,66 @@ typedef struct s_button
 	t_button_func	func;
 	bool			is_hovered;
 }	t_button;
+
+typedef struct s_sphere_buttons
+{
+	t_button	x_plus;
+	t_button	x_minus;
+	t_button	y_plus;
+	t_button	y_minus;
+	t_button	z_plus;
+	t_button	z_minus;
+	t_button	diameter_plus;
+	t_button	diameter_minus;
+}	t_sphere_buttons;
+
+typedef struct s_plane_buttons
+{
+	t_button	x_plus;
+	t_button	x_minus;
+	t_button	y_plus;
+	t_button	y_minus;
+	t_button	z_plus;
+	t_button	z_minus;
+}	t_plane_buttons;
+
+typedef struct s_cylinder_buttons
+{
+	t_button	x_plus;
+	t_button	x_minus;
+	t_button	y_plus;
+	t_button	y_minus;
+	t_button	z_plus;
+	t_button	z_minus;
+	t_button	diameter_plus;
+	t_button	diameter_minus;
+	t_button	height_plus;
+	t_button	height_minus;
+}	t_cylinder_buttons;
+
+typedef struct s_cone_buttons
+{
+	t_button	x_plus;
+	t_button	x_minus;
+	t_button	y_plus;
+	t_button	y_minus;
+	t_button	z_plus;
+	t_button	z_minus;
+	t_button	diameter_plus;
+	t_button	diameter_minus;
+	t_button	height_plus;
+	t_button	height_minus;
+}	t_cone_buttons;
+
+typedef struct s_light_button
+{
+	int		x;
+	int		y;
+	int		width;
+	int		height;
+	int		index;
+	bool	is_selected;
+}	t_light_button;
 
 typedef struct s_tab_data
 {
@@ -141,6 +195,10 @@ typedef struct s_win_button
 	t_button			ratio_slider;
 	int					is_dragging;
 	t_light_pos_buttons	light_pos_buttons;
+	t_sphere_buttons	sphere_buttons;
+	t_plane_buttons		plane_buttons;
+	t_cylinder_buttons	cylinder_buttons;
+	t_cone_buttons		cone_buttons;
 }	t_win_button;
 
 void	init_button_window(t_prog *prog);

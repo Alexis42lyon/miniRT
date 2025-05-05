@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 16:22:31 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 22:57:17 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,10 @@ typedef struct s_scene
 
 	size_t			selected_light;
 	size_t			selected_material;
+	size_t			selected_sphere;
+	size_t			selected_plane;
+	size_t			selected_cylinder;
+	size_t			selected_cone;
 
 	t_mat			*materials;
 	size_t			nb_materials;

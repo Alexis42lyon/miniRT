@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 17:04:59 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 19:50:31 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@
 # define ON_EXPOSE 12
 # define ON_DESTROY 17
 
-# define SSAA_FACTOR 2
+# define SSAA_FACTOR 1
 
 /* -------------------------------------------------------------------------- */
 typedef struct s_data

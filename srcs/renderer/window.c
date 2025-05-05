@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 17:03:33 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 20:28:54 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	free_win(t_win_scene *win, t_win_button *win_btn)
 
 void	setup_win(t_prog *prog)
 {
+	prog->win_scene->vp_flags = DIFFUSE | AMBIENT | SPECULAR;
+	prog->win_scene->img_flags = ANTIALIASING;
 	prog->win_scene->scale_factor = SSAA_FACTOR * SSAA_FACTOR;
 	prog->win_scene->height = HEIGHT * prog->win_scene->scale_factor;
 	prog->win_scene->width = WIDTH * prog->win_scene->scale_factor;

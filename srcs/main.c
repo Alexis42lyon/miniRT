@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:02 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/05 16:37:12 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 20:24:14 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,6 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <sys/wait.h>
-
-void	pre_check(void)
-{
-	if (SSAA_FACTOR != (int)SSAA_FACTOR || SSAA_FACTOR < 1)
-		print_exit(NULL, "SSAA_FACTOR is invalid");
-	if (DEFAULT_BOUNCE != (int)DEFAULT_BOUNCE || DEFAULT_BOUNCE < 1)
-		print_exit(NULL, "DEFAULT_BOUNCE is invalid");
-}
 
 int	main(int ac, char **av)
 {
@@ -39,7 +31,6 @@ int	main(int ac, char **av)
 	else if (!ft_strrchr(av[1], '.')
 		|| ft_strcmp(ft_strrchr(av[1], '.'), ".rt"))
 		print_exit(NULL, "File must have the .rt extension");
-	pre_check();
 	prog.parser = &parser;
 	prog.scene = &scene;
 	prog.win_scene = &win_scene;

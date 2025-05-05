@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:15 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/05 16:57:27 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 20:28:47 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@
 
 void	switch_identifier(t_prog *prog, t_parser *parser)
 {
-	if (!ft_strcmp(parser->tokens[0], "A") && parser->ambient_is_set)
-		print_exit(prog, "Ambient light can only be declared once");
-	else if (!ft_strcmp(parser->tokens[0], "A"))
+	if (!ft_strcmp(parser->tokens[0], "A"))
+	{
+		if (parser->ambient_is_set)
+			print_exit(prog, "Ambient light can only be declared once");
 		parser->ambient_is_set = true;
+	}
 	else if (!ft_strcmp(parser->tokens[0], "C"))
 	{
 		if (parser->camera_is_set)
@@ -92,6 +94,10 @@ void	parse_file(t_prog *prog, t_parser *parser, char *file)
 
 void	init(t_prog *prog, char *file)
 {
+	if (SSAA_FACTOR != (int)SSAA_FACTOR || SSAA_FACTOR < 1)
+		print_exit(NULL, "SSAA_FACTOR is invalid");
+	if (DEFAULT_BOUNCE != (int)DEFAULT_BOUNCE || DEFAULT_BOUNCE < 1)
+		print_exit(NULL, "DEFAULT_BOUNCE is invalid");
 	ft_bzero(prog->parser, sizeof(t_parser));
 	ft_bzero(prog->scene, sizeof(t_scene));
 	ft_bzero(prog->win_scene, sizeof(t_win_scene));
@@ -106,6 +112,4 @@ void	init(t_prog *prog, char *file)
 	prog->scene->nb_bounces = DEFAULT_BOUNCE;
 	print_scene(prog->scene);
 	ft_log(SUCCESS, "No error has been found");
-	prog->win_scene->vp_flags = DIFFUSE | AMBIENT | SPECULAR;
-	prog->win_scene->img_flags = ANTIALIASING;
 }
