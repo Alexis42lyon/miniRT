@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/03 08:42:32 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:35:59 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,6 @@
 #include <pthread.h>
 #include <unistd.h>
 #include "texture.h"
-
-t_viewport	viewport(t_win_scene *win, t_scene *scene)
-{
-	t_viewport	vp;
-
-	vp.win = win;
-	vp.cam = &scene->camera;
-	vp.width = win->width;
-	vp.height = win->height;
-	vp.vp_height = 2 * tan((float)vp.cam->fov / 2 * 3.1415 / 180)
-		* vp.cam->focal_length;
-	vp.vp_width = vp.vp_height * win->aspect_ratio;
-	vp.px_up_left = vec3_add(vp.cam->origin,
-			vec3_add(
-				vec3_sub(
-					vec3_mult(vp.cam->forward, vp.cam->focal_length),
-					vec3_mult(vp.cam->right, vp.vp_width / 2)
-					),
-				vec3_mult(vp.cam->up, vp.vp_height / 2)
-				)
-			);
-	vp.horizontal = vec3_mult(vp.cam->right, vp.vp_width);
-	vp.vertical = vec3_mult(vec3_mult(vp.cam->up, -1), vp.vp_height);
-	return (vp);
-}
 
 t_hit	bounce(t_scene *scene, t_ray *ray, t_render_pass *pass)
 {
@@ -77,66 +52,6 @@ t_hit	bounce(t_scene *scene, t_ray *ray, t_render_pass *pass)
 	return (hit);
 }
 
-t_vec3	create_merge_pass(t_render_pass *pass, t_uint flags)
-{
-	pass->merged_pass = vec3_zero();
-	if (flags & AMBIENT)
-		pass->merged_pass = vec3_add(pass->merged_pass, pass->ambient);
-	if (flags & DIFFUSE)
-		pass->merged_pass = vec3_add(pass->merged_pass, pass->diffuse);
-	if (flags & SPECULAR)
-		pass->merged_pass = vec3_add(pass->merged_pass, pass->specular);
-	return (pass->merged_pass);
-}
-
-t_vec3	sky_col(t_ray ray, t_scene *scene)
-{
-	const t_vec3	unit_direction = vec3_normalize(ray.dir);
-	const float		a = 0.5 * (unit_direction.y + 1.0);
-	t_vec3			sky_col;
-
-	sky_col = vec3_add(
-			vec3_mult((t_vec3){1.0, 1.0, 1.0}, (1.0 - a)),
-			vec3_mult(scene->ambient_light.color, a)
-			);
-	return (vec3_mult(sky_col, scene->ambient_light.ratio));
-}
-
-t_frame_data	frame_data(t_scene *scene, t_viewport *vp, int i, int j)
-{
-	return ((t_frame_data){
-		.final_color = vec3_zero(),
-		.hit = hit_fail(),
-		.pass = &vp->win->pass[i + j * vp->width],
-		.radiance = vec3_mult(scene->ambient_light.color,
-			scene->ambient_light.ratio),
-		.ray = get_ray((float)i / ((float)vp->width),
-			(float)j / (float)vp->height, *vp)
-	});
-}
-
-void	apply_shading(t_scene *scene, t_frame_data *frame, t_viewport *vp)
-{
-	phong_shading(scene, frame);
-	if (frame->hit.mat.emission_power == 0)
-		frame->final_color = vec3_add(frame->final_color,
-				create_merge_pass(frame->pass, vp->win->vp_flags));
-	else
-		frame->final_color = vec3_add(frame->final_color,
-				frame->pass->ambient);
-}
-
-t_ray	bounce_ray(t_ray ray, t_hit hit, t_uint seed)
-{
-	t_ray	new_ray;
-
-	new_ray.origin = vec3_add(hit.point,
-			vec3_mult(hit.normal, 0.0001));
-	new_ray.dir = vec3_reflect(ray.dir, vec3_add(hit.normal,
-				vec3_mult(random_vec(seed), hit.mat.roughtness)));
-	return (new_ray);
-}
-
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 {
 	t_frame_data	frame;
@@ -145,8 +60,8 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 
 	frame = frame_data(scene, &vp, i, j);
 	seed = (i + (j * vp.win->width)) * scene->frame_count;
-	x = 0;
-	while (x < scene->nb_bounces)
+	x = -1;
+	while (++x < scene->nb_bounces)
 	{
 		seed *= x + 1;
 		frame.hit = bounce(scene, &frame.ray, frame.pass);
@@ -158,27 +73,12 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 			break ;
 		}
 		apply_shading(scene, &frame, &vp);
-		// frame.ray = bounce_ray(frame.ray, frame.hit, seed);
-		frame.ray.origin = vec3_add(frame.hit.point, vec3_mult(frame.hit.normal, 0.0001));
-		frame.ray.dir = vec3_reflect(frame.ray.dir,
-			vec3_add(frame.hit.normal, vec3_mult(random_vec(seed), frame.hit.mat.roughtness)));		x++;
-		x++;
+		frame.ray.origin = vec3_add(frame.hit.point,
+				vec3_mult(frame.hit.normal, 0.0001));
+		frame.ray.dir = vec3_reflect(frame.ray.dir, vec3_add(frame.hit.normal,
+					vec3_mult(random_vec(seed), frame.hit.mat.roughtness)));
 	}
 	return (vec3_clamp(frame.final_color, 0, 1));
-}
-
-t_vec3	process_accumulation(
-	t_vec3 *accumulation_data, t_thread_context *ctx, t_vec3 color)
-{
-	t_vec3	accumulation;
-
-	accumulation_data[ctx->i + ctx->j * ctx->vp.win->width] = vec3_add(
-			accumulation_data[ctx->i + ctx->j * ctx->vp.win->width], color
-			);
-	accumulation = accumulation_data[ctx->i + ctx->j * ctx->vp.win->width];
-	accumulation = vec3_divide(accumulation, ctx->scene.frame_count);
-	accumulation = vec3_clamp(accumulation, 0, 1);
-	return (accumulation);
 }
 
 void	*thread_routine(void *pcontext)

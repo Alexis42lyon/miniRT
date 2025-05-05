@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/02 16:12:51 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:56:50 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,24 @@ int	window_close(void *prog)
 	return (0);
 }
 
+void	setup_win(t_prog *prog)
+{
+	prog->win_scene->height = HEIGHT;
+	prog->win_scene->width = WIDTH;
+	prog->win_scene->half_width = HEIGHT / 2;
+	prog->win_scene->half_height = WIDTH / 2;
+	prog->win_scene->aspect_ratio = (float)WIDTH / (float)HEIGHT;
+	prog->win_scene->mlx_ptr = mlx_init();
+	if (!prog->win_scene->mlx_ptr)
+		print_exit(prog, "Mlx init failed");
+}
+
 void	init_win(t_prog *prog)
 {
 	t_win_scene	*win;
 
+	setup_win(prog);
 	win = prog->win_scene;
-	win->height = HEIGHT;
-	win->width = WIDTH;
-	win->half_width = HEIGHT / 2;
-	win->half_height = WIDTH / 2;
-	win->aspect_ratio = (float)WIDTH / (float)HEIGHT;
-	win->mlx_ptr = mlx_init();
-	if (!win->mlx_ptr)
-		print_exit(prog, "Mlx init failed");
-	mlx_do_key_autorepeaton(prog->win_scene->mlx_ptr);
 	win->win_ptr = mlx_new_window(win->mlx_ptr, win->width,
 			win->height, "miniRT");
 	if (!win->win_ptr)

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 08:40:33 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:38:43 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,27 +84,27 @@ typedef struct render_pass
 
 typedef struct s_win_scene
 {
-	char	*name;
-	int		width;
-	int		height;
-	int		half_width;
-	int		half_height;
+	char			*name;
+	int				width;
+	int				height;
+	int				half_width;
+	int				half_height;
 
-	int		view_width;
-	int		view_height;
-	double	aspect_ratio;
+	int				view_width;
+	int				view_height;
+	double			aspect_ratio;
 
 	t_vec3			*accumulation_data;
 	t_render_pass	*pass;
 
-	void	*win_ptr;
-	void	*mlx_ptr;
+	void			*win_ptr;
+	void			*mlx_ptr;
 
-	t_data	img;
-	t_uint	img_flags;
-	t_uint	vp_flags;
+	t_data			img;
+	t_uint			img_flags;
+	t_uint			vp_flags;
 
-	bool	paused;
+	bool			paused;
 }	t_win_scene;
 
 /* ------------------------------- END BUTTON ------------------------------ */
@@ -134,6 +134,11 @@ void			chromatic_aberation(t_win_scene *win, int i, int j);
 void			grayscale(t_win_scene *win, int i, int j);
 void			pixelate(t_win_scene *win, int i, int j);
 void			posterize(t_win_scene *win, int i, int j);
+
+// depth_of_field.c
+t_gaussien_dof	new_dof(int size);
+void			create_blur_pixel(t_gaussien_dof *dof,
+					int i, int j, t_win_scene *win);
 
 // input_utils.c
 int				toggle_effects(int keycode, t_prog *prog);

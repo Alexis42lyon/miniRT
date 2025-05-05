@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/02 15:42:10 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:23:32 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,29 +71,25 @@ t_vec3	recalculate_normal(t_scene *scene, t_hit hit,
 	return (*world_normal);
 }
 
-void	phong_shading(t_scene *scene, t_frame_data *frame)
+t_vec3	create_merge_pass(t_render_pass *pass, t_uint flags)
 {
-	struct s_light_info	info;
-	size_t				i;
+	pass->merged_pass = vec3_zero();
+	if (flags & AMBIENT)
+		pass->merged_pass = vec3_add(pass->merged_pass, pass->ambient);
+	if (flags & DIFFUSE)
+		pass->merged_pass = vec3_add(pass->merged_pass, pass->diffuse);
+	if (flags & SPECULAR)
+		pass->merged_pass = vec3_add(pass->merged_pass, pass->specular);
+	return (pass->merged_pass);
+}
 
-	if (is_header_valid(&frame->hit.mat.normal_map.header))
-		recalculate_normal(scene, frame->hit, frame->pass, &frame->hit.normal);
-	if (vec3_lenght_square(frame->pass->normal) == 0)
-		frame->pass->normal = normal_color(frame->hit);
-	i = 0;
-	while (i < scene->nb_lights)
-	{
-		info = new_info(scene->lights[i], frame->hit,
-				frame->hit.mat, frame->ray);
-		frame->pass->ambient = vec3_add(frame->pass->ambient,
-				phong_ambient(frame));
-		if (in_light(scene, frame->hit, info))
-		{
-			frame->pass->diffuse = vec3_add(
-					frame->pass->diffuse, phong_diffuse(info));
-			frame->pass->specular = vec3_add(
-					frame->pass->specular, phong_specular(info));
-		}
-		i++;
-	}
+void	apply_shading(t_scene *scene, t_frame_data *frame, t_viewport *vp)
+{
+	phong_shading(scene, frame);
+	if (frame->hit.mat.emission_power == 0)
+		frame->final_color = vec3_add(frame->final_color,
+				create_merge_pass(frame->pass, vp->win->vp_flags));
+	else
+		frame->final_color = vec3_add(frame->final_color,
+				frame->pass->ambient);
 }

@@ -6,7 +6,7 @@ INCLUDES = -Iincludes -Ilibft/includes -Imlx
 LIBS = libft/bin/libft.a mlx/libmlx.a
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -MD -MP $(INCLUDES) -g3
+CFLAGS = -Wall -Werror -Wextra -MD -MP $(INCLUDES) -O3
 MLXFLAGS = -lX11 -lXext -lbsd -lm
 
 ifeq ($(MODE), debug)
@@ -56,6 +56,7 @@ SRCS =	main.c					\
 		uv.c					\
 		hit.c					\
 		depth_of_field.c		\
+		renderer_utils.c		\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)

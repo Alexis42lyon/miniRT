@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:31 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/02 16:12:33 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:34:35 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,17 @@ t_vec3	int_to_vec(t_uint color)
 		((color >> 8) & 0xFF) / 255.0f,
 		(color & 0xFF) / 255.0f
 	});
+}
+
+t_vec3	sky_col(t_ray ray, t_scene *scene)
+{
+	const t_vec3	unit_direction = vec3_normalize(ray.dir);
+	const float		a = 0.5 * (unit_direction.y + 1.0);
+	t_vec3			sky_col;
+
+	sky_col = vec3_add(
+			vec3_mult((t_vec3){1.0, 1.0, 1.0}, (1.0 - a)),
+			vec3_mult(scene->ambient_light.color, a)
+			);
+	return (vec3_mult(sky_col, scene->ambient_light.ratio));
 }

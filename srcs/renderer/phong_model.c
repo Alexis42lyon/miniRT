@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:18:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/02 15:37:38 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:26:14 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,31 @@ t_vec3	phong_specular(struct s_light_info info)
 	specular = vec3_multv(specular, info.mat.albedo);
 	specular = vec3_mult(specular, info.attenuation);
 	return (specular);
+}
+
+void	phong_shading(t_scene *scene, t_frame_data *frame)
+{
+	struct s_light_info	info;
+	size_t				i;
+
+	if (is_header_valid(&frame->hit.mat.normal_map.header))
+		recalculate_normal(scene, frame->hit, frame->pass, &frame->hit.normal);
+	if (vec3_lenght_square(frame->pass->normal) == 0)
+		frame->pass->normal = normal_color(frame->hit);
+	i = 0;
+	while (i < scene->nb_lights)
+	{
+		info = new_info(scene->lights[i], frame->hit,
+				frame->hit.mat, frame->ray);
+		frame->pass->ambient = vec3_add(frame->pass->ambient,
+				phong_ambient(frame));
+		if (in_light(scene, frame->hit, info))
+		{
+			frame->pass->diffuse = vec3_add(
+					frame->pass->diffuse, phong_diffuse(info));
+			frame->pass->specular = vec3_add(
+					frame->pass->specular, phong_specular(info));
+		}
+		i++;
+	}
 }

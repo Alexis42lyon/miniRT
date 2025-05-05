@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 08:37:49 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 10:35:57 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct viewport
 	int				height;
 }	t_viewport;
 
-struct s_light_info
+typedef struct s_light_info
 {
 	t_light_source	light;
 	t_vec3			light_dir;
@@ -89,7 +89,7 @@ struct s_light_info
 
 	t_hit			hit;
 	t_ray			ray;
-};
+}	t_light_info;
 
 struct s_objs_data
 {
@@ -120,52 +120,67 @@ typedef struct frame_data
 }	t_frame_data;
 
 // colors.c
-t_vec3		normal_color(t_hit hit);
-t_uint		vec_to_int(const t_vec3 color);
-t_vec3		int_to_vec(t_uint color);
+t_vec3			normal_color(t_hit hit);
+t_uint			vec_to_int(const t_vec3 color);
+t_vec3			int_to_vec(t_uint color);
+t_vec3			sky_col(t_ray ray, t_scene *scene);
 
 // ray.c
-t_ray		get_ray(float u, float v, t_viewport vp);
-t_hit		hit_fail(void);
-t_vec3		ray_to_vec(t_ray r);
+t_ray			get_ray(float u, float v, t_viewport vp);
+t_hit			hit_fail(void);
+t_vec3			ray_to_vec(t_ray r);
 
 // intersection.c
-t_hit		trace_ray(t_ray ray, t_scene *scene);
-t_vec3		cylinder_normal(t_cylinder cy, t_vec3 hit_point);
-t_vec3		cone_normal(t_cylinder co, t_vec3 hit_point);
-t_hit		get_min_dist(double (*f)(void*, t_ray), t_ray ray,
-				struct s_objs_data data);
-int			is_closest(t_hit hit, t_hit new_hit, t_ray ray);
+t_hit			trace_ray(t_ray ray, t_scene *scene);
+t_vec3			cylinder_normal(t_cylinder cy, t_vec3 hit_point);
+t_vec3			cone_normal(t_cylinder co, t_vec3 hit_point);
+t_hit			get_min_dist(double (*f)(void*, t_ray), t_ray ray,
+					struct s_objs_data data);
+int				is_closest(t_hit hit, t_hit new_hit, t_ray ray);
+
+// renderer_utils.c
+t_vec3			process_accumulation(
+					t_vec3 *accumulation_data, t_thread_context *ctx,
+					t_vec3 color);
+t_frame_data	frame_data(t_scene *scene, t_viewport *vp, int i, int j);
+t_viewport		viewport(t_win_scene *win, t_scene *scene);
 
 // renderer.c
-t_vec3		get_px_col(int i, int j, t_viewport vp, t_scene *scene);
-void		render(t_viewport vp, t_scene *scene);
-t_viewport	viewport(t_win_scene *win, t_scene *scene);
+t_vec3			get_px_col(int i, int j, t_viewport vp, t_scene *scene);
+void			render(t_viewport vp, t_scene *scene);
+t_viewport		viewport(t_win_scene *win, t_scene *scene);
 
 // sphere.c
-double		sphere_hit(void *p_sphere, const t_ray ray);
-t_hit		hit_result(const t_vec3 origin, const t_ray r, const double t,
-				const size_t idx);
+double			sphere_hit(void *p_sphere, const t_ray ray);
+t_hit			hit_result(const t_vec3 origin, const t_ray r, const double t,
+					const size_t idx);
 
 // place.c
-double		plane_hit(void *p_plane, const t_ray ray);
-double		cylinders_hit(void *p, t_ray ray);
+double			plane_hit(void *p_plane, const t_ray ray);
+double			cylinders_hit(void *p, t_ray ray);
 
 // cone.c
-double		cone_hit(void *p, t_ray ray);
+double			cone_hit(void *p, t_ray ray);
 
 // lighting.c
-void		phong_shading(t_scene *scene, t_frame_data *frame);
+void			apply_shading(t_scene *scene,
+					t_frame_data *frame, t_viewport *vp);
+t_vec3			recalculate_normal(t_scene *scene, t_hit hit,
+					t_render_pass *pass, t_vec3 *world_normal);
+t_light_info	new_info(
+					t_light_source light, t_hit hit, t_mat mat, t_ray ray);
+int				in_light(t_scene *scene, t_hit hit, struct s_light_info infos);
 
 // phong_model.c
-t_vec3		phong_diffuse(struct s_light_info info);
-t_vec3		phong_ambient(t_frame_data *frame);
-t_vec3		phong_specular(struct s_light_info info);
+void			phong_shading(t_scene *scene, t_frame_data *frame);
+t_vec3			phong_diffuse(struct s_light_info info);
+t_vec3			phong_ambient(t_frame_data *frame);
+t_vec3			phong_specular(struct s_light_info info);
 
 // checker.c
-t_vec3		checker_color(t_hit	hit, t_mat mat);
+t_vec3			checker_color(t_hit	hit, t_mat mat);
 
 // hit.c
-t_hit		hit_succes(t_scene *scene, t_ray ray, t_hit hit);
+t_hit			hit_succes(t_scene *scene, t_ray ray, t_hit hit);
 
 #endif
