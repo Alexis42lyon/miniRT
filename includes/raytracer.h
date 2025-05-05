@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/02 15:42:25 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 08:37:49 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,12 +164,6 @@ t_vec3		phong_specular(struct s_light_info info);
 
 // checker.c
 t_vec3		checker_color(t_hit	hit, t_mat mat);
-
-// anti_aliasing.c
-void		anti_aliaser(t_prog *prog, t_win_scene *win);
-
-// denosing.c
-void		denoiser(t_prog *prog, t_win_scene *win);
 
 // hit.c
 t_hit		hit_succes(t_scene *scene, t_ray ray, t_hit hit);

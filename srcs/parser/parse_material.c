@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 10:00:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/28 23:11:30 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/03 09:49:48 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,8 @@ static void	fill_material(t_prog *prog, t_mat *mat, t_list *current)
 		mat[i].spec_coef = check_atof(prog, tokens[5]);
 		mat[i].use_checker = (bool)check_atof(prog, tokens[6]);
 		mat[i].texture_map = ppm_image(tokens[7], prog);
-		mat[i].normal_map = ppm_image(tokens[8], prog);
+		mat[i++].normal_map = ppm_image(tokens[8], prog);
 		current = current->next;
-		i++;
 	}
 	prog->scene->materials = mat;
 }
@@ -105,5 +104,6 @@ void	parse_material(t_prog *prog, t_parser *parser)
 	if (prog->scene->nb_materials == 0)
 		print_exit(prog, "No materials found");
 	fill_material(prog, prog->scene->materials, parser->mat_chained);
-	check_duplicate_name(prog, prog->scene->materials, prog->scene->nb_materials);
+	check_duplicate_name(prog, prog->scene->materials,
+		prog->scene->nb_materials);
 }

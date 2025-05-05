@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:42:03 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/28 23:09:29 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/04 21:22:01 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "miniRT.h"
 
 # define MATERIAL_FILE "scenes/material.rt"
-# define SHOW_SRUCT 0
+# define SHOW_SRUCT 1
 
 typedef struct s_parser
 {
@@ -64,7 +64,7 @@ void	print_planes(const t_scene *scene);
 void	print_cylinders(const t_scene *scene);
 void	print_cones(const t_scene *scene);
 
-int	find_material_index(t_prog *prog, char *material_name);
+int		find_material_index(t_prog *prog, char *material_name);
 
 // renderer/colors.c
 t_uint	vec_to_int(const t_vec3 color);

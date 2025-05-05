@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:21:55 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/02 08:43:10 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 08:40:20 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "window.h"
 #include "parser.h"
 #include "texture.h"
+#include "button.h"
 
 void	free_arr(void **arr)
 {
@@ -33,7 +34,7 @@ void	print_exit(t_prog *prog, char *str)
 	free_all(prog);
 }
 
-void	free_win_scene(t_win_scene *win)
+void	free_win(t_win_scene *win, t_win_button *win_btn)
 {
 	if (win->img.img)
 		mlx_destroy_image(win->mlx_ptr, win->img.img);
@@ -43,6 +44,8 @@ void	free_win_scene(t_win_scene *win)
 	{
 		mlx_destroy_display(win->mlx_ptr);
 		free(win->mlx_ptr);
+		if (win_btn->mlx_ptr)
+			free(win_btn->win_ptr);
 	}
 	if (win->accumulation_data)
 		free(win->accumulation_data);
@@ -91,6 +94,6 @@ void	free_all(t_prog *prog)
 	clean_materials(prog->scene->materials, prog->scene->nb_materials);
 	free(prog->scene->materials);
 	free_parser(prog->parser);
-	free_win_scene(prog->win_scene);
+	free_win(prog->win_scene, prog->win_button);
 	exit(0);
 }

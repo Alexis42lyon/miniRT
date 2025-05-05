@@ -6,11 +6,11 @@ INCLUDES = -Iincludes -Ilibft/includes -Imlx
 LIBS = libft/bin/libft.a mlx/libmlx.a
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -MMD -MP -O3 $(INCLUDES)
+CFLAGS = -Wall -Werror -Wextra -MD -MP $(INCLUDES) -g3
 MLXFLAGS = -lX11 -lXext -lbsd -lm
 
 ifeq ($(MODE), debug)
-	CFLAGS = -Wall -Wextra -MMD -MP $(INCLUDES) -g3 -D DEFAULT_BOUNCE=1
+	CFLAGS = -Wall -Wextra -MD -MP $(INCLUDES) -g3 -D DEFAULT_BOUNCE=2
 endif
 
 VPATH = srcs:srcs/parser:srcs/renderer:srcs/camera:srcs/textures:srcs/button
