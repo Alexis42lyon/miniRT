@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 11:03:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 12:48:27 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/02 13:54:49 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,21 @@
 
 static float	gaussien(int i, int j, float sigma)
 {
-	float s;
+	float	s;
 
 	s = 2.0f * sigma * sigma;
-	return (1.0f / (3.1415 * s)) * exp(-(i * i + j * j) / s);
+	return ((1.0f / (M_PI * s)) * exp(-(i * i + j * j) / s));
 }
 
-float	*create_dof_kernel(const int size)
+float	populate_kernel(const int half, const float sigma,
+	const int size, float *kernel)
 {
-	const float	sigma = 3.0f;
-	float		*kernel;
-	float		sum = 0.0f;
-	int			half = size / 2;
-
 	int		i;
 	int		j;
 	float	value;
+	float	sum;
 
-	kernel = malloc(size * size * sizeof(float));
-	if (!kernel)
-		return (NULL);
+	sum = 0.0f;
 	i = -half;
 	while (i <= half)
 	{
@@ -48,6 +43,21 @@ float	*create_dof_kernel(const int size)
 		}
 		i++;
 	}
+	return (sum);
+}
+
+float	*create_dof_kernel(const int size)
+{
+	const float	sigma = 3.0f;
+	const int	half = size / 2;
+	float		*kernel;
+	float		sum;
+	int			i;
+
+	kernel = malloc(size * size * sizeof(float));
+	if (!kernel)
+		return (NULL);
+	sum = populate_kernel(half, sigma, size, kernel);
 	i = 0;
 	while (i < size * size)
 	{
@@ -57,40 +67,57 @@ float	*create_dof_kernel(const int size)
 	return (kernel);
 }
 
-void	depth_of_field(t_win_scene *win, int i, int j)
+t_gaussien_dof	new_dof(int size)
 {
-	t_vec3	final;
-	const int	size = 11;
-	int	half = size / 2;
+	return ((t_gaussien_dof){
+		.size = size,
+		.half = size / 2,
+		.kernel = create_dof_kernel(size),
+		.final = vec3_zero()
+	});
+}
 
-	final = vec3_zero();
+void	create_blur_pixel(t_gaussien_dof *dof, int i, int j, t_win_scene *win)
+{
+	int		dx;
+	int		dy;
+	t_vec3	color;
+	float	weight;
 
-	int dx;
-	int dy;
-
-	float	*kernel = create_dof_kernel(size);
-	if (kernel == NULL)
-		return;
-
-	dx = -half;
-	while (dx <= half)
+	dx = -dof->half;
+	while (dx <= dof->half)
 	{
-		dy = -half;
-		while (dy <= half)
+		dy = -dof->half;
+		while (dy <= dof->half)
 		{
-			int x = ft_clamp(i + dx, 0, win->width - 1);
-			int y = ft_clamp(j + dy, 0, win->height - 1);
-			t_vec3	color = int_to_vec(get_pixel(&win->img, x, y));
-			float weight = kernel[(dx + half) * size + (dy + half)];
-			final = vec3_add(final, vec3_mult(color, weight));
+			color = int_to_vec(get_pixel(&win->img,
+						ft_clamp(i + dx, 0, win->width - 1),
+						ft_clamp(j + dy, 0, win->height - 1)
+						));
+			weight = dof->kernel[
+				(dx + dof->half) * dof->size + (dy + dof->half)];
+			dof->final = vec3_add(dof->final, vec3_mult(color, weight));
 			dy++;
 		}
 		dx++;
 	}
-	free(kernel);
-	final = vec3_clamp(final, 0, 1);
-	float t = vec3_lenght(win->pass[i + j * win->width].depth_map);
-	t = ft_clamp(t, 0, 1);
-	t_vec3 dof = vec3_add(vec3_mult(int_to_vec(get_pixel(&win->img, i, j)), (1.0 - t)), vec3_mult(final, t));
-	set_pixel(&win->img, i, j,  vec_to_int(dof));
+}
+
+void	depth_of_field(t_win_scene *win, int i, int j)
+{
+	t_gaussien_dof	dof;
+	float			t;
+	t_vec3			new_px;
+
+	dof = new_dof(11);
+	if (!dof.kernel)
+		return ;
+	create_blur_pixel(&dof, i, j, win);
+	free(dof.kernel);
+	dof.final = vec3_clamp(dof.final, 0, 1);
+	t = ft_clamp(vec3_lenght(win->pass[i + j * win->width].depth_map), 0, 1);
+	new_px = vec3_add(vec3_mult(
+				int_to_vec(get_pixel(&win->img, i, j)), (1.0 - t)),
+			vec3_mult(dof.final, t));
+	set_pixel(&win->img, i, j, vec_to_int(new_px));
 }

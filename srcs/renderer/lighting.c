@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 13:33:49 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:42:10 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,55 @@ struct s_light_info	new_info(
 	return (info);
 }
 
-void	phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray, t_render_pass *pass)
+t_vec3	recalculate_normal(t_scene *scene, t_hit hit,
+	t_render_pass *pass, t_vec3 *world_normal)
 {
-	struct s_light_info	info;
-	float				u;
-	float				v;
+	float	u;
+	float	v;
+	t_vec3	tangent;
+	t_vec3	bitangent;
+	t_vec3	map_normal;
 
 	get_uv(scene, hit, &u, &v);
-	if (mat.normal_map.values)
-	{
-		hit.normal = vec3_normalize(vec3_add(vec3_mult(
-					get_px(u, v, &mat.normal_map), 2.0), (t_vec3){-1,-1,-1}));
-	}
+	get_tangents(hit.normal, &tangent, &bitangent);
+	map_normal = get_px(u, v, &hit.mat.normal_map);
+	map_normal = vec3_add(vec3_mult(map_normal, 2.0f), (t_vec3){-1, -1, -1});
+	*world_normal = vec3_add(
+			vec3_mult(tangent, map_normal.x),
+			vec3_add(
+				vec3_mult(bitangent, map_normal.y),
+				vec3_mult(hit.normal, map_normal.z)
+				)
+			);
+	*world_normal = vec3_normalize(*world_normal);
 	if (vec3_lenght_square(pass->uv) == 0)
 		pass->uv = (t_vec3){u, v, 0};
-	if (vec3_lenght_square(pass->normal) == 0)
-		pass->normal = normal_color(hit);
-	for (size_t i = 0; i < scene->nb_lights; i++)
+	return (*world_normal);
+}
+
+void	phong_shading(t_scene *scene, t_frame_data *frame)
+{
+	struct s_light_info	info;
+	size_t				i;
+
+	if (is_header_valid(&frame->hit.mat.normal_map.header))
+		recalculate_normal(scene, frame->hit, frame->pass, &frame->hit.normal);
+	if (vec3_lenght_square(frame->pass->normal) == 0)
+		frame->pass->normal = normal_color(frame->hit);
+	i = 0;
+	while (i < scene->nb_lights)
 	{
-		info = new_info(scene->lights[i], hit, mat, ray);
-		if (in_light(scene, hit, info))
+		info = new_info(scene->lights[i], frame->hit,
+				frame->hit.mat, frame->ray);
+		frame->pass->ambient = vec3_add(frame->pass->ambient,
+				phong_ambient(frame));
+		if (in_light(scene, frame->hit, info))
 		{
-			pass->diffuse = vec3_add(pass->diffuse, phong_diffuse(info));
-			pass->specular = vec3_add(pass->specular, phong_specular(info));
+			frame->pass->diffuse = vec3_add(
+					frame->pass->diffuse, phong_diffuse(info));
+			frame->pass->specular = vec3_add(
+					frame->pass->specular, phong_specular(info));
 		}
+		i++;
 	}
 }

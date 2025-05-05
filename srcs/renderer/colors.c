@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:31 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/21 21:38:46 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:12:33 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_uint	vec_to_int(const t_vec3 color)
 	return ((a << 24) | (r << 16) | (g << 8) | b);
 }
 
-t_vec3 int_to_vec(t_uint color)
+t_vec3	int_to_vec(t_uint color)
 {
 	return ((t_vec3){
 		((color >> 16) & 0xFF) / 255.0f,

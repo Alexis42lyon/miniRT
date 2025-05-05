@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:17:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/16 23:55:07 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:12:26 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ t_vec3	checker_color(t_hit	hit, t_mat mat)
 	y = floor(hit.point.y);
 	z = floor(hit.point.z);
 	if ((x + y + z) % 2 == 0)
-		return ((t_vec3){0,0,0});
+		return ((t_vec3){0, 0, 0});
 	return (mat.albedo);
 }

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:56:00 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 10:02:50 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/02 12:52:54 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include <math.h>
 #include <stdio.h>
 
-void	sp_coordinate_to_uv(t_vec3 normal, float *u, float *v);
-void	co_coordinate_to_uv(t_hit hit, t_cylinder *cy, float *u, float *v);
-void	cy_coordinate_to_uv(t_hit hit, t_cylinder *cy, float *u, float *v);
-void	pl_coordinate_to_uv(t_hit hit, t_plane *plane, float *u, float *v);
+static void	sp_coordinate_to_uv(t_vec3 normal, float *u, float *v);
+static void	co_coordinate_to_uv(t_hit hit, t_cylinder *cy, float *u, float *v);
+static void	cy_coordinate_to_uv(t_hit hit, t_cylinder *cy, float *u, float *v);
+static void	pl_coordinate_to_uv(t_hit hit, t_plane *plane, float *u, float *v);
 
 void	get_uv(t_scene *scene, t_hit hit, float *u, float *v)
 {
@@ -37,18 +37,13 @@ void	get_uv(t_scene *scene, t_hit hit, float *u, float *v)
 	}
 }
 
-void	pl_coordinate_to_uv(t_hit hit, t_plane *plane, float *u, float *v)
+static void	pl_coordinate_to_uv(t_hit hit, t_plane *plane, float *u, float *v)
 {
 	const float	uv_scaling = 1.0f;
 	t_vec3		tangent;
 	t_vec3		bitangent;
-	t_vec3		axis;
 
-	axis = (t_vec3){0, 1, 0};
-	if (fabsf(ft_dot(plane->normal, axis)) > 0.999f)
-		axis = (t_vec3){1, 0, 0};
-	tangent = vec3_normalize(vec3_cross(axis, plane->normal));
-	bitangent = vec3_normalize(vec3_cross(plane->normal, tangent));
+	get_tangents(plane->normal, &tangent, &bitangent);
 	*u = ft_dot(tangent, vec3_sub(plane->origin, hit.point)) * uv_scaling;
 	*v = ft_dot(bitangent, vec3_sub(plane->origin, hit.point)) * uv_scaling;
 	*u = fmodf(*u, 1.0f);
@@ -59,28 +54,45 @@ void	pl_coordinate_to_uv(t_hit hit, t_plane *plane, float *u, float *v)
 		*v += 1.0f;
 }
 
-void	sp_coordinate_to_uv(t_vec3 normal, float *u, float *v)
+static void	sp_coordinate_to_uv(t_vec3 normal, float *u, float *v)
 {
 	*u = 0.5 - (atan2(normal.z, normal.x) / (2 * M_PI));
 	*v = 0.5 - (asin(normal.y) / M_PI);
 }
 
-void	co_coordinate_to_uv(t_hit hit, t_cylinder *cy, float *u, float *v)
+static void	co_coordinate_to_uv(t_hit hit, t_cylinder *cy, float *u, float *v)
 {
-	float	slant;
+	float		slant;
+	t_vec3		tangent;
+	t_vec3		bitangent;
+	t_vec3		local;
+	float		height;
 
-	*u = 0.5 + (atan2(hit.normal.z, hit.normal.x) / (2.0 * M_PI));
+	get_tangents(cy->normal, &tangent, &bitangent);
+	local = vec3_sub(hit.point, cy->origin);
+	*u = 0.5 + (atan2(ft_dot(local, bitangent),
+				ft_dot(local, tangent)) / (2.0 * M_PI));
 	slant = sqrt(cy->radius * cy->radius + cy->height + cy->height);
-	*v = (cy->height / 2 - (hit.point.y - cy->origin.y)) / slant;
+	height = ft_dot(local, cy->normal);
+	*v = (cy->height / 2 - height) / slant + 0.5f;
 	*u = ft_clamp(*u, 0, 1);
 	*v = ft_clamp(*v, 0, 1);
 }
 
-void	cy_coordinate_to_uv(t_hit hit, t_cylinder *cy, float *u, float *v)
+static void	cy_coordinate_to_uv(t_hit hit, t_cylinder *cy, float *u, float *v)
 {
-	*u = 0.5 + (atan2(hit.normal.z, hit.normal.x) / (2.0 * M_PI));
-	*v = (hit.point.y - cy->origin.y + cy->height / 2) / cy->height - 0.5;
+	t_vec3		tangent;
+	t_vec3		bitangent;
+	t_vec3		local;
+	float		height;
+
+	get_tangents(cy->normal, &tangent, &bitangent);
+	local = vec3_sub(hit.point, cy->origin);
+	*u = 0.5f + atan2f(ft_dot(local, bitangent),
+			ft_dot(local, tangent)) / (2.0f * M_PI);
+	height = ft_dot(local, cy->normal);
+	*v = (height + cy->height / 2.0f) / cy->height - 0.5f;
 	*v = 1 - *v;
-	*u = ft_clamp(*u, 0, 1);
 	*v = ft_clamp(*v, 0, 1);
+	*u = ft_clamp(*u, 0, 1);
 }

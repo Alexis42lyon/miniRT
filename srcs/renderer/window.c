@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 12:35:08 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:12:51 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,8 @@ void	init_win(t_prog *prog)
 		ft_calloc(win->height * win->width, sizeof(t_render_pass)),
 		(void **)&win->pass, prog);
 	init_button_window(prog);
-	/* ----------------------------- // mouse hooks // ----------------------------- */
 	mlx_hook(win->win_ptr, ON_MOUSEDOWN, MOUSEDOWN_MASK, mouse_down, prog);
 	mlx_hook(win->win_ptr, ON_MOUSEUP, MOUSEUP_MASK, mouse_up, prog);
-	/* ------------------------------ // key hooks // ------------------------------- */
 	mlx_hook(win->win_ptr, ON_KEYDOWN, KEYDOWN_MASK, key_down, prog);
 	mlx_hook(win->win_ptr, ON_KEYUP, KEYUP_MASK, key_up, prog);
 	mlx_loop(win->mlx_ptr);

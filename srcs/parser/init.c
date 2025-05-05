@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:15 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/01 13:30:31 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/02 14:20:15 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,6 @@ void	init(t_prog *prog, char *file)
 	prog->scene->frame_count = 1;
 	prog->scene->nb_bounces = DEFAULT_BOUNCE;
 	print_scene(prog->scene);
-	ft_printf("%sNo error has been found\n%s", GREEN, RESET);
+	ft_log(SUCCESS, "No error has been found");
 	prog->win_scene->vp_flags = DIFFUSE | AMBIENT | SPECULAR;
 }

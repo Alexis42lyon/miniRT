@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:18:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/28 15:44:56 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:37:38 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ t_vec3	phong_diffuse(struct s_light_info info)
 	diffuse = vec3_multv(diffuse, info.light.material.albedo);
 	diffuse = vec3_mult(diffuse, info.light.ratio);
 	diffuse = vec3_mult(diffuse, info.attenuation);
-
 	return (vec3_clamp(diffuse, 0, 1));
 }
 
@@ -41,13 +40,16 @@ t_vec3	phong_diffuse(struct s_light_info info)
  * Od = obj color
  * Ld = ambient color
 */
-t_vec3	phong_ambient(t_scene *scene, t_mat mat)
+t_vec3	phong_ambient(t_frame_data *frame)
 {
-	t_vec3	ambient;
-
-	ambient = vec3_multv(mat.albedo, scene->ambient_light.color);
-	ambient = vec3_mult(ambient, scene->ambient_light.ratio);
-	return (ambient);
+	if (frame->hit.mat.emission_power != 0)
+		frame->radiance = vec3_mult(
+				frame->hit.mat.albedo, frame->hit.mat.emission_power
+				);
+	else
+		frame->radiance = vec3_multv(frame->radiance, frame->hit.mat.albedo);
+	return (vec3_multv(vec3_divide(frame->hit.mat.albedo, M_PI),
+			frame->radiance));
 }
 
 t_vec3	phong_specular(struct s_light_info info)

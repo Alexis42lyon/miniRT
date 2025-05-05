@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 13:24:14 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/02 15:42:25 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
 # include "window.h"
 
 # ifndef DEFAULT_BOUNCE
-# define DEFAULT_BOUNCE 10
+#  define DEFAULT_BOUNCE 10
 # endif
 
 # define RENDER_PAUSE 0b100000
 # define SHOW_FRAME 0b1000000
 # define MAX_TRHEAD 20
-# define LIGHT_RANGE 5
+# define LIGHT_RANGE 10
 
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846
@@ -110,12 +110,14 @@ typedef struct s_thread_contex
 	t_scene		scene;
 }	t_thread_context;
 
-typedef struct s_vector3i
+typedef struct frame_data
 {
-	int	x;
-	int	y;
-	int	z;
-}	t_vec3i;
+	t_ray			ray;
+	t_vec3			final_color;
+	t_vec3			radiance;
+	t_hit			hit;
+	t_render_pass	*pass;
+}	t_frame_data;
 
 // colors.c
 t_vec3		normal_color(t_hit hit);
@@ -132,7 +134,7 @@ t_hit		trace_ray(t_ray ray, t_scene *scene);
 t_vec3		cylinder_normal(t_cylinder cy, t_vec3 hit_point);
 t_vec3		cone_normal(t_cylinder co, t_vec3 hit_point);
 t_hit		get_min_dist(double (*f)(void*, t_ray), t_ray ray,
-			struct s_objs_data data);
+				struct s_objs_data data);
 int			is_closest(t_hit hit, t_hit new_hit, t_ray ray);
 
 // renderer.c
@@ -153,11 +155,11 @@ double		cylinders_hit(void *p, t_ray ray);
 double		cone_hit(void *p, t_ray ray);
 
 // lighting.c
-void		phong_shading(t_scene *scene, t_hit hit, t_mat mat, t_ray ray, t_render_pass *pass);
+void		phong_shading(t_scene *scene, t_frame_data *frame);
 
 // phong_model.c
 t_vec3		phong_diffuse(struct s_light_info info);
-t_vec3		phong_ambient(t_scene *scene, t_mat mat);
+t_vec3		phong_ambient(t_frame_data *frame);
 t_vec3		phong_specular(struct s_light_info info);
 
 // checker.c

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 13:16:18 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/02 14:20:54 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ typedef struct cylinder
 
 typedef struct s_scene
 {
-	t_vec3			sky_color;
 	t_ambient_light	ambient_light;
 	t_camera		camera;
 	size_t			nb_lights;
@@ -139,6 +138,7 @@ typedef struct s_scene
 	t_cylinder		*cones;
 
 	int				nb_bounces;
+	int				old_bounces;
 
 	t_mat			*materials;
 	size_t			nb_materials;

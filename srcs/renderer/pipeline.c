@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 08:45:57 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 13:20:40 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/02 14:18:51 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,26 +33,27 @@ void	apply_effect(t_win_scene *win)
 	int	i;
 	int	j;
 
-	j = 0;
-	while (j < win->height)
+	j = -1;
+	while (++j < win->height)
 	{
 		i = 0;
 		while (i < win->width)
 		{
 			vp_filter(win, i, j);
-			if (win->img_flags & DEPTH_OF_FIELD)
-				depth_of_field(win, i, j);
-			if (win->img_flags & INVERT)
-				invert_effect(win, i, j);
-			if (win->img_flags & PIXEL)
-				pixelate(win, i, j);
-			if (win->img_flags & CHROMA)
-				chromatic_aberation(win, i, j);
 			if (win->img_flags & GRAYSCALE)
 				grayscale(win, i, j);
+			if (win->img_flags & PIXEL)
+				pixelate(win, i, j);
+			if (win->img_flags & INVERT)
+				invert_effect(win, i, j);
+			if (win->img_flags & CHROMA)
+				chromatic_aberation(win, i, j);
+			if (win->img_flags & POSTERIZE)
+				posterize(win, i, j);
+			if (win->img_flags & DEPTH_OF_FIELD)
+				depth_of_field(win, i, j);
 			i++;
 		}
-		j++;
 	}
 }
 
@@ -63,18 +64,10 @@ void	run_pipeline(t_prog *prog)
 
 	last_frame = get_current_time_ms();
 	update_cam(prog);
-	prog->scene->sky_color = vec3_mult(prog->scene->ambient_light.color,
-			prog->scene->ambient_light.ratio);
 	vp = viewport(prog->win_scene, prog->scene);
 	render(vp, prog->scene);
 	apply_effect(prog->win_scene);
 	prog->scene->total_render_time += get_current_time_ms() - last_frame;
-}
-
-void	display_frame(t_win_scene *win, t_scene *scene)
-{
-	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img.img, 0, 0);
-	scene->frame_count++;
 }
 
 void	new_pass(t_win_scene *win)

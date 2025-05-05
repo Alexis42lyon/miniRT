@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 13:36:06 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/03 08:42:32 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include "texture.h"
 #include "window.h"
 #include "raytracer.h"
-#include <inttypes.h>
 #include <limits.h>
 #include <stdio.h>
 #include <time.h>
@@ -54,7 +53,8 @@ t_viewport	viewport(t_win_scene *win, t_scene *scene)
 t_hit	bounce(t_scene *scene, t_ray *ray, t_render_pass *pass)
 {
 	t_hit	hit;
-	float u, v;
+	float	u;
+	float	v;
 
 	hit = trace_ray(*ray, scene);
 	if (hit.distance == -1)
@@ -66,11 +66,11 @@ t_hit	bounce(t_scene *scene, t_ray *ray, t_render_pass *pass)
 		pass->depth_map.z = hit.distance / scene->camera.focal_length;
 		pass->depth_map = vec3_clamp(pass->depth_map, 0, 1);
 	}
-
 	if (hit.mat.texture_map.header.type[0] != -1)
 	{
 		get_uv(scene, hit, &u, &v);
-		hit.mat.albedo = vec3_multv(hit.mat.albedo, get_px(u, v, &hit.mat.texture_map));
+		hit.mat.albedo = vec3_multv(hit.mat.albedo,
+				get_px(u, v, &hit.mat.texture_map));
 	}
 	if (hit.mat.use_checker)
 		hit.mat.albedo = checker_color(hit, hit.mat);
@@ -89,60 +89,103 @@ t_vec3	create_merge_pass(t_render_pass *pass, t_uint flags)
 	return (pass->merged_pass);
 }
 
+t_vec3	sky_col(t_ray ray, t_scene *scene)
+{
+	const t_vec3	unit_direction = vec3_normalize(ray.dir);
+	const float		a = 0.5 * (unit_direction.y + 1.0);
+	t_vec3			sky_col;
+
+	sky_col = vec3_add(
+			vec3_mult((t_vec3){1.0, 1.0, 1.0}, (1.0 - a)),
+			vec3_mult(scene->ambient_light.color, a)
+			);
+	return (vec3_mult(sky_col, scene->ambient_light.ratio));
+}
+
+t_frame_data	frame_data(t_scene *scene, t_viewport *vp, int i, int j)
+{
+	return ((t_frame_data){
+		.final_color = vec3_zero(),
+		.hit = hit_fail(),
+		.pass = &vp->win->pass[i + j * vp->width],
+		.radiance = vec3_mult(scene->ambient_light.color,
+			scene->ambient_light.ratio),
+		.ray = get_ray((float)i / ((float)vp->width),
+			(float)j / (float)vp->height, *vp)
+	});
+}
+
+void	apply_shading(t_scene *scene, t_frame_data *frame, t_viewport *vp)
+{
+	phong_shading(scene, frame);
+	if (frame->hit.mat.emission_power == 0)
+		frame->final_color = vec3_add(frame->final_color,
+				create_merge_pass(frame->pass, vp->win->vp_flags));
+	else
+		frame->final_color = vec3_add(frame->final_color,
+				frame->pass->ambient);
+}
+
+t_ray	bounce_ray(t_ray ray, t_hit hit, t_uint seed)
+{
+	t_ray	new_ray;
+
+	new_ray.origin = vec3_add(hit.point,
+			vec3_mult(hit.normal, 0.0001));
+	new_ray.dir = vec3_reflect(ray.dir, vec3_add(hit.normal,
+				vec3_mult(random_vec(seed), hit.mat.roughtness)));
+	return (new_ray);
+}
+
 t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 {
-	t_ray	ray;
-	t_vec3	final_color;
-	t_vec3	radiance;
-	t_uint	seed;
-	t_hit	hit;
-	int	x;
+	t_frame_data	frame;
+	t_uint			seed;
+	int				x;
 
-	radiance = vec3_mult(scene->ambient_light.color, scene->ambient_light.ratio);
-	final_color = vec3_zero();
-	ray = get_ray((float)(i) / ((float)vp.width),
-			(float)(j) / (float)(vp.height), vp);
+	frame = frame_data(scene, &vp, i, j);
 	seed = (i + (j * vp.win->width)) * scene->frame_count;
 	x = 0;
 	while (x < scene->nb_bounces)
 	{
 		seed *= x + 1;
-		hit = bounce(scene, &ray, &vp.win->pass[i + j * vp.width]);
-		if (hit.distance == -1)
+		frame.hit = bounce(scene, &frame.ray, frame.pass);
+		if (frame.hit.distance == -1)
 		{
-			t_vec3 unit_direction = vec3_normalize(ray.dir);
-			float a = 0.5 * (unit_direction.y + 1.0);
-			t_vec3 sky_col = vec3_add(
-			vec3_mult((t_vec3){1.0, 1.0, 1.0}, (1.0-a)),
-			vec3_mult(scene->sky_color, a));
-			sky_col = vec3_mult(sky_col, scene->ambient_light.ratio);
-			final_color = vec3_add(final_color, vec3_divide(sky_col, x + 1));
+			if (vp.win->vp_flags & AMBIENT)
+				frame.final_color = vec3_add(frame.final_color,
+						vec3_divide(sky_col(frame.ray, scene), x + 1));
 			break ;
 		}
-		if (hit.mat.emission_power != 0)
-			radiance = vec3_mult(hit.mat.albedo, hit.mat.emission_power);
-		else
-			radiance = vec3_multv(radiance, hit.mat.albedo);
-		final_color = vec3_add(final_color, vec3_multv(vec3_divide(hit.mat.albedo, 3.1415), radiance));
-		phong_shading(scene, hit, hit.mat, ray, &vp.win->pass[i + j * vp.width]);
-		if (hit.mat.emission_power == 0)
-			final_color = vec3_add(final_color, create_merge_pass(&vp.win->pass[i + j * vp.width], vp.win->vp_flags));
-		
-		ray.origin = vec3_add(hit.point, vec3_mult(hit.normal, 0.0001));
-		ray.dir = vec3_reflect(ray.dir,
-			vec3_add(hit.normal, vec3_mult(random_vec(seed), hit.mat.roughtness)));
+		apply_shading(scene, &frame, &vp);
+		// frame.ray = bounce_ray(frame.ray, frame.hit, seed);
+		frame.ray.origin = vec3_add(frame.hit.point, vec3_mult(frame.hit.normal, 0.0001));
+		frame.ray.dir = vec3_reflect(frame.ray.dir,
+			vec3_add(frame.hit.normal, vec3_mult(random_vec(seed), frame.hit.mat.roughtness)));		x++;
 		x++;
 	}
-	return (vec3_clamp(final_color, 0, 1));
+	return (vec3_clamp(frame.final_color, 0, 1));
+}
+
+t_vec3	process_accumulation(
+	t_vec3 *accumulation_data, t_thread_context *ctx, t_vec3 color)
+{
+	t_vec3	accumulation;
+
+	accumulation_data[ctx->i + ctx->j * ctx->vp.win->width] = vec3_add(
+			accumulation_data[ctx->i + ctx->j * ctx->vp.win->width], color
+			);
+	accumulation = accumulation_data[ctx->i + ctx->j * ctx->vp.win->width];
+	accumulation = vec3_divide(accumulation, ctx->scene.frame_count);
+	accumulation = vec3_clamp(accumulation, 0, 1);
+	return (accumulation);
 }
 
 void	*thread_routine(void *pcontext)
 {
 	t_thread_context	*ctx;
-	t_vec3	color;
-	t_vec3	*accumulation_data;
-	t_vec3	accumulation;
-
+	t_vec3				color;
+	t_vec3				*accumulation_data;
 
 	ctx = (t_thread_context *)pcontext;
 	accumulation_data = ctx->vp.win->accumulation_data;
@@ -151,12 +194,9 @@ void	*thread_routine(void *pcontext)
 		while (ctx->i < ctx->vp.win->width)
 		{
 			color = get_px_col(ctx->i, ctx->j, ctx->vp, &ctx->scene);
-			accumulation_data[ctx->i + ctx->j * ctx->vp.win->width] = vec3_add(
-					accumulation_data[ctx->i + ctx->j * ctx->vp.win->width], color);
-			accumulation = accumulation_data[ctx->i + ctx->j * ctx->vp.win->width];
-			accumulation = vec3_divide(accumulation, ctx->scene.frame_count);
-			accumulation = vec3_clamp(accumulation, 0, 1);
-			set_pixel(&ctx->vp.win->img, ctx->i, ctx->j, vec_to_int(accumulation));
+			set_pixel(&ctx->vp.win->img, ctx->i, ctx->j, vec_to_int(
+					process_accumulation(accumulation_data, ctx, color)
+					));
 			ctx->i += MAX_TRHEAD;
 		}
 		ctx->i -= ctx->vp.win->width;
@@ -167,19 +207,24 @@ void	*thread_routine(void *pcontext)
 
 void	render(t_viewport vp, t_scene *scene)
 {
-	t_thread_context ctx[MAX_TRHEAD];
+	t_thread_context	ctx[MAX_TRHEAD];
+	size_t				i;
 
-	for (size_t x = 0; x < MAX_TRHEAD; x++)
+	i = 0;
+	while (i < MAX_TRHEAD)
 	{
-		ctx[x].id = x;
-		ctx[x].i = x;
-		ctx[x].j = 0;
-		ctx[x].scene = *scene;
-		ctx[x].vp = vp;
-		pthread_create(&ctx[x].th, NULL, thread_routine, (void *)&(ctx[x]));
+		ctx[i].id = i;
+		ctx[i].i = i;
+		ctx[i].j = 0;
+		ctx[i].scene = *scene;
+		ctx[i].vp = vp;
+		pthread_create(&ctx[i].th, NULL, thread_routine, (void *)&(ctx[i]));
+		i++;
 	}
-	for (size_t x = 0; x < MAX_TRHEAD; x++)
+	i = 0;
+	while (i < MAX_TRHEAD)
 	{
-		pthread_join(ctx[x].th, NULL);
+		pthread_join(ctx[i].th, NULL);
+		i++;
 	}
 }

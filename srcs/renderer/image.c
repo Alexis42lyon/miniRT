@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:16:12 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 11:12:28 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/02 13:56:01 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,10 @@ unsigned int	get_pixel(t_data *data, int x, int y)
 int	create_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
+}
+
+void	display_frame(t_win_scene *win, t_scene *scene)
+{
+	mlx_put_image_to_window(win->mlx_ptr, win->win_ptr, win->img.img, 0, 0);
+	scene->frame_count++;
 }

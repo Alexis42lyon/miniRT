@@ -6,13 +6,14 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 10:20:05 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 10:26:26 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/02 16:10:30 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytracer.h"
 
-t_hit	hit_succes2(t_scene *scene, t_ray ray, t_hit hit, enum e_object_type type)
+t_hit	hit_succes2(t_scene *scene, t_ray ray,
+	t_hit hit, enum e_object_type type)
 {
 	if (type == CYLINDER)
 	{
@@ -53,22 +54,6 @@ t_hit	hit_succes(t_scene *scene, t_ray ray, t_hit hit)
 		else
 			hit.normal = scene->planes[hit.obj_index].normal;
 		hit.mat = scene->materials[scene->planes[hit.obj_index].mat_idx];
-	}
-	else if (type == CYLINDER)
-	{
-		hit = hit_result(scene->cylinders[hit.obj_index].origin, ray,
-				hit.distance, hit.obj_index);
-		hit.normal = cylinder_normal(scene->cylinders[hit.obj_index],
-				hit.point);
-		hit.mat = scene->materials[scene->cylinders[hit.obj_index].mat_idx];
-	}
-	else if (type == CONE)
-	{
-		hit = hit_result(scene->cones[hit.obj_index].origin, ray,
-				hit.distance, hit.obj_index);
-		hit.normal = cone_normal(scene->cones[hit.obj_index],
-				hit.point);
-		hit.mat = scene->materials[scene->cones[hit.obj_index].mat_idx];
 	}
 	else
 		hit = hit_succes2(scene, ray, hit, type);

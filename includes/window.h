@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 13:27:34 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/02 13:56:14 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,12 @@
 # define HEIGHT 480
 
 /* --------------------------------- effect --------------------------------- */
-# define INVERT 0b0001
-# define DEPTH_OF_FIELD 0b0010
-# define PIXEL 0b1000
-# define CHROMA 0b10000
-# define GRAYSCALE 0b100000
+# define INVERT 0b0000001
+# define DEPTH_OF_FIELD 0b0000010
+# define PIXEL 0b0001000
+# define CHROMA 0b0010000
+# define GRAYSCALE 0b0100000
+# define POSTERIZE 0b1000000
 
 /* ----------------------------- viewport flags ----------------------------- */
 # define AMBIENT 0b0001
@@ -61,6 +62,14 @@ typedef struct s_data
 	int		line_length;
 	int		endian;
 }	t_data;
+
+typedef struct gaussien_dof
+{
+	float	*kernel;
+	int		size;
+	int		half;
+	t_vec3	final;
+}	t_gaussien_dof;
 
 typedef struct render_pass
 {
@@ -105,11 +114,11 @@ int				create_img(t_win_scene *win);
 void			set_pixel(t_data *data, int x, int y, int color);
 int				create_trgb(int t, int r, int g, int b);
 unsigned int	get_pixel(t_data *data, int x, int y);
+void			display_frame(t_win_scene *win, t_scene *scene);
 
 // window.c
 void			init_win(t_prog *prog);
 int				window_close(void *prog);
-int				key_hook(int keycode, t_prog *prog);
 
 void			run_pipeline(t_prog *prog);
 int				new_frame(t_prog *prog);
@@ -124,5 +133,12 @@ void			vp_filter(t_win_scene *win, int i, int j);
 void			chromatic_aberation(t_win_scene *win, int i, int j);
 void			grayscale(t_win_scene *win, int i, int j);
 void			pixelate(t_win_scene *win, int i, int j);
+void			posterize(t_win_scene *win, int i, int j);
+
+// input_utils.c
+int				toggle_effects(int keycode, t_prog *prog);
+int				toggle_movement(int keycode, t_prog *prog);
+int				toggle_pass(int keycode, t_prog *prog);
+int				cam_input(int keycode, t_prog *prog);
 
 #endif

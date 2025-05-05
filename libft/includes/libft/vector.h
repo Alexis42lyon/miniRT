@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:58:27 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 13:27:15 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/02 12:52:06 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,7 @@ t_vec3	vec3_cross(const t_vec3 a, const t_vec3 b);
 t_vec3	vec3_clamp(const t_vec3 vec, double min, double max);
 
 t_vec3	random_vec(t_uint seed);
+
+void	get_tangents(t_vec3 normal, t_vec3 *ref_tangent, t_vec3 *ref_bitangent);
 
 #endif

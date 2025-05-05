@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:11:54 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 09:51:57 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/02 12:53:18 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	write_values(t_win_scene *win, int fd)
 char	*create_save_path(void)
 {
 	char				*name;
-	struct string_ass	strings[5];
+	struct s_string_ass	strings[5];
 
 	strings[0].string = DEFAULT_RENDER_PATH;
 	strings[0].to_free = 0;

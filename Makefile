@@ -6,11 +6,11 @@ INCLUDES = -Iincludes -Ilibft/includes -Imlx
 LIBS = libft/bin/libft.a mlx/libmlx.a
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -MMD -MP $(INCLUDES)
+CFLAGS = -Wall -Werror -Wextra -MMD -MP -O3 $(INCLUDES)
 MLXFLAGS = -lX11 -lXext -lbsd -lm
 
 ifeq ($(MODE), debug)
-	CFLAGS = -Wall -Wextra -MMD -MP $(INCLUDES) -g3 -D DEFAULT_BOUNCE=2
+	CFLAGS = -Wall -Wextra -MMD -MP $(INCLUDES) -g3 -D DEFAULT_BOUNCE=1
 endif
 
 VPATH = srcs:srcs/parser:srcs/renderer:srcs/camera:srcs/textures:srcs/button
@@ -40,14 +40,14 @@ SRCS =	main.c					\
 		cam_transform.c			\
 		phong_model.c			\
 		intersection.c			\
-		anti_aliasing.c			\
-		denoising.c				\
 		input.c					\
+		input_utils.c			\
 		checker.c				\
 		ppm_loader.c			\
 		ppm_header.c			\
 		ppm_utils.c				\
-		effects.c				\
+		effects_complex.c		\
+		effects_simple.c		\
 		ppm_saver.c				\
 		button.c				\
 		put_string_win.c		\

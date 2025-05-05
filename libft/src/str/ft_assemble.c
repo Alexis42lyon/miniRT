@@ -6,13 +6,13 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:50:40 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/25 12:23:10 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/02 12:54:00 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/string.h"
 
-static void	free_strings(struct string_ass *strings)
+static void	free_strings(struct s_string_ass *strings)
 {
 	int		i;
 
@@ -25,7 +25,7 @@ static void	free_strings(struct string_ass *strings)
 	}
 }
 
-char *ft_strassemble(struct string_ass *strings)
+char	*ft_strassemble(struct s_string_ass *strings)
 {
 	char	*result;
 	int		i;
