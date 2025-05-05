@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 09:48:40 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/05 14:17:17 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 16:36:19 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "window.h"
 
-# define SHOW_BUTTON 0
+# define SHOW_BUTTON 1
 # define TAB_COUNT 3
 # define TAB_HEIGHT 30
 # define TAB_COLOR 0x444444
@@ -30,7 +30,7 @@
 # define SLIDER_HANDLE_COLOR 0xFFFFFF
 # define SLIDER_X_POS 120
 # define TEXT_X_POS 20
-# define TEXT_Y_OFFSET 11
+# define TEXT_Y_OFFSET 12
 
 # define SLIDER_AMBIENT_RATIO_HEIGHT 40
 # define SLIDER_AMBIENT_RED_HEIGHT 60
@@ -62,7 +62,13 @@
 # define SLIDER_MAT_SPEC_COEF_HEIGHT 180
 # define SLIDER_MAT_EMISSION_HEIGHT 200
 # define SLIDER_MAT_CHECKER_HEIGHT 220
-# define MAX_MAT_SHININESS 1000
+# define MAX_EMISSION_POWER 50.0f
+# define MAX_MAT_SHININESS 1024
+
+# define LIGHT_POS_BUTTON_WIDTH 20
+# define LIGHT_POS_BUTTON_HEIGHT 15
+# define LIGHT_POS_Y_POS 160
+# define OFFSET_BUTTON 20
 
 typedef int	(*t_button_func)(t_prog *);
 
@@ -112,18 +118,29 @@ typedef struct s_tab_data
 	int			slider_count;
 }	t_tab_data;
 
+typedef struct s_light_pos_buttons
+{
+	t_button	x_plus;
+	t_button	x_minus;
+	t_button	y_plus;
+	t_button	y_minus;
+	t_button	z_plus;
+	t_button	z_minus;
+}	t_light_pos_buttons;
+
 typedef struct s_win_button
 {
-	void			*win_ptr;
-	void			*mlx_ptr;
-	int				width;
-	int				height;
-	enum e_tab		current_tab;
-	enum e_subtab	current_subtab;
-	t_tab_data		tabs[TAB_COUNT];
-	t_button		tab_buttons[TAB_COUNT];
-	t_button		ratio_slider;
-	int				is_dragging;
+	void				*win_ptr;
+	void				*mlx_ptr;
+	int					width;
+	int					height;
+	enum e_tab			current_tab;
+	enum e_subtab		current_subtab;
+	t_tab_data			tabs[TAB_COUNT];
+	t_button			tab_buttons[TAB_COUNT];
+	t_button			ratio_slider;
+	int					is_dragging;
+	t_light_pos_buttons	light_pos_buttons;
 }	t_win_button;
 
 void	init_button_window(t_prog *prog);
@@ -131,7 +148,5 @@ void	draw_button_window(t_prog *prog, t_win_button *win_btn);
 void	put_string_win(t_prog *prog, t_win_button *win_btn);
 void	draw_slider(int y, float value, t_data *img);
 void	handle_tabs(t_prog *prog, t_win_button *win_btn, int x, int y);
-void	draw_light_button(t_data *img, t_light_button light_btn);
-void	draw_light_selector_slider(t_prog *prog, t_data *img);
 
 #endif

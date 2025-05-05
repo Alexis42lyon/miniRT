@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:08:54 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/04 22:34:20 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/05 14:52:57 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,35 @@ static void	draw_tabs(t_data *img, t_win_button *win_btn)
 		draw_tab_objects(win_btn, img);
 }
 
+void	draw_button(t_button *btn, t_data *img)
+{
+	int	x;
+	int	y;
+
+	y = btn->y - 1;
+	while (++y < btn->y + btn->height)
+	{
+		x = btn->x - 1;
+		while (++x < btn->x + btn->width)
+		{
+			if (btn->is_hovered)
+				*(int *)(img->addr + y * img->line_length + x * (img->bits_per_pixel / 8)) = ACTIVE_TAB_COLOR;
+			else
+				*(int *)(img->addr + y * img->line_length + x * (img->bits_per_pixel / 8)) = TAB_COLOR;
+		}
+	}
+}
+
+static void draw_light_pos_buttons(t_win_button *win_btn, t_data *img)
+{
+	draw_button(&win_btn->light_pos_buttons.x_plus, img);
+	draw_button(&win_btn->light_pos_buttons.x_minus, img);
+	draw_button(&win_btn->light_pos_buttons.y_plus, img);
+	draw_button(&win_btn->light_pos_buttons.y_minus, img);
+	draw_button(&win_btn->light_pos_buttons.z_plus, img);
+	draw_button(&win_btn->light_pos_buttons.z_minus, img);
+}
+
 void	draw_button_window(t_prog *prog, t_win_button *win_btn)
 {
 	t_data img;
@@ -110,22 +139,26 @@ void	draw_button_window(t_prog *prog, t_win_button *win_btn)
 			draw_slider(SLIDER_LIGHT_GREEN_HEIGHT, light->material.albedo.y, &img);
 			draw_slider(SLIDER_LIGHT_BLUE_HEIGHT, light->material.albedo.z, &img);
 		}
+		if (prog->scene->selected_light > 0)
+			draw_light_pos_buttons(win_btn, &img);
 	}
 	else if (win_btn->current_tab == TAB_MATERIALS && prog->scene->nb_materials > 0)
 	{
 		t_mat *mat = &prog->scene->materials[prog->scene->selected_material];
 		float select_val = (float)prog->scene->selected_material /
 						(prog->scene->nb_materials - 1);
-
 		draw_slider(SLIDER_MAT_SELECTOR_HEIGHT, select_val, &img);
 		draw_slider(SLIDER_MAT_RED_HEIGHT, mat->albedo.x, &img);
 		draw_slider(SLIDER_MAT_GREEN_HEIGHT, mat->albedo.y, &img);
 		draw_slider(SLIDER_MAT_BLUE_HEIGHT, mat->albedo.z, &img);
-		draw_slider(SLIDER_MAT_SHININESS_HEIGHT, mat->shyniness / MAX_MAT_SHININESS, &img);
+		draw_slider(SLIDER_MAT_SHININESS_HEIGHT, (float)mat->shyniness / MAX_MAT_SHININESS, &img);
 		draw_slider(SLIDER_MAT_ROUGHNESS_HEIGHT, mat->roughtness, &img);
 		draw_slider(SLIDER_MAT_SPEC_COEF_HEIGHT, mat->spec_coef, &img);
-		draw_slider(SLIDER_MAT_EMISSION_HEIGHT, mat->emission_power, &img);
-		draw_slider(SLIDER_MAT_CHECKER_HEIGHT, mat->use_checker ? 1.0f : 0.0f, &img);
+		draw_slider(SLIDER_MAT_EMISSION_HEIGHT, mat->emission_power / MAX_EMISSION_POWER, &img);
+		if (mat->use_checker)
+			draw_slider(SLIDER_MAT_CHECKER_HEIGHT, 1.0f, &img);
+		else
+			draw_slider(SLIDER_MAT_CHECKER_HEIGHT, 0.0f, &img);
 	}
 	mlx_put_image_to_window(win_btn->mlx_ptr, win_btn->win_ptr, img.img, 0, 0);
 	mlx_destroy_image(win_btn->mlx_ptr, img.img);
@@ -191,7 +224,7 @@ static int	handle_mouse_move(int x, int y, t_prog *prog)
 		else if (y >= SLIDER_MAT_SPEC_COEF_HEIGHT && y <= SLIDER_MAT_SPEC_COEF_HEIGHT + SLIDER_HEIGHT)
 			mat->spec_coef = new_value;
 		else if (y >= SLIDER_MAT_EMISSION_HEIGHT && y <= SLIDER_MAT_EMISSION_HEIGHT + SLIDER_HEIGHT)
-			mat->emission_power = new_value;
+			mat->emission_power = new_value * MAX_EMISSION_POWER;
 		else if (y >= SLIDER_MAT_CHECKER_HEIGHT && y <= SLIDER_MAT_CHECKER_HEIGHT + SLIDER_HEIGHT)
 			mat->use_checker = (new_value > 0.5f);
 	}
@@ -200,14 +233,22 @@ static int	handle_mouse_move(int x, int y, t_prog *prog)
 	return (0);
 }
 
+static bool is_click_on_button(int x, int y, t_button *btn)
+{
+	return (x >= btn->x && x <= btn->x + btn->width &&
+			y >= btn->y && y <= btn->y + btn->height);
+}
+
 static int handle_button_click(int button, int x, int y, t_prog *prog)
 {
-	t_win_button *win_btn = prog->win_button;
+	t_win_button	*win_btn;
+	t_light_source	*light;
+	float			step;
 
+	win_btn = prog->win_button;
 	if (button == 1)
 	{
 		handle_tabs(prog, win_btn, x, y);
-
 		if (x >= SLIDER_X_POS && x <= SLIDER_X_POS + SLIDER_WIDTH)
 		{
 			if (win_btn->current_tab == TAB_LIGHTS)
@@ -238,6 +279,29 @@ static int handle_button_click(int button, int x, int y, t_prog *prog)
 			}
 		}
 	}
+	if (button == 1 && win_btn->current_tab == TAB_LIGHTS && prog->scene->selected_light > 0)
+    {
+		light = &prog->scene->lights[prog->scene->selected_light - 1];
+		step = 0.5f;
+
+		if (is_click_on_button(x, y, &win_btn->light_pos_buttons.x_plus))
+			light->origin.x += step;
+		else if (is_click_on_button(x, y, &win_btn->light_pos_buttons.x_minus))
+			light->origin.x -= step;
+		else if (is_click_on_button(x, y, &win_btn->light_pos_buttons.y_plus))
+			light->origin.y += step;
+		else if (is_click_on_button(x, y, &win_btn->light_pos_buttons.y_minus))
+			light->origin.y -= step;
+		else if (is_click_on_button(x, y, &win_btn->light_pos_buttons.z_plus))
+			light->origin.z += step;
+		else if (is_click_on_button(x, y, &win_btn->light_pos_buttons.z_minus))
+			light->origin.z -= step;
+		else
+			return (0);
+		draw_button_window(prog, win_btn);
+		reset_accumulation(prog);
+		return (1);
+    }
 	return (0);
 }
 
@@ -262,18 +326,20 @@ void	init_button_window(t_prog *prog)
 	t_win_button	*win_btn;
 	int				i;
 	const float		tab_width = CONTROL_WINDOW_WIDTH / TAB_COUNT;
+	int				x;
+	char			*text;
 
-	if (WIDTH < CONTROL_WINDOW_WIDTH || HEIGHT < 250)
+	if (HEIGHT < 250)
 	{
 		ft_dprintf(2, RED
-			"Error: Window width is too small for button window.\n", RESET);
+			"Error: Window height is too small for panel control.\n", RESET);
 		return ;
 	}
 	win_btn = prog->win_button;
 	*win_btn = (t_win_button)
 	{
 		.width = CONTROL_WINDOW_WIDTH,
-		.height = prog->win_scene->height,
+		.height = HEIGHT,
 		.mlx_ptr = prog->win_scene->mlx_ptr,
 		.win_ptr = mlx_new_window(prog->win_scene->mlx_ptr,
 			CONTROL_WINDOW_WIDTH, prog->win_scene->height, "Control Panel"),
@@ -290,6 +356,36 @@ void	init_button_window(t_prog *prog)
 			.width = tab_width,
 			.height = TAB_HEIGHT,
 			.text = (char *[]){"Lights", "Objects", "Materials"}[i]
+		};
+	}
+	t_button *btns[6] = {
+		&win_btn->light_pos_buttons.x_plus,
+		&win_btn->light_pos_buttons.x_minus,
+		&win_btn->light_pos_buttons.y_plus,
+		&win_btn->light_pos_buttons.y_minus,
+		&win_btn->light_pos_buttons.z_plus,
+		&win_btn->light_pos_buttons.z_minus
+	};
+	i = -1;
+	while (++i < 6)
+	{
+		if (i % 2 == 0)
+		{
+			x = SLIDER_X_POS;
+			text = "+";
+		}
+		else
+		{
+			x = SLIDER_X_POS + LIGHT_POS_BUTTON_WIDTH + 5;
+			text = "-";
+		}
+		*btns[i] = (t_button)
+		{
+			.x = x,
+			.y = LIGHT_POS_Y_POS + OFFSET_BUTTON * (i / 2),
+			.width = LIGHT_POS_BUTTON_WIDTH,
+			.height = LIGHT_POS_BUTTON_HEIGHT,
+			.text = text
 		};
 	}
 	mlx_hook(win_btn->win_ptr, 2, 1L << 0, key_hook_btn, prog);
