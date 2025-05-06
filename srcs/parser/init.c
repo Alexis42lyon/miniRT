@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:15 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 11:29:26 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:40:57 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	init(t_prog *prog, char **av)
 	ft_bzero(prog->parser, sizeof(t_parser));
 	ft_bzero(prog->scene, sizeof(t_scene));
 	ft_bzero(prog->win_scene, sizeof(t_win_scene));
-	ft_bzero(prog->win_button, sizeof(t_win_button));
 	prog->scene->camera.right = (t_vec3){1, 0, 0};
 	prog->scene->camera.up = (t_vec3){0, 1, 0};
 	prog->parser->fd = open(av[1], O_RDONLY);

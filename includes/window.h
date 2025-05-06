@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 15:44:58 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:41:20 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,27 +46,6 @@ typedef struct s_win_scene
 	void	*mlx_ptr;
 	t_data	img;
 }	t_win_scene;
-
-/* ------------------------------- BUTTON ------------------------------ */
-
-# define SLIDER_WIDTH 200
-# define SLIDER_MIN 0
-# define SLIDER_MAX 180
-
-typedef struct s_win_button
-{
-	void	*win_ptr;
-	void	*mlx_ptr;
-	int		width;
-	int		height;
-	int		slider_x;
-	int		slider_width;
-	int		is_dragging;
-}	t_win_button;
-
-typedef void	(*t_button_func)(t_prog *);
-
-/* ------------------------------- END BUTTON ------------------------------ */
 
 // image.c
 int		create_img(t_win_scene *win);
