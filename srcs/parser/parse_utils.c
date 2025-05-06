@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:42 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 12:00:10 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:34:48 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,18 @@
 
 void	parse_vector(t_prog *prog, t_vec3 *vec, char *str)
 {
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	tmp = ft_strchr(str, ',');
+	while (tmp)
+	{
+		i++;
+		tmp = ft_strchr(tmp + 1, ',');
+	}
+	if (i != 2)
+		print_exit(prog, "Invalid vector format");
 	check_mem((t_info){__FILE__, __LINE__, __func__},
 		ft_split(str, ','), (void **)&prog->parser->tokens, prog);
 	if (ft_arrlen(prog->parser->tokens) != 3)
@@ -48,18 +60,18 @@ void	parse_color(t_prog *prog, t_vec3 *color, char *str)
 	color->z /= 255.0;
 }
 
-static void	get_decimal(char **nptr, double *res)
+static void	get_decimal(t_prog *prog, char *nptr, double *res)
 {
 	double	fraction;
 
-	(*nptr)++;
 	fraction = 0.1;
-	while (ft_isdigit(**nptr))
+	while (ft_isdigit(*nptr))
 	{
-		*res += (**nptr - '0') * fraction;
-		(*nptr)++;
+		*res += (*nptr++ - '0') * fraction;
 		fraction *= 0.1;
 	}
+	if (*nptr)
+		print_exit(prog, "Invalid number format");
 }
 
 double	check_atof(t_prog *prog, const char *nptr)
@@ -84,9 +96,9 @@ double	check_atof(t_prog *prog, const char *nptr)
 		if (res * sign != (int)(res * sign))
 			print_exit(prog, "Invalid number format");
 	}
-	if (*nptr == '.')
-		get_decimal((char **)&nptr, &res);
-	if (*nptr)
+	if (*nptr && *nptr != '.')
 		print_exit(prog, "Invalid number format");
+	else if (*nptr == '.')
+		get_decimal(prog, (char *)++nptr, &res);
 	return (res * sign);
 }
