@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:15 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 15:28:32 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:10:16 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,9 @@ void	init(t_prog *prog, char *file)
 		print_exit(NULL, "SSAA_FACTOR is invalid");
 	if (DEFAULT_BOUNCE != (int)DEFAULT_BOUNCE || DEFAULT_BOUNCE < 1)
 		print_exit(NULL, "DEFAULT_BOUNCE is invalid");
+	if (WIDTH * HEIGHT * SSAA_FACTOR * SSAA_FACTOR * SSAA_FACTOR * SSAA_FACTOR
+			* sizeof(t_render_pass) > 10000000000)
+		print_exit(NULL, "not enough memory");
 	ft_bzero(prog->parser, sizeof(t_parser));
 	ft_bzero(prog->scene, sizeof(t_scene));
 	prog->scene->camera.right = (t_vec3){1, 0, 0};

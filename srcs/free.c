@@ -3,28 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:21:55 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 15:27:39 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:11:25 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "window.h"
 #include "parser.h"
-
-void	free_arr(void **arr)
-{
-	int	i;
-
-	if (!arr)
-		return ;
-	i = 0;
-	while (arr[i])
-		free(arr[i++]);
-	free(arr);
-}
 
 void	print_exit(t_prog *prog, char *str)
 {

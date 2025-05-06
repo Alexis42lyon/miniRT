@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 15:42:45 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/05 11:24:17 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:14:26 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,14 @@ static size_t	get_split_len(char const *s, char c)
 	return (i);
 }
 
-static void	cleanup(char **arr, int n)
+void	free_arr(void **arr)
 {
 	int	i;
 
+	if (!arr)
+		return ;
 	i = 0;
-	while (i < n)
+	while (arr[i])
 	{
 		free(arr[i]);
 		i++;
@@ -66,7 +68,7 @@ static int	wrong_split(char **split, size_t y)
 {
 	if (split[y] == NULL)
 	{
-		cleanup(split, y);
+		free_arr((void **)split);
 		return (1);
 	}
 	return (0);
