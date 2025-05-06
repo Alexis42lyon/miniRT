@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:42:03 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/05 16:22:34 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/06 08:28:07 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "miniRT.h"
 
 # define MATERIAL_FILE "scenes/material.rt"
-# define SHOW_SRUCT 1
+# define SHOW_SRUCT 0
 
 typedef struct s_parser
 {
