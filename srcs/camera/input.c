@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:33:51 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 12:59:50 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/06 13:32:36 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	key_down(int keycode, t_prog *prog)
 		return (0);
 	else if (keycode == ESC)
 		free_all(prog);
-	else if (keycode == 'n')
+	else if (keycode == 'k')
 		print_cam(&prog->scene->camera);
 	else if (keycode == '0')
 		reload(prog);
