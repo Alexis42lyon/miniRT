@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:38:37 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:09:50 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <mlx.h>
 # include <sys/types.h>
 
-# define WIDTH 10
-# define HEIGHT 10
+# define WIDTH 1200
+# define HEIGHT 720
 
 /* --------------------------------- effect --------------------------------- */
 # define INVERT 0b00000001
@@ -47,7 +47,7 @@
 # define ON_EXPOSE 12
 # define ON_DESTROY 17
 
-# define SSAA_FACTOR 1
+# define SSAA_FACTOR 3
 
 /* -------------------------------------------------------------------------- */
 typedef struct s_data
