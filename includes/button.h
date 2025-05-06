@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/03 09:48:40 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/05 23:28:16 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 13:01:00 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@
 # define CYLINDER_POS_Y_POS 100
 # define CYLINDER_DIAMETER_Y_POS 180
 # define CYLINDER_HEIGHT_Y_POS 200
-# define CYLINDER_MAT_SELECT_H 220
+# define CYLINDER_MAT_SELECT_H 160
 # define SLID_CYLINDER_SELECT_H 70
 
 typedef int	(*t_button_func)(t_prog *);
@@ -98,7 +98,6 @@ typedef struct s_button
 	int				y;
 	int				width;
 	int				height;
-	char			*text;
 	t_button_func	func;
 	bool			is_hovered;
 }	t_button;
@@ -201,10 +200,66 @@ typedef struct s_win_button
 	t_cone_buttons		cone_buttons;
 }	t_win_button;
 
-void	init_button_window(t_prog *prog);
-void	draw_button_window(t_prog *prog, t_win_button *win_btn);
+// put_string_win.c
 void	put_string_win(t_prog *prog, t_win_button *win_btn);
+
+// draw_objects_controls.c
+void	draw_objects_controls(t_prog *prog, t_win_button *win_btn, t_data img);
+
+// put_string_objects.c
+void	put_string_objects(t_prog *prog, t_win_button *win_btn);
+
+// put_string_objects_utils.c
+void	put_sphere_strings_utils(t_prog *prog, t_win_button *win_btn,
+			t_sphere *sphere);
+void	put_plane_string_utils(t_prog *prog, t_win_button *win_btn,
+			t_plane *plane);
+void	put_cylinder_strings_utils(t_prog *prog, t_win_button *win_btn,
+			t_cylinder *cylinder);
+void	put_cone_string_utils(t_prog *prog, t_win_button *win_btn,
+			t_cylinder *cone);
+
+// put_mat_info.c
+void	put_mat_info(t_win_button *win_btn, t_mat *mat);
+
+// handle_button_click.c
+int		handle_button_click(int button, int x, int y, t_prog *prog);
+bool	is_click_on_button(int x, int y, t_button *btn);
+
+// handle_button_click_utils.c
+void	handle_cylinder_click(int x, int y, t_prog *prog,
+			t_win_button *win_btn);
+void	handle_cone_click(int x, int y, t_prog *prog, t_win_button *win_btn);
+
+// handle_mouse_move.c
+int		handle_mouse_move(int x, int y, t_prog *prog);
+
+// handle_mouse_move_utils.c
+void	handle_mouse_move_objects(int y, float new_value,
+			t_prog *prog, t_win_button *win_btn);
+
+// handle_dragging_slider.c
+void	handle_dragging_slider(int y, t_win_button *win_btn, t_prog *prog);
+
+// draw.c
+void	draw_button_window(t_prog *prog, t_win_button *win_btn);
+void	draw_button(t_button *btn, t_data *img);
 void	draw_slider(int y, float value, t_data *img);
+
+// draw_utils.c
+void	draw_light_pos_buttons(t_win_button *win_btn, t_data *img);
+void	draw_tabs(t_data *img, t_win_button *win_btn);
+
+// init_button.c
+void	init_button(t_win_button *win_btn, t_button *btns[6]);
+void	init_cylinder_buttons(t_win_button *win_btn);
+void	init_cone_buttons(t_win_button *win_btn);
+
+// init_button_utils.c
+void	init_sphere_buttons(t_win_button *win_btn);
+void	init_plane_buttons(t_win_button *win_btn);
+
+// handle_tabs.c
 void	handle_tabs(t_prog *prog, t_win_button *win_btn, int x, int y);
 
 #endif

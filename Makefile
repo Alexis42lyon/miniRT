@@ -15,47 +15,61 @@ endif
 
 VPATH = srcs:srcs/parser:srcs/renderer:srcs/camera:srcs/textures:srcs/button
 
-SRCS =	main.c					\
-		utils.c					\
-		free.c					\
-		init.c					\
-		parse.c					\
-		parse_objects.c			\
-		parse_utils.c			\
-		print_struct.c			\
-		print_struct_utils.c	\
-		parse_material.c		\
-		image.c					\
-		window.c				\
-		renderer.c				\
-		ray.c					\
-		colors.c				\
-		sphere.c				\
-		plane.c					\
-		cylinder.c				\
-		cone.c					\
-		lighting.c				\
-		pipeline.c				\
-		camera.c				\
-		cam_transform.c			\
-		phong_model.c			\
-		intersection.c			\
-		input.c					\
-		input_utils.c			\
-		checker.c				\
-		ppm_loader.c			\
-		ppm_header.c			\
-		ppm_utils.c				\
-		effects_complex.c		\
-		effects_simple.c		\
-		ppm_saver.c				\
-		button.c				\
-		put_string_win.c		\
-		uv.c					\
-		hit.c					\
-		depth_of_field.c		\
-		renderer_utils.c		\
-		antialiaser.c			\
+SRCS =	main.c						\
+		utils.c						\
+		free.c						\
+		init.c						\
+		parse.c						\
+		parse_objects.c				\
+		parse_utils.c				\
+		print_struct.c				\
+		print_struct_utils.c		\
+		parse_material.c			\
+		image.c						\
+		window.c					\
+		renderer.c					\
+		ray.c						\
+		colors.c					\
+		sphere.c					\
+		plane.c						\
+		cylinder.c					\
+		cone.c						\
+		lighting.c					\
+		pipeline.c					\
+		camera.c					\
+		cam_transform.c				\
+		phong_model.c				\
+		intersection.c				\
+		input.c						\
+		input_utils.c				\
+		checker.c					\
+		ppm_loader.c				\
+		ppm_header.c				\
+		ppm_utils.c					\
+		effects_complex.c			\
+		effects_simple.c			\
+		ppm_saver.c					\
+		button.c					\
+		draw_objects_controls.c		\
+		put_string_win.c			\
+		put_string_objects.c		\
+		put_string_objects_utils.c	\
+		put_mat_info.c				\
+		handle_button_click.c		\
+		handle_button_click_utils.c	\
+		handle_mouse_move.c			\
+		handle_mouse_move_utils.c	\
+		handle_dragging_slider.c	\
+		draw.c						\
+		draw_utils.c				\
+		init_button.c				\
+		init_button_utils.c			\
+		handle_tabs.c				\
+		uv.c						\
+		hit.c						\
+		depth_of_field.c			\
+		renderer_utils.c			\
+		antialiaser.c				\
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 DEPS = $(OBJS:.o=.d)
@@ -97,7 +111,7 @@ $(OBJ_DIR)/%.o: %.c Makefile $(LIBS)| $(OBJ_DIR)
 	printf "$(GRAY)compiling: $(BLUE)%-40s $(GRAY)[%d/%d]\n" "$<" "$$(ls $(OBJ_DIR) | grep -c '\.o')" "$(words $(SRCS))"
 
 norm:
-	norminette srcs includes
+	norminette srcs includes libft
 
 file = scene1
 
