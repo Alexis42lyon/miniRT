@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 16:12:47 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:47:58 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_viewport	viewport(t_win_scene *win, t_scene *scene)
 	return (vp);
 }
 
-int	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, t_uint seed)
+int	bounce(t_vec3 *final_color, t_scene *scene, t_ray *ray, uint seed)
 {
 	t_hit	hit;
 	t_mat	mat;
@@ -75,7 +75,7 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	t_ray	ray;
 	t_vec3	final_color;
 	float	mutiplier;
-	t_uint	seed;
+	uint	seed;
 
 	mutiplier = 1.0f;
 	final_color = vec3_zero();

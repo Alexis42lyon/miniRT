@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 13:51:52 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/05 14:57:30 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/14 13:34:26 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	alert(const char *msg)
 
 void	info(const char *msg)
 {
-	ft_dprintf(STDERR_FILENO, "%s[LOG]: %s%s\n", GRAY, RESET, msg);
+	ft_dprintf(STDERR_FILENO, "%s[LOG]:%s%s\n", GRAY, RESET, msg);
 }
 
 void	warning(const char *msg)

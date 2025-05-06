@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:31 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 14:10:18 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:47:58 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_vec3	normal_color(t_hit hit)
 	return (color);
 }
 
-t_uint	vec_to_int(const t_vec3 color)
+uint	vec_to_int(const t_vec3 color)
 {
 	unsigned char	r;
 	unsigned char	g;
@@ -43,7 +43,7 @@ t_uint	vec_to_int(const t_vec3 color)
 	return ((a << 24) | (r << 16) | (g << 8) | b);
 }
 
-t_vec3	int_to_vec(t_uint color)
+t_vec3	int_to_vec(uint color)
 {
 	t_vec3			vec;
 	unsigned char	r;
