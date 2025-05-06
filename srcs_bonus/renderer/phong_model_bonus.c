@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phong_model_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:18:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:28:32 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:00:28 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,7 @@ void	phong_shading(t_scene *scene, t_frame_data *frame)
 	struct s_light_info	info;
 	size_t				i;
 
-	if (is_header_valid(&frame->hit.mat.normal_map.header))
-		recalculate_normal(scene, frame->hit, frame->pass, &frame->hit.normal);
+	recalculate_normal(scene, frame->hit, frame->pass, &frame->hit.normal);
 	if (vec3_length_square(frame->pass->normal) == 0)
 		frame->pass->normal = normal_color(frame->hit);
 	i = 0;

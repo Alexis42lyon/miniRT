@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   depth_of_field_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 11:03:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:28:32 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:57:01 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

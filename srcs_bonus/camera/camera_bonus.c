@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:46:23 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:28:48 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:57:24 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_camera	new_camera(t_vec3 origin, t_vec3 forward, int fov)
 	cam.movement_enable = 0;
 	cam.movekeys = 0;
 	cam.move_speed = 10;
-	cam.focal_length = 10.0f;
+	cam.focal_length = 20.0f;
 	cam.sensibility = 0.1f;
 	cam.last_x = 0;
 	cam.last_y = 0;
