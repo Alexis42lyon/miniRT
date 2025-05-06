@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 16:25:53 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:47:58 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ struct s_objs_data
 
 // colors.c
 t_vec3		normal_color(t_hit hit);
-t_uint		vec_to_int(const t_vec3 color);
-t_vec3		int_to_vec(t_uint color);
+uint		vec_to_int(const t_vec3 color);
+t_vec3		int_to_vec(uint color);
 
 // ray.c
 t_ray		get_ray(float u, float v, t_viewport vp);

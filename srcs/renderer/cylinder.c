@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:34:21 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/15 12:34:15 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:54:36 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static double	check_caps(t_ray_cylinder ray, t_cylinder *cy, bool top)
 	if (t < 1e-6)
 		return (INFINITY);
 	hit = vec3_add(ray.origin, vec3_mult(ray.dir, t));
-	if (vec3_lenght(vec3_sub(hit, cap_center)) > cy->radius)
+	if (vec3_length(vec3_sub(hit, cap_center)) > cy->radius)
 		return (INFINITY);
 	return (t);
 }

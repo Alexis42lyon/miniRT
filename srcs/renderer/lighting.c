@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 11:03:55 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:54:38 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ struct s_light_info	new_info(t_scene *scene, t_hit hit, t_mat mat, t_ray ray)
 	info.hit = hit;
 	info.mat = mat;
 	info.light_dir = vec3_sub(hit.point, scene->light.origin);
-	info.attenuation = LIGHT_RANGE / vec3_lenght(info.light_dir);
+	info.attenuation = LIGHT_RANGE / vec3_length(info.light_dir);
 	if (info.attenuation < 0)
 		info.attenuation = 0;
 	info.light_dir = vec3_normalize(info.light_dir);

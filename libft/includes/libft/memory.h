@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 11:16:19 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/03/05 11:58:45 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/04/25 10:55:30 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,8 @@ void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_memchr(const void *s, int c, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
+
+int		malloc_assert(void *mem, const char *file,
+			int line);
 
 #endif

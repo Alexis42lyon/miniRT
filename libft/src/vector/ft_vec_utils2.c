@@ -6,28 +6,28 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 08:49:13 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 08:50:22 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/05 15:18:40 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/vector.h"
 #include <math.h>
 
-inline double	vec3_lenght(const t_vec3 vec)
+inline double	vec3_length(const t_vec3 vec)
 {
-	return (sqrt(vec3_lenght_square(vec)));
+	return (sqrt(vec3_length_square(vec)));
 }
 
-inline double	vec3_lenght_square(const t_vec3 vec)
+inline double	vec3_length_square(const t_vec3 vec)
 {
 	return ((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z));
 }
 
 inline t_vec3	vec3_normalize(const t_vec3 v)
 {
-	if (vec3_lenght_square(v) == 0)
+	if (vec3_length_square(v) == 0)
 		return (vec3_zero());
-	return (vec3_divide(v, vec3_lenght(v)));
+	return (vec3_divide(v, vec3_length(v)));
 }
 
 inline float	ft_dot(const t_vec3 v1, const t_vec3 v2)
