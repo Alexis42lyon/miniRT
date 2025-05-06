@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 14:45:02 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:25:46 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "miniRT.h"
 # include <mlx.h>
 
-# define WIDTH 720
-# define HEIGHT 480
+# define WIDTH 10
+# define HEIGHT 10
 
 /* ----------------------------------- MLX ---------------------------------- */
 typedef struct s_data

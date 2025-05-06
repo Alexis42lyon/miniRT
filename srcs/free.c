@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:21:55 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 14:40:52 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:27:39 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,17 @@ void	free_parser(t_parser *parser)
 	ft_lstclear(&parser->map, (void *)free_arr);
 }
 
-void	free_all(t_prog *prog)
+void	free_scene(t_prog *prog)
 {
 	free(prog->scene->spheres);
 	free(prog->scene->planes);
 	free(prog->scene->cylinders);
 	free_parser(prog->parser);
+}
+
+void	free_all(t_prog *prog)
+{
+	free_scene(prog);
 	free_win_scene(prog->win_scene);
 	exit(0);
 }
