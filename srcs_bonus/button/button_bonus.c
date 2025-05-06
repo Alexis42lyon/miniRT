@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:08:54 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 15:29:28 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:54:11 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	init_struct(t_prog *prog, t_win_button *win_btn)
 		.height = HEIGHT,
 		.mlx_ptr = prog->win_scene->mlx_ptr,
 		.win_ptr = mlx_new_window(prog->win_scene->mlx_ptr,
-			CONTROL_WINDOW_WIDTH, prog->win_scene->height, "Control Panel"),
+			CONTROL_WINDOW_WIDTH, HEIGHT, "Control Panel"),
 		.current_tab = TAB_LIGHTS,
 		.is_dragging = 0,
 	};
