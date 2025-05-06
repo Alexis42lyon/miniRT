@@ -12,61 +12,61 @@ MLXFLAGS = -lX11 -lXext -lbsd -lm
 ifeq ($(MODE),bonus)
 VPATH = :srcs_bonus:srcs_bonus/parser:srcs_bonus/renderer:srcs_bonus/camera:srcs_bonus/textures:srcs_bonus/button
 CFLAGS = -Wall -Werror -Wextra -MD -MP -Ilibft/includes -Iincludes_bonus -Imlx
-SRCS =	main.c						\
-		utils.c						\
-		free.c						\
-		init.c						\
-		parse.c						\
-		parse_objects.c				\
-		parse_utils.c					\
-		print_struct.c				\
-		print_struct_utils.c			\
-		parse_material.c				\
-		image.c						\
-		window.c						\
-		renderer.c					\
-		ray.c							\
-		colors.c						\
-		sphere.c						\
-		plane.c						\
-		cylinder.c					\
-		cone.c						\
-		lighting.c					\
-		pipeline.c					\
-		camera.c						\
-		cam_transform.c				\
-		phong_model.c					\
-		intersection.c				\
-		input.c						\
-		input_utils.c					\
-		checker.c						\
-		ppm_loader.c					\
-		ppm_header.c					\
-		ppm_utils.c					\
-		effects_complex.c				\
-		effects_simple.c				\
-		ppm_saver.c					\
-		button.c						\
-		draw_objects_controls.c		\
-		put_string_win.c				\
-		put_string_objects.c			\
-		put_string_objects_utils.c	\
-		put_mat_info.c				\
-		handle_button_click.c			\
-		handle_button_click_utils.c	\
-		handle_mouse_move.c			\
-		handle_mouse_move_utils.c		\
-		handle_dragging_slider.c		\
-		draw.c						\
-		draw_utils.c					\
-		init_button.c					\
-		init_button_utils.c			\
-		handle_tabs.c					\
-		uv.c							\
-		hit.c							\
-		depth_of_field.c				\
-		renderer_utils.c				\
-		antialiaser.c					\
+SRCS =	main_bonus.c						\
+		utils_bonus.c						\
+		free_bonus.c						\
+		init_bonus.c						\
+		parse_bonus.c						\
+		parse_objects_bonus.c				\
+		parse_utils_bonus.c					\
+		print_struct_bonus.c				\
+		print_struct_utils_bonus.c			\
+		parse_material_bonus.c				\
+		image_bonus.c						\
+		window_bonus.c						\
+		renderer_bonus.c					\
+		ray_bonus.c							\
+		colors_bonus.c						\
+		sphere_bonus.c						\
+		plane_bonus.c						\
+		cylinder_bonus.c					\
+		cone_bonus.c						\
+		lighting_bonus.c					\
+		pipeline_bonus.c					\
+		camera_bonus.c						\
+		cam_transform_bonus.c				\
+		phong_model_bonus.c					\
+		intersection_bonus.c				\
+		input_bonus.c						\
+		input_utils_bonus.c					\
+		checker_bonus.c						\
+		ppm_loader_bonus.c					\
+		ppm_header_bonus.c					\
+		ppm_utils_bonus.c					\
+		effects_complex_bonus.c				\
+		effects_simple_bonus.c				\
+		ppm_saver_bonus.c					\
+		button_bonus.c						\
+		draw_objects_controls_bonus.c		\
+		put_string_win_bonus.c				\
+		put_string_objects_bonus.c			\
+		put_string_objects_utils_bonus.c	\
+		put_mat_info_bonus.c				\
+		handle_button_click_bonus.c			\
+		handle_button_click_utils_bonus.c	\
+		handle_mouse_move_bonus.c			\
+		handle_mouse_move_utils_bonus.c		\
+		handle_dragging_slider_bonus.c		\
+		draw_bonus.c						\
+		draw_utils_bonus.c					\
+		init_button_bonus.c					\
+		init_button_utils_bonus.c			\
+		handle_tabs_bonus.c					\
+		uv_bonus.c							\
+		hit_bonus.c							\
+		depth_of_field_bonus.c				\
+		renderer_utils_bonus.c				\
+		antialiaser_bonus.c					\
 
 else
 VPATH = srcs:srcs/parser:srcs/renderer:srcs/camera
@@ -93,7 +93,7 @@ SRCS =	main.c			\
 		cam_transform.c	\
 		phong_model.c	\
 		intersection.c	\
-		
+
 endif
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
