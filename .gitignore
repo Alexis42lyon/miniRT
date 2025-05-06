@@ -57,3 +57,4 @@ miniRT
 mlx/test/mlx-test
 compile_flags.txt
 .clangd
+*.code-workspace

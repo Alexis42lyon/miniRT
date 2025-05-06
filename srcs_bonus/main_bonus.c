@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:02 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 14:03:40 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:36:24 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "texture_bonus.h"
 #include "window_bonus.h"
 #include "parser_bonus.h"
-#include "button.h"
+#include "button_bonus.h"
 #include <stdbool.h>
 #include <unistd.h>
 #include <sys/wait.h>
