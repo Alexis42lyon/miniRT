@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:48:28 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/01 09:41:04 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/06 09:12:07 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,22 @@ t_uint	get_next_value(int fd)
 	char	c[1];
 
 	nb_read = read(fd, c, 1);
-	while (is_whitespace(c[0]) && nb_read != 0)
+	while (is_whitespace(c[0]) && nb_read > 0)
 		nb_read = read(fd, c, 1);
 	if (c[0] == '#')
 	{
-		while (c[0] != '\n' && nb_read != 0)
+		while (c[0] != '\n' && nb_read > 0)
 			nb_read = read(fd, c, 1);
+		return (get_next_value(fd));
 	}
+	if (nb_read == -1)
+		return (-1);
 	val = 0;
 	while ((c[0] >= '0' && c[0] <= '9') && nb_read != 0)
 	{
 		val *= 10;
 		val += c[0] - '0';
-		nb_read = read(fd, &c, 1);
+		nb_read = read(fd, c, 1);
 	}
 	return (val);
 }
@@ -87,3 +90,4 @@ t_ppm_header	parse_header(int fd)
 	header.max_values = get_next_value(fd);
 	return (header);
 }
+
