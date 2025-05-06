@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 19:50:31 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 12:45:27 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <mlx.h>
 # include <sys/types.h>
 
-# define WIDTH 720
-# define HEIGHT 480
+# define WIDTH 480
+# define HEIGHT 360
 
 /* --------------------------------- effect --------------------------------- */
 # define INVERT 0b00000001
