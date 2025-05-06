@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:21:55 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 15:29:54 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:39:58 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	clean_materials(t_mat *mats, size_t nb_mat)
 	}
 }
 
-void	free_all(t_prog *prog)
+void	free_scene(t_prog *prog)
 {
 	free(prog->scene->lights);
 	free(prog->scene->spheres);
@@ -79,6 +79,11 @@ void	free_all(t_prog *prog)
 	clean_materials(prog->scene->materials, prog->scene->nb_materials);
 	free(prog->scene->materials);
 	free_parser(prog->parser);
+}
+
+void	free_all(t_prog *prog)
+{
+	free_scene(prog);
 	free_win(prog->win_scene, prog->win_button);
 	exit(0);
 }

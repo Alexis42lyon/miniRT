@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:23:58 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:37:56 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,5 +185,6 @@ void	print_cam(const t_camera *cam);
 t_mat	default_mat(void);
 long	get_current_time_ms(void);
 void	show_stats(t_prog *prog);
+void	free_scene(t_prog *prog);
 
 #endif

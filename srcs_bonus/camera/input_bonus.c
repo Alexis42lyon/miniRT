@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:33:51 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:29:54 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:38:16 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	mouse_up(int button, int x, int y, t_prog *prog)
 void	reload(t_prog *prog)
 {
 	ft_log(LOG, "reloading scene...");
+	free_scene(prog);
 	init(prog, NULL);
 	reset_accumulation(prog);
 	ft_log(SUCCESS, "scene loaded");
