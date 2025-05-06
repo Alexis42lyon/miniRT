@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lighting_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:28:32 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:01:21 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,19 @@ t_vec3	recalculate_normal(t_scene *scene, t_hit hit,
 
 	get_uv(scene, hit, &u, &v);
 	get_tangents(hit.normal, &tangent, &bitangent);
-	map_normal = get_px(u, v, &hit.mat.normal_map);
-	map_normal = vec3_add(vec3_mult(map_normal, 2.0f), (t_vec3){-1, -1, -1});
-	*world_normal = vec3_add(
-			vec3_mult(tangent, map_normal.x),
-			vec3_add(
-				vec3_mult(bitangent, map_normal.y),
-				vec3_mult(hit.normal, map_normal.z)
-				)
-			);
-	*world_normal = vec3_normalize(*world_normal);
+	if (is_header_valid(&hit.mat.normal_map.header))
+	{
+		map_normal = get_px(u, v, &hit.mat.normal_map);
+		map_normal = vec3_add(vec3_mult(map_normal, 2.0f), (t_vec3){-1, -1, -1});
+		*world_normal = vec3_add(
+				vec3_mult(tangent, map_normal.x),
+				vec3_add(
+					vec3_mult(bitangent, map_normal.y),
+					vec3_mult(hit.normal, map_normal.z)
+					)
+				);
+		*world_normal = vec3_normalize(*world_normal);
+	}
 	if (vec3_length_square(pass->uv) == 0)
 		pass->uv = (t_vec3){u, v, 0};
 	return (*world_normal);

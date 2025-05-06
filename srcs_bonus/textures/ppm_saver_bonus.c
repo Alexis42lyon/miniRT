@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ppm_saver_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:11:54 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:28:32 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 17:32:30 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 void	write_header(t_ppm_header *header, int fd)
 {
 	ft_dprintf(fd, "P6\n", header->type);
-	ft_dprintf(fd, "%u %u\n", WIDTH, HEIGHT);
+	ft_dprintf(fd, "%u %u\n", header->width, header->height);
 	ft_dprintf(fd, "%u\n", header->max_values);
 }
 
@@ -31,19 +31,19 @@ void	write_values(t_win_scene *win, int fd)
 	t_vec3	color;
 
 	j = 0;
-	while (j < HEIGHT)
+	while (j < win->height)
 	{
 		i = 0;
-		while (i < WIDTH)
+		while (i < win->width)
 		{
-			color = int_to_vec(get_pixel(&win->final_image, i, j));
+			color = int_to_vec(get_pixel(&win->img, i, j));
 			color = vec3_mult(color, 255);
 			ft_dprintf(fd, "%c%c%c",
 				(char)color.x, (char)color.y, (char)color.z);
 			i++;
 		}
-		show_progress(i + j * WIDTH,
-			HEIGHT * WIDTH, "saving image");
+		show_progress(i + j * win->width,
+			win->height * win->width, "saving image");
 		j++;
 	}
 }

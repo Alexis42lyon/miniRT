@@ -3,15 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   antialiaser_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:32:28 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:28:32 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:34:51 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window_bonus.h"
 #include "raytracer_bonus.h"
+
+void	gaussien_pixel(t_gaussien_dof *dof, int i, int j, t_win_scene *win)
+{
+	int		dx;
+	int		dy;
+	t_vec3	color;
+	float	weight;
+
+	dx = -dof->half;
+	while (dx <= dof->half)
+	{
+		dy = -dof->half;
+		while (dy <= dof->half)
+		{
+			color = int_to_vec(get_pixel(&win->img,
+						ft_clamp(i + dx, 0, win->width - 1),
+						ft_clamp(j + dy, 0, win->height - 1)
+						));
+			weight = dof->kernel[
+				(dx + dof->half) * dof->size + (dy + dof->half)];
+			dof->final = vec3_add(dof->final, vec3_mult(color, weight));
+			dy++;
+		}
+		dx++;
+	}
+}
 
 void	ssaa(t_win_scene *win, int i, int j)
 {
@@ -26,7 +52,7 @@ void	ssaa(t_win_scene *win, int i, int j)
 	dof = new_dof(win->scale_factor - 1);
 	if (!dof.kernel)
 		return ;
-	create_blur_pixel(&dof, i, j, win);
+	gaussien_pixel(&dof, i, j, win);
 	free(dof.kernel);
 	dof.final = vec3_clamp(dof.final, 0, 1);
 	pthread_mutex_lock(&image_mutex);

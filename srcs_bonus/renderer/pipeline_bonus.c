@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 08:45:57 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:29:54 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 16:54:59 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	apply_effect(t_win_scene *win)
 	int	j;
 
 	j = -1;
-	while (++j < HEIGHT)
+	while (++j < win->height)
 	{
 		i = 0;
-		while (i < WIDTH)
+		while (i < win->width)
 		{
 			vp_filter(win, i, j);
 			if (win->img_flags & GRAYSCALE)
@@ -68,8 +68,8 @@ void	run_pipeline(t_prog *prog)
 	update_cam(prog);
 	vp = viewport(prog->win_scene, prog->scene);
 	render(vp, prog->scene);
-	anti_aliaser(prog->win_scene);
 	apply_effect(prog->win_scene);
+	anti_aliaser(prog->win_scene);
 	prog->scene->total_render_time += get_current_time_ms() - last_frame;
 }
 

@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:25:46 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:55:41 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # include "miniRT.h"
 # include <mlx.h>
 
-# define WIDTH 10
-# define HEIGHT 10
+# define WIDTH 480
+# define HEIGHT 360
 
 /* ----------------------------------- MLX ---------------------------------- */
 typedef struct s_data
