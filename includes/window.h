@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 14:41:20 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 14:45:02 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "miniRT.h"
 # include <mlx.h>
 
-# define SHOW_BUTTON 0
 # define WIDTH 720
 # define HEIGHT 480
 
