@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:15 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 14:47:52 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:23:45 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,15 @@ void	parse_map(t_prog *prog)
 
 void	init(t_prog *prog, char **av)
 {
+	static char	*filename = NULL;
+
+	if (!filename)
+		filename = av[1];
 	ft_bzero(prog->parser, sizeof(t_parser));
 	ft_bzero(prog->scene, sizeof(t_scene));
-	ft_bzero(prog->win_scene, sizeof(t_win_scene));
 	prog->scene->camera.right = (t_vec3){1, 0, 0};
 	prog->scene->camera.up = (t_vec3){0, 1, 0};
-	prog->parser->fd = open(av[1], O_RDONLY);
+	prog->parser->fd = open(filename, O_RDONLY);
 	if (prog->parser->fd == -1)
 		print_exit(prog, "File not found or cannot access to the file");
 	parse_map(prog);

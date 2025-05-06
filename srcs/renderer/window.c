@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 14:59:30 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:27:55 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@
 #include "mlx.h"
 #include <stdio.h>
 #include <math.h>
+
+void	reload(t_prog *prog)
+{
+	free_scene(prog);
+	init(prog, NULL);
+	reset_accumulation(prog);
+}
 
 int	key_hook2(int keycode, t_camera	*camera)
 {
@@ -68,6 +75,8 @@ int	key_hook(int keycode, t_prog *prog)
 		turn_roll(camera, -10 * (3.1415 / 180.0f));
 	else if (keycode == PAGE_DOWN)
 		turn_roll(camera, 10 * (3.1415 / 180.0f));
+	else if (keycode == 'l')
+		reload(prog);
 	else if (key_hook2(keycode, camera))
 		return (0);
 	print_cam(&prog->scene->camera);

@@ -68,6 +68,8 @@ SRCS =	main.c						\
 		renderer_utils.c				\
 		antialiaser.c					\
 
+file = bonus/scene1
+
 else
 VPATH = srcs:srcs/parser:srcs/renderer:srcs/camera
 CFLAGS = -Wall -Werror -Wextra -MD -MP -Ilibft/includes -Iincludes -Imlx
@@ -93,6 +95,8 @@ SRCS =	main.c			\
 		cam_transform.c	\
 		phong_model.c	\
 		intersection.c	\
+
+file = mandatory/scene1
 		
 endif
 
@@ -132,8 +136,6 @@ $(OBJ_DIR)/%.o: %.c Makefile $(LIBS)| $(OBJ_DIR)
 	printf "$(GRAY)compiling: $(BLUE)%-40s $(GRAY)[%d/%d]\n" "$<" "$$(ls $(OBJ_DIR) | grep -c '\.o')" "$(words $(SRCS))"
 norm:
 		norminette srcs includes srcs includes libft
-
-file = scene1
 
 scene: all
 		./$(NAME) scenes/$(file).rt

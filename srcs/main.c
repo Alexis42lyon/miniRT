@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:02 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 14:40:36 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:24:10 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	main(int ac, char **av)
 	prog.parser = &parser;
 	prog.scene = &scene;
 	prog.win_scene = &win_scene;
+	ft_bzero(prog.win_scene, sizeof(t_win_scene));
 	init(&prog, av);
 	init_win(&prog);
 	free_all(&prog);

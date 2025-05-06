@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:34 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 14:55:42 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/06 15:27:50 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,5 +140,7 @@ void	reset_accumulation(t_prog *prog);
 // ?.c
 void	print_cam(const t_camera *cam);
 t_mat	default_mat(void);
+void	init(t_prog *prog, char **av);
+void	free_scene(t_prog *prog);
 
 #endif
