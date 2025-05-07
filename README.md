@@ -87,8 +87,10 @@ here is the available keybinds:
 |`r`|reset camera orientation|
 |`g`|save render (.ppm format)|
 
+#### Miscelanous
+you can change the window inside the makefile, `WIDHT` and `HEIGHT` are the window size, you can set `SSAA_FACTOR` to 2 or 3, this will turn on supersampling, denoising and antialiasing, however expect heavy slowdown
 
-
+> /!\ a window of 960x540 with SSAA_FACTOR set to 2 will take ~1.7GB, carefull with large windows size / hight SSAA_FACTOR 
 
 ## Installation
 
