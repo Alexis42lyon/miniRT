@@ -11,7 +11,7 @@ MLXFLAGS = -lX11 -lXext -lbsd -lm
 
 ifeq ($(MODE),bonus)
 VPATH = :srcs_bonus:srcs_bonus/parser:srcs_bonus/renderer:srcs_bonus/camera:srcs_bonus/textures:srcs_bonus/button
-CFLAGS = -Wall -Werror -Wextra -MD -MP -Ilibft/includes -Iincludes_bonus -Imlx -g3
+CFLAGS = -Wall -Werror -Wextra -MD -MP -Ilibft/includes -Iincludes_bonus -Imlx
 SRCS =	main_bonus.c						\
 		utils_bonus.c						\
 		free_bonus.c						\
@@ -133,7 +133,7 @@ $(NAME): $(OBJS)
 
 $(OBJ_DIR)/%.o: %.c Makefile $(LIBS)| $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
-	printf "$(GRAY)compiling: $(BLUE)%-40s $(GRAY)[%d/%d]\n" "$<" "$$(ls $(OBJ_DIR) | grep -c '\.o')" "$(words $(SRCS))"
+	printf "$(GRAY)compiling: $(BLUE)%-60s $(GRAY)[%d/%d]\n" "$<" "$$(ls $(OBJ_DIR) | grep -c '\.o')" "$(words $(SRCS))"
 norm:
 	norminette srcs includes srcs_bonus includes_bonus libft
 
