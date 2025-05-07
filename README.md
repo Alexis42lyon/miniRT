@@ -30,7 +30,7 @@ example: ```default 125,125,150 0.0 1 126 0.6 1 # # ```
 ### File configuration
 files are using the .rt format
 
-this is all possible entry with there option:
+this is all possible entry with the option needed:
 |name|description|options|
 |------|-----|-----|
 |C |camera|`vec3: position` `vec3:direction`, `int:fov [0, 180]`|
