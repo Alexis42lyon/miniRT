@@ -133,6 +133,26 @@ scenes/mirror.rt
 scenes/room.rt
 [![Project-20250412054030.jpg](https://i.postimg.cc/J4trF3WY/Screenshot-from-2025-05-07-14-55-00.png)](https://postimg.cc/tYBSSyMs)
 
+
+|differents pass|
+|----|
+|[![Project-20250412054030.jpg](https://i.postimg.cc/h40F0Xzy/Screenshot-from-2025-05-07-15-16-56.png)](https://postimg.cc/tYBSSyMs) |
+|uv pass|
+[![Project-20250412054030.jpg](https://i.postimg.cc/pTDw4T0d/Screenshot-from-2025-05-07-15-16-48.png)](https://postimg.cc/tYBSSyMs) |
+depth map pass
+[![Project-20250412054030.jpg](https://i.postimg.cc/NfG3CQRg/Screenshot-from-2025-05-07-15-17-03.png)](https://postimg.cc/tYBSSyMs)
+
+
+
+|more renders|
+|----|
+|[![Project-20250412054030.jpg](https://i.postimg.cc/c1PDwZT9/mini-RT-render-2121699479.png)](https://postimg.cc/tYBSSyMs) |
+|with some filters apply|
+[![Project-20250412054030.jpg](https://i.postimg.cc/c6q8HFRh/mini-RT-render-1873529600.png)](https://postimg.cc/tYBSSyMs) |
+[![Project-20250412054030.jpg](https://i.postimg.cc/1R8C840V/Screenshot-from-2025-05-07-15-23-47.png)](https://postimg.cc/tYBSSyMs)
+
+
+
 ## Acknowledgements
 
  - [cherno raytracing series](https://youtu.be/gfW1Fhd9u9Q?si=0JJXZGSj0m92Ba5W)
