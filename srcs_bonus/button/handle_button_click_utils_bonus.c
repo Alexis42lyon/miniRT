@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 12:16:59 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 15:29:28 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:02:09 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 
 #if SHOW_BUTTON
 
-# include "window_bonus.h"
 # include <math.h>
-# include <stdio.h>
-# include <string.h>
 
 static int	handle_cylinder_click_utils(int x, int y,
 	t_win_button *win_btn, t_cylinder *cylinder)

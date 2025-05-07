@@ -6,11 +6,10 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:01:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/04/11 14:12:53 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:55:20 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/vector.h"
 #include "miniRT.h"
 #include "raytracer.h"
 #include <limits.h>

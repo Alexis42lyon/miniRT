@@ -6,12 +6,10 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:42 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 14:34:48 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:54:13 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <miniRT.h>
-#include <math.h>
 #include <parser.h>
 #include "libft/is.h"
 

@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   effects_simple_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 08:27:13 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 16:55:09 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:10:12 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "camera_bonus.h"
-#include "libft/io.h"
-#include "libft/math.h"
-#include "libft/vector.h"
 #include "raytracer_bonus.h"
-#include <stdio.h>
-#include "window_bonus.h"
 
 void	invert_effect(t_win_scene *win, int i, int j)
 {

@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ppm_saver_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 11:11:54 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 17:32:30 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:15:30 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "texture_bonus.h"
-#include "window_bonus.h"
-#include "libft/io.h"
-#include "raytracer_bonus.h"
-#include <unistd.h>
 #include <fcntl.h>
 
 void	write_header(t_ppm_header *header, int fd)

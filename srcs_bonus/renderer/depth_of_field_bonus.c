@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   depth_of_field_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 11:03:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 16:57:01 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:09:20 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytracer_bonus.h"
-#include "window_bonus.h"
 
 static float	gaussien(int i, int j, float sigma)
 {

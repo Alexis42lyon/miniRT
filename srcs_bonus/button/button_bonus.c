@@ -6,18 +6,13 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:08:54 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/07 08:33:28 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:00:03 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "button_bonus.h"
 
 #if SHOW_BUTTON
-
-# include "window_bonus.h"
-# include <math.h>
-# include <stdio.h>
-# include <string.h>
 
 static int	handle_mouse_up(int button, int x, int y, t_prog *prog)
 {

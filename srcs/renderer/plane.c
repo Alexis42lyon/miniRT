@@ -6,12 +6,11 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:17:10 by abidolet          #+#    #+#             */
-/*   Updated: 2025/04/11 13:17:12 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:56:01 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytracer.h"
-#include "libft/vector.h"
 
 double	plane_hit(void *p_plane, const t_ray ray)
 {

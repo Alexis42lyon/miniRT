@@ -6,11 +6,10 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:16:12 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:28:32 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:10:19 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "window_bonus.h"
 #include "raytracer_bonus.h"
 
 int	create_img(t_win_scene *win)

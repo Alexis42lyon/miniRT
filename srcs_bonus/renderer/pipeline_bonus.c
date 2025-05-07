@@ -3,22 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   pipeline_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 08:45:57 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 16:54:59 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:12:23 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "camera_bonus.h"
-#include "miniRT_bonus.h"
 #include "raytracer_bonus.h"
-#include "window_bonus.h"
-#include <strings.h>
 #include <sys/time.h>
-#include "libft/vector.h"
-
-void	anti_aliaser(t_win_scene *win);
 
 long	get_current_time_ms(void)
 {

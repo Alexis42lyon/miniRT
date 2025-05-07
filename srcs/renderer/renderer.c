@@ -3,21 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   renderer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 14:47:58 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:57:09 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/math.h"
-#include "libft/vector.h"
-#include "miniRT.h"
-#include "mlx.h"
 #include "window.h"
 #include "raytracer.h"
-#include <limits.h>
-#include <time.h>
 
 t_viewport	viewport(t_win_scene *win, t_scene *scene)
 {

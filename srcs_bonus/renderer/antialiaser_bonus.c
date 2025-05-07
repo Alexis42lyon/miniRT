@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   antialiaser_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 16:32:28 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 16:34:51 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:08:19 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "window_bonus.h"
 #include "raytracer_bonus.h"
 
 void	gaussien_pixel(t_gaussien_dof *dof, int i, int j, t_win_scene *win)

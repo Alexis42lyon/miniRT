@@ -6,21 +6,12 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 11:48:28 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:29:54 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:14:50 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "camera_bonus.h"
-#include "libft/memory.h"
-#include "miniRT_bonus.h"
 #include "texture_bonus.h"
-#include "libft/string.h"
 #include "libft/is.h"
-
-#include <fcntl.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <stdint.h>
 
 t_ppm_header	invalid_header(void)
 {

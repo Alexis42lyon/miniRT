@@ -6,11 +6,10 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:21:55 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 17:11:25 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:58:34 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
 #include "window.h"
 #include "parser.h"
 

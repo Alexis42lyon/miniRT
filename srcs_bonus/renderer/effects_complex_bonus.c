@@ -6,17 +6,11 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 08:27:13 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/07 08:39:00 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:09:47 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "camera_bonus.h"
-#include "libft/io.h"
-#include "libft/math.h"
-#include "libft/vector.h"
 #include "raytracer_bonus.h"
-#include <stdio.h>
-#include "window_bonus.h"
 
 void	posterize(t_win_scene *win, int i, int j)
 {

@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:20:06 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 15:29:28 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:04:00 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 
 #if SHOW_BUTTON
 
-# include "window_bonus.h"
-# include <math.h>
 # include <stdio.h>
-# include <string.h>
 
 static void	put_string_materials(t_prog *prog, t_win_button *win_btn)
 {

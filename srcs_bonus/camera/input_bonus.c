@@ -3,18 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   input_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 12:33:51 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:38:16 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:05:08 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "camera_bonus.h"
-#include "libft/io.h"
-#include "miniRT_bonus.h"
-#include "raytracer_bonus.h"
-#include "window_bonus.h"
 #include "parser_bonus.h"
 #include "texture_bonus.h"
 

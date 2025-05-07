@@ -6,15 +6,12 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 11:01:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:29:54 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:10:46 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/vector.h"
-#include "miniRT_bonus.h"
 #include "raytracer_bonus.h"
 #include <limits.h>
-#include <stdio.h>
 
 t_vec3	cone_normal(t_cylinder co, t_vec3 hit_point)
 {

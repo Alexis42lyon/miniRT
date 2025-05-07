@@ -6,15 +6,10 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/07 08:30:56 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:14:02 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "window_bonus.h"
-#include "libft/memory.h"
-#include "libft/vector.h"
-#include "miniRT_bonus.h"
-#include "mlx.h"
 #include "button_bonus.h"
 
 int	window_close(void *prog)

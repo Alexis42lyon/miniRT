@@ -6,12 +6,11 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:26 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 15:28:48 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:05:57 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser_bonus.h"
-#include "camera_bonus.h"
 
 static void	parse_light(t_prog *prog, t_light_source *light, char **tokens)
 {

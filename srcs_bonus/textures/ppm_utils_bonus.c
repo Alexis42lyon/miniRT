@@ -6,13 +6,11 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:29:14 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:25:49 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:15:41 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/vector.h"
 #include "texture_bonus.h"
-#include "libft/io.h"
 
 int	is_header_valid(t_ppm_header *header)
 {

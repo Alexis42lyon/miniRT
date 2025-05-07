@@ -6,13 +6,11 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:14:06 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:28:32 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:13:38 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/vector.h"
 #include "raytracer_bonus.h"
-#include <stdio.h>
 
 t_hit	hit_result(const t_vec3 origin, const t_ray r, const double t,
 	const size_t idx)

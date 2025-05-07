@@ -6,17 +6,11 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:47:10 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:29:54 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:15:23 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/io.h"
-#include "libft/vector.h"
-#include "miniRT_bonus.h"
 #include "texture_bonus.h"
-#include <stdlib.h>
-#include <sys/types.h>
-#include <unistd.h>
 #include <fcntl.h>
 
 t_ppm_image	ppm_image(char *path, t_prog *prog)

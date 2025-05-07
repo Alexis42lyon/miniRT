@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:27:55 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:58:06 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window.h"
-#include "libft/io.h"
-#include "libft/memory.h"
-#include "libft/string.h"
-#include "libft/vector.h"
-#include "miniRT.h"
-#include "mlx.h"
-#include <stdio.h>
-#include <math.h>
 
 void	reload(t_prog *prog)
 {

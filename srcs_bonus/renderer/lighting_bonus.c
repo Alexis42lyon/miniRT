@@ -6,15 +6,11 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/07 08:37:59 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:11:08 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/vector.h"
-#include "raytracer_bonus.h"
 #include "texture_bonus.h"
-#include <stdio.h>
-#include "window_bonus.h"
 
 int	in_light(t_scene *scene, t_hit hit, struct s_light_info infos)
 {

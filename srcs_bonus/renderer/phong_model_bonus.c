@@ -3,24 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   phong_model_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:18:09 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 17:00:28 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:11:15 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytracer_bonus.h"
-#include "texture_bonus.h"
 
-/*
- * Diffuse = Kd * DOT(N, L) * Od * Ld
- * Kd = obj diffuse coef
- * N = normal
- * L = light dir
- * Od = obj albedo
- * Ld = light albedo
-*/
 t_vec3	phong_diffuse(struct s_light_info info)
 {
 	t_vec3	diffuse;

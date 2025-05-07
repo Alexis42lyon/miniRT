@@ -6,18 +6,13 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 12:59:40 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 15:29:28 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:03:11 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "button_bonus.h"
 
 #if SHOW_BUTTON
-
-# include "window_bonus.h"
-# include <math.h>
-# include <stdio.h>
-# include <string.h>
 
 static void	handle_tabs_objects(t_prog *prog, t_win_button *win_btn, int x,
 	int y)

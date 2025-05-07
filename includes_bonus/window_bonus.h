@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/07 08:24:19 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:06:46 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <mlx.h>
 # include <sys/types.h>
 
-# define WIDTH 300
-# define HEIGHT 250
+# define WIDTH 720
+# define HEIGHT 480
 
 /* --------------------------------- effect --------------------------------- */
 # define INVERT 0b00000001

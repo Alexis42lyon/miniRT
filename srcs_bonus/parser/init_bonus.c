@@ -6,15 +6,13 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:15 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/07 08:38:28 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:05:54 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "parser_bonus.h"
-#include "window_bonus.h"
 #include "raytracer_bonus.h"
-#include "button_bonus.h"
 
 void	switch_identifier(t_prog *prog, t_parser *parser)
 {

@@ -6,15 +6,12 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:21:55 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 17:41:37 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:16:19 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT_bonus.h"
-#include "window_bonus.h"
 #include "parser_bonus.h"
 #include "texture_bonus.h"
-#include "button_bonus.h"
 
 void	print_exit(t_prog *prog, char *str)
 {

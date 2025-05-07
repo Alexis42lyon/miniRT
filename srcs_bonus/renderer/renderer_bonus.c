@@ -3,26 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   renderer_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 16:54:06 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:13:28 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/io.h"
-#include "libft/math.h"
-#include "libft/string.h"
-#include "libft/vector.h"
-#include "miniRT_bonus.h"
-#include "texture_bonus.h"
-#include "window_bonus.h"
-#include "raytracer_bonus.h"
-#include <limits.h>
-#include <stdio.h>
-#include <time.h>
-#include <pthread.h>
-#include <unistd.h>
 #include "texture_bonus.h"
 
 t_hit	bounce(t_scene *scene, t_ray *ray, t_render_pass *pass)

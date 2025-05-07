@@ -6,14 +6,11 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 14:17:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:28:32 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:08:36 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/vector.h"
 #include "raytracer_bonus.h"
-#include <math.h>
-#include <stdint.h>
 
 t_vec3	checker_color(t_hit	hit, t_mat mat)
 {

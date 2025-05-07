@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:49 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 15:26:21 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:07:36 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 #if SHOW_SRUCT
 
-# include "parser.h"
 # include <stdio.h>
 
 static void	print_lights(const t_scene *scene)

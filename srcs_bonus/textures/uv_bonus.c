@@ -6,14 +6,11 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 11:56:00 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:28:32 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:15:58 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "texture_bonus.h"
 #include "raytracer_bonus.h"
-#include <math.h>
-#include <stdio.h>
 
 static void	sp_coordinate_to_uv(t_vec3 normal, float *u, float *v);
 static void	co_coordinate_to_uv(t_hit hit, t_cylinder *cy, float *u, float *v);

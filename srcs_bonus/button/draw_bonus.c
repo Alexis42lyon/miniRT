@@ -6,18 +6,13 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 12:33:16 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/07 08:36:09 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:01:07 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "button_bonus.h"
 
 #if SHOW_BUTTON
-
-# include "window_bonus.h"
-# include <math.h>
-# include <stdio.h>
-# include <string.h>
 
 void	draw_button(t_button *btn, t_data *img)
 {

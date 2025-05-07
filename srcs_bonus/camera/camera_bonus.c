@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   camera_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 11:46:23 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 16:57:24 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:04:42 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "camera_bonus.h"
-#include "libft/io.h"
 #include "window_bonus.h"
 
 t_camera	new_camera(t_vec3 origin, t_vec3 forward, int fov)

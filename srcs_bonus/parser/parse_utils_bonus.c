@@ -6,12 +6,10 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 10:22:42 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 15:45:31 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:07:29 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT_bonus.h"
-#include <math.h>
 #include "parser_bonus.h"
 #include "libft/is.h"
 
@@ -96,7 +94,9 @@ double	check_atof(t_prog *prog, const char *nptr)
 		if (res * sign != (int)(res * sign))
 			print_exit(prog, "Invalid number format");
 	}
-	if (*nptr == '.')
+	if (*nptr && *nptr != '.')
+		print_exit(prog, "Invalid number format");
+	else if (*nptr == '.')
 		get_decimal(prog, (char *)++nptr, &res);
 	return (res * sign);
 }

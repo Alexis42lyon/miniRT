@@ -3,23 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:02 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 16:53:31 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:59:06 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window.h"
 #include "parser.h"
-#include "raytracer.h"
-#include "libft/math.h"
-
-#include <stdio.h>
-#include <unistd.h>
-#include "libft/vector.h"
-
-#include <sys/wait.h>
 
 int	main(int ac, char **av)
 {

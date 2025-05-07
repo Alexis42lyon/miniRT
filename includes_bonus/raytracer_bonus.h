@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:27:53 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:12:20 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,5 +194,8 @@ t_vec3			checker_color(t_hit	hit, t_mat mat);
 
 // hit.c
 t_hit			hit_succes(t_scene *scene, t_ray ray, t_hit hit);
+
+// antialiaser.c
+void	anti_aliaser(t_win_scene *win);
 
 #endif

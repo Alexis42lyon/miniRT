@@ -6,18 +6,13 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 12:54:01 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 15:29:28 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:03:18 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "button_bonus.h"
 
 #if SHOW_BUTTON
-
-# include "window_bonus.h"
-# include <math.h>
-# include <stdio.h>
-# include <string.h>
 
 static void	init_cylinder_buttons_utils(t_win_button *win_btn,
 	t_button *btns[10])

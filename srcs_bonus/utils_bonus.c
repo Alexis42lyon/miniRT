@@ -6,15 +6,11 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:19:17 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 15:28:35 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:17:03 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/io.h"
-#include "window_bonus.h"
-#include "miniRT_bonus.h"
 #include "raytracer_bonus.h"
-
 #include <stdio.h>
 
 void	show_stats(t_prog *prog)
