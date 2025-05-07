@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 12:21:57 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/07 09:02:57 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:29:47 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 #if SHOW_BUTTON
 
-#include <math.h>
+# include <math.h>
 
 static void	handle_mouse_move_ambient_light(int y, float new_value,
 	t_prog *prog)

@@ -6,10 +6,9 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:16:12 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/07 09:19:42 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:29:53 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "raytracer_bonus.h"
 
