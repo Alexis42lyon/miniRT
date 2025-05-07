@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/07 08:45:21 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:58:08 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <mlx.h>
 # include <sys/types.h>
 
-# define WIDTH 780
-# define HEIGHT 420
+# define WIDTH 480
+# define HEIGHT 360
 
 /* --------------------------------- effect --------------------------------- */
 # define INVERT 0b00000001
