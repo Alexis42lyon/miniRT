@@ -87,7 +87,7 @@ here is the available keybinds:
 |`r`|reset camera orientation|
 |`g`|save render (.ppm format)|
 
-#### Miscelanous
+### Miscelanous
 
 all settings are up the top of the Makefile.
 
