@@ -11,7 +11,7 @@ MLXFLAGS = -lX11 -lXext -lbsd -lm
 
 ifeq ($(MODE),bonus)
 VPATH = :srcs_bonus:srcs_bonus/parser:srcs_bonus/renderer:srcs_bonus/camera:srcs_bonus/textures:srcs_bonus/button
-CFLAGS = -Wall -Werror -Wextra -MD -MP -Ilibft/includes -Iincludes_bonus -Imlx
+CFLAGS = -Wall -Werror -Wextra -MD -MP -Ilibft/includes -Iincludes_bonus -Imlx -g3
 SRCS =	main_bonus.c						\
 		utils_bonus.c						\
 		free_bonus.c						\

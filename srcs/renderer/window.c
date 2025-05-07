@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/07 08:58:06 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:19:06 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	key_hook(int keycode, t_prog *prog)
 		turn_roll(camera, -10 * (3.1415 / 180.0f));
 	else if (keycode == PAGE_DOWN)
 		turn_roll(camera, 10 * (3.1415 / 180.0f));
-	else if (keycode == 'l')
+	else if (keycode == '0')
 		reload(prog);
 	else if (key_hook2(keycode, camera))
 		return (0);
@@ -93,7 +93,6 @@ void	init_win(t_prog *prog)
 	win->mlx_ptr = mlx_init();
 	if (!win->mlx_ptr)
 		print_exit(prog, "Mlx init failed");
-	mlx_do_key_autorepeaton(prog->win_scene->mlx_ptr);
 	win->win_ptr = mlx_new_window(win->mlx_ptr, win->width,
 			win->height, "miniRT");
 	if (!win->win_ptr)

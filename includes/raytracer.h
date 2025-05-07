@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 17:39:37 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:08:35 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <math.h>
 
 # define BOUNCES 2
-# define DEFAULT_EMMI_POWER 5
 
 # define SPECULAR 0b0100
 # define DIFFUSE 0b0010

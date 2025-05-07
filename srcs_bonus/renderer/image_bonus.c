@@ -6,9 +6,10 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:16:12 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/07 09:10:19 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 09:19:42 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "raytracer_bonus.h"
 
@@ -20,20 +21,15 @@ int	create_img(t_win_scene *win)
 	win->img.addr = mlx_get_data_addr(win->img.img, &win->img.bits_per_pixel,
 			&win->img.line_length, &win->img.endian);
 	if (!win->img.addr)
-	{
 		return (-1);
-	}
-	win->final_image.img = mlx_new_image(win->mlx_ptr,
-			win->width / SSAA_FACTOR, win->height / SSAA_FACTOR);
+	win->final_image.img = mlx_new_image(win->mlx_ptr, WIDTH, HEIGHT);
 	if (!win->final_image.img)
 		return (-1);
 	win->final_image.addr = mlx_get_data_addr(win->final_image.img,
 			&win->final_image.bits_per_pixel,
 			&win->final_image.line_length, &win->final_image.endian);
-	if (!win->img.addr)
-	{
+	if (!win->final_image.addr)
 		return (-1);
-	}
 	return (0);
 }
 
