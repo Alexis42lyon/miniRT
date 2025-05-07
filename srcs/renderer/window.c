@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:27:55 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:34:50 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	key_hook(int keycode, t_prog *prog)
 		turn_roll(camera, -10 * (3.1415 / 180.0f));
 	else if (keycode == PAGE_DOWN)
 		turn_roll(camera, 10 * (3.1415 / 180.0f));
-	else if (keycode == 'l')
+	else if (keycode == '0')
 		reload(prog);
 	else if (key_hook2(keycode, camera))
 		return (0);
