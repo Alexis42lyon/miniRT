@@ -106,8 +106,8 @@ here is the available keybinds:
 ## Usage/Examples
 
 #### requirement
-to run the project, you will need a scenes/ folder inside must be a material.rt file containing your materials
-you also need a <scene-name>.rt containing a valid scene
+to run the project, you will need a scenes/ folder inside must be a `material.rt` file containing your materials
+you also need a `<scene-name>.rt` containing a valid scene
 
 #### running miniRT
 
