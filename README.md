@@ -132,7 +132,8 @@ available scenes are `showcase.rt`, `mirror.rt`, `room.rt`, `42.rt`, `lights.rt`
 ## Screenshots
 
 scenes/showcase.rt
-[![Project-20250412054030.jpg](https://i.postimg.cc/brVzJr1R/Screenshot-from-2025-05-07-13-24-01.png)](https://postimg.cc/tYBSSyMs)
+![mini-RT-render-1415640704](https://github.com/user-attachments/assets/f3368666-15a2-463b-ab37-67091a22c6ff)
+
 
 scenes/mirror.rt
 [![Project-20250412054030.jpg](https://i.postimg.cc/v808XqC6/Screenshot-from-2025-05-07-14-49-09.png)](https://postimg.cc/tYBSSyMs)
