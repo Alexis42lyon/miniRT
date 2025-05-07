@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:18:24 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 15:29:54 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:30:56 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ void	free_win(t_win_scene *win, t_win_button *win_btn)
 		mlx_destroy_image(win->mlx_ptr, win->img.img);
 	if (win->final_image.img)
 		mlx_destroy_image(win->mlx_ptr, win->final_image.img);
+	if (win_btn->win_ptr)
+		mlx_destroy_window(win_btn->mlx_ptr, win_btn->win_ptr);
 	if (win->win_ptr)
 		mlx_destroy_window(win->mlx_ptr, win->win_ptr);
 	if (win->mlx_ptr)
 	{
 		mlx_destroy_display(win->mlx_ptr);
 		free(win->mlx_ptr);
-		if (win_btn->mlx_ptr)
-			free(win_btn->win_ptr);
 	}
 	if (win->accumulation_data)
 		free(win->accumulation_data);

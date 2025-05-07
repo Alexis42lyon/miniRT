@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lighting_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 14:25:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 17:01:21 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:37:59 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ t_vec3	recalculate_normal(t_scene *scene, t_hit hit,
 	if (is_header_valid(&hit.mat.normal_map.header))
 	{
 		map_normal = get_px(u, v, &hit.mat.normal_map);
-		map_normal = vec3_add(vec3_mult(map_normal, 2.0f), (t_vec3){-1, -1, -1});
+		map_normal = vec3_add(vec3_mult(map_normal, 2.0f),
+				(t_vec3){-1, -1, -1});
 		*world_normal = vec3_add(
 				vec3_mult(tangent, map_normal.x),
 				vec3_add(

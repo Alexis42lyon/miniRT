@@ -135,7 +135,7 @@ $(OBJ_DIR)/%.o: %.c Makefile $(LIBS)| $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 	printf "$(GRAY)compiling: $(BLUE)%-40s $(GRAY)[%d/%d]\n" "$<" "$$(ls $(OBJ_DIR) | grep -c '\.o')" "$(words $(SRCS))"
 norm:
-	norminette srcs includes srcs includes libft
+	norminette srcs includes srcs_bonus includes_bonus libft
 
 scene: all
 		./$(NAME) scenes/$(file).rt

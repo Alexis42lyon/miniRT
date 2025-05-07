@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   effects_complex_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 08:27:13 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 16:55:34 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:39:00 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	chromatic_aberation(t_win_scene *win, int i, int j)
 
 	offset = vec3_mult(dir, strenght);
 	col.x = int_to_vec(get_pixel(&win->img, do_offset(i,
-					offset.x, win->width), do_offset(j, offset.y, win->height))).x;
+					offset.x, win->width),
+				do_offset(j, offset.y, win->height))).x;
 	col.y = int_to_vec(get_pixel(&win->img, i, j)).y;
 	col.z = int_to_vec(get_pixel(&win->img, do_offset(i,
 					-offset.x, win->width),
@@ -72,7 +73,8 @@ void	depth_of_field(t_win_scene *win, int i, int j)
 	create_blur_pixel(&dof, i, j, win);
 	free(dof.kernel);
 	dof.final = vec3_clamp(dof.final, 0, 1);
-	t = ft_clamp(vec3_length_square(win->pass[i + j * win->width].depth_map), 0, 1);
+	t = ft_clamp(vec3_length_square(win->pass[i + j * win->width].depth_map),
+			0, 1);
 	new_px = vec3_add(vec3_mult(
 				int_to_vec(get_pixel(&win->img, i, j)), (1.0 - t)),
 			vec3_mult(dof.final, t));

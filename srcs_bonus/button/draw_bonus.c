@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 12:33:16 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 15:29:28 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:36:09 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,15 +124,20 @@ void	draw_button_window(t_prog *prog, t_win_button *win_btn)
 	t_data			img;
 
 	img.img = mlx_new_image(win_btn->mlx_ptr, win_btn->width, win_btn->height);
+	if (!img.img)
+		print_exit(prog, "Failed to create control window image.");
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
 			&img.line_length, &img.endian);
+	if (!img.addr)
+	{
+		mlx_destroy_image(win_btn->mlx_ptr, img.img);
+		print_exit(prog, "Failed to get control window image data.");
+	}
 	draw_tabs(&img, win_btn);
 	if (win_btn->current_tab == TAB_LIGHTS)
 		draw_tab_lights(prog, img, win_btn);
 	else if (win_btn->current_tab == TAB_OBJECTS)
-	{
 		draw_objects_controls(prog, win_btn, img);
-	}
 	else if (win_btn->current_tab == TAB_MATERIALS
 		&& prog->scene->nb_materials > 0)
 		draw_tab_materials(prog, img);

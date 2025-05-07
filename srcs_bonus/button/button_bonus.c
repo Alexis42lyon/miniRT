@@ -6,7 +6,7 @@
 /*   By: abidolet <abidolet@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:08:54 by abidolet          #+#    #+#             */
-/*   Updated: 2025/05/06 15:54:11 by abidolet         ###   ########.fr       */
+/*   Updated: 2025/05/07 08:33:28 by abidolet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ static int	key_hook_btn(int keycode, t_prog *prog)
 static void	init_struct(t_prog *prog, t_win_button *win_btn)
 {
 	int				i;
-	const float		tab_width = CONTROL_WINDOW_WIDTH / TAB_COUNT;
 
 	*win_btn = (t_win_button)
 	{
@@ -50,14 +49,16 @@ static void	init_struct(t_prog *prog, t_win_button *win_btn)
 		.current_tab = TAB_LIGHTS,
 		.is_dragging = 0,
 	};
+	if (!win_btn->win_ptr)
+		print_exit(prog, "Failed to create control window.");
 	i = -1;
 	while (++i < TAB_COUNT)
 	{
 		win_btn->tab_buttons[i] = (t_button)
 		{
-			.x = i * tab_width,
+			.x = i * CONTROL_WINDOW_WIDTH / TAB_COUNT,
 			.y = 0,
-			.width = tab_width,
+			.width = CONTROL_WINDOW_WIDTH / TAB_COUNT,
 			.height = TAB_HEIGHT,
 		};
 	}
@@ -68,7 +69,7 @@ void	init_button_window(t_prog *prog)
 	t_win_button	*win_btn;
 	t_button		*btns[6];
 
-	if (HEIGHT < 250 || WIDTH < 250)
+	if (HEIGHT < 250 || CONTROL_WINDOW_WIDTH < 300)
 	{
 		ft_log(ERROR,
 			"Error: Window dimensions are too small for panel control.");
