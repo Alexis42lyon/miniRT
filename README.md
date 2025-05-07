@@ -144,8 +144,9 @@ scenes/room.rt
 
 |differents pass|
 |----|
-|[![Project-20250412054030.jpg](https://i.postimg.cc/h40F0Xzy/Screenshot-from-2025-05-07-15-16-56.png)](https://postimg.cc/tYBSSyMs) |
 |uv pass|
+|[![Project-20250412054030.jpg](https://i.postimg.cc/h40F0Xzy/Screenshot-from-2025-05-07-15-16-56.png)](https://postimg.cc/tYBSSyMs) |
+|normal pass|
 [![Project-20250412054030.jpg](https://i.postimg.cc/pTDw4T0d/Screenshot-from-2025-05-07-15-16-48.png)](https://postimg.cc/tYBSSyMs) |
 depth map pass
 [![Project-20250412054030.jpg](https://i.postimg.cc/NfG3CQRg/Screenshot-from-2025-05-07-15-17-03.png)](https://postimg.cc/tYBSSyMs)
