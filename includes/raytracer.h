@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 09:09:16 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/08 08:32:06 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:02:56 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ typedef struct viewport
 
 	int				width;
 	int				height;
+
+	int				seed;
 }	t_viewport;
 
 typedef struct s_light_info
@@ -141,7 +143,7 @@ t_vec3			int_to_vec(t_uint color);
 t_vec3			sky_col(t_ray ray, t_scene *scene);
 
 // ray.c
-t_ray			get_ray(float u, float v, t_viewport vp);
+t_ray	get_ray(float u, float v, t_viewport vp);
 t_hit			hit_fail(void);
 t_vec3			ray_to_vec(t_ray r);
 

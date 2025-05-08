@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 13:24:20 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/05 15:01:11 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/08 14:03:29 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ t_vec3	get_px_col(int i, int j, t_viewport vp, t_scene *scene)
 	t_uint			seed;
 	int				x;
 
-	frame = frame_data(scene, &vp, i, j);
 	seed = (i + (j * vp.win->width)) * scene->frame_count;
+	vp.seed = seed;
+	frame = frame_data(scene, &vp, i, j);
 	x = -1;
 	while (++x < scene->nb_bounces)
 	{
