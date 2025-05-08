@@ -172,6 +172,6 @@ depth map pass
  - [ppm images](https://paulbourke.net/dataformats/ppm/)
 
 ## Contributors
-[@abidolet](https://github.com/Alexis42lyon)
+[@abidolet](https://github.com/abidolet)
 
 [@mjuncker](https://github.com/Maxime-juncker)
