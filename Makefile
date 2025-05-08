@@ -5,8 +5,8 @@
 
 # ---------------------------------- window ---------------------------------- #
 
-WIDTH = 480 # width of window
-HEIGHT = 360 # hight of window
+WIDTH = 720 # width of window
+HEIGHT = 480 # hight of window
 
 # --------------------------------- rendering -------------------------------- #
 

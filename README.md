@@ -111,7 +111,7 @@ MAX_RAM = 10 # max amount of RAM miniRT can take (a medium render is ~2GB)
 
 # ------------------------------------- - ------------------------------------ #
 ```
-
+> /!\ super sampling can help making smother render, however expect a big performance drop
 ## Installation
 you will need to install the following packages
 ```bash
