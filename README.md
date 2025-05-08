@@ -86,6 +86,9 @@ here is the available keybinds:
 |`f`|show frame render time|
 |`r`|reset camera orientation|
 |`g`|save render (.ppm format)|
+|`+`|increase number of bounce by 1|
+|`-`|decrease number of bounce by 1|
+|`r`|reset camera orientation|
 
 ### Miscelanous
 
@@ -121,11 +124,11 @@ sudo apt-get update && sudo apt-get install xorg libxext-dev zlib1g-dev libbsd-d
   cd miniRT
 ```
 
-1. build using make
+2. build using make
 ```bash
   make
 ```
-to make a debug build (which increase performance by decreasing render quality)
+or make a debug build (which increase performance by decreasing render quality)
 run:
 ```bash
 make MODE=debug
