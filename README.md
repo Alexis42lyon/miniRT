@@ -86,6 +86,9 @@ here is the available keybinds:
 |`f`|show frame render time|
 |`r`|reset camera orientation|
 |`g`|save render (.ppm format)|
+|`+`|increase number of bounce by 1|
+|`-`|decrease number of bounce by 1|
+|`r`|reset camera orientation|
 
 ### Miscelanous
 
