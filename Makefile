@@ -5,13 +5,14 @@
 
 # ---------------------------------- window ---------------------------------- #
 
-WIDTH = 720 # width of window
-HEIGHT = 480 # hight of window
+WIDTH = 1920 # width of window
+HEIGHT = 1080 # hight of window
 
 # --------------------------------- rendering -------------------------------- #
 
 DEFAULT_BOUNCE = 10 # for better result set to hight value
 SSAA_FACTOR = 1 # supersampling factor
+RAY_RANDOMNESS = 0.02 # add a small random to every ray, help with edge antialiasing
 
 # -------------------------------- preformance ------------------------------- #
 
@@ -22,8 +23,8 @@ MAX_RAM = 10 # max amount of RAM miniRT can take (a medium render is ~2GB)
 
 NAME = miniRT
 MODE ?= release
-CONFIG = -D WIDTH=$(WIDTH) -D HEIGHT=$(HEIGHT) -D DEFAULT_BOUNCE=$(DEFAULT_BOUNCE) -D SSAA_FACTOR=$(SSAA_FACTOR) -D MAX_THREAD=$(MAX_THREAD) -D MAX_RAM=$(MAX_RAM)
-DEBUG_CONFIG = -D WIDTH=$(WIDTH) -D HEIGHT=$(HEIGHT) -D DEFAULT_BOUNCE=1 -D SSAA_FACTOR=1 -D MAX_THREAD=$(MAX_THREAD) -D MAX_RAM=$(MAX_RAM)
+CONFIG = -D WIDTH=$(WIDTH) -D HEIGHT=$(HEIGHT) -D DEFAULT_BOUNCE=$(DEFAULT_BOUNCE) -D SSAA_FACTOR=$(SSAA_FACTOR) -D MAX_THREAD=$(MAX_THREAD) -D MAX_RAM=$(MAX_RAM) -D RAY_RANDOMNESS=$(RAY_RANDOMNESS)
+DEBUG_CONFIG = -D WIDTH=$(WIDTH) -D HEIGHT=$(HEIGHT) -D DEFAULT_BOUNCE=1 -D SSAA_FACTOR=1 -D MAX_THREAD=$(MAX_THREAD) -D MAX_RAM=$(MAX_RAM) -D RAY_RANDOMNESS=$(RAY_RANDOMNESS)
 
 OBJ_DIR = obj-$(MODE)
 INCLUDES = -Iincludes -Ilibft/includes -Imlx
