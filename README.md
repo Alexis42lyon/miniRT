@@ -124,11 +124,11 @@ sudo apt-get update && sudo apt-get install xorg libxext-dev zlib1g-dev libbsd-d
   cd miniRT
 ```
 
-1. build using make
+2. build using make
 ```bash
   make
 ```
-to make a debug build (which increase performance by decreasing render quality)
+or make a debug build (which increase performance by decreasing render quality)
 run:
 ```bash
 make MODE=debug
