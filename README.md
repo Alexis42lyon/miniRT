@@ -90,14 +90,30 @@ here is the available keybinds:
 ### Miscelanous
 
 all settings are up the top of the Makefile.
+```Makefile
+# ---------------------------------- window ---------------------------------- #
 
-`WIDHT` and `HEIGHT` are the window size, you can set `SSAA_FACTOR` to 2 or 3, this will turn on supersampling, denoising and antialiasing, however expect heavy slowdown
+WIDTH = 480 # width of window
+HEIGHT = 360 # hight of window
 
-> /!\ a window of 960x540 with SSAA_FACTOR set to 2 will take ~1.7GB, carefull with large windows size / hight SSAA_FACTOR
+# --------------------------------- rendering -------------------------------- #
 
-> to turn off memory protection set `PROTECT_LFS` to `0`
+DEFAULT_BOUNCE = 10 # for better result set to hight value
+SSAA_FACTOR = 1 # supersampling factor
+
+# -------------------------------- preformance ------------------------------- #
+
+MAX_THREAD = 4 # check your cpu for best value
+MAX_RAM = 10 # max amount of RAM miniRT can take (a medium render is ~2GB)
+
+# ------------------------------------- - ------------------------------------ #
+```
 
 ## Installation
+you will need to install the following packages
+```bash
+sudo apt-get update && sudo apt-get install xorg libxext-dev zlib1g-dev libbsd-dev
+```
 
 1. clone the repo
 ```bash
@@ -109,6 +125,14 @@ all settings are up the top of the Makefile.
 ```bash
   make
 ```
+to make a debug build (which increase performance by decreasing render quality)
+run:
+```bash
+make MODE=debug
+```
+
+- `make clean` will remove .obj / .d file
+- `make fclean` same as clean but also remove executable
     
 ## Usage/Examples
 
