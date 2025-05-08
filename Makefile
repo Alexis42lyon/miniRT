@@ -1,16 +1,40 @@
+# ---------------------------------------------------------------------------- #
+#                                  USER CONFIG                                 #
+# ---------------------------------------------------------------------------- #
+
+
+# ---------------------------------- window ---------------------------------- #
+
+WIDTH = 480 # width of window
+HEIGHT = 360 # hight of window
+
+# --------------------------------- rendering -------------------------------- #
+
+DEFAULT_BOUNCE = 10 # for better result set to hight value
+SSAA_FACTOR = 1 # supersampling factor
+
+# -------------------------------- preformance ------------------------------- #
+
+MAX_THREAD = 4 # check your cpu for best value
+MAX_RAM = 10 # max amount of RAM miniRT can take (a medium render is ~2GB)
+
+# ------------------------------------- - ------------------------------------ #
+
 NAME = miniRT
 MODE ?= release
+CONFIG = -D WIDTH=$(WIDTH) -D HEIGHT=$(HEIGHT) -D DEFAULT_BOUNCE=$(DEFAULT_BOUNCE) -D SSAA_FACTOR=$(SSAA_FACTOR) -D MAX_THREAD=$(MAX_THREAD) -D MAX_RAM=$(MAX_RAM)
+DEBUG_CONFIG = -D WIDTH=$(WIDTH) -D HEIGHT=$(HEIGHT) -D DEFAULT_BOUNCE=1 -D SSAA_FACTOR=1 -D MAX_THREAD=$(MAX_THREAD) -D MAX_RAM=$(MAX_RAM)
 
 OBJ_DIR = obj-$(MODE)
 INCLUDES = -Iincludes -Ilibft/includes -Imlx
 LIBS = libft/bin/libft.a mlx/libmlx.a
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -MD -MP $(INCLUDES) -g3
+CFLAGS = -Wall -Werror -Wextra -MD -MP $(INCLUDES) $(CONFIG)
 MLXFLAGS = -lX11 -lXext -lbsd -lm
 
 ifeq ($(MODE), debug)
-	CFLAGS = -Wall -Wextra -MD -MP $(INCLUDES) -g3 -D DEFAULT_BOUNCE=2
+	CFLAGS = -Wall -Wextra -MD -MP $(INCLUDES) -g3 $(DEBUG_CONFIG)
 endif
 
 VPATH = srcs:srcs/parser:srcs/renderer:srcs/camera:srcs/textures:srcs/button
@@ -88,12 +112,6 @@ all:
 	$(MAKE) $(BIN)
 	printf "$(RESET)"
 
-debug:
-	$(MAKE) MODE=debug scene
-
-release:
-	$(MAKE) MODE=release scene
-
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
@@ -110,22 +128,8 @@ $(OBJ_DIR)/%.o: %.c Makefile $(LIBS)| $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 	printf "$(GRAY)compiling: $(BLUE)%-40s $(GRAY)[%d/%d]\n" "$<" "$$(ls $(OBJ_DIR) | grep -c '\.o')" "$(words $(SRCS))"
 
-norm:
-	norminette srcs includes libft
-
-file = scene1
-
-scene: all
-	./$(BIN) scenes/$(file).rt
-
-leaks: all
-	valgrind --leak-check=full --track-origins=yes --show-leak-kinds=all --track-fds=all ./$(BIN) scenes/$(file).rt
-
-callgrind: all
-	valgrind --tool=memcheck  ./$(BIN) scenes/$(file).rt
-
 clean:
-	rm -rf obj-debug obj-release
+	rm -rf obj-*
 	$(MAKE) -C libft clean
 	$(MAKE) -C mlx clean > /dev/null 2>&1
 

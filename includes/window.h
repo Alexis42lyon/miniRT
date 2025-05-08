@@ -6,7 +6,7 @@
 /*   By: mjuncker <mjuncker@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 15:02:36 by mjuncker          #+#    #+#             */
-/*   Updated: 2025/05/06 12:45:27 by mjuncker         ###   ########.fr       */
+/*   Updated: 2025/05/08 08:37:28 by mjuncker         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,25 @@
 # include <mlx.h>
 # include <sys/types.h>
 
-# define WIDTH 480
-# define HEIGHT 360
+/* -------------------------------------------------------------------------- */
+/*                                window config                               */
+/* -------------------------------------------------------------------------- */
+
+# ifndef WIDTH
+#  define WIDTH 480
+# endif
+
+# ifndef HEIGHT
+#  define HEIGHT 360
+# endif
+
+# ifndef SSAA_FACTOR
+#  define SSAA_FACTOR 1
+# endif
+
+# ifndef MAX_RAM
+#  define MAX_RAM 1
+# endif
 
 /* --------------------------------- effect --------------------------------- */
 # define INVERT 0b00000001
@@ -47,7 +64,6 @@
 # define ON_EXPOSE 12
 # define ON_DESTROY 17
 
-# define SSAA_FACTOR 1
 
 /* -------------------------------------------------------------------------- */
 typedef struct s_data
